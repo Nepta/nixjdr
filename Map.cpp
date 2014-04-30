@@ -1,16 +1,26 @@
-#include <SFML/Window.hpp>
+#include <SFML/Graphics.hpp>
 
 using namespace sf;
 
 int main(){
-	Window window(VideoMode(800,600),"map");
+	RenderWindow window(VideoMode(800,600),"map");
+	Vector2u window_size = window.getSize();
+
+	RectangleShape background(
+        Vector2f(window_size.x, window_size.y));
+    background.setPosition(0, 0);
+    background.setFillColor(Color(3, 2, 18));
+
 	while(window.isOpen()){
-		sf::Event event;
+		Event event;
 		while(window.pollEvent(event)){
-			if (event.type == sf::Event::Closed){
+			if (event.type == Event::Closed){
 				window.close();
 			}
 		}
+		window.clear();
+		window.draw(background);
+		window.display();
 	}
  return 0;
 }
