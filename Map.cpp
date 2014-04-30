@@ -13,7 +13,6 @@ int main(){
 	
 	Sprite background(forest);
 	
-	window.draw(background);
 	while(window.isOpen()){
 		Event event;
 		while(window.pollEvent(event)){
@@ -21,6 +20,9 @@ int main(){
 				window.close();
 			}
 		}
+		window.clear();
+		window.draw(background);
+		window.display();
 	}
  return 0;
 }
