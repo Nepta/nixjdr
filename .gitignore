@@ -21,3 +21,6 @@ obj/
 *.out
 *.app
 *.bin
+
+# Qt
+*.user
