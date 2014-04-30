@@ -1,13 +1,23 @@
-#include <SFML/Window.hpp>
+#include <SFML/Graphics.hpp>
+#include <iostream>
 
 using namespace sf;
 
 int main(){
-	Window window(VideoMode(800,600),"map");
+	RenderWindow window(VideoMode(800,600),"map");
+	window.setFramerateLimit(120);
+	Texture forest;
+	if(!forest.loadFromFile("resource/littleForest.png")){
+		std::cout << "unable to load littleForest.png" << std::endl;
+	}
+	
+	Sprite background(forest);
+	
+	window.draw(background);
 	while(window.isOpen()){
-		sf::Event event;
+		Event event;
 		while(window.pollEvent(event)){
-			if (event.type == sf::Event::Closed){
+			if(event.type == Event::Closed || Keyboard::isKeyPressed(Keyboard::Key::Escape)){
 				window.close();
 			}
 		}
