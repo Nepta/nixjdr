@@ -5,13 +5,26 @@
 using namespace sf;
 
 Map::Map(std::string path){
-	RenderWindow window(VideoMode(800,600),"map");
-	window_ = &window;
+	window_ = new RenderWindow(VideoMode(800,600),"map");
 	
+	if(!backgroundImage_.loadFromFile(path)){
+		std::cout << "unable to load littleForest.png" << std::endl;
+	}
+	background_ = new Sprite(backgroundImage_);
 }
 
 void Map::unlimitRender(){
-	
+	while(window_->isOpen()){
+		Event event;
+		while(window_->pollEvent(event)){
+			if(event.type == Event::Closed || Keyboard::isKeyPressed(Keyboard::Key::Escape)){
+				window_->close();
+			}
+		}
+		window_->clear();
+		window_->draw(*background_);
+		window_->display();
+	}	
 }
 
 int main(){
