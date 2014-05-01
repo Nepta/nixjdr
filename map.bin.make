@@ -65,6 +65,7 @@ endif
 
 OBJECTS := \
 	$(OBJDIR)/Map.o \
+	$(OBJDIR)/Interaction.o \
 
 RESOURCES := \
 
@@ -125,7 +126,10 @@ $(GCH): $(PCH)
 	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
 endif
 
-$(OBJDIR)/Map.o: Map.cpp
+$(OBJDIR)/Map.o: src/GameBoard/Map.cpp
+	@echo $(notdir $<)
+	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
+$(OBJDIR)/Interaction.o: src/GameBoard/Interaction.cpp
 	@echo $(notdir $<)
 	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
 

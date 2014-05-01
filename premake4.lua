@@ -14,6 +14,6 @@ solution "Template"
 		kind "ConsoleApp"
 		language "C++"
 
-		files {"Map.cpp"}
+		files {"src/GameBoard/*"}
 		links {"sfml-graphics","sfml-window","sfml-system"}
 
