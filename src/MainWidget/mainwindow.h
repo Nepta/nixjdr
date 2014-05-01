@@ -17,7 +17,6 @@ public:
 
 private slots:
     void on_actionModify_Background_triggered();
-    //void startChoiceDialog();
 
 signals:
     void initMainWindow();
