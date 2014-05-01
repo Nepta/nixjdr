@@ -6,7 +6,7 @@ ifndef config
 endif
 export config
 
-PROJECTS := map.bin qsfml.bin mainWidget.bin
+PROJECTS := map.bin qsfml.bin qtsfml.bin mainWidget.bin
 
 .PHONY: all clean help $(PROJECTS)
 
@@ -20,6 +20,10 @@ qsfml.bin:
 	@echo "==== Building qsfml.bin ($(config)) ===="
 	@${MAKE} --no-print-directory -C . -f qsfml.bin.make
 
+qtsfml.bin: 
+	@echo "==== Building qtsfml.bin ($(config)) ===="
+	@${MAKE} --no-print-directory -C . -f qtsfml.bin.make
+
 mainWidget.bin: 
 	@echo "==== Building mainWidget.bin ($(config)) ===="
 	@${MAKE} --no-print-directory -C . -f mainWidget.bin.make
@@ -27,6 +31,7 @@ mainWidget.bin:
 clean:
 	@${MAKE} --no-print-directory -C . -f map.bin.make clean
 	@${MAKE} --no-print-directory -C . -f qsfml.bin.make clean
+	@${MAKE} --no-print-directory -C . -f qtsfml.bin.make clean
 	@${MAKE} --no-print-directory -C . -f mainWidget.bin.make clean
 
 help:
@@ -41,6 +46,7 @@ help:
 	@echo "   clean"
 	@echo "   map.bin"
 	@echo "   qsfml.bin"
+	@echo "   qtsfml.bin"
 	@echo "   mainWidget.bin"
 	@echo ""
 	@echo "For more information, see http://industriousone.com/premake/quick-start"
@@ -48,5 +54,6 @@ help:
 lupdate:
 	@${MAKE} --no-print-directory -C . -f map.bin.make lupdate
 	@${MAKE} --no-print-directory -C . -f qsfml.bin.make lupdate
+	@${MAKE} --no-print-directory -C . -f qtsfml.bin.make lupdate
 	@${MAKE} --no-print-directory -C . -f mainWidget.bin.make lupdate
 

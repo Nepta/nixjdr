@@ -32,6 +32,19 @@ solution "Template"
 			"src/QTSFML/*.qrc"
 		}
 		
+	project "qtsfml.bin"
+		kind "WindowedApp"
+		language "C++"
+		uses {"QtGui","QtWidgets"}
+		links {"sfml-graphics","sfml-window","sfml-system"}
+		buildoptions{"-fPIC"}
+		files{
+			"src/Qt-sfml/**.h",
+			"src/Qt-sfml/**.cpp",
+			"src/Qt-sfml/**.ui",
+			"src/Qt-sfml/**.qrc"
+		}
+		
 
 	project "mainWidget.bin"
 		kind "WindowedApp"

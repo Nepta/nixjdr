@@ -11,7 +11,7 @@ Map::Map(QWidget* Parent, const QPoint& Position, const QSize& Size) :
 
 void Map::OnInit()
 {
-    image_.loadFromFile("img/littleForest.png");
+    image_.loadFromFile("resource/littleForest.png");
 
     // On paramètre le sprite
     sprite_.setTexture(image_);
