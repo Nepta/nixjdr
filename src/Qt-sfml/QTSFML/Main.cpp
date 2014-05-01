@@ -29,9 +29,9 @@ int main(int argc, char **argv){
 	//On crée une vue SFML dans la fenêtre principale
 	QSFMLCanvas *map;
 	if(argc > 1){
-		map = new Canvas(MainFrame,QPoint(0,0), QSize(800, 600));
-	}else{
 		map = new Map(MainFrame, QPoint(0, 0), QSize(800, 600));
+	}else{
+		map = new Canvas(MainFrame,QPoint(0,0), QSize(800, 600));
 	}
 	map->show();
 

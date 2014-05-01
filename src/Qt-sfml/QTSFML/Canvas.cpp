@@ -1,5 +1,6 @@
 #include "Canvas.h"
-
+#include "Action.h"
+#include "CoutAction.h"
 #include <iostream>
 #include <string>
 #include <QDir>
@@ -34,10 +35,9 @@ void Canvas::OnUpdate()
 }
 
 void Canvas::mouseReleaseEvent(QMouseEvent *event){
-
-    //Sur sortie standart
-//    std::cout << "(x:" << event->x() << ", y:" << event->y() << ")" <<std::endl;
-
-    // Sur console de debug Qt
-    qDebug() << event->pos();
+	int&& x = event->x();
+	int&& y = event->y();
+	Action *action = new CoutAction(x,y);
+	action->execute();
+	delete action;
 }
