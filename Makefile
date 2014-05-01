@@ -6,7 +6,7 @@ ifndef config
 endif
 export config
 
-PROJECTS := map.bin qsfml.bin qtsfml.bin mainWidget.bin
+PROJECTS := map.bin qtsfml.bin mainWidget.bin
 
 .PHONY: all clean help $(PROJECTS)
 
@@ -15,10 +15,6 @@ all: $(PROJECTS)
 map.bin: 
 	@echo "==== Building map.bin ($(config)) ===="
 	@${MAKE} --no-print-directory -C . -f map.bin.make
-
-qsfml.bin: 
-	@echo "==== Building qsfml.bin ($(config)) ===="
-	@${MAKE} --no-print-directory -C . -f qsfml.bin.make
 
 qtsfml.bin: 
 	@echo "==== Building qtsfml.bin ($(config)) ===="
@@ -30,7 +26,6 @@ mainWidget.bin:
 
 clean:
 	@${MAKE} --no-print-directory -C . -f map.bin.make clean
-	@${MAKE} --no-print-directory -C . -f qsfml.bin.make clean
 	@${MAKE} --no-print-directory -C . -f qtsfml.bin.make clean
 	@${MAKE} --no-print-directory -C . -f mainWidget.bin.make clean
 
@@ -45,7 +40,6 @@ help:
 	@echo "   all (default)"
 	@echo "   clean"
 	@echo "   map.bin"
-	@echo "   qsfml.bin"
 	@echo "   qtsfml.bin"
 	@echo "   mainWidget.bin"
 	@echo ""
@@ -53,7 +47,6 @@ help:
 
 lupdate:
 	@${MAKE} --no-print-directory -C . -f map.bin.make lupdate
-	@${MAKE} --no-print-directory -C . -f qsfml.bin.make lupdate
 	@${MAKE} --no-print-directory -C . -f qtsfml.bin.make lupdate
 	@${MAKE} --no-print-directory -C . -f mainWidget.bin.make lupdate
 
