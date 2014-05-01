@@ -8,7 +8,7 @@ Map::Map(std::string path){
 	window_ = new RenderWindow(VideoMode(800,600),"map");
 	
 	if(!backgroundImage_.loadFromFile(path)){
-		std::cout << "unable to load littleForest.png" << std::endl;
+		std::cout << "unable to load " << path << std::endl;
 	}
 	background_ = new Sprite(backgroundImage_);
 }
@@ -28,7 +28,7 @@ void Map::unlimitRender(){
 }
 
 int main(){
-	Map map("resource/littleForest.png");
+	Map map("resource/suwako.png");
 	map.unlimitRender();
  return 0;
 }
