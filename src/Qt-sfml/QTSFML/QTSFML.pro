@@ -15,12 +15,14 @@ TEMPLATE = app
 
 HEADERS += \
     QTSFMLCanvas.h \
-    Canvas.h
+    Canvas.h \
+    Map.h
 
 SOURCES += \
     QTSFMLCanvas.cpp \
     Canvas.cpp \
-    Main.cpp
+    Main.cpp \
+    Map.cpp
 
 QT += \
     widgets \

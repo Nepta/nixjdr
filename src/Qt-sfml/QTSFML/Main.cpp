@@ -4,14 +4,9 @@
 #include <QApplication>
 #include <QFrame>
 #include <QPushButton>
-
-#include <QMessageBox>
-#include <QInputDialog>
-#include <QFontDialog>
-#include <QColorDialog>
-#include <QLayout>
-#include <QHBoxLayout>
-#include <QGridLayout>
+#include <QGraphicsScene>
+#include <QGraphicsView>
+#include <QGraphicsPixmapItem>
 
 int main(int argc, char **argv)
 {
@@ -22,14 +17,14 @@ int main(int argc, char **argv)
     MainFrame->setWindowTitle("Qt SFML");
     MainFrame->resize(800, 600);
 
-//    QPushButton bouton("Suwa~", MainFrame);
-
-
     MainFrame->show();
 
     //On crée une vue SFML dans la fenêtre principale
     Map* map = new Map(MainFrame, QPoint(0, 0), QSize(800, 600));
     map->show();
+
+    Canvas* suwako = new Canvas(MainFrame, QPoint(20, 0), QSize(75, 95));
+    suwako->show();
 
     return App.exec();
 }

@@ -109,9 +109,9 @@ ifeq ($(config),release)
 endif
 
 OBJECTS := \
+	$(OBJDIR)/mainwindow.o \
 	$(OBJDIR)/startdialog.o \
 	$(OBJDIR)/main.o \
-	$(OBJDIR)/mainwindow.o \
 	$(OBJDIR)/moc_mainwindow.o \
 	$(OBJDIR)/moc_startdialog.o \
 
@@ -183,13 +183,13 @@ endif
 	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -MF $(@:%.o=%.d) -c "$<"
 endif
 
+$(OBJDIR)/mainwindow.o: src/MainWidget/mainwindow.cpp
+	@echo $(notdir $<)
+	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -MF $(@:%.o=%.d) -c "$<"
 $(OBJDIR)/startdialog.o: src/MainWidget/startdialog.cpp
 	@echo $(notdir $<)
 	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -MF $(@:%.o=%.d) -c "$<"
 $(OBJDIR)/main.o: src/MainWidget/main.cpp
-	@echo $(notdir $<)
-	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -MF $(@:%.o=%.d) -c "$<"
-$(OBJDIR)/mainwindow.o: src/MainWidget/mainwindow.cpp
 	@echo $(notdir $<)
 	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -MF $(@:%.o=%.d) -c "$<"
 $(OBJDIR)/moc_mainwindow.o: $(MOCDIR)/moc_mainwindow.cpp

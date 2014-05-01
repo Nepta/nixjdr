@@ -110,9 +110,9 @@ endif
 
 OBJECTS := \
 	$(OBJDIR)/QTSFMLCanvas.o \
-	$(OBJDIR)/Map.o \
-	$(OBJDIR)/Main.o \
 	$(OBJDIR)/Canvas.o \
+	$(OBJDIR)/Main.o \
+	$(OBJDIR)/Map.o \
 
 RESOURCES := \
 
@@ -185,13 +185,13 @@ endif
 $(OBJDIR)/QTSFMLCanvas.o: src/Qt-sfml/QTSFML/QTSFMLCanvas.cpp
 	@echo $(notdir $<)
 	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -MF $(@:%.o=%.d) -c "$<"
-$(OBJDIR)/Map.o: src/Qt-sfml/QTSFML/Map.cpp
+$(OBJDIR)/Canvas.o: src/Qt-sfml/QTSFML/Canvas.cpp
 	@echo $(notdir $<)
 	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -MF $(@:%.o=%.d) -c "$<"
 $(OBJDIR)/Main.o: src/Qt-sfml/QTSFML/Main.cpp
 	@echo $(notdir $<)
 	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -MF $(@:%.o=%.d) -c "$<"
-$(OBJDIR)/Canvas.o: src/Qt-sfml/QTSFML/Canvas.cpp
+$(OBJDIR)/Map.o: src/Qt-sfml/QTSFML/Map.cpp
 	@echo $(notdir $<)
 	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -MF $(@:%.o=%.d) -c "$<"
 
