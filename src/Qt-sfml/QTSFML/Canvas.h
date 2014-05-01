@@ -11,7 +11,7 @@ public:
     Canvas(QWidget* Parent, const QPoint& Position, const QSize& Size);
     void OnInit();
     void OnUpdate();
-    void mouseMoveEvent(QMouseEvent *event);
+    void mouseReleaseEvent(QMouseEvent *event);
 
 private:
     sf::Clock clock_;

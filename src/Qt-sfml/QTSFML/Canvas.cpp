@@ -33,7 +33,7 @@ void Canvas::OnUpdate()
     clock_.restart();
 }
 
-void Canvas::mouseMoveEvent(QMouseEvent *event){
+void Canvas::mouseReleaseEvent(QMouseEvent *event){
 
     //Sur sortie standart
 //    std::cout << "(x:" << event->x() << ", y:" << event->y() << ")" <<std::endl;
