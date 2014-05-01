@@ -11,7 +11,7 @@ MyCanvas::MyCanvas(QWidget* Parent, const QPoint& Position, const QSize& Size) :
 
 void MyCanvas::OnInit()
 {
-    myImage.loadFromFile("img/suwako.png");
+    myImage.loadFromFile("resource/suwako.png");
 
     // On paramètre le sprite
     mySprite.setTexture(myImage);
