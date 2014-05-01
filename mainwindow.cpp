@@ -1,6 +1,8 @@
 #include <QString>
 #include <QFileDialog>
 #include <QMdiSubWindow>
+#include <QApplication>
+#include <QDesktopWidget>
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
