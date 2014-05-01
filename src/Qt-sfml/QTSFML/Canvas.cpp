@@ -11,11 +11,13 @@ Canvas::Canvas(QWidget* Parent, const QPoint& Position, const QSize& Size) :
 
 void Canvas::OnInit()
 {
-    myImage.loadFromFile("img/suwako.png");
+    image_.loadFromFile("img/suwako.png");
 
     // On paramètre le sprite
-    mySprite.setTexture(myImage);
-    mySprite.setOrigin(0.f,0.f);
+    sprite_.setTexture(image_);
+    sprite_.setOrigin(0.f,0.f);
+
+    clock_.restart();
 }
 
 void Canvas::OnUpdate()
@@ -24,8 +26,9 @@ void Canvas::OnUpdate()
     this->clear(sf::Color(0, 128, 0));
 
     // Une petite rotation du sprite
-    mySprite.setRotation(360.f);
+    sprite_.setRotation(clock_.getElapsedTime().asSeconds() * 50.f);
 
     // Et on l'affiche
-    this->draw(mySprite);
+    this->draw(sprite_);
+    clock_.restart();
 }

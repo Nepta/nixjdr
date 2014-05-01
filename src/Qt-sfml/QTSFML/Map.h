@@ -1,14 +1,13 @@
-#ifndef CANVAS_H
-#define CANVAS_H
+#ifndef MAP_H
+#define MAP_H
 
 #include "QTSFMLCanvas.h"
 #include <SFML/Graphics.hpp>
-#include <QPushButton>
 
-class Canvas : public QSFMLCanvas
+class Map : public QSFMLCanvas
 {
 public:
-    Canvas(QWidget* Parent, const QPoint& Position, const QSize& Size);
+    Map(QWidget* Parent, const QPoint& Position, const QSize& Size);
     void OnInit();
     void OnUpdate();
 
@@ -18,4 +17,4 @@ private:
     sf::Sprite sprite_;
 };
 
-#endif // CANVAS_H
+#endif // MAP_H
