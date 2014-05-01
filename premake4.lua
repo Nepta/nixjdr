@@ -33,3 +33,16 @@ solution "Template"
 		}
 		
 
+	project "mainWidget.bin"
+		kind "WindowedApp"
+		language "C++"
+		uses {"QtGui","QtWidgets"}
+		buildoptions{"-fPIC"}
+		files{
+			"src/MainWidget/*.h",
+			"src/MainWidget/*.cpp",
+			"src/MainWidget/*.ui",
+			"src/MainWidget/*.qrc"
+		}
+		
+
