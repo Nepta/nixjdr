@@ -6,7 +6,7 @@ ifndef config
 endif
 export config
 
-PROJECTS := map.bin
+PROJECTS := map.bin qsfml.bin
 
 .PHONY: all clean help $(PROJECTS)
 
@@ -16,8 +16,13 @@ map.bin:
 	@echo "==== Building map.bin ($(config)) ===="
 	@${MAKE} --no-print-directory -C . -f map.bin.make
 
+qsfml.bin: 
+	@echo "==== Building qsfml.bin ($(config)) ===="
+	@${MAKE} --no-print-directory -C . -f qsfml.bin.make
+
 clean:
 	@${MAKE} --no-print-directory -C . -f map.bin.make clean
+	@${MAKE} --no-print-directory -C . -f qsfml.bin.make clean
 
 help:
 	@echo "Usage: make [config=name] [target]"
@@ -30,5 +35,11 @@ help:
 	@echo "   all (default)"
 	@echo "   clean"
 	@echo "   map.bin"
+	@echo "   qsfml.bin"
 	@echo ""
 	@echo "For more information, see http://industriousone.com/premake/quick-start"
+
+lupdate:
+	@${MAKE} --no-print-directory -C . -f map.bin.make lupdate
+	@${MAKE} --no-print-directory -C . -f qsfml.bin.make lupdate
+

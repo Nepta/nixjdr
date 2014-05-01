@@ -1,3 +1,5 @@
+require "qt-support"
+
 solution "Template"
 	configurations {"debug", "release"}
 
@@ -16,4 +18,18 @@ solution "Template"
 
 		files {"src/GameBoard/*"}
 		links {"sfml-graphics","sfml-window","sfml-system"}
+
+	project "qsfml.bin"
+		kind "WindowedApp"
+		language "C++"
+		uses {"QtGui","QtWidgets"}
+		links {"sfml-graphics","sfml-window","sfml-system"}
+		buildoptions{"-fPIC"}
+		files{
+			"src/QTSFML/*.h",
+			"src/QTSFML/*.cpp",
+			"src/QTSFML/*.ui",
+			"src/QTSFML/*.qrc"
+		}
+		
 
