@@ -8,30 +8,32 @@
 #include <QMouseEvent>
 
 Canvas::Canvas(QWidget* Parent, const QPoint& Position, const QSize& Size) :
-    QSFMLCanvas(Parent, Position, Size)
-{
+	QSFMLCanvas(Parent, Position, Size){
 }
 
-void Canvas::OnInit()
-{
-    image_.loadFromFile("resource/suwako.png");
-
-    // On paramètre le sprite
-    sprite_.setTexture(image_);
-    sprite_.setOrigin(0.f,0.f);
-
-    setMouseTracking(true);
-    clock_.restart();
+void Canvas::OnInit(){
+	image_.loadFromFile("resource/suwako.png");
+	
+	// On paramètre le sprite
+	sprite_.setTexture(image_);
+	sprite_.setOrigin(0.f,0.f);
+	
+	std::vector<sf::Sprite>& sprite = *new std::vector<sf::Sprite>();
+	sprite.push_back(sprite_);
+	spriteList_.push_back({image_, sprite});
+	
+	setMouseTracking(true);
+	clock_.restart();
 }
 
-void Canvas::OnUpdate()
-{
-    // On efface l'écran
-    this->clear(sf::Color(255, 255, 255, 0));
+void Canvas::OnUpdate(){
+	// On efface l'écran
+	clear();
 
-    // Et on l'affiche
-    this->draw(sprite_);
-    clock_.restart();
+	// Et on l'affiche
+//	draw(sprite_);
+	drawList();
+	clock_.restart();
 }
 
 void Canvas::mouseReleaseEvent(QMouseEvent *event){
@@ -40,4 +42,12 @@ void Canvas::mouseReleaseEvent(QMouseEvent *event){
 	Action *action = new CoutAction(x,y);
 	action->execute();
 	delete action;
+}
+
+void Canvas::drawList(){
+	for(auto &texturedSprite : spriteList_){
+		for(auto &sprite : texturedSprite.second){
+			draw(sprite);
+		}
+	}
 }
