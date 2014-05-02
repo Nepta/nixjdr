@@ -21,6 +21,7 @@ public:
     Map(QWidget* Parent, const QPoint& Position, const QSize& Size);
     void OnInit();
     void OnUpdate();
+    void mouseReleaseEvent(QMouseEvent *event);
 
 private:
     void drawList();

@@ -74,3 +74,18 @@ void Map::drawList(){
         }
     }
 }
+
+void Map::mouseReleaseEvent(QMouseEvent *event){
+    int&& x = event->x();
+    int&& y = event->y();
+
+    sf::RectangleShape square(sf::Vector2f(tileWidth_, tileHeight_));
+    
+    x = x/tileWidth_;
+    x = x*tileWidth_;
+
+    y = y/tileHeight_;
+    y = y*tileHeight_;
+
+    square.setPosition(x, y);
+}
