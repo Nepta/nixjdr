@@ -1,4 +1,7 @@
 #include "Map.h"
+#include "Action.h"
+#include "CoutAction.h"
+#include "ActionChooser.h"
 
 #include <iostream>
 #include <string>
@@ -27,6 +30,11 @@ void Map::OnInit()
     sprite_.setTexture(image_);
     sprite_.setOrigin(0.f,0.f);
 
+    std::vector<sf::Sprite>& sprite = *new std::vector<sf::Sprite>();
+    sprite.push_back(sprite_);
+    spriteList_.push_back({image_, sprite});
+    ActionChooser::instance().spriteList(spriteList_);
+
     clock_.restart();
 }
 
@@ -36,7 +44,7 @@ void Map::OnUpdate()
     this->clear();
 
     // Et on l'affiche
-    this->draw(sprite_);
+    drawList();
 
     // Dessine les axes verticaux de la grille
     for(int i = 0; i < nbTilesX_; i++){
@@ -57,4 +65,12 @@ void Map::OnUpdate()
     }
 
     clock_.restart();
+}
+
+void Map::drawList(){
+    for(auto &texturedSprite : spriteList_){
+        for(auto &sprite : texturedSprite.second){
+            draw(sprite);
+        }
+    }
 }
