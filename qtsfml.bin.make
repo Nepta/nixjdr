@@ -113,6 +113,7 @@ OBJECTS := \
 	$(OBJDIR)/Action.o \
 	$(OBJDIR)/Map.o \
 	$(OBJDIR)/CoutAction.o \
+	$(OBJDIR)/ActionChooser.o \
 	$(OBJDIR)/Main.o \
 	$(OBJDIR)/Canvas.o \
 
@@ -194,6 +195,9 @@ $(OBJDIR)/Map.o: src/Qt-sfml/QTSFML/Map.cpp
 	@echo $(notdir $<)
 	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -MF $(@:%.o=%.d) -c "$<"
 $(OBJDIR)/CoutAction.o: src/Qt-sfml/QTSFML/CoutAction.cpp
+	@echo $(notdir $<)
+	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -MF $(@:%.o=%.d) -c "$<"
+$(OBJDIR)/ActionChooser.o: src/Qt-sfml/QTSFML/ActionChooser.cpp
 	@echo $(notdir $<)
 	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -MF $(@:%.o=%.d) -c "$<"
 $(OBJDIR)/Main.o: src/Qt-sfml/QTSFML/Main.cpp

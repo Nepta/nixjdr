@@ -1,6 +1,7 @@
 #include "Canvas.h"
 #include "Action.h"
 #include "CoutAction.h"
+#include "ActionChooser.h"
 #include <iostream>
 #include <string>
 #include <QDir>
@@ -39,7 +40,7 @@ void Canvas::OnUpdate(){
 void Canvas::mouseReleaseEvent(QMouseEvent *event){
 	int&& x = event->x();
 	int&& y = event->y();
-	Action *action = new CoutAction(x,y);
+	Action *action = ActionChooser::instance().choose(x,y);
 	action->execute();
 	delete action;
 }
