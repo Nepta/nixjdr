@@ -18,11 +18,12 @@ void Map::OnInit()
 {
     image_.loadFromFile("resource/littleForest.png");
 
-    // Dimensions d'une tile
+    // Dimensions d'une tile (a parametrer avec parametres)
     tileHeight_ = 32;
     tileWidth_ = 32;
 
-    // Nombre de tiles en longueur et largeur
+    // Nombre de tiles en longueur et largeur (a faire en parametre)
+    // ou ennfonction de la taille de l'image et des tiles
     nbTilesX_ = 25;
     nbTilesY_ = 19;
 
@@ -30,9 +31,17 @@ void Map::OnInit()
     sprite_.setTexture(image_);
     sprite_.setOrigin(0.f,0.f);
 
+    sf::Texture texture;
+    texture.loadFromFile("resource/resize_suwako.png");
+
+    sf::Sprite square;
+    square.setTexture(image_);
+    square.setOrigin(0.f, 0.f);
+
+    // put mini suwako
     std::vector<sf::Sprite>& sprite = *new std::vector<sf::Sprite>();
-    sprite.push_back(sprite_);
-    spriteList_.push_back({image_, sprite});
+    sprite.push_back(square);
+    spriteList_.push_back({texture, sprite});
     ActionChooser::instance().spriteList(spriteList_);
 
     clock_.restart();
@@ -43,7 +52,10 @@ void Map::OnUpdate()
     // On efface l'écran
     this->clear();
 
-    // Et on l'affiche
+    // Dessine map
+    this->draw(sprite_);
+
+    // Dessine les elements de la liste
     drawList();
 
     // Dessine les axes verticaux de la grille
@@ -52,7 +64,7 @@ void Map::OnUpdate()
             sf::Vertex(sf::Vector2f(i*tileWidth_, 0)),
             sf::Vertex(sf::Vector2f(i*tileWidth_, image_.getSize().y))
         };
-        this->draw(line, 25, sf::Lines);
+        this->draw(line, 2, sf::Lines);
     }
 
     // Dessine les axes horizontaux de la grille
@@ -79,13 +91,15 @@ void Map::mouseReleaseEvent(QMouseEvent *event){
     int&& x = event->x();
     int&& y = event->y();
 
-    sf::RectangleShape square(sf::Vector2f(tileWidth_, tileHeight_));
-    
+
+    // Pour obtenir l'origine de la case sur laquelle afficher
     x = x/tileWidth_;
     x = x*tileWidth_;
 
     y = y/tileHeight_;
     y = y*tileHeight_;
 
-    square.setPosition(x, y);
+    Action *action = ActionChooser::instance().choose(x,y);
+    action->execute();
+    delete action;
 }
