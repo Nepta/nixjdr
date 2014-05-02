@@ -42,7 +42,7 @@ void Map::OnUpdate()
     for(int i = 0; i < nbTilesX_; i++){
         sf::Vertex line[]={
             sf::Vertex(sf::Vector2f(i*tileWidth_, 0)),
-            sf::Vertex(sf::Vector2f(i*tileWidth_, 600))
+            sf::Vertex(sf::Vector2f(i*tileWidth_, image_.getSize().y))
         };
         this->draw(line, 25, sf::Lines);
     }
@@ -51,7 +51,7 @@ void Map::OnUpdate()
     for(int i = 0; i < nbTilesY_; i++){
         sf::Vertex line[]={
             sf::Vertex(sf::Vector2f(0, i*tileHeight_)),
-            sf::Vertex(sf::Vector2f(800, i*tileHeight_))
+            sf::Vertex(sf::Vector2f(image_.getSize().x, i*tileHeight_))
         };
         this->draw(line, 2, sf::Lines);
     }
