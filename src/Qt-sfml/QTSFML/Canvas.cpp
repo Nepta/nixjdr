@@ -13,7 +13,7 @@ Canvas::Canvas(QWidget* Parent, const QPoint& Position, const QSize& Size) :
 }
 
 void Canvas::OnInit(){
-	image_.loadFromFile("resource/suwako.png");
+	image_.loadFromFile("resource/resize_suwako.png");
 	
 	// On paramètre le sprite
 	sprite_.setTexture(image_);
