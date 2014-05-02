@@ -22,7 +22,7 @@ void Canvas::OnInit(){
 	std::vector<sf::Sprite>& sprite = *new std::vector<sf::Sprite>();
 	sprite.push_back(sprite_);
 	spriteList_.push_back({image_, sprite});
-	
+	ActionChooser::instance().spriteList(spriteList_);
 	setMouseTracking(true);
 	clock_.restart();
 }

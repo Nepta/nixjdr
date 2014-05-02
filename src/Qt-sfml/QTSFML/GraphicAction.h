@@ -1,9 +1,13 @@
 #ifndef __GraphicAction_H__
 #define __GraphicAction_H__
 
+#include <vector>
 #include "Action.h"
-typedef SpriteList std::vector<std::pair<sf::Texture, std::vector<sf::Sprite>>>;
+
+typedef std::vector<std::pair<sf::Texture, std::vector<sf::Sprite>>> SpriteList;
 class GraphicAction : public Action{
+
+protected:
 	SpriteList& spriteList_;
 
 public:
