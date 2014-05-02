@@ -16,10 +16,11 @@ int main(int argc, char *argv[])
                     QLibraryInfo::location(QLibraryInfo::TranslationsPath));
     a.installTranslator(&translator);
 
+    bool role;
     StartDialog startDialog(NULL);
-    startDialog.resultExec();
+    role = startDialog.resultExec();
 
-    MainWindow w;
+    MainWindow w(role);
     w.show();
 
     return a.exec();

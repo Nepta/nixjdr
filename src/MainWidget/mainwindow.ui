@@ -68,7 +68,7 @@
              <x>0</x>
              <y>0</y>
              <width>102</width>
-             <height>270</height>
+             <height>79</height>
             </rect>
            </property>
            <attribute name="label">
@@ -80,8 +80,8 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>102</width>
-             <height>270</height>
+             <width>96</width>
+             <height>26</height>
             </rect>
            </property>
            <attribute name="label">
@@ -120,7 +120,7 @@
           <property name="orientation">
            <enum>Qt::Vertical</enum>
           </property>
-          <widget class="QTextBrowser" name="displayChat">
+          <widget class="QTextBrowser" name="msgList">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
              <horstretch>0</horstretch>
@@ -128,14 +128,8 @@
             </sizepolicy>
            </property>
           </widget>
-          <widget class="QPlainTextEdit" name="editChat">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-             <horstretch>0</horstretch>
-             <verstretch>1</verstretch>
-            </sizepolicy>
-           </property>
-          </widget>
+          <widget class="QLineEdit" name="pseudoField"/>
+          <widget class="QLineEdit" name="msgField"/>
          </widget>
         </item>
        </layout>

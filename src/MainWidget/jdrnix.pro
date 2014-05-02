@@ -4,7 +4,8 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT       += core gui network
+QMAKE_CXXFLAGS += -std=c++11
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -14,9 +15,15 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    startdialog.cpp
+    startdialog.cpp \
+    chatserver.cpp \
+    chatcommon.cpp \
+    chatclient.cpp
 
 HEADERS  += mainwindow.h \
-    startdialog.h
+    startdialog.h \
+    chatserver.h \
+    chatcommon.h \
+    chatclient.h
 
 FORMS    += mainwindow.ui
