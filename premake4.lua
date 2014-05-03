@@ -36,7 +36,7 @@ solution "Template"
 	project "mainWidget.bin"
 		kind "WindowedApp"
 		language "C++"
-		uses {"QtGui","QtWidgets"}
+		uses {"QtGui","QtWidgets","QtNetwork"}
 		buildoptions{"-fPIC"}
 		files{
 			"src/MainWidget/*.h",

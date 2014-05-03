@@ -38,14 +38,14 @@ ifeq ($(config),debug)
   OBJDIR     = obj/debug/mainWidget.bin
   TARGETDIR  = .
   TARGET     = $(TARGETDIR)/mainWidget.bin
-  DEFINES   += -DQT_CORE_LIB -D_REENTRANT -DQT_SHARED -DQT_GUI_LIB -DQT_WIDGETS_LIB
-  INCLUDES  += -I$(QT_INCLUDE)/QtCore -I$(QT_INCLUDE) -I$(UIDIR) -I$(MOCDIR) -I$(QT_INCLUDE)/QtGui -I$(QT_INCLUDE)/QtWidgets
+  DEFINES   += -DQT_CORE_LIB -D_REENTRANT -DQT_SHARED -DQT_GUI_LIB -DQT_WIDGETS_LIB -DQT_NETWORK_LIB
+  INCLUDES  += -I$(QT_INCLUDE)/QtCore -I$(QT_INCLUDE) -I$(UIDIR) -I$(MOCDIR) -I$(QT_INCLUDE)/QtGui -I$(QT_INCLUDE)/QtWidgets -I$(QT_INCLUDE)/QtNetwork
   CPPFLAGS  += -MMD -MP $(DEFINES) $(INCLUDES)
   CFLAGS    += $(CPPFLAGS) $(ARCH) -Wall -g -std=c++11 -fPIC
   CXXFLAGS  += $(CFLAGS) 
   LDFLAGS   += -L$(QT_LIB) -Wl,-rpath,$(QT_LIB) -lpthread
   RESFLAGS  += $(DEFINES) $(INCLUDES) 
-  LIBS      += -lQt5Core -lQt5Gui -lQt5Widgets
+  LIBS      += -lQt5Core -lQt5Gui -lQt5Widgets -lQt5Network
   LDDEPS    += 
   LINKCMD    = $(CXX) -o $(TARGET) $(OBJECTS) $(RESOURCES) $(ARCH) $(LIBS) $(LDFLAGS)
   QT_BIN = $(QT_BIN_DEFAULT)
@@ -75,14 +75,14 @@ ifeq ($(config),release)
   OBJDIR     = obj/release/mainWidget.bin
   TARGETDIR  = .
   TARGET     = $(TARGETDIR)/mainWidget.bin
-  DEFINES   += -DQT_CORE_LIB -D_REENTRANT -DQT_SHARED -DQT_NO_DEBUG -DQT_GUI_LIB -DQT_WIDGETS_LIB
-  INCLUDES  += -I$(QT_INCLUDE)/QtCore -I$(QT_INCLUDE) -I$(UIDIR) -I$(MOCDIR) -I$(QT_INCLUDE)/QtGui -I$(QT_INCLUDE)/QtWidgets
+  DEFINES   += -DQT_CORE_LIB -D_REENTRANT -DQT_SHARED -DQT_NO_DEBUG -DQT_GUI_LIB -DQT_WIDGETS_LIB -DQT_NETWORK_LIB
+  INCLUDES  += -I$(QT_INCLUDE)/QtCore -I$(QT_INCLUDE) -I$(UIDIR) -I$(MOCDIR) -I$(QT_INCLUDE)/QtGui -I$(QT_INCLUDE)/QtWidgets -I$(QT_INCLUDE)/QtNetwork
   CPPFLAGS  += -MMD -MP $(DEFINES) $(INCLUDES)
   CFLAGS    += $(CPPFLAGS) $(ARCH) -O3 -std=c++11 -fPIC
   CXXFLAGS  += $(CFLAGS) 
   LDFLAGS   += -L$(QT_LIB) -s -Wl,-rpath,$(QT_LIB) -lpthread
   RESFLAGS  += $(DEFINES) $(INCLUDES) 
-  LIBS      += -lQt5Core -lQt5Gui -lQt5Widgets
+  LIBS      += -lQt5Core -lQt5Gui -lQt5Widgets -lQt5Network
   LDDEPS    += 
   LINKCMD    = $(CXX) -o $(TARGET) $(OBJECTS) $(RESOURCES) $(ARCH) $(LIBS) $(LDFLAGS)
   QT_BIN = $(QT_BIN_DEFAULT)
@@ -109,11 +109,18 @@ ifeq ($(config),release)
 endif
 
 OBJECTS := \
+	$(OBJDIR)/user.o \
+	$(OBJDIR)/chatcommon.o \
+	$(OBJDIR)/chatclient.o \
+	$(OBJDIR)/main.o \
+	$(OBJDIR)/chatserver.o \
 	$(OBJDIR)/mainwindow.o \
 	$(OBJDIR)/startdialog.o \
-	$(OBJDIR)/main.o \
-	$(OBJDIR)/moc_mainwindow.o \
 	$(OBJDIR)/moc_startdialog.o \
+	$(OBJDIR)/moc_chatserver.o \
+	$(OBJDIR)/moc_mainwindow.o \
+	$(OBJDIR)/moc_chatclient.o \
+	$(OBJDIR)/moc_user.o \
 
 RESOURCES := \
 
@@ -183,19 +190,40 @@ endif
 	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -MF $(@:%.o=%.d) -c "$<"
 endif
 
+$(OBJDIR)/user.o: src/MainWidget/user.cpp
+	@echo $(notdir $<)
+	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -MF $(@:%.o=%.d) -c "$<"
+$(OBJDIR)/chatcommon.o: src/MainWidget/chatcommon.cpp
+	@echo $(notdir $<)
+	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -MF $(@:%.o=%.d) -c "$<"
+$(OBJDIR)/chatclient.o: src/MainWidget/chatclient.cpp
+	@echo $(notdir $<)
+	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -MF $(@:%.o=%.d) -c "$<"
+$(OBJDIR)/main.o: src/MainWidget/main.cpp
+	@echo $(notdir $<)
+	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -MF $(@:%.o=%.d) -c "$<"
+$(OBJDIR)/chatserver.o: src/MainWidget/chatserver.cpp
+	@echo $(notdir $<)
+	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -MF $(@:%.o=%.d) -c "$<"
 $(OBJDIR)/mainwindow.o: src/MainWidget/mainwindow.cpp
 	@echo $(notdir $<)
 	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -MF $(@:%.o=%.d) -c "$<"
 $(OBJDIR)/startdialog.o: src/MainWidget/startdialog.cpp
 	@echo $(notdir $<)
 	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -MF $(@:%.o=%.d) -c "$<"
-$(OBJDIR)/main.o: src/MainWidget/main.cpp
+$(OBJDIR)/moc_startdialog.o: $(MOCDIR)/moc_startdialog.cpp
+	@echo $(notdir $<)
+	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -MF $(@:%.o=%.d) -c "$<"
+$(OBJDIR)/moc_chatserver.o: $(MOCDIR)/moc_chatserver.cpp
 	@echo $(notdir $<)
 	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -MF $(@:%.o=%.d) -c "$<"
 $(OBJDIR)/moc_mainwindow.o: $(MOCDIR)/moc_mainwindow.cpp
 	@echo $(notdir $<)
 	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -MF $(@:%.o=%.d) -c "$<"
-$(OBJDIR)/moc_startdialog.o: $(MOCDIR)/moc_startdialog.cpp
+$(OBJDIR)/moc_chatclient.o: $(MOCDIR)/moc_chatclient.cpp
+	@echo $(notdir $<)
+	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -MF $(@:%.o=%.d) -c "$<"
+$(OBJDIR)/moc_user.o: $(MOCDIR)/moc_user.cpp
 	@echo $(notdir $<)
 	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -MF $(@:%.o=%.d) -c "$<"
 
@@ -207,19 +235,31 @@ endif
 .PHONY: lupdate
 lupdate:
 
+$(MOCDIR)/moc_startdialog.cpp: src/MainWidget/startdialog.h
+	@echo moc startdialog.h
+	$(SILENT) $(QTMOC) $(MOCFLAGS) -nw -o "$@" "$<"
+$(MOCDIR)/moc_chatserver.cpp: src/MainWidget/chatserver.h
+	@echo moc chatserver.h
+	$(SILENT) $(QTMOC) $(MOCFLAGS) -nw -o "$@" "$<"
 $(MOCDIR)/moc_mainwindow.cpp: src/MainWidget/mainwindow.h
 	@echo moc mainwindow.h
 	$(SILENT) $(QTMOC) $(MOCFLAGS) -nw -o "$@" "$<"
-$(MOCDIR)/moc_startdialog.cpp: src/MainWidget/startdialog.h
-	@echo moc startdialog.h
+$(MOCDIR)/moc_chatclient.cpp: src/MainWidget/chatclient.h
+	@echo moc chatclient.h
+	$(SILENT) $(QTMOC) $(MOCFLAGS) -nw -o "$@" "$<"
+$(MOCDIR)/moc_user.cpp: src/MainWidget/user.h
+	@echo moc user.h
 	$(SILENT) $(QTMOC) $(MOCFLAGS) -nw -o "$@" "$<"
 $(UIDIR)/ui_mainwindow.h: src/MainWidget/mainwindow.ui
 	@echo uic mainwindow
 	$(SILENT) $(QTUIC) "$<" -o "$@"
 
 
-prebuild: $(QT_DIRS) $(MOCDIR)/moc_mainwindow.cpp \
- $(MOCDIR)/moc_startdialog.cpp \
+prebuild: $(QT_DIRS) $(MOCDIR)/moc_startdialog.cpp \
+ $(MOCDIR)/moc_chatserver.cpp \
+ $(MOCDIR)/moc_mainwindow.cpp \
+ $(MOCDIR)/moc_chatclient.cpp \
+ $(MOCDIR)/moc_user.cpp \
  $(UIDIR)/ui_mainwindow.h
 
 -include $(OBJECTS:%.o=%.d)
