@@ -1,16 +1,17 @@
 #include "chatserver.h"
 #include "chatcommon.h"
+#include<QTranslator>
 
 ChatServer::ChatServer()
 {
     server = new QTcpServer(this);
-
-    msgSize = 0;
 }
 
 ChatServer::~ChatServer()
 {
     delete server;
+    qDeleteAll(listUsers.begin(), listUsers.end());
+    listUsers.clear();
 }
 
 void ChatServer::init() {
@@ -31,56 +32,45 @@ void ChatServer::init() {
     }
 }
 
+/**
+ * @brief ChatServer::newClientConnection
+ * @todo rename newUserConnection
+ */
 void ChatServer::newClientConnection()
 {
-    sendMessageToClients(tr("<em>Un nouveau client vient de se connecter</em>"));
+    sendMessageToAll(tr("<em>Un nouveau client vient de se connecter</em>"));
 
-    QTcpSocket *nouveauClient = server->nextPendingConnection();
-    listClients << nouveauClient;
+    //QTcpSocket *newUserSocket = server->nextPendingConnection();
+    User *newUser = new User(server->nextPendingConnection());
+    listUsers << newUser;
 
-    connect(nouveauClient, SIGNAL(readyRead()), this, SLOT(receivedData()));
-    connect(nouveauClient, SIGNAL(disconnected()), this, SLOT(clientDisconnected()));
+    // full packet has been received -> process and send it
+    // TODO refactor -> ChatCommon contains a parser to retrieve which action to use (see enum)
+    connect(newUser, SIGNAL(receivedFullData(QString)), this, SLOT(sendMessageToAll(QString)));
+    connect(newUser, SIGNAL(userDisconnectedNotify(User&)), this, SLOT(userDisconnected(User&)));
 }
 
-void ChatServer::receivedData()
+void ChatServer::userDisconnected(User &user)
 {
-    // Retrieve client who sent the message
-    QTcpSocket *socket = qobject_cast<QTcpSocket *>(sender());
+    sendMessageToAll(user.getPseudo() + tr(" <em>vient de se déconnecter</em>"));
 
-    QString message;
-    if (ChatCommon::messageReadyToReceive(socket, message, msgSize)) {
-        sendMessageToClients(message);
-        msgSize = 0;
-    }
-}
-
-void ChatServer::clientDisconnected()
-{
-    sendMessageToClients(tr("<em>Un client vient de se déconnecter</em>"));
-
-    // On détermine quel client se déconnecte
-    QTcpSocket *socket = qobject_cast<QTcpSocket *>(sender());
-    if (socket == 0) { // Si par hasard on n'a pas trouvé le client à l'origine du signal, on arrête la méthode
-        return;
-    }
-
-    listClients.removeOne(socket);
+    listUsers.removeOne(&user);
 
     // The socket may still be in use even though the client is disconnected (e.g.
     // message still being sent).
-    socket->deleteLater();
+    user.deleteLater();
 }
 
-void ChatServer::sendMessageToClients(const QString &message)
+void ChatServer::sendMessageToAll(const QString &message)
 {
     QByteArray packet;
 
     packet = ChatCommon::preparePacket(message);
 
     // Envoi du paquet préparé à tous les clients connectés au server
-    for (int i = 0; i < listClients.size(); i++)
+    for (int i = 0; i < listUsers.size(); i++)
     {
-        listClients[i]->write(packet);
+        listUsers[i]->getSocket()->write(packet);
     }
 }
 

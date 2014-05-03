@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include <QtNetwork>
+#include <user.h>
 
 class ChatServer : public QObject
 {
@@ -11,22 +12,20 @@ class ChatServer : public QObject
 public:
     ChatServer();
     ~ChatServer();
-    void sendMessageToClients(const QString &message);
     quint16 getPort();
     void init();
 
 private slots:
     void newClientConnection();
-    void receivedData();
-    void clientDisconnected();
+    void userDisconnected(User &user);
+    void sendMessageToAll(const QString &message);
 
 signals:
     void sendMessageToUI(const QString &msg);
 
 private:
     QTcpServer *server;
-    QList<QTcpSocket *> listClients;
-    quint16 msgSize;
+    QList<User *> listUsers;
 };
 
 #endif // CHATSERVER_H

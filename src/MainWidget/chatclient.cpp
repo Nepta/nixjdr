@@ -4,20 +4,24 @@
 ChatClient::ChatClient() :
     QObject()
 {
-    socket = new QTcpSocket(this);
-    connect(socket, SIGNAL(readyRead()), this, SLOT(receivedData()));
-    connect(socket, SIGNAL(connected()), this, SIGNAL(clientConnected()));
-    connect(socket, SIGNAL(disconnected()), this, SIGNAL(clientDisconnected()));
-    connect(socket, SIGNAL(error(QAbstractSocket::SocketError)),
-            this, SLOT(socketError(QAbstractSocket::SocketError)));
+    QTcpSocket *socket = new QTcpSocket(this);
+    m_User = new User(socket);
 
-    msgSize = 0;
+    connect(m_User, SIGNAL(receivedFullData(QString)), this, SIGNAL(sendMessageToUI(QString)));
+    connect(m_User, SIGNAL(userDisconnectedNotify(User&)), this, SIGNAL(clientDisconnected(User&)));
+    connect(m_User, SIGNAL(userConnectedNotify()), this, SIGNAL(clientConnected()));
+    connect(m_User, SIGNAL(socketErrorNotify(QAbstractSocket::SocketError)),
+            this, SLOT(socketError(QAbstractSocket::SocketError)));
 }
 
 ChatClient::ChatClient(const QString &serverIP, const quint16 &serverPort) :
     ChatClient()
 {
     connection(serverIP, serverPort);
+}
+
+ChatClient::~ChatClient() {
+    delete m_User;
 }
 
 /**
@@ -27,13 +31,13 @@ ChatClient::ChatClient(const QString &serverIP, const quint16 &serverPort) :
  */
 void ChatClient::connection(const QString &serverIP, const quint16 &serverPort)
 {
-    socket->abort(); // disable previous connection
-    socket->connectToHost(serverIP, serverPort);
+    m_User->getSocket()->abort(); // disable previous connection
+    m_User->getSocket()->connectToHost(serverIP, serverPort);
 }
 
 /**
  * @brief ChatClient::sendMessageToServer Send the message to the server in order
- * to broadcast it to all the users
+ * to broadcast it to all the users.
  * @param pseudo
  * @param msg
  *
@@ -44,20 +48,11 @@ void ChatClient::sendMessageToServer(const QString &pseudo, const QString &msg)
     QByteArray packet;
     QString formattedMsg;
 
+    // TODO use pseudo in user
     formattedMsg = QString("<strong>" + pseudo + "</strong> : " + msg);
 
     packet = ChatCommon::preparePacket(formattedMsg);
-    socket->write(packet);
-}
-
-void ChatClient::receivedData()
-{
-    QString message;
-
-    if (ChatCommon::messageReadyToReceive(socket, message, msgSize)) {
-        emit sendMessageToUI(message);
-        msgSize = 0;
-    }
+    m_User->getSocket()->write(packet);
 }
 
 void ChatClient::socketError(QAbstractSocket::SocketError error)
@@ -76,7 +71,7 @@ void ChatClient::socketError(QAbstractSocket::SocketError error)
             errMsg = tr("<em>ERREUR : le serveur a coupé la connexion.</em>");
             break;
         default:
-            errMsg = tr("<em>ERREUR : ") + socket->errorString() + tr("</em>");
+            errMsg = tr("<em>ERREUR : ") + m_User->getSocket()->errorString() + "</em>";
     }
 
     emit sendMessageToUI(errMsg);

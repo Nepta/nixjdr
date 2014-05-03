@@ -77,8 +77,8 @@ void MainWindow::setupChatClient() {
                         this, SLOT(receivedMessage(QString)));
     MainWindow::connect(m_chatClient, SIGNAL(clientConnected()),
                         this, SLOT(connectionSuccess()));
-    MainWindow::connect(m_chatClient, SIGNAL(clientDisconnected()),
-                        this, SLOT(disconnectionSuccess()));
+    MainWindow::connect(m_chatClient, SIGNAL(clientDisconnected(User&)),
+                        this, SLOT(disconnectionSuccess(User&)));
 }
 
 void MainWindow::receivedMessage(const QString &msg) {
@@ -90,7 +90,7 @@ void MainWindow::connectionSuccess()
     ui->msgList->append(tr("<em>Connexion réussie !</em>"));
 }
 
-void MainWindow::disconnectionSuccess()
+void MainWindow::disconnectionSuccess(User &user)
 {
     ui->msgList->append(tr("<em>Déconnecté du serveur</em>"));
 }

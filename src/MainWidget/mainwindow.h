@@ -25,7 +25,7 @@ private slots:
     void on_msgField_returnPressed();
     void receivedMessage(const QString &msg);
     void connectionSuccess();
-    void disconnectionSuccess();
+    void disconnectionSuccess(User &user);
 
 signals:
     void initMainWindow();

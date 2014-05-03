@@ -9,7 +9,7 @@ public:
     ChatCommon();
     static QByteArray preparePacket(const QString &msg);
     static bool messageReadyToReceive(QTcpSocket *socket,
-                                      QString &msg, quint16 tailleMessage);
+                                      QString &msg, quint16 &tailleMessage);
 };
 
 #endif // CHATCOMMON_H

@@ -15,12 +15,12 @@ QByteArray ChatCommon::preparePacket(const QString &msg) {
     return packet;
 }
 
-bool ChatCommon::messageReadyToReceive(QTcpSocket *socket, QString &msg, quint16 tailleMessage) {
+bool ChatCommon::messageReadyToReceive(QTcpSocket *socket, QString &msg, quint16 &tailleMessage) {
     if (socket == 0) {
         return false;
     }
 
-    QDataStream in(socket);
+   QDataStream in(socket);
 
     if (tailleMessage == 0)
     {

@@ -18,12 +18,14 @@ SOURCES += main.cpp\
     startdialog.cpp \
     chatserver.cpp \
     chatcommon.cpp \
-    chatclient.cpp
+    chatclient.cpp \
+    user.cpp
 
 HEADERS  += mainwindow.h \
     startdialog.h \
     chatserver.h \
     chatcommon.h \
-    chatclient.h
+    chatclient.h \
+    user.h
 
 FORMS    += mainwindow.ui
