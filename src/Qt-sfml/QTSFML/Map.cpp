@@ -2,6 +2,7 @@
 #include "Action.h"
 #include "CoutAction.h"
 #include "ActionChooser.h"
+#include "SpriteList.h"
 
 #include <iostream>
 #include <string>
@@ -14,8 +15,7 @@ Map::Map(QWidget* Parent, const QPoint& Position, const QSize& Size) :
 {
 }
 
-void Map::OnInit()
-{
+void Map::OnInit(){
     image_.loadFromFile("resource/littleForest.png");
 
     // Dimensions d'une tile (a parametrer avec parametres)
@@ -39,9 +39,7 @@ void Map::OnInit()
     square.setOrigin(0.f, 0.f);
 
     // put mini suwako
-    std::vector<sf::Sprite>& sprite = *new std::vector<sf::Sprite>();
-    sprite.push_back(square);
-    spriteList_.push_back({texture, sprite});
+    SpriteList::instance().newTexture(texture);
 
     clock_.restart();
 }
@@ -79,7 +77,7 @@ void Map::OnUpdate()
 }
 
 void Map::drawList(){
-    for(auto &texturedSprite : spriteList_){
+    for(auto &texturedSprite : SpriteList::instance().list_){
         for(auto &sprite : texturedSprite.second){
             draw(sprite);
         }
