@@ -18,13 +18,20 @@ User::~User() {
     delete m_Socket;
 }
 
-// TODO connect aussi dans chatClient
 void User::receivedData()
 {
     QString message;
     if (ChatCommon::messageReadyToReceive(m_Socket, message, m_MsgSize)) {
         emit receivedFullData(message);
         m_MsgSize = 0;
+    }
+
+    // receivedData() is called by the signal readyRead() when new data is available.
+    // However readyRead() cannot be emitted again while the receivedData slot
+    // is executed. The following lines fix the problem by calling received Data
+    // once again while m_Socket contains available bytes.
+    if (m_Socket->bytesAvailable() > 0) {
+        receivedData();
     }
 }
 
