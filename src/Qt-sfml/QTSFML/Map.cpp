@@ -100,3 +100,10 @@ void Map::mouseReleaseEvent(QMouseEvent *event){
     action->execute();
     delete action;
 }
+
+void Map::mousePressEvent(QMouseEvent *event){
+	int x = event->x()/tileWidth_*tileWidth_;
+	int y = event->y()/tileHeight_*tileHeight_;
+	ActionChooser::instance().selectSprite(x,y);
+}
+

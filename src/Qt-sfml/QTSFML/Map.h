@@ -22,7 +22,8 @@ public:
     void OnInit();
     void OnUpdate();
     void mouseReleaseEvent(QMouseEvent *event);
-
+    void mousePressEvent(QMouseEvent *event);
+    
 private:
     void drawList();
 

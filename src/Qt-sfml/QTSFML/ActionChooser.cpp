@@ -18,22 +18,26 @@ void ActionChooser::selectSprite(int x, int y){
 ActionChooser::ActionType ActionChooser::selectAction(int x, int y){
 	void* hasSprite = SpriteList::instance().searchSprite(x,y);
 	ActionType type;
-	switch((hasSprite != 0) + 1){
-		case 0:
-			type = Cout;
-			break;
-		
-		case 1:
-			type = Add;
-			break;
-		
-		case 2:
-			type = Remove;
-			break;
-		
-		default:
-			type = Cout;
-			break;
+	if(!hasSprite && selectedSprite_){
+		type = Move;
+	}else{
+		switch((hasSprite != 0) + 1){
+			case 0:
+				type = Cout;
+				break;
+	
+			case 1:
+				type = Add;
+				break;
+	
+			case 2:
+				type = Remove;
+				break;
+	
+			default:
+				type = Cout;
+				break;
+		}
 	}
 	return type;
 }
