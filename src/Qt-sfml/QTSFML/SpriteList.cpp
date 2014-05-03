@@ -16,3 +16,14 @@ void SpriteList::addSprite(int x, int y, int position){
 	sprite.setPosition(x,y);
 	list_[position].second.push_back(sprite);
 }
+
+sf::Sprite* SpriteList::searchSprite(int x, int y){
+	sf::Vector2f cellPosition(x,y);
+	for(auto &texturedSprite : list_){
+		for(auto &sprite : texturedSprite.second){
+			if(sprite.getPosition == cellPosition){
+				return &sprite;
+			}
+		}
+	}
+}

@@ -14,6 +14,7 @@ public:
 	static SpriteList& instance();
 	void newTexture(sf::Texture); //add a texture in the list
 	void addSprite(int x, int y, int position=0); //add a sprite in the list at the position (texture number)
+	sf::Sprite* searchSprite(int x, int y);
 };
 
 #endif /* __SpriteList_H__ */
