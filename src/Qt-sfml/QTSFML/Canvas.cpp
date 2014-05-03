@@ -15,6 +15,8 @@ Canvas::Canvas(QWidget* Parent, const QPoint& Position, const QSize& Size) :
 
 void Canvas::OnInit(){
 	image_.loadFromFile("resource/resize_suwako.png");
+	SpriteList::instance().newTexture(image_);
+	SpriteList::instance().addSprite(0,0);
 	
 	// On paramètre le sprite
 	sprite_.setTexture(image_);
@@ -23,6 +25,8 @@ void Canvas::OnInit(){
 	std::vector<sf::Sprite>& sprite = *new std::vector<sf::Sprite>();
 	sprite.push_back(sprite_);
 	spriteList_.push_back({image_, sprite});
+	
+	
 	ActionChooser::instance().spriteList(spriteList_);
 	setMouseTracking(true);
 	clock_.restart();

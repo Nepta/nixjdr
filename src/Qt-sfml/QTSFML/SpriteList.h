@@ -9,8 +9,11 @@ private:
 	SpriteList(){};
 	SpriteList(const SpriteList&) = delete;
 	SpriteList& operator=(const SpriteList&) = delete;
+	
 public:
-	static 
+	static SpriteList& instance();
+	void newTexture(sf::Texture);
+	void addSprite(int x, int y, int position=0);
 };
 
 #endif /* __SpriteList_H__ */
