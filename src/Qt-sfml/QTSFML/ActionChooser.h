@@ -6,7 +6,7 @@
 #include "Action.h"
 
 class ActionChooser{
-	sf::Sprite *selectedSprite_;
+	sf::Sprite *selectedSprite_ = nullptr;
 
 private:
 	ActionChooser(){};

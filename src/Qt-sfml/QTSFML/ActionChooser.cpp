@@ -2,6 +2,7 @@
 #include "CoutAction.h"
 #include "TokenAddAction.h"
 #include "TokenDelAction.h"
+#include "TokenMoveAction.h"
 #include "SpriteList.h"
 #include <iostream>
 
@@ -11,7 +12,7 @@ ActionChooser& ActionChooser::instance(){
 }
 
 void ActionChooser::selectSprite(int x, int y){
-	seletedSprite_ = SpriteList::instance().searchSprite(x,y);
+	selectedSprite_ = SpriteList::instance().searchSprite(x,y);
 }
 
 ActionChooser::ActionType ActionChooser::selectAction(int x, int y){
@@ -50,10 +51,13 @@ Action* ActionChooser::choose(int x, int y){
 		case Remove:
 			action = new TokenDelAction(x,y);
 			break;
+		case Move:
+			action = new TokenMoveAction(*selectedSprite_,x,y);
+			break;
 		default:
 			break;
 	}
+	selectedSprite_ = nullptr;
  return action;
 }
-
 
