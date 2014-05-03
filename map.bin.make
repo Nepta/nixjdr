@@ -75,9 +75,9 @@ ifeq ($(config),release)
 endif
 
 OBJECTS := \
-	$(OBJDIR)/CoutAction.o \
-	$(OBJDIR)/Map.o \
 	$(OBJDIR)/Action.o \
+	$(OBJDIR)/Map.o \
+	$(OBJDIR)/CoutAction.o \
 
 RESOURCES := \
 
@@ -143,13 +143,13 @@ endif
 	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -MF $(@:%.o=%.d) -c "$<"
 endif
 
-$(OBJDIR)/CoutAction.o: src/GameBoard/CoutAction.cpp
+$(OBJDIR)/Action.o: src/GameBoard/Action.cpp
 	@echo $(notdir $<)
 	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -MF $(@:%.o=%.d) -c "$<"
 $(OBJDIR)/Map.o: src/GameBoard/Map.cpp
 	@echo $(notdir $<)
 	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -MF $(@:%.o=%.d) -c "$<"
-$(OBJDIR)/Action.o: src/GameBoard/Action.cpp
+$(OBJDIR)/CoutAction.o: src/GameBoard/CoutAction.cpp
 	@echo $(notdir $<)
 	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -MF $(@:%.o=%.d) -c "$<"
 

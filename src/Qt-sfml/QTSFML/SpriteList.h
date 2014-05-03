@@ -4,7 +4,7 @@
 #include <SFML/Graphics.hpp>
 
 class SpriteList{
-	std::vector<std::pair<sf::Texture, std::vector<sf::Sprite>>> list_;
+public: std::vector<std::pair<sf::Texture, std::vector<sf::Sprite>>> list_; //R.A.C.H.E.
 private:
 	SpriteList(){};
 	SpriteList(const SpriteList&) = delete;

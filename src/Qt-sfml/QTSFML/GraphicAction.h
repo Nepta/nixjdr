@@ -3,15 +3,16 @@
 
 #include <vector>
 #include "Action.h"
+#include "SpriteList.h"
 
-typedef std::vector<std::pair<sf::Texture, std::vector<sf::Sprite>>> SpriteList;
 class GraphicAction : public Action{
 
 protected:
 	SpriteList& spriteList_;
 
 public:
-	GraphicAction(int x, int y, SpriteList& spriteList) : Action(x,y), spriteList_(spriteList){}
+	GraphicAction(int x, int y, SpriteList& spriteList) : 
+		Action(x,y), spriteList_(SpriteList::instance()){}
 	virtual void execute() = 0;
 };
 

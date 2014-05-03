@@ -42,7 +42,6 @@ void Map::OnInit()
     std::vector<sf::Sprite>& sprite = *new std::vector<sf::Sprite>();
     sprite.push_back(square);
     spriteList_.push_back({texture, sprite});
-    ActionChooser::instance().spriteList(spriteList_);
 
     clock_.restart();
 }

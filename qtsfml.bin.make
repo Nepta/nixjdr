@@ -110,12 +110,13 @@ endif
 
 OBJECTS := \
 	$(OBJDIR)/QTSFMLCanvas.o \
-	$(OBJDIR)/ActionChooser.o \
-	$(OBJDIR)/Canvas.o \
-	$(OBJDIR)/CoutAction.o \
-	$(OBJDIR)/Main.o \
-	$(OBJDIR)/Map.o \
 	$(OBJDIR)/Action.o \
+	$(OBJDIR)/Map.o \
+	$(OBJDIR)/CoutAction.o \
+	$(OBJDIR)/SpriteList.o \
+	$(OBJDIR)/ActionChooser.o \
+	$(OBJDIR)/Main.o \
+	$(OBJDIR)/Canvas.o \
 
 RESOURCES := \
 
@@ -188,22 +189,25 @@ endif
 $(OBJDIR)/QTSFMLCanvas.o: src/Qt-sfml/QTSFML/QTSFMLCanvas.cpp
 	@echo $(notdir $<)
 	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -MF $(@:%.o=%.d) -c "$<"
-$(OBJDIR)/ActionChooser.o: src/Qt-sfml/QTSFML/ActionChooser.cpp
-	@echo $(notdir $<)
-	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -MF $(@:%.o=%.d) -c "$<"
-$(OBJDIR)/Canvas.o: src/Qt-sfml/QTSFML/Canvas.cpp
-	@echo $(notdir $<)
-	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -MF $(@:%.o=%.d) -c "$<"
-$(OBJDIR)/CoutAction.o: src/Qt-sfml/QTSFML/CoutAction.cpp
-	@echo $(notdir $<)
-	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -MF $(@:%.o=%.d) -c "$<"
-$(OBJDIR)/Main.o: src/Qt-sfml/QTSFML/Main.cpp
+$(OBJDIR)/Action.o: src/Qt-sfml/QTSFML/Action.cpp
 	@echo $(notdir $<)
 	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -MF $(@:%.o=%.d) -c "$<"
 $(OBJDIR)/Map.o: src/Qt-sfml/QTSFML/Map.cpp
 	@echo $(notdir $<)
 	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -MF $(@:%.o=%.d) -c "$<"
-$(OBJDIR)/Action.o: src/Qt-sfml/QTSFML/Action.cpp
+$(OBJDIR)/CoutAction.o: src/Qt-sfml/QTSFML/CoutAction.cpp
+	@echo $(notdir $<)
+	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -MF $(@:%.o=%.d) -c "$<"
+$(OBJDIR)/SpriteList.o: src/Qt-sfml/QTSFML/SpriteList.cpp
+	@echo $(notdir $<)
+	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -MF $(@:%.o=%.d) -c "$<"
+$(OBJDIR)/ActionChooser.o: src/Qt-sfml/QTSFML/ActionChooser.cpp
+	@echo $(notdir $<)
+	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -MF $(@:%.o=%.d) -c "$<"
+$(OBJDIR)/Main.o: src/Qt-sfml/QTSFML/Main.cpp
+	@echo $(notdir $<)
+	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -MF $(@:%.o=%.d) -c "$<"
+$(OBJDIR)/Canvas.o: src/Qt-sfml/QTSFML/Canvas.cpp
 	@echo $(notdir $<)
 	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -MF $(@:%.o=%.d) -c "$<"
 

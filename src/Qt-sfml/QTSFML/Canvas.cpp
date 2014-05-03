@@ -2,6 +2,7 @@
 #include "Action.h"
 #include "CoutAction.h"
 #include "ActionChooser.h"
+#include "SpriteList.h"
 
 #include <iostream>
 #include <string>
@@ -18,16 +19,15 @@ void Canvas::OnInit(){
 	SpriteList::instance().newTexture(image_);
 	SpriteList::instance().addSprite(0,0);
 	
-	// On paramètre le sprite
-	sprite_.setTexture(image_);
-	sprite_.setOrigin(0.f,0.f);
+//	// On paramètre le sprite
+//	sprite_.setTexture(image_);
+//	sprite_.setOrigin(0.f,0.f);
+//	
+//	std::vector<sf::Sprite>& sprite = *new std::vector<sf::Sprite>();
+//	sprite.push_back(sprite_);
+//	spriteList_.push_back({image_, sprite});
+//	
 	
-	std::vector<sf::Sprite>& sprite = *new std::vector<sf::Sprite>();
-	sprite.push_back(sprite_);
-	spriteList_.push_back({image_, sprite});
-	
-	
-	ActionChooser::instance().spriteList(spriteList_);
 	setMouseTracking(true);
 	clock_.restart();
 }
@@ -51,7 +51,7 @@ void Canvas::mouseReleaseEvent(QMouseEvent *event){
 }
 
 void Canvas::drawList(){
-	for(auto &texturedSprite : spriteList_){
+	for(auto &texturedSprite : SpriteList::instance().list_){ //R.A.C.H.E.
 		for(auto &sprite : texturedSprite.second){
 			draw(sprite);
 		}

@@ -10,7 +10,6 @@ class Canvas : public QSFMLCanvas{
 	sf::Clock clock_;
 	sf::Texture image_;
 	sf::Sprite sprite_;
-	std::vector<std::pair<sf::Texture, std::vector<sf::Sprite>>> spriteList_;
 
 private:
 	void drawList();
