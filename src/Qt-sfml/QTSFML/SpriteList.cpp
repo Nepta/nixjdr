@@ -1,4 +1,5 @@
 #include "SpriteList.h"
+#include <iostream>
 #include <vector>
 
 SpriteList& SpriteList::instance(){
@@ -17,13 +18,27 @@ void SpriteList::addSprite(int x, int y, int position){
 	list_[position].second.push_back(sprite);
 }
 
-sf::Sprite* SpriteList::searchSprite(int x, int y){
+void SpriteList::delSprite(int x, int y, int position){
 	sf::Vector2f cellPosition(x,y);
 	for(auto &texturedSprite : list_){
-		for(auto &sprite : texturedSprite.second){
-			if(sprite.getPosition == cellPosition){
-				return &sprite;
+		for(auto it = texturedSprite.second.begin(); it != texturedSprite.second.end(); it++){
+			sf::Sprite& sprite = *it;
+			if(sprite.getPosition() == cellPosition){
+				list_[position].second.erase(it);
 			}
 		}
 	}
 }
+
+sf::Sprite* SpriteList::searchSprite(int x, int y){
+	sf::Vector2f cellPosition(x,y);
+	for(auto &texturedSprite : list_){
+		for(auto &sprite : texturedSprite.second){
+			if(sprite.getPosition() == cellPosition){
+				return &sprite;
+			}
+		}
+	}
+	return nullptr;
+}
+

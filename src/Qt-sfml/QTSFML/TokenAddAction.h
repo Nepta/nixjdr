@@ -6,7 +6,7 @@
 class TokenAddAction : public GraphicAction{
 
 public:
-	TokenAddAction(int x, int y, SpriteList& spriteList) : GraphicAction(x,y,spriteList){}
+	TokenAddAction(int x, int y) : GraphicAction(x,y){}
 	void execute(){
 		spriteList_.addSprite(x(), y());
 	}
