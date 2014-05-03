@@ -9,7 +9,7 @@ ChatServer::ChatServer()
 
 ChatServer::~ChatServer()
 {
-    delete server;
+    server->deleteLater();
     qDeleteAll(listUsers.begin(), listUsers.end());
     listUsers.clear();
 }

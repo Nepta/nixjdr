@@ -15,7 +15,7 @@ User::User(QTcpSocket *socket)
 }
 
 User::~User() {
-    delete m_Socket;
+    m_Socket->deleteLater();
 }
 
 void User::receivedData()

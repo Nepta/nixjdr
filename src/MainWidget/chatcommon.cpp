@@ -23,19 +23,19 @@ bool ChatCommon::messageReadyToReceive(QTcpSocket *socket, QString &msg, quint16
         return false;
     }
 
-   QDataStream in(socket);
+    QDataStream in(socket);
 
-    if (msgSize == 0)
-    {
-        if (socket->bytesAvailable() < (int)sizeof(quint16)) { // On n'a pas reçu la taille du message en entier
-             return false;
+    if (msgSize == 0) { // new message being received
+        if (socket->bytesAvailable() < (qint64) sizeof(quint16)) {
+            // The message has not been fully received
+            return false;
         }
 
         in >> msgSize;
     }
 
-    // Si on connaît la taille du message, on vérifie si on a reçu le message en entier
     if (socket->bytesAvailable() < msgSize) {
+        // the message has not been fully received
         return false;
     }
 

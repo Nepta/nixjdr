@@ -68,7 +68,7 @@
              <x>0</x>
              <y>0</y>
              <width>102</width>
-             <height>79</height>
+             <height>298</height>
             </rect>
            </property>
            <attribute name="label">
@@ -80,8 +80,8 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>96</width>
-             <height>26</height>
+             <width>102</width>
+             <height>298</height>
             </rect>
            </property>
            <attribute name="label">
@@ -128,8 +128,19 @@
             </sizepolicy>
            </property>
           </widget>
-          <widget class="QLineEdit" name="pseudoField"/>
-          <widget class="QLineEdit" name="msgField"/>
+          <widget class="QLineEdit" name="pseudoField">
+           <property name="placeholderText">
+            <string>pseudo</string>
+           </property>
+          </widget>
+          <widget class="QLineEdit" name="msgField">
+           <property name="placeholderText">
+            <string>message</string>
+           </property>
+           <property name="clearButtonEnabled">
+            <bool>true</bool>
+           </property>
+          </widget>
          </widget>
         </item>
        </layout>

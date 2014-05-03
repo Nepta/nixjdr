@@ -25,6 +25,7 @@ MainWindow::~MainWindow()
 {
     delete ui;
     delete m_chatServer;
+    delete m_chatClient;
 }
 
 void MainWindow::on_actionModify_Background_triggered()
@@ -46,6 +47,7 @@ void MainWindow::on_actionModify_Background_triggered()
 void MainWindow::on_msgField_returnPressed()
 {
     m_chatClient->sendMessageToServer(ui->pseudoField->text(), ui->msgField->text());
+    ui->msgField->clear();
 }
 
 void MainWindow::setupMJ() {
@@ -54,6 +56,7 @@ void MainWindow::setupMJ() {
 }
 
 void MainWindow::setupPlayer() {
+    m_chatServer = NULL;
     setupChatClient();
 }
 
