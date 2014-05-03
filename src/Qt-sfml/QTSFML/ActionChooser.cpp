@@ -10,6 +10,10 @@ ActionChooser& ActionChooser::instance(){
 	return *instance;
 }
 
+void ActionChooser::selectSprite(int x, int y){
+	seletedSprite_ = SpriteList::instance().searchSprite(x,y);
+}
+
 ActionChooser::ActionType ActionChooser::selectAction(int x, int y){
 	void* hasSprite = SpriteList::instance().searchSprite(x,y);
 	ActionType type;
