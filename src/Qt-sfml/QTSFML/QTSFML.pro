@@ -16,14 +16,29 @@ TEMPLATE = app
 HEADERS += \
     QTSFMLCanvas.h \
     Canvas.h \
-    Map.h
+    Map.h \
+    Action.h \
+    ActionChooser.h \
+    CoutAction.h \
+    GraphicAction.h \
+    SpriteList.h \
+    TokenAddAction.h \
+    TokenDelAction.h \
+    TokenMoveAction.h
 
 SOURCES += \
     QTSFMLCanvas.cpp \
     Canvas.cpp \
     Main.cpp \
-    Map.cpp
+    Map.cpp \
+    Action.cpp \
+    ActionChooser.cpp \
+    CoutAction.cpp \
+    SpriteList.cpp
 
 QT += \
     widgets \
     core gui
+
+QMAKE_CXXFLAGS = -std=c++11
+QMAKE_LFLAGS = -std=c++11
