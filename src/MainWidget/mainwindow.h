@@ -2,8 +2,8 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include "chatserver.h"
-#include "chatclient.h"
+#include "chat/chatserver.h"
+#include "chat/chatclient.h"
 
 namespace Ui {
 class MainWindow;

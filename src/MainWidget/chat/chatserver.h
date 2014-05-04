@@ -33,7 +33,7 @@ private:
     QString verifyAndGetNickname(QString nickname);
 
     void cmdModifyNickname(ChatHeader &header, QString nickname);
-    void cmdWhisp(ChatHeader &header, QString message);
+    void cmdWhisper(ChatHeader &header, QString message);
 
     QTcpServer *server;
     QHash<QString, User *> listUsers;

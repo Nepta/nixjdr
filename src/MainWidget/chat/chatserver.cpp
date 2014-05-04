@@ -38,7 +38,7 @@ void ChatServer::newClientConnection()
 {
     QString checkedNickname;
 
-    sendPacketToAll(ChatCommon::MESSAGE,
+    sendPacketToAll(ChatCommon::SRVCMD_MESSAGE,
                     tr("<em>Un nouveau client vient de se connecter</em>"));
 
     //QTcpSocket *newUserSocket = server->nextPendingConnection();
@@ -57,7 +57,7 @@ void ChatServer::newClientConnection()
 
 void ChatServer::userDisconnected(User &user)
 {
-    sendPacketToAll(ChatCommon::MESSAGE,
+    sendPacketToAll(ChatCommon::SRVCMD_MESSAGE,
                     user.getNickname() + tr(" <em>vient de se déconnecter</em>"));
 
     listUsers.remove(user.getNickname());
@@ -74,7 +74,7 @@ void ChatServer::userDisconnected(User &user)
  */
 void ChatServer::processNewMessage(ChatHeader header, QString message) {
     switch (header.getCmd()) {
-        case ChatCommon::MESSAGE :
+        case ChatCommon::USERCMD_MESSAGE :
             sendMessageToAll(header, message);
             break;
 
@@ -82,8 +82,8 @@ void ChatServer::processNewMessage(ChatHeader header, QString message) {
             cmdModifyNickname(header, message);
             break;
 
-        case ChatCommon::USERCMD_WHISP :
-            cmdWhisp(header, message);
+        case ChatCommon::USERCMD_WHISPER :
+            cmdWhisper(header, message);
             break;
     }
 }
@@ -112,7 +112,7 @@ void ChatServer::sendMessageToAll(ChatHeader &header, QString &message) {
                            .arg(header.getSocketUserNickname())
                            .arg(message);
 
-    sendPacketToAll(ChatCommon::MESSAGE, namedMessage);
+    sendPacketToAll(ChatCommon::SRVCMD_MESSAGE, namedMessage);
 }
 
 quint16 ChatServer::getPort()
@@ -152,7 +152,7 @@ void ChatServer::cmdModifyNickname(ChatHeader &header, QString nickname) {
     // TODO send updated list of users to all clients
 }
 
-void ChatServer::cmdWhisp(ChatHeader &header, QString message) {
+void ChatServer::cmdWhisper(ChatHeader &header, QString message) {
     QString strippedMsg, msgSender, msgTarget,
             sender, target;
 
@@ -169,11 +169,14 @@ void ChatServer::cmdWhisp(ChatHeader &header, QString message) {
                 .arg(target)
                 .arg(strippedMsg);
 
-        sendPacketToOne(ChatCommon::SRVCMD_WHISP_REP, msgTarget, target);
-        sendPacketToOne(ChatCommon::SRVCMD_WHISP_REP, msgSender, sender);
+        sendPacketToOne(ChatCommon::SRVCMD_WHISPER_REP, msgTarget, target);
+        sendPacketToOne(ChatCommon::SRVCMD_WHISPER_REP, msgSender, sender);
     }
     else {
-        sendPacketToOne(ChatCommon::MESSAGE, target + tr(" n'existe pas."), sender);
+        QString errmsg = tr("%1 n'existe pas")
+                         .arg(target);
+
+        sendPacketToOne(ChatCommon::SRVCMD_MESSAGE, errmsg, sender);
     }
 
 }

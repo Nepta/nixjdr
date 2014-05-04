@@ -1,5 +1,5 @@
 #include "user.h"
-#include "chatcommon.h"
+#include "chat/chatcommon.h"
 
 User::User(QTcpSocket *socket)
 {

@@ -9,11 +9,14 @@ class ChatCommon
 {
 public:
     enum commands {
-        MESSAGE = 0,
+        USERCMD_MESSAGE = 0,
         USERCMD_NICK,
+        USERCMD_WHISPER,
+
+        SRVCMD_MESSAGE,
         SRVCMD_NICK_ACK,
-        USERCMD_WHISP,
-        SRVCMD_WHISP_REP,
+        SRVCMD_WHISPER_REP,
+
         UNDEFINED = 999
     };
     const static QHash<QString, commands> commandCodes;

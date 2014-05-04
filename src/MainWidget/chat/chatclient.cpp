@@ -76,7 +76,7 @@ void ChatClient::socketError(QAbstractSocket::SocketError error)
 
 void ChatClient::processNewMessage(ChatHeader header, QString message) {
     switch (header.getCmd()) {
-        case ChatCommon::MESSAGE :
+        case ChatCommon::SRVCMD_MESSAGE :
             emit sendMessageToUI(message);
             break;
 
@@ -85,7 +85,7 @@ void ChatClient::processNewMessage(ChatHeader header, QString message) {
             emit sendMessageToUI(tr("Vous avez changé votre peudo en ") + message);
             break;
 
-        case ChatCommon::SRVCMD_WHISP_REP :
+        case ChatCommon::SRVCMD_WHISPER_REP :
             QString formattedMsg = QString("<div style=\" color:#9E6B94;\">%1</div>")
                                    .arg(message);
             emit sendMessageToUI(formattedMsg);

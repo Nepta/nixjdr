@@ -3,7 +3,7 @@
 
 const QHash<QString, ChatCommon::commands> ChatCommon::commandCodes = {
     {"/nickname", ChatCommon::USERCMD_NICK},
-    {"/whisp", ChatCommon::USERCMD_WHISP}
+    {"/w", ChatCommon::USERCMD_WHISPER}
 };
 
 ChatCommon::ChatCommon()
@@ -35,10 +35,10 @@ quint16 ChatCommon::translateCommand(const QString &msg) {
     QString cmd = msg.split(" ").at(0);
 
     if (!msg.startsWith("/")) {
-        return ChatCommon::MESSAGE;
+        return ChatCommon::USERCMD_MESSAGE;
     }
     else {
-        return commandCodes.value(cmd, ChatCommon::MESSAGE); // TODO remplacer par HELP
+        return commandCodes.value(cmd, ChatCommon::USERCMD_MESSAGE); // TODO remplacer par HELP
     }
 }
 
