@@ -17,13 +17,15 @@ private:
     int tileWidth_;
     int nbTilesX_;
     int nbTilesY_;
+
 public:
     Map(QWidget* Parent, const QPoint& Position, const QSize& Size);
     void OnInit();
-    void OnUpdate();
-    void mouseReleaseEvent(QMouseEvent *event);
+	 void OnUpdate();
+	 void mouseReleaseEvent(QMouseEvent *event);
     void mousePressEvent(QMouseEvent *event);
-    
+	 void mouseMoveEvent(QMouseEvent * event);
+
 private:
     void drawList();
 

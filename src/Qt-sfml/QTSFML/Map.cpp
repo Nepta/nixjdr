@@ -107,3 +107,12 @@ void Map::mousePressEvent(QMouseEvent *event){
 	ActionChooser::instance().selectSprite(x,y);
 }
 
+void Map::mouseMoveEvent(QMouseEvent *event){
+	ActionChooser::instance().isMoving(true);
+	int x = event->x();
+	int y = event->y();
+	Action& action = ActionChooser::instance().choose(x,y);
+	action.execute();
+	delete &action;
+	ActionChooser::instance().isMoving(false);
+}
