@@ -5,6 +5,7 @@
 #include <QDesktopWidget>
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include "../Qt-sfml/QTSFML/Map.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -27,10 +28,18 @@ void MainWindow::on_actionModify_Background_triggered()
         QMdiSubWindow* subWindow = new QMdiSubWindow();
         subWindow->setWindowFlags( Qt::CustomizeWindowHint | Qt::WindowCloseButtonHint );
 
-        // TODO send string to sfml app
-
         ui->tableArea->addSubWindow(subWindow);
         subWindow->setGeometry(0, 0, ui->tableArea->width()/2, ui->tableArea->height()/2);
         subWindow->show();
+
+        // On crée la fenêtre principale
+        QWidget* SFMLWidget = new QMdiSubWindow();
+        SFMLWidget->setWindowTitle("Qt SFML");
+        SFMLWidget->resize(800, 600);
+        SFMLWidget->show();
+
+        //On crée une vue SFML dans la fenêtre principale
+        QSFMLCanvas *map = new Map(SFMLWidget, QPoint(0, 0), QSize(800, 600));
+        map->show();
     }
 }

@@ -45,7 +45,7 @@ ifeq ($(config),debug)
   CXXFLAGS  += $(CFLAGS) 
   LDFLAGS   += -L$(QT_LIB) -Wl,-rpath,$(QT_LIB) -lpthread
   RESFLAGS  += $(DEFINES) $(INCLUDES) 
-  LIBS      += -lQt5Core -lQt5Gui -lQt5Widgets
+  LIBS      += -lsfml-graphics -lsfml-window -lsfml-system -lQt5Core -lQt5Gui -lQt5Widgets
   LDDEPS    += 
   LINKCMD    = $(CXX) -o $(TARGET) $(OBJECTS) $(RESOURCES) $(ARCH) $(LIBS) $(LDFLAGS)
   QT_BIN = $(QT_BIN_DEFAULT)
@@ -82,7 +82,7 @@ ifeq ($(config),release)
   CXXFLAGS  += $(CFLAGS) 
   LDFLAGS   += -L$(QT_LIB) -s -Wl,-rpath,$(QT_LIB) -lpthread
   RESFLAGS  += $(DEFINES) $(INCLUDES) 
-  LIBS      += -lQt5Core -lQt5Gui -lQt5Widgets
+  LIBS      += -lsfml-graphics -lsfml-window -lsfml-system -lQt5Core -lQt5Gui -lQt5Widgets
   LDDEPS    += 
   LINKCMD    = $(CXX) -o $(TARGET) $(OBJECTS) $(RESOURCES) $(ARCH) $(LIBS) $(LDFLAGS)
   QT_BIN = $(QT_BIN_DEFAULT)
@@ -112,6 +112,13 @@ OBJECTS := \
 	$(OBJDIR)/startdialog.o \
 	$(OBJDIR)/main.o \
 	$(OBJDIR)/mainwindow.o \
+	$(OBJDIR)/QTSFMLCanvas.o \
+	$(OBJDIR)/Action.o \
+	$(OBJDIR)/Map.o \
+	$(OBJDIR)/CoutAction.o \
+	$(OBJDIR)/SpriteList.o \
+	$(OBJDIR)/ActionChooser.o \
+	$(OBJDIR)/Canvas.o \
 	$(OBJDIR)/moc_mainwindow.o \
 	$(OBJDIR)/moc_startdialog.o \
 
@@ -190,6 +197,27 @@ $(OBJDIR)/main.o: src/MainWidget/main.cpp
 	@echo $(notdir $<)
 	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -MF $(@:%.o=%.d) -c "$<"
 $(OBJDIR)/mainwindow.o: src/MainWidget/mainwindow.cpp
+	@echo $(notdir $<)
+	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -MF $(@:%.o=%.d) -c "$<"
+$(OBJDIR)/QTSFMLCanvas.o: src/Qt-sfml/QTSFML/QTSFMLCanvas.cpp
+	@echo $(notdir $<)
+	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -MF $(@:%.o=%.d) -c "$<"
+$(OBJDIR)/Action.o: src/Qt-sfml/QTSFML/Action.cpp
+	@echo $(notdir $<)
+	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -MF $(@:%.o=%.d) -c "$<"
+$(OBJDIR)/Map.o: src/Qt-sfml/QTSFML/Map.cpp
+	@echo $(notdir $<)
+	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -MF $(@:%.o=%.d) -c "$<"
+$(OBJDIR)/CoutAction.o: src/Qt-sfml/QTSFML/CoutAction.cpp
+	@echo $(notdir $<)
+	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -MF $(@:%.o=%.d) -c "$<"
+$(OBJDIR)/SpriteList.o: src/Qt-sfml/QTSFML/SpriteList.cpp
+	@echo $(notdir $<)
+	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -MF $(@:%.o=%.d) -c "$<"
+$(OBJDIR)/ActionChooser.o: src/Qt-sfml/QTSFML/ActionChooser.cpp
+	@echo $(notdir $<)
+	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -MF $(@:%.o=%.d) -c "$<"
+$(OBJDIR)/Canvas.o: src/Qt-sfml/QTSFML/Canvas.cpp
 	@echo $(notdir $<)
 	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -MF $(@:%.o=%.d) -c "$<"
 $(OBJDIR)/moc_mainwindow.o: $(MOCDIR)/moc_mainwindow.cpp

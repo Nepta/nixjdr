@@ -21,6 +21,7 @@ solution "Template"
 
 	project "qtsfml.bin"
 		kind "WindowedApp"
+--		kind "StaticLib"
 		language "C++"
 		uses {"QtGui","QtWidgets"}
 		links {"sfml-graphics","sfml-window","sfml-system"}
@@ -31,6 +32,7 @@ solution "Template"
 			"src/Qt-sfml/**.ui",
 			"src/Qt-sfml/**.qrc"
 		}
+--		excludes {"src/Qt-sfml/QTSFML/Main.cpp"}
 		
 
 	project "mainWidget.bin"
@@ -44,5 +46,13 @@ solution "Template"
 			"src/MainWidget/*.ui",
 			"src/MainWidget/*.qrc"
 		}
-		
+		files{
+			"src/Qt-sfml/**.h",
+			"src/Qt-sfml/**.cpp",
+			"src/Qt-sfml/**.ui",
+			"src/Qt-sfml/**.qrc"
+		}
+		excludes {"src/Qt-sfml/QTSFML/Main.cpp"}
+--		links {"qtsfml.bin"}		
+		links {"sfml-graphics","sfml-window","sfml-system"}
 
