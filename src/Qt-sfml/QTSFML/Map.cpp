@@ -32,7 +32,7 @@ void Map::OnInit(){
     sprite_.setOrigin(0.f,0.f);
 
     sf::Texture texture;
-    texture.loadFromFile("resource/resize_suwako.png");
+    texture.loadFromFile("resource/cirno.png");
 
     sf::Sprite square;
     square.setTexture(image_);
