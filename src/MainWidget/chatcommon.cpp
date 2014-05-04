@@ -11,9 +11,12 @@ ChatCommon::ChatCommon()
 
 QByteArray ChatCommon::preparePacket(const QString &msg) {
     quint16 cmdCode;
-    cmdCode = translateCommand(msg);
+    QString strippedMsg;
 
-    return preparePacket(cmdCode, msg);
+    cmdCode = translateCommand(msg);
+    strippedMsg = stripCommandFromMessage(msg);
+
+    return preparePacket(cmdCode, strippedMsg);
 }
 
 QByteArray ChatCommon::preparePacket(quint16 cmdCode, const QString &msg) {
@@ -30,13 +33,23 @@ QByteArray ChatCommon::preparePacket(quint16 cmdCode, const QString &msg) {
 quint16 ChatCommon::translateCommand(const QString &msg) {
     QString cmd = msg.split(" ").at(0);
 
-    //if (msg.at(0) != '/') {
     if (!msg.startsWith("/")) {
         return ChatCommon::MESSAGE;
     }
     else {
         return commandCodes.value(cmd, ChatCommon::MESSAGE); // TODO remplacer par HELP
     }
+}
+
+QString ChatCommon::stripCommandFromMessage(const QString &msg) {
+    QString strippedMsg = msg;
+
+    if (msg.startsWith("/")) {
+        QString cmd = msg.split(" ").at(0);
+        strippedMsg.remove(cmd + " ");
+    }
+
+    return strippedMsg;
 }
 
 bool ChatCommon::messageReadyToReceive(QTcpSocket *socket, ChatHeader &header, QString &msg) {

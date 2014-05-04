@@ -20,6 +20,7 @@ public:
     static QByteArray preparePacket(const QString &msg);
     static QByteArray preparePacket(quint16 cmdCode, const QString &msg);
     static quint16 translateCommand(const QString &msg);
+    static QString stripCommandFromMessage(const QString &msg);
     static bool messageReadyToReceive(QTcpSocket *socket, ChatHeader &header,
                                       QString &msg);
 };

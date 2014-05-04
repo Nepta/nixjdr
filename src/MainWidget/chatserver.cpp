@@ -79,10 +79,8 @@ void ChatServer::processNewMessage(ChatHeader header, QString message) {
             break;
 
         case ChatCommon::USERCMD_NICK :
-            // TODO changenickname
+            cmdModifyNickname(header, message);
             // envoyer update list to all clients
-            // send ack au user qui a fait la demande -> côté client: votre nouveau pseudo est
-            // lui balancer un message si le pseudo est déjà pris
             break;
     }
 }
@@ -127,5 +125,21 @@ QString ChatServer::verifyAndGetNickname(QString nickname) {
 }
 
 void ChatServer::cmdModifyNickname(ChatHeader &header, QString nickname) {
-    // TODO
+    QString checkedNickname;
+    User *tempUser;
+
+    // save the user and remove the old value from the hash
+    tempUser = listUsers.value(header.getSocketUserNickname());
+    listUsers.remove(header.getSocketUserNickname());
+
+    // new nickname
+    checkedNickname = verifyAndGetNickname(nickname);
+
+    // modify the nickname in user, header and add the new pair to the hash
+    tempUser->setPseudo(checkedNickname);
+    header.setSocketUserNickname(checkedNickname);
+    listUsers.insert(checkedNickname, tempUser);
+
+    // acknowledge
+    sendPacketToOne(ChatCommon::SRVCMD_NICK_ACK, checkedNickname, checkedNickname);
 }
