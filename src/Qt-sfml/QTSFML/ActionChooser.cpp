@@ -22,29 +22,43 @@ void ActionChooser::isMoving(bool state){
 ActionChooser::ActionType ActionChooser::selectAction(int x, int y){
 	void* hasSprite = SpriteList::instance().searchSprite(x,y);
 	ActionType type = Cout;
-	if(selectedSprite_ != nullptr){
-		if(isMovementAnimation_ || hasSprite == nullptr){
-			type = Move;
-		}
-	}else if(!isMovementAnimation_){
-		switch((hasSprite != 0) + 1){
-			case 0:
-				type = Cout;
-				break;
+	// if(selectedSprite_ != nullptr){
+	// 	if(isMovementAnimation_ || hasSprite == nullptr){
+	// 		type = Move;
+	// 	}
+	// }else if(!isMovementAnimation_){
+	// 	switch((hasSprite != 0) + 1){
+	// 		case 0:
+	// 			type = Cout;
+	// 			break;
 	
-			case 1:
-				type = Add;
-				break;
+	// 		case 1:
+	// 			type = Add;
+	// 			break;
 	
-			case 2:
-				type = Remove;
-				break;
+	// 		case 2:
+	// 			type = Remove;
+	// 			break;
 	
-			default:
-				type = Cout;
-				break;
-		}
+	// 		default:
+	// 			type = Cout;
+	// 			break;
+	// 	}
+	// }
+	
+	if(!selectedSprite_ && !hasSprite && !isMovementAnimation_){
+		type = Add;
 	}
+	else if(selectedSprite_ && (!hasSprite || isMovementAnimation_)){
+		type = Move;
+	}
+	else if(hasSprite){
+		type = Remove;
+	}
+	else{
+		type = Cout;
+	}
+	
 	return type;
 }
 
