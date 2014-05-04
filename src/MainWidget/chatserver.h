@@ -31,7 +31,9 @@ private:
                                      QString receiverNickname);
     void sendMessageToAll(ChatHeader &header, QString &message);
     QString verifyAndGetNickname(QString nickname);
+
     void cmdModifyNickname(ChatHeader &header, QString nickname);
+    void cmdWhisp(ChatHeader &header, QString message);
 
     QTcpServer *server;
     QHash<QString, User *> listUsers;

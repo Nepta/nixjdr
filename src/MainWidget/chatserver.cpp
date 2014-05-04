@@ -45,7 +45,7 @@ void ChatServer::newClientConnection()
     User *newUser = new User(server->nextPendingConnection());
 
     checkedNickname = verifyAndGetNickname("guest");
-    newUser->setPseudo(checkedNickname);
+    newUser->setNickname(checkedNickname);
     listUsers.insert(checkedNickname, newUser);
     sendPacketToOne(ChatCommon::SRVCMD_NICK_ACK, checkedNickname, checkedNickname);
 
@@ -58,9 +58,9 @@ void ChatServer::newClientConnection()
 void ChatServer::userDisconnected(User &user)
 {
     sendPacketToAll(ChatCommon::MESSAGE,
-                    user.getPseudo() + tr(" <em>vient de se déconnecter</em>"));
+                    user.getNickname() + tr(" <em>vient de se déconnecter</em>"));
 
-    listUsers.remove(user.getPseudo());
+    listUsers.remove(user.getNickname());
 
     // The socket may still be in use even though the client is disconnected (e.g.
     // message still being sent).
@@ -80,7 +80,10 @@ void ChatServer::processNewMessage(ChatHeader header, QString message) {
 
         case ChatCommon::USERCMD_NICK :
             cmdModifyNickname(header, message);
-            // envoyer update list to all clients
+            break;
+
+        case ChatCommon::USERCMD_WHISP :
+            cmdWhisp(header, message);
             break;
     }
 }
@@ -105,7 +108,10 @@ void ChatServer::sendPacketToOne(ChatCommon::commands code, QString message,
 }
 
 void ChatServer::sendMessageToAll(ChatHeader &header, QString &message) {
-    QString namedMessage = header.getSocketUserNickname() + ": " + message;
+        QString namedMessage = QString("[%1]: %2")
+                           .arg(header.getSocketUserNickname())
+                           .arg(message);
+
     sendPacketToAll(ChatCommon::MESSAGE, namedMessage);
 }
 
@@ -136,10 +142,38 @@ void ChatServer::cmdModifyNickname(ChatHeader &header, QString nickname) {
     checkedNickname = verifyAndGetNickname(nickname);
 
     // modify the nickname in user, header and add the new pair to the hash
-    tempUser->setPseudo(checkedNickname);
+    tempUser->setNickname(checkedNickname);
     header.setSocketUserNickname(checkedNickname);
     listUsers.insert(checkedNickname, tempUser);
 
     // acknowledge
     sendPacketToOne(ChatCommon::SRVCMD_NICK_ACK, checkedNickname, checkedNickname);
+
+    // TODO send updated list of users to all clients
+}
+
+void ChatServer::cmdWhisp(ChatHeader &header, QString message) {
+    QString strippedMsg, msgSender, msgTarget,
+            sender, target;
+
+    strippedMsg = message;
+    sender = header.getSocketUserNickname();
+    target = ChatCommon::extractFirstWord(strippedMsg);
+
+    if (listUsers.contains(target)) {
+        msgTarget = tr("[%1] chuchote: %2")
+                .arg(sender)
+                .arg(strippedMsg);
+
+        msgSender = tr("à [%1]: %2")
+                .arg(target)
+                .arg(strippedMsg);
+
+        sendPacketToOne(ChatCommon::SRVCMD_WHISP_REP, msgTarget, target);
+        sendPacketToOne(ChatCommon::SRVCMD_WHISP_REP, msgSender, sender);
+    }
+    else {
+        sendPacketToOne(ChatCommon::MESSAGE, target + tr(" n'existe pas."), sender);
+    }
+
 }

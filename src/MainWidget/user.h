@@ -13,9 +13,9 @@ public:
     User(QTcpSocket *socket);
     ~User();
     QTcpSocket *getSocket();
-    QString getPseudo();
+    QString getNickname();
     ChatHeader getHeader();
-    User* setPseudo(const QString &pseudo);
+    User* setNickname(const QString &nickname);
 
 private slots:
     void receivedData();
@@ -29,7 +29,7 @@ signals:
 
 private:
     QTcpSocket *m_Socket;
-    QString m_Pseudo;
+    QString m_Nickname;
     ChatHeader m_Header;
 };
 

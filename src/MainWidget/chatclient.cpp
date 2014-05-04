@@ -39,7 +39,6 @@ void ChatClient::connection(const QString &serverIP, const quint16 &serverPort)
 /**
  * @brief ChatClient::sendMessageToServer Send the message to the server in order
  * to broadcast it to all the users.
- * @param pseudo
  * @param msg
  */
 void ChatClient::sendMessageToServer(const QString &msg)
@@ -57,7 +56,7 @@ void ChatClient::socketError(QAbstractSocket::SocketError error)
 {
     QString errMsg;
 
-    switch(error) // On affiche un message différent selon l'erreur qu'on nous indique
+    switch(error)
     {
         case QAbstractSocket::HostNotFoundError:
             errMsg = tr("<em>ERREUR : le serveur n'a pas pu être trouvé. Vérifiez l'IP et le port.</em>");
@@ -82,8 +81,14 @@ void ChatClient::processNewMessage(ChatHeader header, QString message) {
             break;
 
         case ChatCommon::SRVCMD_NICK_ACK :
-            m_User->setPseudo(message);
+            m_User->setNickname(message);
             emit sendMessageToUI(tr("Vous avez changé votre peudo en ") + message);
+            break;
+
+        case ChatCommon::SRVCMD_WHISP_REP :
+            QString formattedMsg = QString("<div style=\" color:#9E6B94;\">%1</div>")
+                                   .arg(message);
+            emit sendMessageToUI(formattedMsg);
             break;
     }
 }

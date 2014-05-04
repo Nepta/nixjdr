@@ -80,8 +80,8 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>102</width>
-             <height>298</height>
+             <width>96</width>
+             <height>26</height>
             </rect>
            </property>
            <attribute name="label">
@@ -126,11 +126,6 @@
              <horstretch>0</horstretch>
              <verstretch>3</verstretch>
             </sizepolicy>
-           </property>
-          </widget>
-          <widget class="QLineEdit" name="pseudoField">
-           <property name="placeholderText">
-            <string>pseudo</string>
            </property>
           </widget>
           <widget class="QLineEdit" name="msgField">

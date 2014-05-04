@@ -2,7 +2,8 @@
 #include <QDataStream>
 
 const QHash<QString, ChatCommon::commands> ChatCommon::commandCodes = {
-    {"/nickname", ChatCommon::USERCMD_NICK}
+    {"/nickname", ChatCommon::USERCMD_NICK},
+    {"/whisp", ChatCommon::USERCMD_WHISP}
 };
 
 ChatCommon::ChatCommon()
@@ -45,11 +46,19 @@ QString ChatCommon::stripCommandFromMessage(const QString &msg) {
     QString strippedMsg = msg;
 
     if (msg.startsWith("/")) {
-        QString cmd = msg.split(" ").at(0);
-        strippedMsg.remove(cmd + " ");
+        extractFirstWord(strippedMsg);
     }
 
     return strippedMsg;
+}
+
+QString ChatCommon::extractFirstWord(QString &msg) {
+    QString firstWord;
+
+    firstWord = msg.section(" ", 0, 0);
+    msg = msg.section(" ", 1, -1);
+
+    return firstWord;
 }
 
 bool ChatCommon::messageReadyToReceive(QTcpSocket *socket, ChatHeader &header, QString &msg) {

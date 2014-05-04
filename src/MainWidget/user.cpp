@@ -6,7 +6,7 @@ User::User(QTcpSocket *socket)
     m_Socket = socket;
     //m_MsgSize = 0;
     m_Header = ChatHeader();
-    m_Pseudo = QString("guest");
+    m_Nickname = QString("guest");
 
     connect(m_Socket, SIGNAL(readyRead()), this, SLOT(receivedData()));
     connect(m_Socket, SIGNAL(disconnected()), this, SLOT(userDisconnected()));
@@ -25,7 +25,7 @@ void User::receivedData()
     QString message;
 
     if (ChatCommon::messageReadyToReceive(m_Socket, header, message)) {
-        header.setSocketUserNickname(getPseudo());
+        header.setSocketUserNickname(getNickname());
         emit receivedFullData(header, message);
         m_Header.setMsgSize(0);
     }
@@ -51,16 +51,16 @@ QTcpSocket* User::getSocket() {
     return m_Socket;
 }
 
-QString User::getPseudo() {
-    return m_Pseudo;
+QString User::getNickname() {
+    return m_Nickname;
 }
 
 ChatHeader User::getHeader() {
     return m_Header;
 }
 
-User* User::setPseudo(const QString &pseudo) {
-    m_Pseudo = pseudo;
+User* User::setNickname(const QString &nickname) {
+    m_Nickname = nickname;
 
     return this;
 }
