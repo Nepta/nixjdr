@@ -45,9 +45,9 @@ void Canvas::OnUpdate(){
 void Canvas::mouseReleaseEvent(QMouseEvent *event){
 	int&& x = event->x();
 	int&& y = event->y();
-	Action *action = ActionChooser::instance().choose(x,y);
-	action->execute();
-	delete action;
+	Action& action = ActionChooser::instance().choose(x,y);
+	action.execute();
+	delete &action;
 }
 
 void Canvas::drawList(){

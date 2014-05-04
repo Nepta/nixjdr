@@ -96,9 +96,9 @@ void Map::mouseReleaseEvent(QMouseEvent *event){
     y = y/tileHeight_;
     y = y*tileHeight_;
 
-    Action *action = ActionChooser::instance().choose(x,y);
-    action->execute();
-    delete action;
+	 Action& action = ActionChooser::instance().choose(x,y);
+	 action.execute();
+	 delete &action;
 }
 
 void Map::mousePressEvent(QMouseEvent *event){

@@ -42,8 +42,8 @@ ActionChooser::ActionType ActionChooser::selectAction(int x, int y){
 	return type;
 }
 
-Action* ActionChooser::choose(int x, int y){
-	Action *action;
+Action& ActionChooser::choose(int x, int y){
+    Action *action;
 	ActionType type(selectAction(x,y));
 	switch(type){
 		case Cout:
@@ -59,9 +59,10 @@ Action* ActionChooser::choose(int x, int y){
 			action = new TokenMoveAction(*selectedSprite_,x,y);
 			break;
 		default:
+            action = new CoutAction(x,y);
 			break;
 	}
 	selectedSprite_ = nullptr;
- return action;
+ return *action;
 }
 

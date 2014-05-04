@@ -8,7 +8,7 @@ DEPENDPATH += /usr/local/include/SFML/include
 
 CONFIG(release, debug|release): LIBS += -L /usr/local/lib -lsfml-audio -lsfml-graphics -lsfml-network -lsfml-window -lsfml-system
 
-CONFIG(debug, debug|release): LIBS += -L /usr/local/lib/ -lsfml-audio-d -lsfml-graphics-d -lsfml-network-d -lsfml-window-d -lsfml-system-d
+CONFIG(debug, debug|release): LIBS += -L /usr/local/lib/ -lsfml-audio -lsfml-graphics -lsfml-network -lsfml-window -lsfml-system
 
 TARGET = sfml
 TEMPLATE = app

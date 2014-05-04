@@ -9,7 +9,7 @@ class ActionChooser{
 	sf::Sprite *selectedSprite_ = nullptr;
 
 private:
-	ActionChooser(){};
+    ActionChooser(){}
 	enum ActionType{
 		Cout,
 		Remove,
@@ -19,7 +19,7 @@ private:
 	
 public:
 	static ActionChooser& instance();
-	Action* choose(int x, int y);
+    Action& choose(int x, int y);
 	void selectSprite(int x, int y);
 	ActionType selectAction(int x, int y);
 };
