@@ -2,14 +2,26 @@
 #define CHATCOMMON_H
 
 #include <QtNetwork>
+#include <QHash>
+#include "chatheader.h"
 
 class ChatCommon
 {
 public:
+    enum commands {
+        MESSAGE = 0,
+        USERCMD_NICK,
+        SRVCMD_NICK_ACK,
+        UNDEFINED = 999
+    };
+    const static QHash<QString, commands> commandCodes;
+
     ChatCommon();
     static QByteArray preparePacket(const QString &msg);
-    static bool messageReadyToReceive(QTcpSocket *socket,
-                                      QString &msg, quint16 &tailleMessage);
+    static QByteArray preparePacket(quint16 cmdCode, const QString &msg);
+    static quint16 translateCommand(const QString &msg);
+    static bool messageReadyToReceive(QTcpSocket *socket, ChatHeader &header,
+                                      QString &msg);
 };
 
 #endif // CHATCOMMON_H

@@ -46,8 +46,10 @@ void MainWindow::on_actionModify_Background_triggered()
 
 void MainWindow::on_msgField_returnPressed()
 {
-    m_chatClient->sendMessageToServer(ui->pseudoField->text(), ui->msgField->text());
-    ui->msgField->clear();
+    if (!ui->msgField->text().isEmpty()) {
+        m_chatClient->sendMessageToServer(ui->msgField->text());
+        ui->msgField->clear();
+    }
 }
 
 void MainWindow::setupMJ() {

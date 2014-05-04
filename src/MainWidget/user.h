@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include <QtNetwork>
+#include "chatheader.h"
 
 class User : public QObject
 {
@@ -13,7 +14,7 @@ public:
     ~User();
     QTcpSocket *getSocket();
     QString getPseudo();
-    quint16 getMsgSize();
+    ChatHeader getHeader();
     User* setPseudo(const QString &pseudo);
 
 private slots:
@@ -24,12 +25,12 @@ signals:
     void userConnectedNotify();
     void userDisconnectedNotify(User &user);
     void socketErrorNotify(QAbstractSocket::SocketError);
-    void receivedFullData(QString message);
+    void receivedFullData(ChatHeader header, QString message);
 
 private:
     QTcpSocket *m_Socket;
     QString m_Pseudo;
-    quint16 m_MsgSize;
+    ChatHeader m_Header;
 };
 
 #endif // USER_H

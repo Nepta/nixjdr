@@ -1,5 +1,4 @@
 #include "chatserver.h"
-#include "chatcommon.h"
 #include<QTranslator>
 
 ChatServer::ChatServer()
@@ -34,47 +33,99 @@ void ChatServer::init() {
 
 /**
  * @brief ChatServer::newClientConnection
- * @todo rename newUserConnection
  */
 void ChatServer::newClientConnection()
 {
-    sendMessageToAll(tr("<em>Un nouveau client vient de se connecter</em>"));
+    QString checkedNickname;
+
+    sendPacketToAll(ChatCommon::MESSAGE,
+                    tr("<em>Un nouveau client vient de se connecter</em>"));
 
     //QTcpSocket *newUserSocket = server->nextPendingConnection();
     User *newUser = new User(server->nextPendingConnection());
-    listUsers << newUser;
+
+    checkedNickname = verifyAndGetNickname("guest");
+    newUser->setPseudo(checkedNickname);
+    listUsers.insert(checkedNickname, newUser);
+    sendPacketToOne(ChatCommon::SRVCMD_NICK_ACK, checkedNickname, checkedNickname);
 
     // full packet has been received -> process and send it
-    // TODO refactor -> ChatCommon contains a parser to retrieve which action to use (see enum)
-    connect(newUser, SIGNAL(receivedFullData(QString)), this, SLOT(sendMessageToAll(QString)));
+    connect(newUser, SIGNAL(receivedFullData(ChatHeader, QString)),
+            this, SLOT(processNewMessage(ChatHeader, QString)));
     connect(newUser, SIGNAL(userDisconnectedNotify(User&)), this, SLOT(userDisconnected(User&)));
 }
 
 void ChatServer::userDisconnected(User &user)
 {
-    sendMessageToAll(user.getPseudo() + tr(" <em>vient de se déconnecter</em>"));
+    sendPacketToAll(ChatCommon::MESSAGE,
+                    user.getPseudo() + tr(" <em>vient de se déconnecter</em>"));
 
-    listUsers.removeOne(&user);
+    listUsers.remove(user.getPseudo());
 
     // The socket may still be in use even though the client is disconnected (e.g.
     // message still being sent).
     user.deleteLater();
 }
 
-void ChatServer::sendMessageToAll(const QString &message)
+/**
+ * @brief ChatServer::processNewMessage
+ * @param header
+ * @param message
+ */
+void ChatServer::processNewMessage(ChatHeader header, QString message) {
+    switch (header.getCmd()) {
+        case ChatCommon::MESSAGE :
+            sendMessageToAll(header, message);
+            break;
+
+        case ChatCommon::USERCMD_NICK :
+            // TODO changenickname
+            // envoyer update list to all clients
+            // send ack au user qui a fait la demande -> côté client: votre nouveau pseudo est
+            // lui balancer un message si le pseudo est déjà pris
+            break;
+    }
+}
+
+void ChatServer::sendPacketToAll(ChatCommon::commands code, QString message)
 {
     QByteArray packet;
+    packet = ChatCommon::preparePacket(code, message);
 
-    packet = ChatCommon::preparePacket(message);
-
-    // Envoi du paquet préparé à tous les clients connectés au server
-    for (int i = 0; i < listUsers.size(); i++)
+    for (int i = 0; i < listUsers.values().size(); i++)
     {
-        listUsers[i]->getSocket()->write(packet);
+        listUsers.values()[i]->getSocket()->write(packet);
     }
+}
+
+void ChatServer::sendPacketToOne(ChatCommon::commands code, QString message,
+                                 QString receiverNickname) {
+    QByteArray packet;
+
+    packet = ChatCommon::preparePacket(code, message);
+    listUsers.value(receiverNickname)->getSocket()->write(packet);
+}
+
+void ChatServer::sendMessageToAll(ChatHeader &header, QString &message) {
+    QString namedMessage = header.getSocketUserNickname() + ": " + message;
+    sendPacketToAll(ChatCommon::MESSAGE, namedMessage);
 }
 
 quint16 ChatServer::getPort()
 {
     return server->serverPort();
+}
+
+QString ChatServer::verifyAndGetNickname(QString nickname) {
+    QString tempNickname = nickname;
+
+    while (listUsers.contains(tempNickname)) {
+        tempNickname += "_";
+    }
+
+    return tempNickname;
+}
+
+void ChatServer::cmdModifyNickname(ChatHeader &header, QString nickname) {
+    // TODO
 }

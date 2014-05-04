@@ -7,7 +7,8 @@ ChatClient::ChatClient() :
     QTcpSocket *socket = new QTcpSocket(this);
     m_User = new User(socket);
 
-    connect(m_User, SIGNAL(receivedFullData(QString)), this, SIGNAL(sendMessageToUI(QString)));
+    connect(m_User, SIGNAL(receivedFullData(ChatHeader, QString)),
+            this, SLOT(processNewMessage(ChatHeader, QString)));
     connect(m_User, SIGNAL(userDisconnectedNotify(User&)), this, SIGNAL(clientDisconnected(User&)));
     connect(m_User, SIGNAL(userConnectedNotify()), this, SIGNAL(clientConnected()));
     connect(m_User, SIGNAL(socketErrorNotify(QAbstractSocket::SocketError)),
@@ -40,16 +41,13 @@ void ChatClient::connection(const QString &serverIP, const quint16 &serverPort)
  * to broadcast it to all the users.
  * @param pseudo
  * @param msg
- *
- * @todo refacto : pseudo in User class
  */
-void ChatClient::sendMessageToServer(const QString &pseudo, const QString &msg)
+void ChatClient::sendMessageToServer(const QString &msg)
 {
     QByteArray packet;
     QString formattedMsg;
 
-    // TODO use pseudo in user
-    formattedMsg = QString("<strong>" + pseudo + "</strong> : " + msg);
+    formattedMsg = QString(msg);
 
     packet = ChatCommon::preparePacket(formattedMsg);
     m_User->getSocket()->write(packet);
@@ -75,4 +73,17 @@ void ChatClient::socketError(QAbstractSocket::SocketError error)
     }
 
     emit sendMessageToUI(errMsg);
+}
+
+void ChatClient::processNewMessage(ChatHeader header, QString message) {
+    switch (header.getCmd()) {
+        case ChatCommon::MESSAGE :
+            emit sendMessageToUI(message);
+            break;
+
+        case ChatCommon::SRVCMD_NICK_ACK :
+            m_User->setPseudo(message);
+            emit sendMessageToUI(tr("Vous avez changé votre peudo en ") + message);
+            break;
+    }
 }

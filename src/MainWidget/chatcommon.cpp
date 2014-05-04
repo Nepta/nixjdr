@@ -1,40 +1,78 @@
 #include "chatcommon.h"
 #include <QDataStream>
-#include <QDebug>
-#include <QtEndian>
+
+const QHash<QString, ChatCommon::commands> ChatCommon::commandCodes = {
+    {"/nickname", ChatCommon::USERCMD_NICK}
+};
 
 ChatCommon::ChatCommon()
 {
 }
 
 QByteArray ChatCommon::preparePacket(const QString &msg) {
+    quint16 cmdCode;
+    cmdCode = translateCommand(msg);
+
+    return preparePacket(cmdCode, msg);
+}
+
+QByteArray ChatCommon::preparePacket(quint16 cmdCode, const QString &msg) {
     QByteArray packet;
     QDataStream out(&packet, QIODevice::WriteOnly);
 
-    out << quint16(0) << msg;
+    out << quint16(0) << cmdCode << msg;
     out.device()->seek(0);
-    out << (quint16) (packet.size() - sizeof(quint16));
+    out << (quint16) (packet.size() - 2*sizeof(quint16));
 
     return packet;
 }
 
-bool ChatCommon::messageReadyToReceive(QTcpSocket *socket, QString &msg, quint16 &msgSize) {
+quint16 ChatCommon::translateCommand(const QString &msg) {
+    QString cmd = msg.split(" ").at(0);
+
+    //if (msg.at(0) != '/') {
+    if (!msg.startsWith("/")) {
+        return ChatCommon::MESSAGE;
+    }
+    else {
+        return commandCodes.value(cmd, ChatCommon::MESSAGE); // TODO remplacer par HELP
+    }
+}
+
+bool ChatCommon::messageReadyToReceive(QTcpSocket *socket, ChatHeader &header, QString &msg) {
     if (socket == 0) {
         return false;
     }
 
     QDataStream in(socket);
 
-    if (msgSize == 0) { // new message being received
+    // message size
+    if (header.getMsgSize() == 0) { // new message being received
+        quint16 msgSize;
+
         if (socket->bytesAvailable() < (qint64) sizeof(quint16)) {
             // The message has not been fully received
             return false;
         }
 
         in >> msgSize;
+        header.setMsgSize(msgSize);
     }
 
-    if (socket->bytesAvailable() < msgSize) {
+    // command
+    if (header.getCmd() == ChatCommon::UNDEFINED) {
+        quint16 cmd;
+
+        if (socket->bytesAvailable() < (qint64) sizeof(quint16)) {
+            return false;
+        }
+
+        in >> cmd;
+        header.setCmd(cmd);
+    }
+
+    // message
+    if (socket->bytesAvailable() < header.getMsgSize()) {
         // the message has not been fully received
         return false;
     }

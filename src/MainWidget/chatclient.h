@@ -14,10 +14,11 @@ public:
     ~ChatClient();
     ChatClient(const QString &serverIP, const quint16 &serverPort);
     void connection(const QString &serverIP, const quint16 &serverPort);
-    void sendMessageToServer(const QString &pseudo, const QString &msg);
+    void sendMessageToServer(const QString &msg);
 
 private slots:
     void socketError(QAbstractSocket::SocketError error);
+    void processNewMessage(ChatHeader, QString);
 
 signals:
     void sendMessageToUI(const QString &msg);

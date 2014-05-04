@@ -4,7 +4,8 @@
 User::User(QTcpSocket *socket)
 {
     m_Socket = socket;
-    m_MsgSize = 0;
+    //m_MsgSize = 0;
+    m_Header = ChatHeader();
     m_Pseudo = QString("guest");
 
     connect(m_Socket, SIGNAL(readyRead()), this, SLOT(receivedData()));
@@ -20,10 +21,13 @@ User::~User() {
 
 void User::receivedData()
 {
+    ChatHeader header;
     QString message;
-    if (ChatCommon::messageReadyToReceive(m_Socket, message, m_MsgSize)) {
-        emit receivedFullData(message);
-        m_MsgSize = 0;
+
+    if (ChatCommon::messageReadyToReceive(m_Socket, header, message)) {
+        header.setSocketUserNickname(getPseudo());
+        emit receivedFullData(header, message);
+        m_Header.setMsgSize(0);
     }
 
     // receivedData() is called by the signal readyRead() when new data is available.
@@ -51,8 +55,8 @@ QString User::getPseudo() {
     return m_Pseudo;
 }
 
-quint16 User::getMsgSize() {
-    return m_MsgSize;
+ChatHeader User::getHeader() {
+    return m_Header;
 }
 
 User* User::setPseudo(const QString &pseudo) {
