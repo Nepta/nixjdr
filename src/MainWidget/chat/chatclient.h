@@ -19,11 +19,11 @@ public:
 private slots:
     void socketError(QAbstractSocket::SocketError error);
     void processNewMessage(ChatHeader, QString);
+    void clientConnected();
+    void clientDisconnected(User &user);
 
 signals:
     void sendMessageToUI(const QString &msg);
-    void clientConnected();
-    void clientDisconnected(User &user);
 
 private:
     User *m_User;

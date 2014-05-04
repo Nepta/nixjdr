@@ -2,8 +2,8 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include "chatserver.h"
-#include "chatclient.h"
+#include "chat/chatserver.h"
+#include "chat/chatclient.h"
 
 namespace Ui {
 class MainWindow;
@@ -24,8 +24,6 @@ private slots:
     void on_actionModify_Background_triggered();
     void on_msgField_returnPressed();
     void receivedMessage(const QString &msg);
-    void connectionSuccess();
-    void disconnectionSuccess(User &user);
 
 signals:
     void initMainWindow();

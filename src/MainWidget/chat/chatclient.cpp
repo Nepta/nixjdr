@@ -1,3 +1,4 @@
+#include "commands/abstractchatcmd.h"
 #include "chatclient.h"
 #include "chatcommon.h"
 
@@ -9,8 +10,10 @@ ChatClient::ChatClient() :
 
     connect(m_User, SIGNAL(receivedFullData(ChatHeader, QString)),
             this, SLOT(processNewMessage(ChatHeader, QString)));
-    connect(m_User, SIGNAL(userDisconnectedNotify(User&)), this, SIGNAL(clientDisconnected(User&)));
-    connect(m_User, SIGNAL(userConnectedNotify()), this, SIGNAL(clientConnected()));
+    connect(m_User, SIGNAL(userDisconnectedNotify(User&)),
+            this, SLOT(clientDisconnected(User&)));
+    connect(m_User, SIGNAL(userConnectedNotify()),
+            this, SLOT(clientConnected()));
     connect(m_User, SIGNAL(socketErrorNotify(QAbstractSocket::SocketError)),
             this, SLOT(socketError(QAbstractSocket::SocketError)));
 }
@@ -74,21 +77,33 @@ void ChatClient::socketError(QAbstractSocket::SocketError error)
     emit sendMessageToUI(errMsg);
 }
 
+// TODO REFACTO
 void ChatClient::processNewMessage(ChatHeader header, QString message) {
     switch (header.getCmd()) {
-        case ChatCommon::MESSAGE :
+        case (quint16) ChatCodes::SRVCMD_MESSAGE :
             emit sendMessageToUI(message);
             break;
 
-        case ChatCommon::SRVCMD_NICK_ACK :
+        case (quint16) ChatCodes::SRVCMD_NICK_ACK :
             m_User->setNickname(message);
             emit sendMessageToUI(tr("Vous avez changé votre peudo en ") + message);
             break;
 
-        case ChatCommon::SRVCMD_WHISP_REP :
+        case (quint16) ChatCodes::SRVCMD_WHISPER_REP :
             QString formattedMsg = QString("<div style=\" color:#9E6B94;\">%1</div>")
                                    .arg(message);
             emit sendMessageToUI(formattedMsg);
             break;
     }
+}
+// END TODO REFACTO
+
+void ChatClient::clientConnected()
+{
+    emit sendMessageToUI(tr("<em>Connexion réussie !</em>"));
+}
+
+void ChatClient::clientDisconnected(User &user)
+{
+    emit sendMessageToUI(tr("<em>Déconnecté du serveur</em>"));
 }

@@ -3,9 +3,9 @@
 
 #include <QObject>
 #include <QtNetwork>
+#include "commands/chatcmds.h"
 #include "user.h"
 #include "chatheader.h"
-#include "chatcommon.h"
 
 class ChatServer : public QObject
 {
@@ -14,29 +14,23 @@ class ChatServer : public QObject
 public:
     ChatServer();
     ~ChatServer();
-    quint16 getPort();
     void init();
+    quint16 getPort();
 
 private slots:
     void newClientConnection();
     void userDisconnected(User &user);
     void processNewMessage(ChatHeader header, QString message);
+    void sendPacketToAll(ChatCodes code, QString message);
+    void sendPacketToOne(ChatCodes code, QString message, QString receiverNickname);
 
 signals:
     void sendMessageToUI(const QString &msg);
 
 private:
-    void sendPacketToAll(ChatCommon::commands code, QString message);
-    void sendPacketToOne(ChatCommon::commands code, QString message,
-                                     QString receiverNickname);
-    void sendMessageToAll(ChatHeader &header, QString &message);
-    QString verifyAndGetNickname(QString nickname);
-
-    void cmdModifyNickname(ChatHeader &header, QString nickname);
-    void cmdWhisp(ChatHeader &header, QString message);
-
-    QTcpServer *server;
-    QHash<QString, User *> listUsers;
+    QTcpServer *m_Server;
+    QHash<QString, User *> m_ListUsers;
+    ChatCmds m_ChatCmds;
 };
 
 #endif // CHATSERVER_H
