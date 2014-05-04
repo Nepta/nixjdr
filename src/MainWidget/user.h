@@ -3,7 +3,7 @@
 
 #include <QObject>
 #include <QtNetwork>
-#include "chatheader.h"
+#include "chat/chatheader.h"
 
 class User : public QObject
 {

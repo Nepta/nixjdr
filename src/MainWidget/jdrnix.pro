@@ -12,22 +12,21 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 TARGET = jdrnix
 TEMPLATE = app
 
-
 SOURCES += main.cpp\
-        mainwindow.cpp \
+    mainwindow.cpp \
     startdialog.cpp \
-    chatserver.cpp \
-    chatcommon.cpp \
-    chatclient.cpp \
     user.cpp \
-    chatheader.cpp
+    chat/chatserver.cpp \
+    chat/chatcommon.cpp \
+    chat/chatclient.cpp \
+    chat/chatheader.cpp
 
 HEADERS  += mainwindow.h \
     startdialog.h \
-    chatserver.h \
-    chatcommon.h \
-    chatclient.h \
     user.h \
-    chatheader.h
+    chat/chatserver.h \
+    chat/chatcommon.h \
+    chat/chatclient.h \
+    chat/chatheader.h
 
 FORMS    += mainwindow.ui
