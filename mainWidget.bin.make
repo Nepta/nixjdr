@@ -109,16 +109,16 @@ ifeq ($(config),release)
 endif
 
 OBJECTS := \
+	$(OBJDIR)/mainwindow.o \
 	$(OBJDIR)/startdialog.o \
 	$(OBJDIR)/main.o \
-	$(OBJDIR)/mainwindow.o \
 	$(OBJDIR)/QTSFMLCanvas.o \
-	$(OBJDIR)/Action.o \
-	$(OBJDIR)/Map.o \
-	$(OBJDIR)/CoutAction.o \
 	$(OBJDIR)/SpriteList.o \
 	$(OBJDIR)/ActionChooser.o \
 	$(OBJDIR)/Canvas.o \
+	$(OBJDIR)/CoutAction.o \
+	$(OBJDIR)/Map.o \
+	$(OBJDIR)/Action.o \
 	$(OBJDIR)/moc_mainwindow.o \
 	$(OBJDIR)/moc_startdialog.o \
 
@@ -190,25 +190,16 @@ endif
 	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -MF $(@:%.o=%.d) -c "$<"
 endif
 
+$(OBJDIR)/mainwindow.o: src/MainWidget/mainwindow.cpp
+	@echo $(notdir $<)
+	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -MF $(@:%.o=%.d) -c "$<"
 $(OBJDIR)/startdialog.o: src/MainWidget/startdialog.cpp
 	@echo $(notdir $<)
 	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -MF $(@:%.o=%.d) -c "$<"
 $(OBJDIR)/main.o: src/MainWidget/main.cpp
 	@echo $(notdir $<)
 	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -MF $(@:%.o=%.d) -c "$<"
-$(OBJDIR)/mainwindow.o: src/MainWidget/mainwindow.cpp
-	@echo $(notdir $<)
-	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -MF $(@:%.o=%.d) -c "$<"
 $(OBJDIR)/QTSFMLCanvas.o: src/Qt-sfml/QTSFML/QTSFMLCanvas.cpp
-	@echo $(notdir $<)
-	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -MF $(@:%.o=%.d) -c "$<"
-$(OBJDIR)/Action.o: src/Qt-sfml/QTSFML/Action.cpp
-	@echo $(notdir $<)
-	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -MF $(@:%.o=%.d) -c "$<"
-$(OBJDIR)/Map.o: src/Qt-sfml/QTSFML/Map.cpp
-	@echo $(notdir $<)
-	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -MF $(@:%.o=%.d) -c "$<"
-$(OBJDIR)/CoutAction.o: src/Qt-sfml/QTSFML/CoutAction.cpp
 	@echo $(notdir $<)
 	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -MF $(@:%.o=%.d) -c "$<"
 $(OBJDIR)/SpriteList.o: src/Qt-sfml/QTSFML/SpriteList.cpp
@@ -218,6 +209,15 @@ $(OBJDIR)/ActionChooser.o: src/Qt-sfml/QTSFML/ActionChooser.cpp
 	@echo $(notdir $<)
 	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -MF $(@:%.o=%.d) -c "$<"
 $(OBJDIR)/Canvas.o: src/Qt-sfml/QTSFML/Canvas.cpp
+	@echo $(notdir $<)
+	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -MF $(@:%.o=%.d) -c "$<"
+$(OBJDIR)/CoutAction.o: src/Qt-sfml/QTSFML/CoutAction.cpp
+	@echo $(notdir $<)
+	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -MF $(@:%.o=%.d) -c "$<"
+$(OBJDIR)/Map.o: src/Qt-sfml/QTSFML/Map.cpp
+	@echo $(notdir $<)
+	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -MF $(@:%.o=%.d) -c "$<"
+$(OBJDIR)/Action.o: src/Qt-sfml/QTSFML/Action.cpp
 	@echo $(notdir $<)
 	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -MF $(@:%.o=%.d) -c "$<"
 $(OBJDIR)/moc_mainwindow.o: $(MOCDIR)/moc_mainwindow.cpp

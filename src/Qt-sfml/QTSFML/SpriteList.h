@@ -4,19 +4,58 @@
 #include <SFML/Graphics.hpp>
 
 class SpriteList{
-public: std::vector<std::pair<sf::Texture, std::vector<sf::Sprite>>> list_; //R.A.C.H.E.
+public:
+    // List of texture paired with its sprite list
+    std::vector<std::pair<sf::Texture, std::vector<sf::Sprite>>> list_; //R.A.C.H.E.
 
 private:
-	SpriteList(){}; // private constructor, you can only access by instance() static methode
-	SpriteList(const SpriteList&) = delete;
-	SpriteList& operator=(const SpriteList&) = delete;
+    SpriteList(); // private constructor, you can only access by instance() static methode
+    SpriteList(const SpriteList&) = delete; // prevent copy constructor
+    SpriteList& operator=(const SpriteList&) = delete; // prevent copy constructor
 	
 
 public:
+    /**
+     * Look for the sprite placed at (x,y)
+     *
+     * @brief searchSprite
+     * @param x
+     * @param y
+     * @return The sprite at (x,y)
+     */
 	sf::Sprite* searchSprite(int x, int y);
+
+    /**
+     * @brief instance
+     * @return The sprite list
+     */
 	static SpriteList& instance();
+
+    /**
+     * Add a new texture to the list
+     *
+     * @brief newTexture
+     */
 	void newTexture(sf::Texture); //add a texture in the list
+
+    /**
+     * Add a new sprite to the list of a texture
+     *
+     * @brief addSprite
+     * @param x
+     * @param y
+     * @param position
+     */
 	void addSprite(int x, int y, int position=0); //add a sprite in the list at the position (texture number)
+
+    /**
+     * Remove a sprite of the list of a texture
+     *
+     * @brief delSprite
+     * @param x
+     * @param y
+     * @param position
+     */
 	void delSprite(int x, int y, int position=0); //add a sprite in the list at the position (texture number)
 };
 

@@ -2,6 +2,10 @@
 #include <iostream>
 #include <vector>
 
+SpriteList::SpriteList(){
+
+}
+
 SpriteList& SpriteList::instance(){
 	static SpriteList *instance = new SpriteList();
 	return *instance;
