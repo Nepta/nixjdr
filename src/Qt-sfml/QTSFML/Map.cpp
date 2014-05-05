@@ -15,8 +15,9 @@ Map::Map(QWidget* Parent, const QPoint& Position, const QSize& Size) :
 {
 }
 
-void Map::setMap(QString mapPath){
+Map* Map::setMap(QString mapPath){
 	image_.loadFromFile(mapPath.toStdString());
+	return this;
 }
 
 void Map::OnInit(){

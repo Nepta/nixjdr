@@ -1,3 +1,4 @@
+#include <QMdiSubWindow>
 #include "QTSFMLCanvas.h"
 
 #ifdef Q_WS_X11
@@ -6,18 +7,18 @@
 #endif
 
 QSFMLCanvas::QSFMLCanvas(QWidget* Parent, const QPoint& Position,
-    const QSize& Size, unsigned int FrameTime) : QWidget(Parent),
+	 const QSize& Size, unsigned int FrameTime) : QMdiSubWindow(Parent),
     myInitialized (false)
 {
     // Setup some states to allow direct rendering into the widget
-    setAttribute(Qt::WA_PaintOnScreen);
-    setAttribute(Qt::WA_OpaquePaintEvent);
-    setAttribute(Qt::WA_NoSystemBackground);
+	 setAttribute(Qt::WA_PaintOnScreen);
+	 setAttribute(Qt::WA_OpaquePaintEvent);
+	 setAttribute(Qt::WA_NoSystemBackground);
     // Set strong focus to enable keyboard events to be received
-    setFocusPolicy(Qt::StrongFocus);
+	 setFocusPolicy(Qt::StrongFocus);
     // Setup the widget geometry
     move(Position);
-    resize(Size);
+	 resize(Size);
     // Setup the timer
     myTimer.setInterval(FrameTime);
 }

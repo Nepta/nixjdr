@@ -4,8 +4,9 @@
 #include <QWidget>
 #include <SFML/Graphics.hpp>
 #include <QTimer>
+#include <QMdiSubWindow>
 
-class QSFMLCanvas : public QWidget, public sf::RenderWindow
+class QSFMLCanvas : public QMdiSubWindow, public sf::RenderWindow
 {
 public :
 
