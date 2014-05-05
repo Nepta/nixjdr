@@ -15,8 +15,12 @@ Map::Map(QWidget* Parent, const QPoint& Position, const QSize& Size) :
 {
 }
 
+void Map::setMap(QString mapPath){
+	image_.loadFromFile(mapPath.toStdString());
+}
+
 void Map::OnInit(){
-    image_.loadFromFile("resource/littleForest.png");
+
 
     // Dimensions d'une tile (a parametrer avec parametres)
     tileHeight_ = 32;
