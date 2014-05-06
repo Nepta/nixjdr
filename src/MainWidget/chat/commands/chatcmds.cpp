@@ -45,6 +45,8 @@ ChatCmds::ChatCmds()
 }
 
 ChatCmds::~ChatCmds() {
+    qDeleteAll(m_UserCommands);
+    qDeleteAll(m_ServerCommands);
 }
 
 AbstractChatCmd *ChatCmds::getUserCommand(ChatCodes code) {

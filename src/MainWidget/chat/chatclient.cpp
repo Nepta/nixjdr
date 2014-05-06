@@ -31,8 +31,6 @@ ChatClient::ChatClient(const QString &serverIP, const quint16 &serverPort) :
 
 ChatClient::~ChatClient() {
     delete m_User;
-    qDeleteAll(m_UsersList.begin(), m_UsersList.end());
-    m_UsersList.clear();
 }
 
 /**
