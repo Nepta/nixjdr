@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QtGui>
 #include <QtNetwork>
+#include "commands/chatcmds.h"
 #include "user.h"
 
 class ChatClient : public QObject
@@ -18,7 +19,7 @@ public:
 
 private slots:
     void socketError(QAbstractSocket::SocketError error);
-    void processNewMessage(ChatHeader, QString);
+    void processNewMessage(ChatHeader header, QString message);
     void clientConnected();
     void clientDisconnected(User &user);
 
@@ -27,6 +28,8 @@ signals:
 
 private:
     User *m_User;
+    QHash<QString, User *> m_UsersList;
+    ChatCmds m_ChatCmds;
 };
 
 #endif // CHATCLIENT_H

@@ -5,13 +5,16 @@ ChatCmdNickname::ChatCmdNickname()
 {
 }
 
+// TODO REFACTO (CODE DUPLICATION)
 void ChatCmdNickname::execute(ChatHeader &header, QString &arg) {
+    QString oldNickname;
     QString checkedNickname;
     User *tempUser;
 
     // save the user and remove the old value from the hash
-    tempUser = AbstractChatCmd::getListUsers()->value(header.getSocketUserNickname());
-    AbstractChatCmd::getListUsers()->remove(header.getSocketUserNickname());
+    oldNickname = header.getSocketUserNickname();
+    tempUser = AbstractChatCmd::getUsersListServer()->value(oldNickname);
+    AbstractChatCmd::getUsersListServer()->remove(oldNickname);
 
     // new nickname
     checkedNickname = verifyAndGetNickname(arg);
@@ -19,24 +22,29 @@ void ChatCmdNickname::execute(ChatHeader &header, QString &arg) {
     // modify the nickname in user, header and add the new pair to the hash
     tempUser->setNickname(checkedNickname);
     header.setSocketUserNickname(checkedNickname);
-    AbstractChatCmd::getListUsers()->insert(checkedNickname, tempUser);
+    AbstractChatCmd::getUsersListServer()->insert(checkedNickname, tempUser);
 
     // acknowledge
-    emit cmdSendPacketToOne(ChatCodes::SRVCMD_NICK_ACK, checkedNickname, checkedNickname);
+    emit cmdSendPacketToOne(ChatCodes::SRVCMD_NICK_ACK,
+                            QString(oldNickname + " " + checkedNickname), checkedNickname);
 
     // TODO send updated list of users to all clients
 }
 
 void ChatCmdNickname::executeNewClientConnection(User *newUser) {
+    QString oldNickname;
     QString checkedNickname;
 
-    checkedNickname = verifyAndGetNickname("guest");
+    oldNickname = QString("guest");
+    checkedNickname = verifyAndGetNickname(oldNickname);
     newUser->setNickname(checkedNickname);
     emit cmdSendPacketToAll(ChatCodes::SRVCMD_MESSAGE,
                             tr("<em>%1 vient de se connecter</em>").arg(checkedNickname));
-    AbstractChatCmd::getListUsers()->insert(checkedNickname, newUser);
-    emit cmdSendPacketToOne(ChatCodes::SRVCMD_NICK_ACK, checkedNickname, checkedNickname);
+    AbstractChatCmd::getUsersListServer()->insert(checkedNickname, newUser);
+    emit cmdSendPacketToOne(ChatCodes::SRVCMD_NICK_ACK,
+                            QString(oldNickname + " " + checkedNickname), checkedNickname);
 }
+// END TODO REFACTO (CODE DUPLICATION)
 
 QString ChatCmdNickname::getHelp() {
     return tr("/nickname pseudonyme - Permet de modifier votre pseudonyme.");
@@ -45,7 +53,7 @@ QString ChatCmdNickname::getHelp() {
 QString ChatCmdNickname::verifyAndGetNickname(QString nickname) {
     QString tempNickname = nickname;
 
-    while (AbstractChatCmd::getListUsers()->contains(tempNickname)) {
+    while (AbstractChatCmd::getUsersListServer()->contains(tempNickname)) {
         tempNickname += "_";
     }
 

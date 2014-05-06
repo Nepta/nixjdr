@@ -1,7 +1,10 @@
 #include "chatcmds.h"
-#include "chatcmdnickname.h"
 #include "chatcmdmessageall.h"
+#include "chatcmdnickname.h"
 #include "chatcmdwhisper.h"
+#include "chatcmdmessageui.h"
+#include "chatcmdnicknameack.h"
+#include "chatcmdwhisperrep.h"
 
 inline uint qHash(const ChatCodes &key)
 {
@@ -15,25 +18,41 @@ const QHash<QString, ChatCodes> ChatCmds::s_CommandCodes = {
 
 ChatCmds::ChatCmds()
 {
-    m_Commands.insert(ChatCodes::USERCMD_MESSAGE, new ChatCmdMessageAll());
-    m_Commands.insert(ChatCodes::USERCMD_NICK, new ChatCmdNickname());
-    m_Commands.insert(ChatCodes::USERCMD_WHISPER, new ChatCmdWhisper());
+    // User commands
+    m_UserCommands.insert(ChatCodes::USERCMD_MESSAGE, new ChatCmdMessageAll());
+    m_UserCommands.insert(ChatCodes::USERCMD_NICK, new ChatCmdNickname());
+    m_UserCommands.insert(ChatCodes::USERCMD_WHISPER, new ChatCmdWhisper());
 
-    // allow each command to send packets
-    foreach (AbstractChatCmd *command, m_Commands) {
+    // Server commands
+    m_ServerCommands.insert(ChatCodes::SRVCMD_MESSAGE, new ChatCmdMessageUI);
+    m_ServerCommands.insert(ChatCodes::SRVCMD_NICK_ACK, new ChatCmdNicknameAck);
+    m_ServerCommands.insert(ChatCodes::SRVCMD_WHISPER_REP, new ChatCmdWhisperRep);
+
+    // Allow each command to send packets (server side)
+    foreach (AbstractChatCmd *command, m_UserCommands) {
         connect(command, SIGNAL(cmdSendPacketToAll(ChatCodes, QString)),
                 this, SIGNAL(cmdSendPacketToAll(ChatCodes, QString)));
 
         connect(command, SIGNAL(cmdSendPacketToOne(ChatCodes, QString, QString)),
                 this, SIGNAL(cmdSendPacketToOne(ChatCodes, QString,QString )));
     }
+
+    // Allow each command to send messages to the UI (client side)
+    foreach (AbstractChatCmd *command, m_ServerCommands) {
+        connect(command, SIGNAL(cmdSendMessageToUI(QString)),
+                this, SIGNAL(cmdSendMessageToUI(QString)));
+    }
 }
 
 ChatCmds::~ChatCmds() {
 }
 
-AbstractChatCmd *ChatCmds::getCommand(ChatCodes code) {
-    return m_Commands.value(code);
+AbstractChatCmd *ChatCmds::getUserCommand(ChatCodes code) {
+    return m_UserCommands.value(code);
+}
+
+AbstractChatCmd *ChatCmds::getServerCommand(ChatCodes code) {
+    return m_ServerCommands.value(code);
 }
 
 QString ChatCmds::getPrintableCommandsList() {

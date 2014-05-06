@@ -2,11 +2,11 @@
 #include "chatclient.h"
 #include "chatcommon.h"
 
-ChatClient::ChatClient() :
-    QObject()
+ChatClient::ChatClient()
 {
     QTcpSocket *socket = new QTcpSocket(this);
     m_User = new User(socket);
+    m_UsersList.insert(m_User->getNickname(), m_User);
 
     connect(m_User, SIGNAL(receivedFullData(ChatHeader, QString)),
             this, SLOT(processNewMessage(ChatHeader, QString)));
@@ -16,6 +16,11 @@ ChatClient::ChatClient() :
             this, SLOT(clientConnected()));
     connect(m_User, SIGNAL(socketErrorNotify(QAbstractSocket::SocketError)),
             this, SLOT(socketError(QAbstractSocket::SocketError)));
+
+    // init commands
+    AbstractChatCmd::setUsersListClient(&m_UsersList);
+    connect(&m_ChatCmds, SIGNAL(cmdSendMessageToUI(QString)),
+            this, SIGNAL(sendMessageToUI(QString)));
 }
 
 ChatClient::ChatClient(const QString &serverIP, const quint16 &serverPort) :
@@ -26,6 +31,8 @@ ChatClient::ChatClient(const QString &serverIP, const quint16 &serverPort) :
 
 ChatClient::~ChatClient() {
     delete m_User;
+    qDeleteAll(m_UsersList.begin(), m_UsersList.end());
+    m_UsersList.clear();
 }
 
 /**
@@ -77,26 +84,11 @@ void ChatClient::socketError(QAbstractSocket::SocketError error)
     emit sendMessageToUI(errMsg);
 }
 
-// TODO REFACTO
 void ChatClient::processNewMessage(ChatHeader header, QString message) {
-    switch (header.getCmd()) {
-        case (quint16) ChatCodes::SRVCMD_MESSAGE :
-            emit sendMessageToUI(message);
-            break;
+    ChatCodes code = (ChatCodes) header.getCmd();
 
-        case (quint16) ChatCodes::SRVCMD_NICK_ACK :
-            m_User->setNickname(message);
-            emit sendMessageToUI(tr("Vous avez changé votre peudo en ") + message);
-            break;
-
-        case (quint16) ChatCodes::SRVCMD_WHISPER_REP :
-            QString formattedMsg = QString("<div style=\" color:#9E6B94;\">%1</div>")
-                                   .arg(message);
-            emit sendMessageToUI(formattedMsg);
-            break;
-    }
+    m_ChatCmds.getServerCommand(code)->execute(header, message);
 }
-// END TODO REFACTO
 
 void ChatClient::clientConnected()
 {

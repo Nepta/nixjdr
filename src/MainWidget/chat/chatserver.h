@@ -29,7 +29,7 @@ signals:
 
 private:
     QTcpServer *m_Server;
-    QHash<QString, User *> m_ListUsers;
+    QHash<QString, User *> m_UsersList;
     ChatCmds m_ChatCmds;
 };
 

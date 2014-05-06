@@ -4,13 +4,12 @@
 #include "chatcommon.h"
 #include "chatserver.h"
 
-ChatServer::ChatServer() :
-    m_ChatCmds()
+ChatServer::ChatServer()
 {
     m_Server = new QTcpServer(this);
 
     // init commands
-    AbstractChatCmd::setListUsers(&m_ListUsers);
+    AbstractChatCmd::setUsersListServer(&m_UsersList);
     connect(&m_ChatCmds, SIGNAL(cmdSendPacketToAll(ChatCodes, QString)),
             this, SLOT(sendPacketToAll(ChatCodes, QString)));
     connect(&m_ChatCmds, SIGNAL(cmdSendPacketToOne(ChatCodes, QString, QString)),
@@ -20,8 +19,8 @@ ChatServer::ChatServer() :
 ChatServer::~ChatServer()
 {
     m_Server->deleteLater();
-    qDeleteAll(m_ListUsers.begin(), m_ListUsers.end());
-    m_ListUsers.clear();
+    qDeleteAll(m_UsersList.begin(), m_UsersList.end());
+    m_UsersList.clear();
 }
 
 void ChatServer::init() {
@@ -51,7 +50,7 @@ void ChatServer::newClientConnection()
     User *newUser = new User(m_Server->nextPendingConnection());
 
     ChatCmdNickname *cmdNickname = dynamic_cast<ChatCmdNickname*>(
-                m_ChatCmds.getCommand(ChatCodes::USERCMD_NICK));
+                m_ChatCmds.getUserCommand(ChatCodes::USERCMD_NICK));
     cmdNickname->executeNewClientConnection(newUser);
 
     // process and send a packet when fully received
@@ -65,22 +64,18 @@ void ChatServer::userDisconnected(User &user)
     sendPacketToAll(ChatCodes::SRVCMD_MESSAGE,
                     user.getNickname() + tr(" <em>vient de se déconnecter</em>"));
 
-    m_ListUsers.remove(user.getNickname());
+    m_UsersList.remove(user.getNickname());
 
     // The socket may still be in use even though the client is disconnected (e.g.
     // message still being sent).
     user.deleteLater();
 }
 
-/**
- * @brief ChatServer::processNewMessage
- * @param header
- * @param message
- */
+
 void ChatServer::processNewMessage(ChatHeader header, QString message) {
     ChatCodes code = (ChatCodes) header.getCmd();
 
-    m_ChatCmds.getCommand(code)->execute(header, message);
+    m_ChatCmds.getUserCommand(code)->execute(header, message);
 }
 
 void ChatServer::sendPacketToAll(ChatCodes code, QString message)
@@ -88,9 +83,9 @@ void ChatServer::sendPacketToAll(ChatCodes code, QString message)
     QByteArray packet;
     packet = ChatCommon::preparePacket(code, message);
 
-    for (int i = 0; i < m_ListUsers.values().size(); i++)
+    for (int i = 0; i < m_UsersList.values().size(); i++)
     {
-        m_ListUsers.values()[i]->getSocket()->write(packet);
+        m_UsersList.values()[i]->getSocket()->write(packet);
     }
 }
 
@@ -99,7 +94,7 @@ void ChatServer::sendPacketToOne(ChatCodes code, QString message,
     QByteArray packet;
 
     packet = ChatCommon::preparePacket(code, message);
-    m_ListUsers.value(receiverNickname)->getSocket()->write(packet);
+    m_UsersList.value(receiverNickname)->getSocket()->write(packet);
 }
 
 quint16 ChatServer::getPort()

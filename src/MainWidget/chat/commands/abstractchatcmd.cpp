@@ -1,15 +1,25 @@
 #include "abstractchatcmd.h"
 
-QHash<QString, User *> *AbstractChatCmd::s_ListUsers = NULL;
+QHash<QString, User *> *AbstractChatCmd::s_UsersListClient = NULL;
+QHash<QString, User *> *AbstractChatCmd::s_UsersListServer = NULL;
 
 AbstractChatCmd::AbstractChatCmd() {
 
 }
 
-void AbstractChatCmd::setListUsers(QHash<QString, User *> *listUsers) {
-    AbstractChatCmd::s_ListUsers = listUsers;
+void AbstractChatCmd::setUsersListClient(QHash<QString, User *> *usersList) {
+    AbstractChatCmd::s_UsersListClient = usersList;
 }
 
-QHash<QString, User *> *AbstractChatCmd::getListUsers() {
-    return AbstractChatCmd::s_ListUsers;
+QHash<QString, User *> *AbstractChatCmd::getUsersListClient() {
+    return AbstractChatCmd::s_UsersListClient;
 }
+
+void AbstractChatCmd::setUsersListServer(QHash<QString, User *> *usersList) {
+    AbstractChatCmd::s_UsersListServer = usersList;
+}
+
+QHash<QString, User *> *AbstractChatCmd::getUsersListServer() {
+    return AbstractChatCmd::s_UsersListServer;
+}
+

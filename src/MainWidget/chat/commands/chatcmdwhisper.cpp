@@ -15,7 +15,7 @@ void ChatCmdWhisper::execute(ChatHeader &header, QString &arg) {
     sender = header.getSocketUserNickname();
     target = ChatCommon::extractFirstWord(strippedMsg);
 
-    if (AbstractChatCmd::getListUsers()->contains(target)) {
+    if (AbstractChatCmd::getUsersListServer()->contains(target)) {
         msgTarget = tr("[%1] chuchote: %2")
                 .arg(sender)
                 .arg(strippedMsg);

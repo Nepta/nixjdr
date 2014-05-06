@@ -13,8 +13,10 @@ class AbstractChatCmd : public QObject
     Q_OBJECT
 
 public:
-    static void setListUsers(QHash<QString, User *> *listUsers);
-    static QHash<QString, User *> *getListUsers();
+    static QHash<QString, User *> *getUsersListClient();
+    static QHash<QString, User *> *getUsersListServer();
+    static void setUsersListClient(QHash<QString, User *> *usersList);
+    static void setUsersListServer(QHash<QString, User *> *usersList);
 
     AbstractChatCmd();
 
@@ -23,12 +25,14 @@ public:
     virtual QString getHelp() = 0;
 
 private:
-    static QHash<QString, User *> *s_ListUsers;
+    static QHash<QString, User *> *s_UsersListClient;
+    static QHash<QString, User *> *s_UsersListServer;
 
 signals:
     void cmdSendPacketToAll(ChatCodes code, QString message);
     void cmdSendPacketToOne(ChatCodes code, QString message,
                                      QString receiverNickname);
+    void cmdSendMessageToUI(const QString &msg);
 };
 
 #endif // ABSTRACTCHATCMD_H

@@ -29,16 +29,19 @@ public:
     ChatCmds();
     ~ChatCmds();
 
-    AbstractChatCmd *getCommand(ChatCodes code);
+    AbstractChatCmd *getUserCommand(ChatCodes code);
+    AbstractChatCmd *getServerCommand(ChatCodes code);
     QString getPrintableCommandsList();
 
 private:
-    QHash<ChatCodes, AbstractChatCmd *> m_Commands;
+    QHash<ChatCodes, AbstractChatCmd *> m_UserCommands;
+    QHash<ChatCodes, AbstractChatCmd *> m_ServerCommands;
 
 signals:
     void cmdSendPacketToAll(ChatCodes code, QString message);
     void cmdSendPacketToOne(ChatCodes code, QString message,
                             QString receiverNickname);
+    void cmdSendMessageToUI(const QString &msg);
 };
 
 #endif // CHATCMDS_H
