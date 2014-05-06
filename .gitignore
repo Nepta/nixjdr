@@ -22,5 +22,10 @@ obj/
 *.app
 *.bin
 
+# Automatically generated makefiles
+Makefile
+*.make
+
 # Qt
 *.user
+build-*

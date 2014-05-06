@@ -5,7 +5,7 @@
 #include <QDesktopWidget>
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include "../Qt-sfml/QTSFML/Map.h"
+#include "QTSFML/Map.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),

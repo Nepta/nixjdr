@@ -27,10 +27,10 @@ solution "Template"
 		links {"sfml-graphics","sfml-window","sfml-system"}
 		buildoptions{"-fPIC"}
 		files{
-			"src/Qt-sfml/**.h",
-			"src/Qt-sfml/**.cpp",
-			"src/Qt-sfml/**.ui",
-			"src/Qt-sfml/**.qrc"
+			"src/QTSFML/**.h",
+			"src/QTSFML/**.cpp",
+			"src/QTSFML/**.ui",
+			"src/QTSFML/**.qrc"
 		}
 --		excludes {"src/Qt-sfml/QTSFML/Main.cpp"}
 		
@@ -47,10 +47,10 @@ solution "Template"
 			"src/MainWidget/*.qrc"
 		}
 		files{
-			"src/Qt-sfml/**.h",
-			"src/Qt-sfml/**.cpp",
-			"src/Qt-sfml/**.ui",
-			"src/Qt-sfml/**.qrc"
+			"src/QTSFML/**.h",
+			"src/QTSFML/**.cpp",
+			"src/QTSFML/**.ui",
+			"src/QTSFML/**.qrc"
 		}
 		excludes {"src/Qt-sfml/QTSFML/Main.cpp"}
 --		links {"qtsfml.bin"}		
