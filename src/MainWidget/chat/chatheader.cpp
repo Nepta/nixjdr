@@ -1,10 +1,10 @@
+#include "chat/commands/chatcmds.h"
 #include "chatheader.h"
-#include "chatcommon.h"
 
 ChatHeader::ChatHeader()
 {
     m_MsgSize = 0;
-    m_Cmd = ChatCommon::UNDEFINED;
+    m_Cmd = (quint16) ChatCodes::UNDEFINED;
 }
 
 ChatHeader::ChatHeader(quint16 msgSize, quint16 cmd)

@@ -65,6 +65,8 @@ void MainWindow::setupPlayer() {
 void MainWindow::setupChatServer() {
     m_chatServer = new ChatServer;
 
+    // connect needed before init to display system messages in the chat during
+    // initialization
     MainWindow::connect(m_chatServer, SIGNAL(sendMessageToUI(QString)),
                         this, SLOT(receivedMessage(QString)));
 
@@ -80,22 +82,8 @@ void MainWindow::setupChatClient() {
 
     MainWindow::connect(m_chatClient, SIGNAL(sendMessageToUI(QString)),
                         this, SLOT(receivedMessage(QString)));
-    MainWindow::connect(m_chatClient, SIGNAL(clientConnected()),
-                        this, SLOT(connectionSuccess()));
-    MainWindow::connect(m_chatClient, SIGNAL(clientDisconnected(User&)),
-                        this, SLOT(disconnectionSuccess(User&)));
 }
 
 void MainWindow::receivedMessage(const QString &msg) {
     ui->msgList->append(msg);
-}
-
-void MainWindow::connectionSuccess()
-{
-    ui->msgList->append(tr("<em>Connexion réussie !</em>"));
-}
-
-void MainWindow::disconnectionSuccess(User &user)
-{
-    ui->msgList->append(tr("<em>Déconnecté du serveur</em>"));
 }

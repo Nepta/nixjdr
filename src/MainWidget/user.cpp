@@ -4,7 +4,6 @@
 User::User(QTcpSocket *socket)
 {
     m_Socket = socket;
-    //m_MsgSize = 0;
     m_Header = ChatHeader();
     m_Nickname = QString("guest");
 

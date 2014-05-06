@@ -24,8 +24,6 @@ private slots:
     void on_actionModify_Background_triggered();
     void on_msgField_returnPressed();
     void receivedMessage(const QString &msg);
-    void connectionSuccess();
-    void disconnectionSuccess(User &user);
 
 signals:
     void initMainWindow();

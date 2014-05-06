@@ -1,44 +1,42 @@
-#include "chatcommon.h"
 #include <QDataStream>
 
-const QHash<QString, ChatCommon::commands> ChatCommon::commandCodes = {
-    {"/nickname", ChatCommon::USERCMD_NICK},
-    {"/w", ChatCommon::USERCMD_WHISPER}
-};
+#include "commands/chatcmds.h"
+#include "chatcommon.h"
 
 ChatCommon::ChatCommon()
 {
 }
 
 QByteArray ChatCommon::preparePacket(const QString &msg) {
-    quint16 cmdCode;
+    ChatCodes cmdCode;
     QString strippedMsg;
 
-    cmdCode = translateCommand(msg);
+    cmdCode = translateCommandToCode(msg);
     strippedMsg = stripCommandFromMessage(msg);
 
     return preparePacket(cmdCode, strippedMsg);
 }
 
-QByteArray ChatCommon::preparePacket(quint16 cmdCode, const QString &msg) {
+QByteArray ChatCommon::preparePacket(ChatCodes cmdCode, const QString &msg) {
     QByteArray packet;
     QDataStream out(&packet, QIODevice::WriteOnly);
 
-    out << quint16(0) << cmdCode << msg;
+    out << quint16(0) << (quint16) cmdCode << msg;
     out.device()->seek(0);
     out << (quint16) (packet.size() - 2*sizeof(quint16));
 
     return packet;
 }
 
-quint16 ChatCommon::translateCommand(const QString &msg) {
+ChatCodes ChatCommon::translateCommandToCode(const QString &msg) {
     QString cmd = msg.split(" ").at(0);
 
     if (!msg.startsWith("/")) {
-        return ChatCommon::USERCMD_MESSAGE;
+        return ChatCodes::USERCMD_MESSAGE;
     }
     else {
-        return commandCodes.value(cmd, ChatCommon::USERCMD_MESSAGE); // TODO remplacer par HELP
+        // TODO remplacer par HELP
+        return ChatCmds::s_CommandCodes.value(cmd, ChatCodes::USERCMD_MESSAGE);
     }
 }
 
@@ -82,7 +80,7 @@ bool ChatCommon::messageReadyToReceive(QTcpSocket *socket, ChatHeader &header, Q
     }
 
     // command
-    if (header.getCmd() == ChatCommon::UNDEFINED) {
+    if (header.getCmd() == (quint16) ChatCodes::UNDEFINED) {
         quint16 cmd;
 
         if (socket->bytesAvailable() < (qint64) sizeof(quint16)) {

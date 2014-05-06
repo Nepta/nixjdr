@@ -1,18 +1,26 @@
+#include "commands/abstractchatcmd.h"
 #include "chatclient.h"
 #include "chatcommon.h"
 
-ChatClient::ChatClient() :
-    QObject()
+ChatClient::ChatClient()
 {
     QTcpSocket *socket = new QTcpSocket(this);
     m_User = new User(socket);
+    m_UsersList.insert(m_User->getNickname(), m_User);
 
     connect(m_User, SIGNAL(receivedFullData(ChatHeader, QString)),
             this, SLOT(processNewMessage(ChatHeader, QString)));
-    connect(m_User, SIGNAL(userDisconnectedNotify(User&)), this, SIGNAL(clientDisconnected(User&)));
-    connect(m_User, SIGNAL(userConnectedNotify()), this, SIGNAL(clientConnected()));
+    connect(m_User, SIGNAL(userDisconnectedNotify(User&)),
+            this, SLOT(clientDisconnected(User&)));
+    connect(m_User, SIGNAL(userConnectedNotify()),
+            this, SLOT(clientConnected()));
     connect(m_User, SIGNAL(socketErrorNotify(QAbstractSocket::SocketError)),
             this, SLOT(socketError(QAbstractSocket::SocketError)));
+
+    // init commands
+    AbstractChatCmd::setUsersListClient(&m_UsersList);
+    connect(&m_ChatCmds, SIGNAL(cmdSendMessageToUI(QString)),
+            this, SIGNAL(sendMessageToUI(QString)));
 }
 
 ChatClient::ChatClient(const QString &serverIP, const quint16 &serverPort) :
@@ -23,6 +31,8 @@ ChatClient::ChatClient(const QString &serverIP, const quint16 &serverPort) :
 
 ChatClient::~ChatClient() {
     delete m_User;
+    qDeleteAll(m_UsersList.begin(), m_UsersList.end());
+    m_UsersList.clear();
 }
 
 /**
@@ -75,20 +85,17 @@ void ChatClient::socketError(QAbstractSocket::SocketError error)
 }
 
 void ChatClient::processNewMessage(ChatHeader header, QString message) {
-    switch (header.getCmd()) {
-        case ChatCommon::SRVCMD_MESSAGE :
-            emit sendMessageToUI(message);
-            break;
+    ChatCodes code = (ChatCodes) header.getCmd();
 
-        case ChatCommon::SRVCMD_NICK_ACK :
-            m_User->setNickname(message);
-            emit sendMessageToUI(tr("Vous avez changé votre peudo en ") + message);
-            break;
+    m_ChatCmds.getServerCommand(code)->execute(header, message);
+}
 
-        case ChatCommon::SRVCMD_WHISPER_REP :
-            QString formattedMsg = QString("<div style=\" color:#9E6B94;\">%1</div>")
-                                   .arg(message);
-            emit sendMessageToUI(formattedMsg);
-            break;
-    }
+void ChatClient::clientConnected()
+{
+    emit sendMessageToUI(tr("<em>Connexion réussie !</em>"));
+}
+
+void ChatClient::clientDisconnected(User &user)
+{
+    emit sendMessageToUI(tr("<em>Déconnecté du serveur</em>"));
 }
