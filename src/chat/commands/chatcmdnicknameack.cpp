@@ -11,8 +11,10 @@ void ChatCmdNicknameAck::execute(ChatHeader &header, QString &arg) {
 
     oldNickname = ChatCommon::extractFirstWord(newNickname);
 
-    AbstractChatCmd::getUsersListClient()->value(oldNickname)
-                                   ->setNickname(newNickname);
+    User* user = AbstractChatCmd::getUsersListClient()->value(oldNickname);
+    user->setNickname(newNickname);
+    AbstractChatCmd::getUsersListClient()->remove(oldNickname);
+    AbstractChatCmd::getUsersListClient()->insert(newNickname, user);
 
     emit cmdSendMessageToUI(tr("Vous avez changé votre peudo en %1").arg(newNickname));
 }
