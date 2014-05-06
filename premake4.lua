@@ -11,48 +11,16 @@ solution "Template"
 
 	configuration "release"
 		flags {"OptimizeSpeed"}
-	
-	project "map.bin"
-		kind "ConsoleApp"
-		language "C++"
-
-		files {"src/GameBoard/*"}
-		links {"sfml-graphics","sfml-window","sfml-system"}
-
-	project "qtsfml.bin"
-		kind "WindowedApp"
---		kind "StaticLib"
-		language "C++"
-		uses {"QtGui","QtWidgets"}
-		links {"sfml-graphics","sfml-window","sfml-system"}
-		buildoptions{"-fPIC"}
-		files{
-			"src/QTSFML/**.h",
-			"src/QTSFML/**.cpp",
-			"src/QTSFML/**.ui",
-			"src/QTSFML/**.qrc"
-		}
---		excludes {"src/Qt-sfml/QTSFML/Main.cpp"}
-		
 
 	project "mainWidget.bin"
 		kind "WindowedApp"
 		language "C++"
-		uses {"QtGui","QtWidgets"}
+		uses {"QtGui", "QtWidgets"}
 		buildoptions{"-fPIC"}
 		files{
-			"src/MainWidget/*.h",
-			"src/MainWidget/*.cpp",
-			"src/MainWidget/*.ui",
-			"src/MainWidget/*.qrc"
-		}
-		files{
-			"src/QTSFML/**.h",
-			"src/QTSFML/**.cpp",
-			"src/QTSFML/**.ui",
-			"src/QTSFML/**.qrc"
-		}
-		excludes {"src/Qt-sfml/QTSFML/Main.cpp"}
---		links {"qtsfml.bin"}		
+			"src/**.h",
+			"src/**.cpp",
+			"src/**.ui",
+			"src/**.qrc"
+		}		
 		links {"sfml-graphics","sfml-window","sfml-system"}
-

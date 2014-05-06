@@ -1,59 +1,66 @@
+#include <QMdiSubWindow>
 #include "Canvas.h"
-#include "Action.h"
-#include "CoutAction.h"
-#include "ActionChooser.h"
-#include "SpriteList.h"
 
-#include <iostream>
-#include <string>
-#include <QDir>
-#include <QDebug>
-#include <QMouseEvent>
+#ifdef Q_WS_X11
+    #include <Qt/qx11info_x11.h>
+    #include <X11/Xlib.h>
+#endif
 
-Canvas::Canvas(QWidget* Parent, const QPoint& Position, const QSize& Size) :
-	QSFMLCanvas(Parent, Position, Size){
+Canvas::Canvas(QWidget* Parent, const QPoint& Position,
+	 const QSize& Size, unsigned int FrameTime) : QMdiSubWindow(Parent),
+    myInitialized (false)
+{
+    // Setup some states to allow direct rendering into the widget
+	 setAttribute(Qt::WA_PaintOnScreen);
+	 setAttribute(Qt::WA_OpaquePaintEvent);
+	 setAttribute(Qt::WA_NoSystemBackground);
+    // Set strong focus to enable keyboard events to be received
+	 setFocusPolicy(Qt::StrongFocus);
+    // Setup the widget geometry
+    move(Position);
+	 resize(Size);
+    // Setup the timer
+    myTimer.setInterval(FrameTime);
 }
 
-void Canvas::OnInit(){
-	image_.loadFromFile("resource/resize_suwako.png");
-	SpriteList::instance().newTexture(image_);
-	SpriteList::instance().addSprite(0,0);
-	
-//	// On paramètre le sprite
-//	sprite_.setTexture(image_);
-//	sprite_.setOrigin(0.f,0.f);
-//	
-//	std::vector<sf::Sprite>& sprite = *new std::vector<sf::Sprite>();
-//	sprite.push_back(sprite_);
-//	spriteList_.push_back({image_, sprite});
-//	
-	
-	setMouseTracking(true);
-	clock_.restart();
+Canvas::~Canvas(){
+
 }
 
-void Canvas::OnUpdate(){
-	// On efface l'écran
-	clear();
+void Canvas::showEvent(QShowEvent*)
+{
+    if (!myInitialized)
+    {
+        // Under X11, we need to flush the commands sent to the server to ensure that
+        // SFML will get an updated view of the windows
+        #ifdef Q_WS_X11
+            XFlush(QX11Info::display());
+        #endif
 
-	// Et on l'affiche
-//	draw(sprite_);
-	drawList();
-	clock_.restart();
+
+        this->Window::create(this->winId());
+        // Let the derived class do its specific stuff
+        OnInit();
+        // Setup the timer to trigger a refresh at specified framerate
+        connect(&myTimer, SIGNAL(timeout()), this, SLOT(repaint()));
+        myTimer.start();
+
+        myInitialized = true;
+    }
 }
 
-void Canvas::mouseReleaseEvent(QMouseEvent *event){
-	int&& x = event->x();
-	int&& y = event->y();
-	Action& action = ActionChooser::instance().choose(x,y);
-	action.execute();
-	delete &action;
+QPaintEngine* Canvas::paintEngine() const
+{
+    return 0;
 }
 
-void Canvas::drawList(){
-	for(auto &texturedSprite : SpriteList::instance().list_){ //R.A.C.H.E.
-		for(auto &sprite : texturedSprite.second){
-			draw(sprite);
-		}
-	}
+void Canvas::paintEvent(QPaintEvent*)
+{
+    // Let the derived class do its specific stuff
+    OnUpdate();
+    // Display on screen
+    RenderWindow::display();
 }
+
+void Canvas::OnInit() {}
+void Canvas::OnUpdate() {}

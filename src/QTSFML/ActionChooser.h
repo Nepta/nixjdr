@@ -2,7 +2,7 @@
 #define __ActionChooser_H__
 
 #include <vector>
-#include "QTSFMLCanvas.h"
+#include "Canvas.h"
 #include "Action.h"
 /**
  * @brief The ActionChooser class

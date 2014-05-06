@@ -1,24 +1,29 @@
 #ifndef CANVAS_H
 #define CANVAS_H
 
-#include "QTSFMLCanvas.h"
+#include <QWidget>
 #include <SFML/Graphics.hpp>
-#include <QPushButton>
-#include <vector>
+#include <QTimer>
+#include <QMdiSubWindow>
 
-class Canvas : public QSFMLCanvas{
-	sf::Clock clock_;
-	sf::Texture image_;
-	sf::Sprite sprite_;
+class Canvas : public QMdiSubWindow, public sf::RenderWindow
+{
+public :
 
-private:
-	void drawList();
+    Canvas(QWidget* Parent, const QPoint& Position, const QSize& Size,
+        unsigned int FrameTime = 0);
+    virtual ~Canvas();
 
-public:
-    Canvas(QWidget* Parent, const QPoint& Position, const QSize& Size);
-    void OnInit();
-    void OnUpdate();
-    void mouseReleaseEvent(QMouseEvent *event);
+private :
+
+    virtual void OnInit();
+    virtual void OnUpdate();
+    virtual QPaintEngine* paintEngine() const;
+    virtual void showEvent(QShowEvent*);
+    virtual void paintEvent(QPaintEvent*);
+
+    QTimer myTimer;
+    bool   myInitialized;
 };
 
 #endif // CANVAS_H

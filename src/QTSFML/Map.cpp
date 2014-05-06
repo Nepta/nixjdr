@@ -11,7 +11,7 @@
 #include <QMouseEvent>
 
 Map::Map(QWidget* Parent, const QPoint& Position, const QSize& Size) :
-    QSFMLCanvas(Parent, Position, Size)
+    Canvas(Parent, Position, Size)
 {
 }
 

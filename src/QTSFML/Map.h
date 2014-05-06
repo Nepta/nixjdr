@@ -1,11 +1,11 @@
 #ifndef MAP_H
 #define MAP_H
 
-#include "QTSFMLCanvas.h"
+#include "Canvas.h"
 #include <SFML/Graphics.hpp>
 #include <vector>
 
-class Map : public QSFMLCanvas
+class Map : public Canvas
 {
 private:
 	sf::Clock clock_;
