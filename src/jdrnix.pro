@@ -27,8 +27,7 @@ SOURCES += main.cpp\
     chat/commands/chatcmds.cpp \
     chat/commands/chatcmdmessageui.cpp \
     chat/commands/chatcmdnicknameack.cpp \
-    chat/commands/chatcmdwhisperrep.cpp \
-    chat/chatprocessor.cpp
+    chat/commands/chatcmdwhisperrep.cpp
 
 HEADERS  += mainwindow.h \
     startdialog.h \
@@ -37,6 +36,7 @@ HEADERS  += mainwindow.h \
     chat/chatcommon.h \
     chat/chatclient.h \
     chat/chatheader.h \
+    chat/chatprocessor.h \
     chat/commands/abstractchatcmd.h \
     chat/commands/chatcmdmessageall.h \
     chat/commands/chatcmdnickname.h \
@@ -44,7 +44,6 @@ HEADERS  += mainwindow.h \
     chat/commands/chatcmds.h \
     chat/commands/chatcmdmessageui.h \
     chat/commands/chatcmdnicknameack.h \
-    chat/commands/chatcmdwhisperrep.h \
-    chat/chatprocessor.h
+    chat/commands/chatcmdwhisperrep.h
 
 FORMS    += mainwindow.ui

@@ -9,7 +9,9 @@ class ChatProcessor : public QObject
     Q_OBJECT
 
 public:
-    ChatProcessor();
+    ChatProcessor(){}
+
+    virtual ~ChatProcessor(){}
 
 protected:
     ChatCmds m_ChatCmds;
