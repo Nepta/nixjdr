@@ -1,13 +1,14 @@
 #ifndef CHATSERVER_H
 #define CHATSERVER_H
 
-#include <QObject>
+//#include <QObject>
 #include <QtNetwork>
 #include "commands/chatcmds.h"
-#include "user.h"
+#include "chatprocessor.h"
 #include "chatheader.h"
+#include "user.h"
 
-class ChatServer : public QObject
+class ChatServer : public ChatProcessor
 {
     Q_OBJECT
 
@@ -30,7 +31,6 @@ signals:
 private:
     QTcpServer *m_Server;
     QHash<QString, User *> m_UsersList;
-    ChatCmds m_ChatCmds;
 };
 
 #endif // CHATSERVER_H

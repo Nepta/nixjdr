@@ -5,9 +5,10 @@
 #include <QtGui>
 #include <QtNetwork>
 #include "commands/chatcmds.h"
+#include "chatprocessor.h"
 #include "user.h"
 
-class ChatClient : public QObject
+class ChatClient : public ChatProcessor
 {
     Q_OBJECT
 public:
@@ -29,7 +30,6 @@ signals:
 private:
     User *m_User;
     QHash<QString, User *> m_UsersList;
-    ChatCmds m_ChatCmds;
 };
 
 #endif // CHATCLIENT_H
