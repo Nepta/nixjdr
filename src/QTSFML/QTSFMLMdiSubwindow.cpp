@@ -5,8 +5,6 @@
 
 QTSFMLMdiSubwindow::QTSFMLMdiSubwindow(QString filename, int height, int width, int margin)
 {
-    isMoving_ = false;
-
     setGeometry(10, 10, width, height + margin);
     setWindowTitle("Qt SFML");
 
@@ -16,18 +14,14 @@ QTSFMLMdiSubwindow::QTSFMLMdiSubwindow(QString filename, int height, int width, 
     map_->show();
 }
 
-void QTSFMLMdiSubwindow::mouseMoveEvent(QMouseEvent *event) {
-    QMdiSubWindow::mouseMoveEvent(event);
+void QTSFMLMdiSubwindow::mousePressEvent(QMouseEvent *event) {
+    QMdiSubWindow::mousePressEvent(event);
 
-    if (!isMoving_ && (event->buttons() & Qt::LeftButton)) {
-        //map_->setUpdatesEnabled(false);
-        map_->hide();
-        isMoving_ = true;
-    }
+    //map_->setUpdatesEnabled(false);
+    map_->hide();
 }
 
 void QTSFMLMdiSubwindow::mouseReleaseEvent(QMouseEvent* event) {
     //map_->setUpdatesEnabled(true);
     map_->show();
-    isMoving_ = false;
 }
