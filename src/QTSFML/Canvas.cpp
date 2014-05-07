@@ -11,14 +11,17 @@ Canvas::Canvas(QWidget* Parent, const QPoint& Position,
     myInitialized (false)
 {
     // Setup some states to allow direct rendering into the widget
-	 setAttribute(Qt::WA_PaintOnScreen);
-	 setAttribute(Qt::WA_OpaquePaintEvent);
-	 setAttribute(Qt::WA_NoSystemBackground);
+    setAttribute(Qt::WA_PaintOnScreen);
+    setAttribute(Qt::WA_OpaquePaintEvent);
+    setAttribute(Qt::WA_NoSystemBackground);
+
     // Set strong focus to enable keyboard events to be received
-	 setFocusPolicy(Qt::StrongFocus);
+    setFocusPolicy(Qt::StrongFocus);
+
     // Setup the widget geometry
     move(Position);
-	 resize(Size);
+    resize(Size);
+
     // Setup the timer
     myTimer.setInterval(FrameTime);
 }
@@ -38,7 +41,7 @@ void Canvas::showEvent(QShowEvent*)
         #endif
 
 
-        this->Window::create(this->winId());
+        Window::create(this->winId());
         // Let the derived class do its specific stuff
         OnInit();
         // Setup the timer to trigger a refresh at specified framerate

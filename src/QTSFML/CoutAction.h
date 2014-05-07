@@ -3,9 +3,9 @@
 
 #include "Action.h"
 
-class CoutAction : public Action{
+class NoAction : public Action{
 public:
-	CoutAction(int x, int y);
+    NoAction(int x, int y);
 	void execute();
 };
 

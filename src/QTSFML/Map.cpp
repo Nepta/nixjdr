@@ -21,8 +21,6 @@ Map* Map::setMap(QString mapPath){
 }
 
 void Map::OnInit(){
-
-
     // Dimensions d'une tile (a parametrer avec parametres)
     tileHeight_ = 32;
     tileWidth_ = 32;
@@ -38,12 +36,6 @@ void Map::OnInit(){
 
     sf::Texture texture;
     texture.loadFromFile("resource/cirno.png");
-
-    sf::Sprite square;
-    square.setTexture(image_);
-    square.setOrigin(0.f, 0.f);
-
-    // put mini suwako
     SpriteList::instance().newTexture(texture);
 
     clock_.restart();
@@ -103,21 +95,21 @@ void Map::mouseReleaseEvent(QMouseEvent *event){
 
 	 Action& action = ActionChooser::instance().choose(x,y);
 	 action.execute();
-	 delete &action;
+     delete &action;
 }
 
 void Map::mousePressEvent(QMouseEvent *event){
-	int x = event->x()/tileWidth_*tileWidth_;
+    int x = event->x()/tileWidth_*tileWidth_;
 	int y = event->y()/tileHeight_*tileHeight_;
-	ActionChooser::instance().selectSprite(x,y);
+    ActionChooser::instance().selectSprite(x,y);
 }
 
 void Map::mouseMoveEvent(QMouseEvent *event){
-	ActionChooser::instance().isMoving(true);
+    ActionChooser::instance().isMoving(true);
 	int x = event->x();
 	int y = event->y();
 	Action& action = ActionChooser::instance().choose(x,y);
 	action.execute();
 	delete &action;
-	ActionChooser::instance().isMoving(false);
+    ActionChooser::instance().isMoving(false);
 }

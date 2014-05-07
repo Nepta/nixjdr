@@ -44,7 +44,7 @@ Action& ActionChooser::choose(int x, int y){
 	ActionType type(selectAction(x,y));
 	switch(type){
 		case Cout:
-			action = new CoutAction(x,y);
+			action = new NoAction(x,y);
 			break;
 
 		case Add:
@@ -60,7 +60,7 @@ Action& ActionChooser::choose(int x, int y){
 			break;
 
 		default:
-			action = new CoutAction(x,y);
+			action = new NoAction(x,y);
 			break;
 	}
 	if(!isMovementAnimation_){
