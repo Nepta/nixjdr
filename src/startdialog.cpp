@@ -1,4 +1,5 @@
 #include "startdialog.h"
+#include "mainwindow.h"
 
 StartDialog::StartDialog(QWidget *parent) :
     QMessageBox(parent)
@@ -11,10 +12,10 @@ StartDialog::StartDialog(QWidget *parent) :
     setButtonText(QMessageBox::No, "Joueur");
 }
 
-void StartDialog::resultExec() {
+bool StartDialog::resultExec() {
     if (exec() == QMessageBox::No) {
-        // TODO
+        return MainWindow::ROLE_PLAYER;
     } else {
-        // TODO
+        return MainWindow::ROLE_MJ;
     }
 }

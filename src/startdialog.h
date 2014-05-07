@@ -8,7 +8,7 @@ class StartDialog : public QMessageBox
     Q_OBJECT
 public:
     explicit StartDialog(QWidget *parent = 0);
-    void resultExec();
+    bool resultExec();
 
 signals:
 
