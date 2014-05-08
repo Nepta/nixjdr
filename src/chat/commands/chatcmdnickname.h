@@ -11,7 +11,7 @@ public:
     ChatCmdNickname();
 
     void execute(ChatHeader &header, QString &arg);
-    void executeNewClientConnection(User *newUser);
+    void executeOnUser(User *newUser, QString currentNickname, QString oldNickname, bool isNew);
     QString getHelp();
     QString verifyAndGetNickname(QString nickname);
 };

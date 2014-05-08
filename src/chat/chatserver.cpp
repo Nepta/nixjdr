@@ -51,7 +51,7 @@ void ChatServer::newClientConnection()
 
     ChatCmdNickname *cmdNickname = dynamic_cast<ChatCmdNickname*>(
                 m_ChatCmds.getUserCommand(ChatCodes::USERCMD_NICK));
-    cmdNickname->executeNewClientConnection(newUser);
+    cmdNickname->executeOnUser(newUser, "guest", "guest", true);
 
     // process and send a packet when fully received
     connect(newUser, SIGNAL(receivedFullData(ChatHeader, QString)),
