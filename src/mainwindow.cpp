@@ -47,10 +47,10 @@ void MainWindow::on_actionModify_Background_triggered(){
 		int height = 600;
 		int width = 800;
 		int margin = 24;
-		QMdiSubWindow* SFMLWidget = new QTSFMLMdiSubwindow(filename, height, width, margin);
+		QTSFMLMdiSubwindow* SFMLWidget = new QTSFMLMdiSubwindow(filename, height, width, margin);
 		ui->tableArea->addSubWindow(SFMLWidget);
 		SFMLWidget->show();
-//		connect(m_tokenMenu->getUi()->listToken, SIGNAL(itemClicked(QListWidgetItem*)), map, SLOT(changeToken(QListWidgetItem*)));
+		connect(m_tokenMenu->getUi()->listToken, SIGNAL(itemClicked(QListWidgetItem*)), SFMLWidget->map(), SLOT(changeToken(QListWidgetItem*)));
 	}
 }
 

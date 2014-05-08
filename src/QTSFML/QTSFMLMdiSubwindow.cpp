@@ -13,3 +13,7 @@ QTSFMLMdiSubwindow::QTSFMLMdiSubwindow(QString filename, int height, int width, 
     map_->setMap(filename);
     map_->show();
 }
+
+Map* QTSFMLMdiSubwindow::map(){
+	return map_;
+}
