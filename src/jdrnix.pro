@@ -49,7 +49,8 @@ SOURCES += \
     chat/commands/CmdRoll.cpp \
     chat/commands/CmdDisconnect.cpp \
     chat/commands/CmdNicknamesList.cpp \
-    chat/commands/CmdNicknamesListAck.cpp
+    chat/commands/CmdNicknamesListAck.cpp \
+    connexionHelper.cpp
 
 HEADERS  += \
     MainWindow.h \
@@ -86,9 +87,11 @@ HEADERS  += \
     chat/commands/CmdRoll.h \
     chat/commands/CmdDisconnect.h \
     chat/commands/CmdNicknamesList.h \
-    chat/commands/CmdNicknamesListAck.h
+    chat/commands/CmdNicknamesListAck.h \
+    connexionHelper.h
 
 FORMS    += mainwindow.ui \
     TokenMenu.ui \
     DiceMenu.ui \
-    ChatWidget.ui
+    ChatWidget.ui \
+    connexionHelper.ui
