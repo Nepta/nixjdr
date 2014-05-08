@@ -29,3 +29,6 @@ Makefile
 # Qt
 *.user
 build-*
+
+# Generated Doxygen documentation
+doc/
