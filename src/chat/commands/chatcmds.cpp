@@ -5,6 +5,7 @@
 #include "chatcmdmessageui.h"
 #include "chatcmdnicknameack.h"
 #include "chatcmdwhisperrep.h"
+#include "chatcmdroll.h"
 
 inline uint qHash(const ChatCodes &key)
 {
@@ -13,7 +14,8 @@ inline uint qHash(const ChatCodes &key)
 
 const QHash<QString, ChatCodes> ChatCmds::s_CommandCodes = {
     {"/nickname", ChatCodes::USERCMD_NICK},
-    {"/w", ChatCodes::USERCMD_WHISPER}
+    {"/w", ChatCodes::USERCMD_WHISPER},
+    {"/roll", ChatCodes::USERCMD_ROLL}
 };
 
 ChatCmds::ChatCmds()
@@ -22,11 +24,13 @@ ChatCmds::ChatCmds()
     m_UserCommands.insert(ChatCodes::USERCMD_MESSAGE, new ChatCmdMessageAll());
     m_UserCommands.insert(ChatCodes::USERCMD_NICK, new ChatCmdNickname());
     m_UserCommands.insert(ChatCodes::USERCMD_WHISPER, new ChatCmdWhisper());
+    m_UserCommands.insert(ChatCodes::USERCMD_ROLL, new ChatCmdRoll());
 
     // Server commands
     m_ServerCommands.insert(ChatCodes::SRVCMD_MESSAGE, new ChatCmdMessageUI);
     m_ServerCommands.insert(ChatCodes::SRVCMD_NICK_ACK, new ChatCmdNicknameAck);
     m_ServerCommands.insert(ChatCodes::SRVCMD_WHISPER_REP, new ChatCmdWhisperRep);
+
 
     // Allow each command to send packets (server side)
     foreach (AbstractChatCmd *command, m_UserCommands) {
