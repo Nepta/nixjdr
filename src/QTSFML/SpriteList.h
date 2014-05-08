@@ -8,12 +8,6 @@ public:
     // List of texture paired with its sprite list
     std::vector<std::pair<sf::Texture, std::vector<sf::Sprite>>> list_; //R.A.C.H.E.
 
-private:
-    SpriteList(); // private constructor, you can only access by instance() static methode
-    SpriteList(const SpriteList&) = delete; // prevent copy constructor
-    SpriteList& operator=(const SpriteList&) = delete; // prevent copy constructor
-	
-
 public:
     /**
      * Look for the sprite placed at (x,y)
@@ -24,12 +18,6 @@ public:
      * @return The sprite at (x,y)
      */
 	sf::Sprite* searchSprite(int x, int y);
-
-    /**
-     * @brief instance
-     * @return The sprite list
-     */
-	static SpriteList& instance();
 
     /**
      * Add a new texture to the list

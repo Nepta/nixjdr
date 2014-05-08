@@ -2,15 +2,6 @@
 #include <iostream>
 #include <vector>
 
-SpriteList::SpriteList(){
-
-}
-
-SpriteList& SpriteList::instance(){
-	static SpriteList *instance = new SpriteList();
-	return *instance;
-}
-
 void SpriteList::newTexture(sf::Texture texture){
 	std::vector<sf::Sprite> sprite;
 	list_.push_back({texture, sprite});

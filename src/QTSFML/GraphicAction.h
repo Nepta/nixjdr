@@ -11,8 +11,9 @@ protected:
 	SpriteList& spriteList_;
 
 public:
-	GraphicAction(int x, int y) : 
-		Action(x,y), spriteList_(SpriteList::instance()){}
+	GraphicAction(int x, int y, SpriteList& spriteList) :
+		Action(x,y), spriteList_(spriteList){}
+
 	virtual void execute() = 0;
 };
 

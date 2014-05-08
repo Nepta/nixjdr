@@ -2,16 +2,16 @@
 #define MAP_H
 
 #include "Canvas.h"
+#include "SpriteList.h"
 #include <SFML/Graphics.hpp>
 #include <vector>
 
-class Map : public Canvas
-{
-private:
+class Map : public Canvas{
 	sf::Clock clock_;
 	sf::Texture image_;
 	sf::Sprite sprite_;
-	std::vector<std::pair<sf::Texture, std::vector<sf::Sprite>>> spriteList_;
+
+	SpriteList spriteList_;
 
 	int tileHeight_;
 	int tileWidth_;
@@ -25,7 +25,7 @@ public:
 	void OnUpdate();
 	void mouseReleaseEvent(QMouseEvent *event);
 	void mousePressEvent(QMouseEvent *event);
-    void mouseMoveEvent(QMouseEvent * event);
+	void mouseMoveEvent(QMouseEvent * event);
 
 private:
 	void drawList();

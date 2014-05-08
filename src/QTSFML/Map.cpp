@@ -36,7 +36,7 @@ void Map::OnInit(){
 
     sf::Texture texture;
     texture.loadFromFile("resource/cirno.png");
-    SpriteList::instance().newTexture(texture);
+	 spriteList_.newTexture(texture);
 
     clock_.restart();
 }
@@ -74,7 +74,7 @@ void Map::OnUpdate()
 }
 
 void Map::drawList(){
-    for(auto &texturedSprite : SpriteList::instance().list_){
+	 for(auto &texturedSprite : spriteList_.list_){
         for(auto &sprite : texturedSprite.second){
             draw(sprite);
         }
@@ -82,33 +82,34 @@ void Map::drawList(){
 }
 
 void Map::mouseReleaseEvent(QMouseEvent *event){
-    int&& x = event->x();
-    int&& y = event->y();
+	int&& x = event->x();
+	int&& y = event->y();
 
 
-    // Pour obtenir l'origine de la case sur laquelle afficher
-    x = x/tileWidth_;
-    x = x*tileWidth_;
+	// Pour obtenir l'origine de la case sur laquelle afficher
+	x = x/tileWidth_;
+	x = x*tileWidth_;
 
-    y = y/tileHeight_;
-    y = y*tileHeight_;
+	y = y/tileHeight_;
+	y = y*tileHeight_;
 
-	 Action& action = ActionChooser::instance().choose(x,y);
-	 action.execute();
-     delete &action;
+	Action& action = ActionChooser::instance().choose(x,y,spriteList_);
+	action.execute();
+	delete &action;
 }
 
 void Map::mousePressEvent(QMouseEvent *event){
-    int x = event->x()/tileWidth_*tileWidth_;
+	int x = event->x()/tileWidth_*tileWidth_;
 	int y = event->y()/tileHeight_*tileHeight_;
-    ActionChooser::instance().selectSprite(x,y);
+	sf::Sprite *selectedSprite = spriteList_.searchSprite(x,y);
+	ActionChooser::instance().selectSprite(selectedSprite);
 }
 
 void Map::mouseMoveEvent(QMouseEvent *event){
     ActionChooser::instance().isMoving(true);
 	int x = event->x();
 	int y = event->y();
-	Action& action = ActionChooser::instance().choose(x,y);
+	Action& action = ActionChooser::instance().choose(x,y,spriteList_);
 	action.execute();
 	delete &action;
     ActionChooser::instance().isMoving(false);

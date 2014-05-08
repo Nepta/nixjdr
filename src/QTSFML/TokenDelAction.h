@@ -6,7 +6,7 @@
 class TokenDelAction : public GraphicAction{
 
 public:
-	TokenDelAction(int x, int y) : GraphicAction(x,y){}
+	TokenDelAction(int x, int y, SpriteList& spriteList) : GraphicAction(x,y,spriteList){}
 	void execute(){
 		spriteList_.delSprite(x(), y());
 	}

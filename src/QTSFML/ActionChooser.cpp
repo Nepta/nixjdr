@@ -11,16 +11,16 @@ ActionChooser& ActionChooser::instance(){
 	return *instance;
 }
 
-void ActionChooser::selectSprite(int x, int y){
-	selectedSprite_ = SpriteList::instance().searchSprite(x,y);
+void ActionChooser::selectSprite(sf::Sprite* selectedSprite){
+	selectedSprite_ = selectedSprite;
 }
 
 void ActionChooser::isMoving(bool state){
 	isMovementAnimation_ = state;
 }
 
-ActionChooser::ActionType ActionChooser::selectAction(int x, int y){
-	void* hasSprite = SpriteList::instance().searchSprite(x,y);
+ActionChooser::ActionType ActionChooser::selectAction(sf::Sprite *sprite){
+	void* hasSprite = sprite;
 	ActionType type = Cout;
 	
 	if(!selectedSprite_ && !hasSprite && !isMovementAnimation_){
@@ -39,24 +39,25 @@ ActionChooser::ActionType ActionChooser::selectAction(int x, int y){
 	return type;
 }
 
-Action& ActionChooser::choose(int x, int y){
+Action& ActionChooser::choose(int x, int y, SpriteList& spriteList){
 	Action *action;
-	ActionType type(selectAction(x,y));
+	sf::Sprite *hasSprite = spriteList.searchSprite(x,y);
+	ActionType type(selectAction(hasSprite));
 	switch(type){
 		case Cout:
 			action = new NoAction(x,y);
 			break;
 
 		case Add:
-			action = new TokenAddAction(x,y);
+			action = new TokenAddAction(x,y,spriteList);
 			break;
 
 		case Remove:
-			action = new TokenDelAction(x,y);
+			action = new TokenDelAction(x,y,spriteList);
 			break;
 
 		case Move:
-			action = new TokenMoveAction(*selectedSprite_,x,y);
+			action = new TokenMoveAction(*selectedSprite_,x,y,spriteList);
 			break;
 
 		default:
