@@ -11,7 +11,7 @@ class Canvas : public QMdiSubWindow, public sf::RenderWindow
 public :
 
     Canvas(QWidget* Parent, const QPoint& Position, const QSize& Size,
-        unsigned int FrameTime = 0);
+		  unsigned int FrameTime = 120);
     virtual ~Canvas();
 
 private :
