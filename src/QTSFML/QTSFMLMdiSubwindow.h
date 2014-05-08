@@ -8,9 +8,8 @@ class QTSFMLMdiSubwindow : public QMdiSubWindow
 {
 public:
     QTSFMLMdiSubwindow(QString filename, int height, int width, int margin);
-    void mousePressEvent(QMouseEvent *event);
-    void mouseReleaseEvent(QMouseEvent *event);
 
+private:
     Map *map_;
 };
 

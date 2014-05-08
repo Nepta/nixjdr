@@ -24,7 +24,7 @@ class ActionChooser{
 private:
 	ActionChooser(){}
 	enum ActionType{
-		Cout,
+        None,
 		Remove,
 		Add,
 		Move

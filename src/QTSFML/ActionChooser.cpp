@@ -1,5 +1,5 @@
 #include "ActionChooser.h"
-#include "CoutAction.h"
+#include "TokenNoAction.h"
 #include "TokenAddAction.h"
 #include "TokenDelAction.h"
 #include "TokenMoveAction.h"
@@ -21,7 +21,7 @@ void ActionChooser::isMoving(bool state){
 
 ActionChooser::ActionType ActionChooser::selectAction(sf::Sprite *sprite){
 	void* hasSprite = sprite;
-	ActionType type = Cout;
+    ActionType type = None;
 	
 	if(!selectedSprite_ && !hasSprite && !isMovementAnimation_){
 		type = Add;
@@ -33,7 +33,7 @@ ActionChooser::ActionType ActionChooser::selectAction(sf::Sprite *sprite){
 		type = Remove;
 	}
 	else{
-		type = Cout;
+        type = None;
 	}
 	
 	return type;
@@ -44,8 +44,8 @@ Action& ActionChooser::choose(int x, int y, SpriteList& spriteList){
 	sf::Sprite *hasSprite = spriteList.searchSprite(x,y);
 	ActionType type(selectAction(hasSprite));
 	switch(type){
-		case Cout:
-			action = new NoAction(x,y);
+        case None:
+            action = new TokenNoAction(x,y);
 			break;
 
 		case Add:
@@ -61,7 +61,7 @@ Action& ActionChooser::choose(int x, int y, SpriteList& spriteList){
 			break;
 
 		default:
-			action = new NoAction(x,y);
+            action = new TokenNoAction(x,y);
 			break;
 	}
 	if(!isMovementAnimation_){

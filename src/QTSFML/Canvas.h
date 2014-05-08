@@ -8,22 +8,24 @@
 
 class Canvas : public QMdiSubWindow, public sf::RenderWindow
 {
-public :
+    Q_OBJECT
 
+public :
     Canvas(QWidget* Parent, const QPoint& Position, const QSize& Size,
 		  unsigned int FrameTime = 120);
     virtual ~Canvas();
 
 private :
-
-    virtual void OnInit();
-    virtual void OnUpdate();
+    virtual void onInit() = 0;
+    virtual void onUpdate() = 0;
     virtual QPaintEngine* paintEngine() const;
     virtual void showEvent(QShowEvent*);
-    virtual void paintEvent(QPaintEvent*);
 
     QTimer myTimer;
     bool   myInitialized;
+
+private slots:
+    void sfmlPaint();
 };
 
 #endif // CANVAS_H

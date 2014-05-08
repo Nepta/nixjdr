@@ -21,8 +21,8 @@ class Map : public Canvas{
 public:
 	Map(QWidget* Parent, const QPoint& Position, const QSize& Size);
 	Map* setMap(QString path);
-	void OnInit();
-	void OnUpdate();
+	void onInit();
+	void onUpdate();
 	void mouseReleaseEvent(QMouseEvent *event);
 	void mousePressEvent(QMouseEvent *event);
 	void mouseMoveEvent(QMouseEvent * event);

@@ -13,15 +13,3 @@ QTSFMLMdiSubwindow::QTSFMLMdiSubwindow(QString filename, int height, int width, 
     map_->setMap(filename);
     map_->show();
 }
-
-void QTSFMLMdiSubwindow::mousePressEvent(QMouseEvent *event) {
-    QMdiSubWindow::mousePressEvent(event);
-
-    //map_->setUpdatesEnabled(false);
-    map_->hide();
-}
-
-void QTSFMLMdiSubwindow::mouseReleaseEvent(QMouseEvent* event) {
-    //map_->setUpdatesEnabled(true);
-    map_->show();
-}

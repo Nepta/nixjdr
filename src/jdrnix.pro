@@ -11,8 +11,6 @@ QT += core gui network
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 # SFML
-INCLUDEPATH += /usr/local/include/SFML/include
-DEPENDPATH += /usr/local/include/SFML/include
 LIBS += -L /usr/local/lib -lsfml-audio -lsfml-graphics -lsfml-network -lsfml-window -lsfml-system
 
 TARGET = jdrnix.out
@@ -28,7 +26,7 @@ SOURCES += \
     QTSFML/Map.cpp \
     QTSFML/Action.cpp \
     QTSFML/ActionChooser.cpp \
-    QTSFML/CoutAction.cpp \
+    QTSFML/TokenNoAction.cpp \
     QTSFML/SpriteList.cpp \
     QTSFML/QTSFMLMdiSubwindow.cpp \
     chat/chatserver.cpp \
@@ -52,12 +50,12 @@ HEADERS  += \
     QTSFML/Map.h \
     QTSFML/Action.h \
     QTSFML/ActionChooser.h \
-    QTSFML/CoutAction.h \
     QTSFML/GraphicAction.h \
     QTSFML/SpriteList.h \
     QTSFML/TokenAddAction.h \
     QTSFML/TokenDelAction.h \
     QTSFML/TokenMoveAction.h \
+    QTSFML/TokenNoAction.h \
     QTSFML/QTSFMLMdiSubwindow.h \
     chat/chatserver.h \
     chat/chatcommon.h \

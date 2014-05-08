@@ -1,6 +1,6 @@
 #include "Map.h"
 #include "Action.h"
-#include "CoutAction.h"
+#include "TokenNoAction.h"
 #include "ActionChooser.h"
 #include "SpriteList.h"
 
@@ -20,7 +20,7 @@ Map* Map::setMap(QString mapPath){
 	return this;
 }
 
-void Map::OnInit(){
+void Map::onInit(){
     // Dimensions d'une tile (a parametrer avec parametres)
     tileHeight_ = 32;
     tileWidth_ = 32;
@@ -41,7 +41,7 @@ void Map::OnInit(){
     clock_.restart();
 }
 
-void Map::OnUpdate()
+void Map::onUpdate()
 {
     // On efface l'écran
     this->clear();
