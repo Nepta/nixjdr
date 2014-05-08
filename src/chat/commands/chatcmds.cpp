@@ -2,6 +2,7 @@
 #include "chatcmdmessageall.h"
 #include "chatcmdnickname.h"
 #include "chatcmdwhisper.h"
+#include "chatcmddisconnect.h"
 #include "chatcmdmessageui.h"
 #include "chatcmdnicknameack.h"
 #include "chatcmdwhisperrep.h"
@@ -19,14 +20,14 @@ const QHash<QString, ChatCodes> ChatCmds::s_CommandCodes = {
 ChatCmds::ChatCmds()
 {
     // User commands
-    m_UserCommands.insert(ChatCodes::USERCMD_MESSAGE, new ChatCmdMessageAll());
-    m_UserCommands.insert(ChatCodes::USERCMD_NICK, new ChatCmdNickname());
-    m_UserCommands.insert(ChatCodes::USERCMD_WHISPER, new ChatCmdWhisper());
+    m_UserCommands.insert(ChatCodes::USERCMD_MESSAGE, new ChatCmdMessageAll);
+    m_UserCommands.insert(ChatCodes::USERCMD_NICK, new ChatCmdNickname);
+    m_UserCommands.insert(ChatCodes::USERCMD_WHISPER, new ChatCmdWhisper);
 
-    // Server commands
     m_ServerCommands.insert(ChatCodes::SRVCMD_MESSAGE, new ChatCmdMessageUI);
     m_ServerCommands.insert(ChatCodes::SRVCMD_NICK_ACK, new ChatCmdNicknameAck);
     m_ServerCommands.insert(ChatCodes::SRVCMD_WHISPER_REP, new ChatCmdWhisperRep);
+    m_ServerCommands.insert(ChatCodes::SRVCMD_DISCONNECT, new ChatCmdDisconnect);
 
     // Allow each command to send packets (server side)
     foreach (AbstractChatCmd *command, m_UserCommands) {

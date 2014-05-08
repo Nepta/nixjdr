@@ -61,8 +61,7 @@ void ChatServer::newClientConnection()
 
 void ChatServer::userDisconnected(User &user)
 {
-    sendPacketToAll(ChatCodes::SRVCMD_MESSAGE,
-                    user.getNickname() + tr(" <em>vient de se déconnecter</em>"));
+    sendPacketToAll(ChatCodes::SRVCMD_DISCONNECT, user.getNickname());
 
     m_UsersList.remove(user.getNickname());
 

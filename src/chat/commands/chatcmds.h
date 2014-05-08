@@ -14,6 +14,7 @@ enum class ChatCodes {
     SRVCMD_MESSAGE,
     SRVCMD_NICK_ACK,
     SRVCMD_WHISPER_REP,
+    SRVCMD_DISCONNECT,
 
     UNDEFINED
 };
