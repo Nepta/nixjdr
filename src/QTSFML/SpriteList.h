@@ -6,7 +6,7 @@
 class SpriteList{
 public:
     // List of texture paired with its sprite list
-    std::vector<std::pair<sf::Texture, std::vector<sf::Sprite>>> list_; //R.A.C.H.E.
+    std::vector<std::pair<sf::Texture&, std::vector<sf::Sprite>>> list_; //R.A.C.H.E.
 
 public:
     /**
@@ -24,7 +24,7 @@ public:
      *
      * @brief newTexture
      */
-	void newTexture(sf::Texture); //add a texture in the list
+    void newTexture(sf::Texture&); //add a texture in the list
 
     /**
      * Add a new sprite to the list of a texture

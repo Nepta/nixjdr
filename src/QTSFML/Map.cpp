@@ -34,9 +34,12 @@ void Map::onInit(){
     sprite_.setTexture(image_);
     sprite_.setOrigin(0.f,0.f);
 
-    sf::Texture texture;
-    texture.loadFromFile("resource/cirno.png");
-	 spriteList_.newTexture(texture);
+//	sf::Texture texture;
+//	texture.loadFromFile("resource/cirno.png");
+//	spriteList_.newTexture(texture);
+
+    tokenTextureToLoad_.loadFromFile("resource/cirno.png");
+    spriteList_.newTexture(tokenTextureToLoad_);
 
     clock_.restart();
 }
@@ -79,6 +82,15 @@ void Map::drawList(){
             draw(sprite);
         }
     }
+}
+
+void Map::changeToken(QListWidgetItem * item)
+{
+    QString textSprite;
+    textSprite = QString("resource/")+item->text()+QString(".png");
+    qDebug() << textSprite;
+    tokenTextureToLoad_.loadFromFile(textSprite.toStdString());
+	 spriteList_.newTexture(tokenTextureToLoad_);
 }
 
 void Map::mouseReleaseEvent(QMouseEvent *event){

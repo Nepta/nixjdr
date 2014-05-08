@@ -2,7 +2,7 @@
 #include <iostream>
 #include <vector>
 
-void SpriteList::newTexture(sf::Texture texture){
+void SpriteList::newTexture(sf::Texture& texture){
 	std::vector<sf::Sprite> sprite;
 	list_.push_back({texture, sprite});
 }

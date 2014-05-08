@@ -41,7 +41,8 @@ SOURCES += \
     chat/commands/chatcmdmessageui.cpp \
     chat/commands/chatcmdnicknameack.cpp \
     chat/commands/chatcmdwhisperrep.cpp \
-    chat/commands/chatcmdroll.cpp
+    chat/commands/chatcmdroll.cpp \
+    tokenmenu.cpp
 
 HEADERS  += \
     mainwindow.h \
@@ -71,6 +72,8 @@ HEADERS  += \
     chat/commands/chatcmdmessageui.h \
     chat/commands/chatcmdnicknameack.h \
     chat/commands/chatcmdwhisperrep.h \
-    chat/commands/chatcmdroll.h
+    chat/commands/chatcmdroll.h \
+    tokenmenu.h
 
-FORMS    += mainwindow.ui
+FORMS    += mainwindow.ui \
+    tokenmenu.ui

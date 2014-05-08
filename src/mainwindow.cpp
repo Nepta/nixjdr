@@ -3,6 +3,9 @@
 #include <QMdiSubWindow>
 #include <QApplication>
 #include <QDesktopWidget>
+#include <QToolBox>
+#include <QPixmap>
+#include <QGridLayout>
 #include "QTSFML/QTSFMLMdiSubwindow.h"
 #include "QTSFML/Map.h"
 #include "mainwindow.h"
@@ -12,7 +15,12 @@ MainWindow::MainWindow(bool role, QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
+    m_tokenMenu = new TokenMenu();
+
     ui->setupUi(this);
+    ui->actionMenu->removeItem(0);
+    ui->actionMenu->addItem(m_tokenMenu, tr("Liste de jetons"));
+
     // QMainWindow::showFullScreen();
     m_role = role;
 
@@ -26,6 +34,7 @@ MainWindow::MainWindow(bool role, QWidget *parent) :
 MainWindow::~MainWindow()
 {
     delete ui;
+    delete m_tokenMenu;
     delete m_chatServer;
     delete m_chatClient;
 }
@@ -35,13 +44,13 @@ void MainWindow::on_actionModify_Background_triggered(){
 
 	if (filename != NULL) {
 		// On crée la fenêtre principale
-        int height = 600;
+		int height = 600;
 		int width = 800;
-        int margin = 24;
-
-        QTSFMLMdiSubwindow* SFMLWidget = new QTSFMLMdiSubwindow(filename, height, width, margin);
+		int margin = 24;
+		QMdiSubWindow* SFMLWidget = new QTSFMLMdiSubwindow(filename, height, width, margin);
 		ui->tableArea->addSubWindow(SFMLWidget);
-        SFMLWidget->show();
+		SFMLWidget->show();
+//		connect(m_tokenMenu->getUi()->listToken, SIGNAL(itemClicked(QListWidgetItem*)), map, SLOT(changeToken(QListWidgetItem*)));
 	}
 }
 

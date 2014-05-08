@@ -5,10 +5,13 @@
 #include "SpriteList.h"
 #include <SFML/Graphics.hpp>
 #include <vector>
+#include <QListWidget>
 
 class Map : public Canvas{
+	Q_OBJECT
 	sf::Clock clock_;
 	sf::Texture image_;
+    sf::Texture tokenTextureToLoad_;
 	sf::Sprite sprite_;
 
 	SpriteList spriteList_;
@@ -29,6 +32,9 @@ public:
 
 private:
 	void drawList();
+
+private slots:
+    void changeToken(QListWidgetItem*item);
 
 };
 #endif // MAP_H

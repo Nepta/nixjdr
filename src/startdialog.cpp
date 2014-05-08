@@ -6,6 +6,7 @@ StartDialog::StartDialog(QWidget *parent) :
 {
     setIcon(QMessageBox::Question);
     setWindowTitle("Choix rôle");
+    setWindowFlags(Qt::CustomizeWindowHint | Qt::WindowTitleHint | Qt::WindowMinMaxButtonsHint);
     setText("Comment voulez-vous utiliser l'application?");
     setStandardButtons(QMessageBox::Yes | QMessageBox::No);
     setButtonText(QMessageBox::Yes, "MJ");

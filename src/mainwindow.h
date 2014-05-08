@@ -4,6 +4,9 @@
 #include <QMainWindow>
 #include "chat/chatserver.h"
 #include "chat/chatclient.h"
+#include "tokenmenu.h"
+#include "ui_tokenmenu.h"
+
 
 namespace Ui {
 class MainWindow;
@@ -35,6 +38,7 @@ private:
     void setupChatClient();
     Ui::MainWindow *ui;
     bool m_role;
+    TokenMenu *m_tokenMenu;
     ChatServer *m_chatServer;
     ChatClient *m_chatClient;
 };
