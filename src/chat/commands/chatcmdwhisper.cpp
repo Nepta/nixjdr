@@ -2,14 +2,12 @@
 #include "chatcmdwhisper.h"
 #include "chatcmds.h"
 #include "chat/chatcommon.h"
-#include <QDebug>
 
 ChatCmdWhisper::ChatCmdWhisper()
 {
 }
 
 void ChatCmdWhisper::execute(ChatHeader &header, QString &arg) {
-    qDebug()<<"ping";
     QString strippedMsg, msgSender, msgTarget,
             sender, target;
 

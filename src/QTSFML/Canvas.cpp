@@ -7,7 +7,7 @@
 #endif
 
 Canvas::Canvas(QWidget* Parent, const QPoint& Position,
-	 const QSize& Size, unsigned int FrameTime) : QMdiSubWindow(Parent),
+    const QSize& Size, unsigned int FrameTime) : QMdiSubWindow(Parent),
     myInitialized (false)
 {
     // Set strong focus to enable keyboard events to be received

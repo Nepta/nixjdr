@@ -46,14 +46,16 @@ void MainWindow::on_actionModify_Background_triggered(){
                                                     "Images (*.png *.xpm *.jpg)");
 
 	if (filename != NULL) {
-		// On crée la fenêtre principale
-		int height = 600;
+        int height = 600;
 		int width = 800;
-		int margin = 24;
+        int margin = 24;
+
 		QTSFMLMdiSubwindow* SFMLWidget = new QTSFMLMdiSubwindow(filename, height, width, margin);
 		ui->tableArea->addSubWindow(SFMLWidget);
-		SFMLWidget->show();
-		connect(m_tokenMenu->getUi()->listToken, SIGNAL(itemClicked(QListWidgetItem*)), SFMLWidget->map(), SLOT(changeToken(QListWidgetItem*)));
+        SFMLWidget->show();
+
+        connect(m_tokenMenu->getUi()->listToken, SIGNAL(itemClicked(QListWidgetItem*)),
+                SFMLWidget->map(), SLOT(changeToken(QListWidgetItem*)));
 	}
 }
 

@@ -4,7 +4,6 @@
 #include "TokenDelAction.h"
 #include "TokenMoveAction.h"
 #include "SpriteList.h"
-#include <QDebug>
 
 ActionChooser& ActionChooser::instance(){
 	static ActionChooser *instance = new ActionChooser();

@@ -3,7 +3,6 @@
 #include <QTranslator>
 #include <QString>
 #include <QLibraryInfo>
-#include <QDebug>
 
 #include "startdialog.h"
 

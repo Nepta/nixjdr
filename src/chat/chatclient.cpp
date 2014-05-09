@@ -57,6 +57,7 @@ void ChatClient::sendMessageToServer(const QString &msg)
     formattedMsg = QString(msg);
 
     packet = ChatCommon::preparePacket(formattedMsg);
+
     m_User->getSocket()->write(packet);
 }
 
