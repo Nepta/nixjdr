@@ -8,38 +8,40 @@ ChatCmdRoll::ChatCmdRoll(QHash<ChatCodes, AbstractChatCmd *> &userCommands) {
 
 void ChatCmdRoll::execute(ChatHeader &header, QString &arg) {
     QString dice, sender, target, result, namedMessage, message;
+    bool error;
 
     dice = ChatCommon::extractFirstWord(arg);
-    sender = header.getSocketUserNickname();
     target = arg;
-    result = ChatCmdRoll::extractDice(dice);
+    sender = header.getSocketUserNickname();
+    result = ChatCmdRoll::extractDice(dice, error);
 
-    namedMessage = QString("[%1]: %2")
-                       .arg(header.getSocketUserNickname())
+    namedMessage = QString("[<strong>%1</strong>]: %2")
+                       .arg(sender)
                        .arg(result);
 
     message = QString("%1 %2").arg(target).arg(result);
 
-    ChatCmdWhisper *cmd = dynamic_cast<ChatCmdWhisper*>(m_UserCommands.value(ChatCodes::USERCMD_WHISPER));
-
-    if(result != "!"){
+    if(!error){
         if(target != ""){
+            ChatCmdWhisper *cmd = dynamic_cast<ChatCmdWhisper*>(m_UserCommands.value(ChatCodes::USERCMD_WHISPER));
             cmd->execute(header, message);
         }
-        else{
-            emit cmdSendPacketToOne(ChatCodes::SRVCMD_MESSAGE, namedMessage, header.getSocketUserNickname());
+        else {
+            emit cmdSendPacketToAll(ChatCodes::SRVCMD_MESSAGE, namedMessage);
         }
     }
     else{
-        emit cmdSendPacketToOne(ChatCodes::SRVCMD_MESSAGE, tr("format de /roll <X>d<Y> incorrect."), header.getSocketUserNickname());
+        emit cmdSendPacketToOne(ChatCodes::SRVCMD_MESSAGE, result, header.getSocketUserNickname());
     }
 }
 
-QString ChatCmdRoll::extractDice(QString dice){
+QString ChatCmdRoll::extractDice(QString dice, bool &error) {
+    QString parser;
     int X;
     int Y=1;
-    QString parser;
     int k=0;
+
+    error = false;
 
     //suppression des espaces, consideres comme des 0
     dice.replace(" ", "");
@@ -50,11 +52,13 @@ QString ChatCmdRoll::extractDice(QString dice){
         }
         else{
             if(i == 0 || dice.at(i)!='d' || k>0){
-                return("!");
+                error = true;
+                return(tr("<em>format de /roll <X>d<Y> incorrect.</em>"));
             }
             else{
                 if(parser.length()>5){
-                    return(tr("nombre de dés trop grand"));
+                    error = true;
+                    return(tr("<em>nombre de dés trop grand</em>"));
                 }
                 X = parser.toInt();
                 parser = "";
@@ -63,15 +67,18 @@ QString ChatCmdRoll::extractDice(QString dice){
         }
     }
     if(parser == ""){
-        return(tr("merci de spécifier un type de dé"));
+        error = true;
+        return(tr("<em>merci de spécifier un type de dé</em>"));
     }
 
     if(Y == 0 || parser.length()>5){
-        return (tr("Forme de dé inexistante."));
+        error = true;
+        return (tr("<em>Forme de dé inexistante.</em>"));
     }
 
     if(X > 10000){
-        return(tr("nombre de dés trop grand"));
+        error = true;
+        return(tr("<em>nombre de dés trop grand</em>"));
     }
 
     Y = parser.toInt();

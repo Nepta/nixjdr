@@ -12,7 +12,7 @@ public:
     QString getHelp();
 
 private :
-    QString extractDice(QString dice);
+    QString extractDice(QString dice, bool &error);
     QString rollDice(int X, int Y);
     QHash<ChatCodes, AbstractChatCmd *> m_UserCommands;
 };
