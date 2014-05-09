@@ -22,6 +22,7 @@ SOURCES += \
     mainwindow.cpp \
     startdialog.cpp \
     user.cpp \
+    tokenmenu.cpp \
     QTSFML/Canvas.cpp \
     QTSFML/Map.cpp \
     QTSFML/Action.cpp \
@@ -33,6 +34,7 @@ SOURCES += \
     chat/chatcommon.cpp \
     chat/chatclient.cpp \
     chat/chatheader.cpp \
+    chat/ChatProcessor.cpp \
     chat/commands/abstractchatcmd.cpp \
     chat/commands/chatcmdmessageall.cpp \
     chat/commands/chatcmdnickname.cpp \
@@ -42,12 +44,15 @@ SOURCES += \
     chat/commands/chatcmdnicknameack.cpp \
     chat/commands/chatcmdwhisperrep.cpp \
     chat/commands/chatcmdroll.cpp \
-    tokenmenu.cpp
+    chat/commands/chatcmddisconnect.cpp \
+    chat/commands/CmdNicknamesList.cpp \
+    chat/commands/CmdNicknamesListAck.cpp
 
 HEADERS  += \
     mainwindow.h \
     startdialog.h \
     user.h \
+    tokenmenu.h \
     QTSFML/Canvas.h \
     QTSFML/Map.h \
     QTSFML/Action.h \
@@ -73,7 +78,10 @@ HEADERS  += \
     chat/commands/chatcmdnicknameack.h \
     chat/commands/chatcmdwhisperrep.h \
     chat/commands/chatcmdroll.h \
-    tokenmenu.h
+    chat/commands/chatcmddisconnect.h \
+    chat/commands/CmdNicknamesList.h \
+    chat/commands/CmdNicknamesListAck.h
 
-FORMS    += mainwindow.ui \
+FORMS    += \
+    mainwindow.ui \
     tokenmenu.ui
