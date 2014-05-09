@@ -6,7 +6,8 @@
 class SpriteList{
 public:
     // List of texture paired with its sprite list
-    std::vector<std::pair<sf::Texture&, std::vector<sf::Sprite>>> list_; //R.A.C.H.E.
+//    std::vector<std::pair<sf::Texture&, std::vector<sf::Sprite>>> list_; //R.A.C.H.E.
+    std::vector<std::vector<std::pair<sf::Texture&,sf::Sprite>>> list_;
 
 public:
     /**

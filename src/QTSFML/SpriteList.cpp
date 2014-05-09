@@ -4,7 +4,7 @@
 
 void SpriteList::newTexture(sf::Texture& texture){
 	std::vector<sf::Sprite> sprite;
-	list_.push_back({texture, sprite});
+    list_.push_back({texture, sprite});
 }
 
 void SpriteList::addSprite(int x, int y, int position){

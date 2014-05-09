@@ -88,9 +88,8 @@ void Map::changeToken(QListWidgetItem * item)
 {
     QString textSprite;
     textSprite = QString("resource/")+item->text()+QString(".png");
-    qDebug() << textSprite;
     tokenTextureToLoad_.loadFromFile(textSprite.toStdString());
-	 spriteList_.newTexture(tokenTextureToLoad_);
+    spriteList_.newTexture(tokenTextureToLoad_);
 }
 
 void Map::mouseReleaseEvent(QMouseEvent *event){
