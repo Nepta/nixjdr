@@ -2,10 +2,13 @@
 #include "chatcmdmessageall.h"
 #include "chatcmdnickname.h"
 #include "chatcmdwhisper.h"
+#include "chatcmddisconnect.h"
 #include "chatcmdmessageui.h"
 #include "chatcmdnicknameack.h"
 #include "chatcmdwhisperrep.h"
 #include "chatcmdroll.h"
+#include "CmdNicknamesList.h"
+#include "CmdNicknamesListAck.h"
 
 inline uint qHash(const ChatCodes &key)
 {
@@ -21,15 +24,17 @@ const QHash<QString, ChatCodes> ChatCmds::s_CommandCodes = {
 ChatCmds::ChatCmds()
 {
     // User commands
-    m_UserCommands.insert(ChatCodes::USERCMD_MESSAGE, new ChatCmdMessageAll());
-    m_UserCommands.insert(ChatCodes::USERCMD_NICK, new ChatCmdNickname());
-    m_UserCommands.insert(ChatCodes::USERCMD_WHISPER, new ChatCmdWhisper());
+    m_UserCommands.insert(ChatCodes::USERCMD_MESSAGE, new ChatCmdMessageAll);
+    m_UserCommands.insert(ChatCodes::USERCMD_NICK, new ChatCmdNickname);
+    m_UserCommands.insert(ChatCodes::USERCMD_WHISPER, new ChatCmdWhisper);
     m_UserCommands.insert(ChatCodes::USERCMD_ROLL, new ChatCmdRoll(m_UserCommands));
+    m_UserCommands.insert(ChatCodes::USERCMD_LIST, new CmdNicknamesList);
 
-    // Server commands
     m_ServerCommands.insert(ChatCodes::SRVCMD_MESSAGE, new ChatCmdMessageUI);
     m_ServerCommands.insert(ChatCodes::SRVCMD_NICK_ACK, new ChatCmdNicknameAck);
     m_ServerCommands.insert(ChatCodes::SRVCMD_WHISPER_REP, new ChatCmdWhisperRep);
+    m_ServerCommands.insert(ChatCodes::SRVCMD_DISCONNECT, new ChatCmdDisconnect);
+    m_ServerCommands.insert(ChatCodes::SRVCMD_LIST, new CmdNicknamesListAck);
 
 
     // Allow each command to send packets (server side)
@@ -41,10 +46,12 @@ ChatCmds::ChatCmds()
                 this, SIGNAL(cmdSendPacketToOne(ChatCodes, QString,QString )));
     }
 
-    // Allow each command to send messages to the UI (client side)
+    // Allow each command to interact with the UI (client side)
     foreach (AbstractChatCmd *command, m_ServerCommands) {
         connect(command, SIGNAL(cmdSendMessageToUI(QString)),
                 this, SIGNAL(cmdSendMessageToUI(QString)));
+        connect(command, SIGNAL(cmdUpdateUserListView()),
+                this, SIGNAL(cmdUpdateUserListView()));
     }
 }
 

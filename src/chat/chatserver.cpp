@@ -1,6 +1,7 @@
 #include<QTranslator>
 #include "commands/abstractchatcmd.h"
 #include "commands/chatcmdnickname.h"
+#include "commands/CmdNicknamesList.h"
 #include "chatcommon.h"
 #include "chatserver.h"
 
@@ -51,7 +52,11 @@ void ChatServer::newClientConnection()
 
     ChatCmdNickname *cmdNickname = dynamic_cast<ChatCmdNickname*>(
                 m_ChatCmds.getUserCommand(ChatCodes::USERCMD_NICK));
-    cmdNickname->executeNewClientConnection(newUser);
+    cmdNickname->executeOnUser(newUser, "guest", "guest", true);
+
+    CmdNicknamesList *cmdNicknamesList = dynamic_cast<CmdNicknamesList*>(
+                m_ChatCmds.getUserCommand(ChatCodes::USERCMD_LIST));
+    cmdNicknamesList->executeOnUser(newUser);
 
     // process and send a packet when fully received
     connect(newUser, SIGNAL(receivedFullData(ChatHeader, QString)),
@@ -61,8 +66,7 @@ void ChatServer::newClientConnection()
 
 void ChatServer::userDisconnected(User &user)
 {
-    sendPacketToAll(ChatCodes::SRVCMD_MESSAGE,
-                    user.getNickname() + tr(" <em>vient de se déconnecter</em>"));
+    sendPacketToAll(ChatCodes::SRVCMD_DISCONNECT, user.getNickname());
 
     m_UsersList.remove(user.getNickname());
 
