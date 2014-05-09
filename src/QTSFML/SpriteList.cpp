@@ -3,7 +3,8 @@
 #include <vector>
 
 void SpriteList::addSprite(int x, int y){
-    sf::Sprite sprite(tokenTextureToLoad_);
+    sf::Texture *texture = new sf::Texture(tokenTextureToLoad_);
+    sf::Sprite sprite(*texture);
     sprite.setPosition(x,y);
     list_.push_back({tokenTextureToLoad_, sprite});
 }
