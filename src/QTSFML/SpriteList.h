@@ -7,7 +7,8 @@ class SpriteList{
 public:
     // List of texture paired with its sprite list
 //    std::vector<std::pair<sf::Texture&, std::vector<sf::Sprite>>> list_; //R.A.C.H.E.
-    std::vector<std::vector<std::pair<sf::Texture&,sf::Sprite>>> list_;
+    std::vector<std::pair<sf::Texture&,sf::Sprite>> list_;
+    sf::Texture tokenTextureToLoad_;
 
 public:
     /**
@@ -21,13 +22,6 @@ public:
 	sf::Sprite* searchSprite(int x, int y);
 
     /**
-     * Add a new texture to the list
-     *
-     * @brief newTexture
-     */
-    void newTexture(sf::Texture&); //add a texture in the list
-
-    /**
      * Add a new sprite to the list of a texture
      *
      * @brief addSprite
@@ -35,7 +29,7 @@ public:
      * @param y
      * @param position
      */
-	void addSprite(int x, int y, int position=0); //add a sprite in the list at the position (texture number)
+    void addSprite(int x, int y); //add a sprite in the list at the position (texture number)
 
     /**
      * Remove a sprite of the list of a texture
@@ -45,7 +39,7 @@ public:
      * @param y
      * @param position
      */
-	void delSprite(int x, int y, int position=0); //add a sprite in the list at the position (texture number)
+    void delSprite(int x, int y); //add a sprite in the list at the position (texture number)
 };
 
 #endif /* __SpriteList_H__ */

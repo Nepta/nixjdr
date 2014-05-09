@@ -9,7 +9,7 @@ public:
 	Action(int x, int y);
 	int x();
 	int y();
-	virtual void execute() = 0;
+    virtual void execute() = 0;
 	virtual ~Action(){};
 };
 

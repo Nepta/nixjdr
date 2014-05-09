@@ -42,7 +42,7 @@ public:
 	 * @param y y mouse position when click is released
 	 * @return an action to perform
 	 */
-	Action& choose(int x, int y, SpriteList &spriteList);
+    Action& choose(int x, int y, SpriteList &spriteList);
 	/**
 	 * @brief selectSprite
 	 * @param x x mouse position when click is released

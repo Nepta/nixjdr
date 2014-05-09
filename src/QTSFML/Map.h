@@ -11,7 +11,7 @@ class Map : public Canvas{
 	Q_OBJECT
 	sf::Clock clock_;
 	sf::Texture image_;
-    sf::Texture tokenTextureToLoad_;
+//    sf::Texture tokenTextureToLoad_;
 	sf::Sprite sprite_;
 
 	SpriteList spriteList_;

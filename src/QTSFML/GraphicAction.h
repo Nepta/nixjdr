@@ -14,7 +14,7 @@ public:
 	GraphicAction(int x, int y, SpriteList& spriteList) :
 		Action(x,y), spriteList_(spriteList){}
 
-	virtual void execute() = 0;
+    virtual void execute() = 0;
 };
 
 #endif /* __GraphicAction_H__ */

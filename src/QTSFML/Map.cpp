@@ -38,8 +38,8 @@ void Map::onInit(){
 //	texture.loadFromFile("resource/cirno.png");
 //	spriteList_.newTexture(texture);
 
-    tokenTextureToLoad_.loadFromFile("resource/cirno.png");
-    spriteList_.newTexture(tokenTextureToLoad_);
+    spriteList_.tokenTextureToLoad_.loadFromFile("resource/cirno.png");
+//    spriteList_.newTexture(tokenTextureToLoad_);
 
     clock_.restart();
 }
@@ -78,9 +78,7 @@ void Map::onUpdate()
 
 void Map::drawList(){
 	 for(auto &texturedSprite : spriteList_.list_){
-        for(auto &sprite : texturedSprite.second){
-            draw(sprite);
-        }
+        draw(texturedSprite.second);
     }
 }
 
@@ -88,8 +86,8 @@ void Map::changeToken(QListWidgetItem * item)
 {
     QString textSprite;
     textSprite = QString("resource/")+item->text()+QString(".png");
-    tokenTextureToLoad_.loadFromFile(textSprite.toStdString());
-    spriteList_.newTexture(tokenTextureToLoad_);
+    spriteList_.tokenTextureToLoad_.loadFromFile(textSprite.toStdString());
+//    spriteList_.newTexture(tokenTextureToLoad_);
 }
 
 void Map::mouseReleaseEvent(QMouseEvent *event){
@@ -104,8 +102,8 @@ void Map::mouseReleaseEvent(QMouseEvent *event){
 	y = y/tileHeight_;
 	y = y*tileHeight_;
 
-	Action& action = ActionChooser::instance().choose(x,y,spriteList_);
-	action.execute();
+    Action& action = ActionChooser::instance().choose(x,y,spriteList_);
+    action.execute();
 	delete &action;
 }
 
@@ -120,7 +118,7 @@ void Map::mouseMoveEvent(QMouseEvent *event){
     ActionChooser::instance().isMoving(true);
 	int x = event->x();
 	int y = event->y();
-	Action& action = ActionChooser::instance().choose(x,y,spriteList_);
+    Action& action = ActionChooser::instance().choose(x,y,spriteList_);
 	action.execute();
 	delete &action;
     ActionChooser::instance().isMoving(false);

@@ -49,7 +49,7 @@ Action& ActionChooser::choose(int x, int y, SpriteList& spriteList){
 			break;
 
 		case Add:
-			action = new TokenAddAction(x,y,spriteList);
+            action = new TokenAddAction(x,y,spriteList);
 			break;
 
 		case Remove:
