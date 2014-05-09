@@ -6,7 +6,7 @@
 class ChatCmdRoll:public AbstractChatCmd
 {
 public:
-    ChatCmdRoll();
+    ChatCmdRoll(QHash<ChatCodes, AbstractChatCmd *> &userCommands);
 
     void execute(ChatHeader &header, QString &arg);
     QString getHelp();
@@ -14,6 +14,7 @@ public:
 private :
     QString extractDice(QString dice);
     QString rollDice(int X, int Y);
+    QHash<ChatCodes, AbstractChatCmd *> m_UserCommands;
 };
 
 

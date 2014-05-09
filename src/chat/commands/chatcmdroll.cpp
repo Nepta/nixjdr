@@ -1,22 +1,34 @@
 #include "chatcmdroll.h"
-#include "../chatcommon.h"
-#include <QDebug>
+#include "chat/chatcommon.h"
+#include "chatcmdwhisper.h"
 
-ChatCmdRoll::ChatCmdRoll(){
-
+ChatCmdRoll::ChatCmdRoll(QHash<ChatCodes, AbstractChatCmd *> &userCommands) {
+    m_UserCommands = userCommands;
 }
 
 void ChatCmdRoll::execute(ChatHeader &header, QString &arg) {
-    QString dice = ChatCommon::extractFirstWord(arg);
+    QString dice, sender, target, result, namedMessage, message;
 
-    QString result = ChatCmdRoll::extractDice(dice);
+    dice = ChatCommon::extractFirstWord(arg);
+    sender = header.getSocketUserNickname();
+    target = arg;
+    result = ChatCmdRoll::extractDice(dice);
 
-    QString namedMessage = QString("[%1]: %2")
+    namedMessage = QString("[%1]: %2")
                        .arg(header.getSocketUserNickname())
                        .arg(result);
 
+    message = QString("%1 %2").arg(target).arg(result);
+
+    ChatCmdWhisper *cmd = dynamic_cast<ChatCmdWhisper*>(m_UserCommands.value(ChatCodes::USERCMD_WHISPER));
+
     if(result != "!"){
-        emit cmdSendPacketToAll(ChatCodes::SRVCMD_MESSAGE, namedMessage);
+        if(target != ""){
+            cmd->execute(header, message);
+        }
+        else{
+            emit cmdSendPacketToOne(ChatCodes::SRVCMD_MESSAGE, namedMessage, header.getSocketUserNickname());
+        }
     }
     else{
         emit cmdSendPacketToOne(ChatCodes::SRVCMD_MESSAGE, tr("format de /roll <X>d<Y> incorrect."), header.getSocketUserNickname());

@@ -1,17 +1,20 @@
 #include <QString>
 #include "chatcmdwhisper.h"
 #include "chatcmds.h"
-#include "../chatcommon.h"
+#include "chat/chatcommon.h"
+#include <QDebug>
 
 ChatCmdWhisper::ChatCmdWhisper()
 {
 }
 
 void ChatCmdWhisper::execute(ChatHeader &header, QString &arg) {
+    qDebug()<<"ping";
     QString strippedMsg, msgSender, msgTarget,
             sender, target;
 
     strippedMsg = arg;
+
     sender = header.getSocketUserNickname();
     target = ChatCommon::extractFirstWord(strippedMsg);
 

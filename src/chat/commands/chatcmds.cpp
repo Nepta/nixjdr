@@ -24,7 +24,7 @@ ChatCmds::ChatCmds()
     m_UserCommands.insert(ChatCodes::USERCMD_MESSAGE, new ChatCmdMessageAll());
     m_UserCommands.insert(ChatCodes::USERCMD_NICK, new ChatCmdNickname());
     m_UserCommands.insert(ChatCodes::USERCMD_WHISPER, new ChatCmdWhisper());
-    m_UserCommands.insert(ChatCodes::USERCMD_ROLL, new ChatCmdRoll());
+    m_UserCommands.insert(ChatCodes::USERCMD_ROLL, new ChatCmdRoll(m_UserCommands));
 
     // Server commands
     m_ServerCommands.insert(ChatCodes::SRVCMD_MESSAGE, new ChatCmdMessageUI);

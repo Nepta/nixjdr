@@ -1,5 +1,5 @@
 #include "chatcmdnicknameack.h"
-#include "../chatcommon.h"
+#include "chat/chatcommon.h"
 
 ChatCmdNicknameAck::ChatCmdNicknameAck()
 {
