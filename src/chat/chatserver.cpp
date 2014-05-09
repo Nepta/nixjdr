@@ -1,6 +1,7 @@
 #include<QTranslator>
 #include "commands/abstractchatcmd.h"
 #include "commands/chatcmdnickname.h"
+#include "commands/CmdNicknamesList.h"
 #include "chatcommon.h"
 #include "chatserver.h"
 
@@ -52,6 +53,10 @@ void ChatServer::newClientConnection()
     ChatCmdNickname *cmdNickname = dynamic_cast<ChatCmdNickname*>(
                 m_ChatCmds.getUserCommand(ChatCodes::USERCMD_NICK));
     cmdNickname->executeOnUser(newUser, "guest", "guest", true);
+
+    CmdNicknamesList *cmdNicknamesList = dynamic_cast<CmdNicknamesList*>(
+                m_ChatCmds.getUserCommand(ChatCodes::USERCMD_LIST));
+    cmdNicknamesList->executeOnUser(newUser);
 
     // process and send a packet when fully received
     connect(newUser, SIGNAL(receivedFullData(ChatHeader, QString)),

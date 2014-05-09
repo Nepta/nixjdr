@@ -13,9 +13,11 @@ MainWindow::MainWindow(bool role, QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    // QMainWindow::showFullScreen();
-    m_role = role;
 
+    m_NicknamesListModel = new QStringListModel;
+    ui->nicknamesListView->setModel(m_NicknamesListModel);
+
+    m_role = role;
     if (m_role == ROLE_MJ) {
         setupMJ();
     } else {
@@ -26,12 +28,14 @@ MainWindow::MainWindow(bool role, QWidget *parent) :
 MainWindow::~MainWindow()
 {
     delete ui;
+    delete m_NicknamesListModel;
     delete m_chatServer;
     delete m_chatClient;
 }
 
 void MainWindow::on_actionModify_Background_triggered(){
-	QString filename = QFileDialog::getOpenFileName(this, "Ouvrir un fichier", "resource", "Images (*.png *.xpm *.jpg)");
+    QString filename = QFileDialog::getOpenFileName(this, "Ouvrir un fichier", "resource",
+                                                    "Images (*.png *.xpm *.jpg)");
 
 	if (filename != NULL) {
 		// On crée la fenêtre principale
@@ -83,8 +87,14 @@ void MainWindow::setupChatClient() {
 
     MainWindow::connect(m_chatClient, SIGNAL(sendMessageToUI(QString)),
                         this, SLOT(receivedMessage(QString)));
+    MainWindow::connect(m_chatClient->getChatCmds(), SIGNAL(cmdUpdateUserListView()),
+                        this, SLOT(updateNicknamesListView()));
 }
 
 void MainWindow::receivedMessage(const QString &msg) {
     ui->msgList->append(msg);
+}
+
+void MainWindow::updateNicknamesListView() {
+    m_NicknamesListModel->setStringList(AbstractChatCmd::getUsersListClient()->keys());
 }

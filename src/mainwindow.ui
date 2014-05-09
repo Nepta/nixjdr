@@ -30,6 +30,12 @@
             <verstretch>4</verstretch>
            </sizepolicy>
           </property>
+          <property name="verticalScrollBarPolicy">
+           <enum>Qt::ScrollBarAlwaysOn</enum>
+          </property>
+          <property name="horizontalScrollBarPolicy">
+           <enum>Qt::ScrollBarAlwaysOn</enum>
+          </property>
           <property name="sizeAdjustPolicy">
            <enum>QAbstractScrollArea::AdjustIgnored</enum>
           </property>
@@ -67,7 +73,7 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>102</width>
+             <width>170</width>
              <height>298</height>
             </rect>
            </property>
@@ -80,8 +86,8 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>96</width>
-             <height>26</height>
+             <width>170</width>
+             <height>298</height>
             </rect>
            </property>
            <attribute name="label">
@@ -104,37 +110,61 @@
          </widget>
         </item>
         <item>
-         <widget class="QSplitter" name="splitter">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
+         <widget class="QTabWidget" name="tabWidget">
+          <property name="currentIndex">
+           <number>1</number>
           </property>
-          <property name="baseSize">
-           <size>
-            <width>200</width>
-            <height>0</height>
-           </size>
-          </property>
-          <property name="orientation">
-           <enum>Qt::Vertical</enum>
-          </property>
-          <widget class="QTextBrowser" name="msgList">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-             <horstretch>0</horstretch>
-             <verstretch>3</verstretch>
-            </sizepolicy>
-           </property>
+          <widget class="QWidget" name="chatTab">
+           <attribute name="title">
+            <string>Chat</string>
+           </attribute>
+           <layout class="QVBoxLayout" name="verticalLayout_3">
+            <item>
+             <widget class="QSplitter" name="splitter">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="baseSize">
+               <size>
+                <width>200</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="orientation">
+               <enum>Qt::Vertical</enum>
+              </property>
+              <widget class="QTextBrowser" name="msgList">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                 <horstretch>0</horstretch>
+                 <verstretch>3</verstretch>
+                </sizepolicy>
+               </property>
+              </widget>
+              <widget class="QLineEdit" name="msgField">
+               <property name="placeholderText">
+                <string>message</string>
+               </property>
+               <property name="clearButtonEnabled">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </widget>
+            </item>
+           </layout>
           </widget>
-          <widget class="QLineEdit" name="msgField">
-           <property name="placeholderText">
-            <string>message</string>
-           </property>
-           <property name="clearButtonEnabled">
-            <bool>true</bool>
-           </property>
+          <widget class="QWidget" name="userTab">
+           <attribute name="title">
+            <string>Utilisateurs</string>
+           </attribute>
+           <layout class="QVBoxLayout" name="verticalLayout_4">
+            <item>
+             <widget class="QListView" name="nicknamesListView"/>
+            </item>
+           </layout>
           </widget>
          </widget>
         </item>

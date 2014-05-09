@@ -35,6 +35,8 @@ void ChatCmdNicknameAck::execute(ChatHeader &header, QString &arg) {
                                 .arg(oldNickname)
                                 .arg(newNickname));
     }
+
+    emit cmdUpdateUserListView();
 }
 
 QString ChatCmdNicknameAck::getHelp() {

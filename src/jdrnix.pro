@@ -33,6 +33,7 @@ SOURCES += \
     chat/chatcommon.cpp \
     chat/chatclient.cpp \
     chat/chatheader.cpp \
+    chat/ChatProcessor.cpp \
     chat/commands/abstractchatcmd.cpp \
     chat/commands/chatcmdmessageall.cpp \
     chat/commands/chatcmdnickname.cpp \
@@ -41,7 +42,9 @@ SOURCES += \
     chat/commands/chatcmdmessageui.cpp \
     chat/commands/chatcmdnicknameack.cpp \
     chat/commands/chatcmdwhisperrep.cpp \
-    chat/commands/chatcmddisconnect.cpp
+    chat/commands/chatcmddisconnect.cpp \
+    chat/commands/CmdNicknamesList.cpp \
+    chat/commands/CmdNicknamesListAck.cpp
 
 HEADERS  += \
     mainwindow.h \
@@ -71,6 +74,8 @@ HEADERS  += \
     chat/commands/chatcmdmessageui.h \
     chat/commands/chatcmdnicknameack.h \
     chat/commands/chatcmdwhisperrep.h \
-    chat/commands/chatcmddisconnect.h
+    chat/commands/chatcmddisconnect.h \
+    chat/commands/CmdNicknamesList.h \
+    chat/commands/CmdNicknamesListAck.h
 
 FORMS    += mainwindow.ui

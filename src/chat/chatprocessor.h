@@ -12,6 +12,7 @@ public:
     ChatProcessor(){}
 
     virtual ~ChatProcessor(){}
+    ChatCmds *getChatCmds();
 
 protected:
     ChatCmds m_ChatCmds;

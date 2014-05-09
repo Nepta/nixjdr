@@ -33,6 +33,7 @@ signals:
     void cmdSendPacketToOne(ChatCodes code, QString message,
                                      QString receiverNickname);
     void cmdSendMessageToUI(const QString &msg);
+    void cmdUpdateUserListView();
 };
 
 #endif // ABSTRACTCHATCMD_H

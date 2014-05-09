@@ -24,6 +24,7 @@ private slots:
     void on_actionModify_Background_triggered();
     void on_msgField_returnPressed();
     void receivedMessage(const QString &msg);
+    void updateNicknamesListView();
 
 signals:
     void initMainWindow();
@@ -33,10 +34,12 @@ private:
     void setupPlayer();
     void setupChatServer();
     void setupChatClient();
+
     Ui::MainWindow *ui;
     bool m_role;
     ChatServer *m_chatServer;
     ChatClient *m_chatClient;
+    QStringListModel *m_NicknamesListModel;
 };
 
 #endif // MAINWINDOW_H
