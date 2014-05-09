@@ -43,7 +43,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="lineEdit_2">
+      <widget class="QLineEdit" name="ipA">
        <property name="text">
         <string/>
        </property>
@@ -63,7 +63,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="lineEdit">
+      <widget class="QLineEdit" name="ipB">
        <property name="text">
         <string/>
        </property>
@@ -77,7 +77,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="lineEdit_3">
+      <widget class="QLineEdit" name="ipC">
        <property name="text">
         <string/>
        </property>
@@ -91,7 +91,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="lineEdit_4">
+      <widget class="QLineEdit" name="ipD">
        <property name="text">
         <string/>
        </property>
@@ -143,9 +143,6 @@
     </layout>
    </widget>
   </widget>
-  <zorder>horizontalLayoutWidget</zorder>
-  <zorder>horizontalLayoutWidget_2</zorder>
-  <zorder>progressBar</zorder>
  </widget>
  <resources/>
  <connections/>

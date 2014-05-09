@@ -15,6 +15,8 @@ public:
 	explicit ConnexionHelper(QWidget *parent = 0);
 	~ConnexionHelper();
 
+public slots:
+	void on_pushButton_clicked();
 private:
 	Ui::ConnexionHelper *ui;
 };
