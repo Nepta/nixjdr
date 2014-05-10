@@ -11,23 +11,29 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
+#include <QScrollBar>
+
 MainWindow::MainWindow(bool role, QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
-    m_tokenMenu = new TokenMenu();
-    m_diceMenu = new DiceMenu();
-
     ui->setupUi(this);
+
+    // Token menu
+    m_tokenMenu = new TokenMenu();
     ui->actionMenu->removeItem(0);
     ui->actionMenu->addItem(m_tokenMenu, tr("Liste de jetons"));
 
-    m_NicknamesListModel = new QStringListModel;
-    ui->nicknamesListView->setModel(m_NicknamesListModel);
-
+    // Dice menu
+    m_diceMenu = new DiceMenu();
     ui->tableArea->addSubWindow(m_diceMenu, Qt::WindowStaysOnTopHint | Qt::CustomizeWindowHint |
                                 Qt::WindowTitleHint | Qt::WindowMinMaxButtonsHint);
     ui->tableArea->subWindowList().last()->setGeometry(0,0,275,100);
+    connect(m_diceMenu, SIGNAL(rollDice(QString)), this, SLOT(rollDice(QString)));
+
+    // Chat nicknames list
+    m_NicknamesListModel = new QStringListModel;
+    ui->nicknamesListView->setModel(m_NicknamesListModel);
 
     m_role = role;
     if (m_role == ROLE_MJ) {
@@ -36,7 +42,7 @@ MainWindow::MainWindow(bool role, QWidget *parent) :
         setupPlayer();
     }
 
-    connect(m_diceMenu, SIGNAL(rollDice(QString)), this, SLOT(rollDice(QString)));
+    showFullScreen();
 }
 
 MainWindow::~MainWindow()

@@ -13,6 +13,7 @@
 Map::Map(QWidget* Parent, const QPoint& Position, const QSize& Size) :
     Canvas(Parent, Position, Size)
 {
+    setWindowFlags(Qt::FramelessWindowHint);
 }
 
 Map* Map::setMap(QString mapPath){

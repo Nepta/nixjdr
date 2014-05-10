@@ -11,7 +11,6 @@ class Map : public Canvas{
 	Q_OBJECT
 	sf::Clock clock_;
 	sf::Texture image_;
-//    sf::Texture tokenTextureToLoad_;
 	sf::Sprite sprite_;
 
 	SpriteList spriteList_;
@@ -24,14 +23,14 @@ class Map : public Canvas{
 public:
 	Map(QWidget* Parent, const QPoint& Position, const QSize& Size);
 	Map* setMap(QString path);
-	void onInit();
-	void onUpdate();
-	void mouseReleaseEvent(QMouseEvent *event);
-	void mousePressEvent(QMouseEvent *event);
-	void mouseMoveEvent(QMouseEvent * event);
 
 private:
 	void drawList();
+    void onInit();
+    void onUpdate();
+    void mouseReleaseEvent(QMouseEvent *event);
+    void mousePressEvent(QMouseEvent *event);
+    void mouseMoveEvent(QMouseEvent * event);
 
 private slots:
     void changeToken(QListWidgetItem*item);

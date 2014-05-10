@@ -15,9 +15,11 @@ public :
           unsigned int FrameTime = 16);
     virtual ~Canvas();
 
-private :
+protected :
     virtual void onInit() = 0;
     virtual void onUpdate() = 0;
+
+private :
     virtual QPaintEngine* paintEngine() const;
     virtual void showEvent(QShowEvent*);
 

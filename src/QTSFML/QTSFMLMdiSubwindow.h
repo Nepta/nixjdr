@@ -4,13 +4,13 @@
 #include <QMdiSubWindow>
 #include "Map.h"
 
-class QTSFMLMdiSubwindow : public QMdiSubWindow{
-public:
-	QTSFMLMdiSubwindow(QString filename, int height, int width, int margin);
-	Map* map();
+class QTSFMLMdiSubwindow : public QMdiSubWindow {
+    public:
+        QTSFMLMdiSubwindow(QString filename, int height, int width, int margin);
+        Map* map();
 
-private:
-	Map *map_;
+    private:
+        Map *map_;
 };
 
 #endif // QTSFMLMDISUBWINDOW_H

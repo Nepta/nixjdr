@@ -17,6 +17,6 @@ QTSFMLMdiSubwindow::QTSFMLMdiSubwindow(QString filename, int height, int width, 
     map_->show();
 }
 
-Map* QTSFMLMdiSubwindow::map(){
+Map* QTSFMLMdiSubwindow::map() {
 	return map_;
 }

@@ -31,10 +31,10 @@
            </sizepolicy>
           </property>
           <property name="verticalScrollBarPolicy">
-           <enum>Qt::ScrollBarAlwaysOn</enum>
+           <enum>Qt::ScrollBarAlwaysOff</enum>
           </property>
           <property name="horizontalScrollBarPolicy">
-           <enum>Qt::ScrollBarAlwaysOn</enum>
+           <enum>Qt::ScrollBarAlwaysOff</enum>
           </property>
           <property name="sizeAdjustPolicy">
            <enum>QAbstractScrollArea::AdjustIgnored</enum>
@@ -80,7 +80,7 @@
              <x>0</x>
              <y>0</y>
              <width>200</width>
-             <height>327</height>
+             <height>331</height>
             </rect>
            </property>
            <property name="minimumSize">
@@ -179,7 +179,7 @@
      <x>0</x>
      <y>0</y>
      <width>985</width>
-     <height>25</height>
+     <height>19</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
