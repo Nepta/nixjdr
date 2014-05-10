@@ -174,12 +174,12 @@
     <property name="title">
      <string>File</string>
     </property>
-    <addaction name="actionModify_Background"/>
+    <addaction name="actionCreateMap"/>
     <addaction name="actionEditMap"/>
    </widget>
    <addaction name="menuFile"/>
   </widget>
-  <action name="actionModify_Background">
+  <action name="actionCreateMap">
    <property name="text">
     <string>Créer map...</string>
    </property>

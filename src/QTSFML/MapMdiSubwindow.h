@@ -2,6 +2,7 @@
 #define MAPMDISUBWINDOW_H
 
 #include <QMdiSubWindow>
+#include <QScrollArea>
 #include "Map.h"
 
 class MapMdiSubwindow : public QMdiSubWindow {
@@ -11,9 +12,12 @@ class MapMdiSubwindow : public QMdiSubWindow {
         explicit MapMdiSubwindow(QString filename);
         ~MapMdiSubwindow();
         Map* map();
+        void editMapBackgroud(QString filename);
 
     private:
+        static const int margin;
         Map *map_;
+        QScrollArea *scrollArea_;
 };
 
 #endif // MAPMDISUBWINDOW_H

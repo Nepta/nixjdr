@@ -63,7 +63,7 @@ void MainWindow::updateMenu() {
     }
 }
 
-void MainWindow::on_actionModify_Background_triggered(){
+void MainWindow::on_actionCreateMap_triggered(){
     QString filename = QFileDialog::getOpenFileName(this, "Ouvrir un fichier", "resource",
                                                     "Images (*.png *.xpm *.jpg)");
 
@@ -83,7 +83,9 @@ void MainWindow::on_actionEditMap_triggered()
                                                     "Images (*.png *.xpm *.jpg)");
 
     MapMdiSubwindow *subwindow = dynamic_cast<MapMdiSubwindow*>(ui->tableArea->activeSubWindow());
-    subwindow->map()->setMap(filename);
+    //subwindow->map()->setMap(filename);
+    subwindow->editMapBackgroud(filename);
+
 }
 
 void MainWindow::on_msgField_returnPressed()
