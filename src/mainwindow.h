@@ -46,7 +46,6 @@ private:
 
     Ui::MainWindow *ui;
     bool m_role;
-    TokenMenu *m_tokenMenu;
     DiceMenu *m_diceMenu;
     ChatServer *m_chatServer;
     ChatClient *m_chatClient;

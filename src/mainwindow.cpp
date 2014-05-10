@@ -6,7 +6,7 @@
 #include <QPixmap>
 #include <QGridLayout>
 
-#include "QTSFML/QTSFMLMdiSubwindow.h"
+#include "QTSFML/MapMdiSubwindow.h"
 #include "QTSFML/Map.h"
 #include "CustomMdiArea.h"
 #include "mainwindow.h"
@@ -17,11 +17,6 @@ MainWindow::MainWindow(bool role, QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-
-    // Token menu
-    m_tokenMenu = new TokenMenu();
-    ui->actionMenu->removeItem(0);
-    ui->actionMenu->addItem(m_tokenMenu, tr("Liste de jetons"));
 
     // Dice menu
     m_diceMenu = new DiceMenu();
@@ -47,7 +42,6 @@ MainWindow::MainWindow(bool role, QWidget *parent) :
 MainWindow::~MainWindow()
 {
     delete ui;
-    delete m_tokenMenu;
     delete m_NicknamesListModel;
     delete m_diceMenu;
     delete m_chatServer;
@@ -63,11 +57,11 @@ void MainWindow::on_actionModify_Background_triggered(){
 		int width = 800;
         int margin = 24;
 
-		QTSFMLMdiSubwindow* SFMLWidget = new QTSFMLMdiSubwindow(filename, height, width, margin);
+        MapMdiSubwindow* SFMLWidget = new MapMdiSubwindow(filename, height, width, margin);
 		ui->tableArea->addSubWindow(SFMLWidget);
         SFMLWidget->show();
 
-        connect(m_tokenMenu->getUi()->listToken, SIGNAL(itemClicked(QListWidgetItem*)),
+        connect(ui->tokenPage->getUi()->listToken, SIGNAL(itemClicked(QListWidgetItem*)),
                 SFMLWidget->map(), SLOT(changeToken(QListWidgetItem*)));
 	}
 }

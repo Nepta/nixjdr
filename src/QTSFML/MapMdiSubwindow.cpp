@@ -1,9 +1,9 @@
 #include <QMouseEvent>
 #include <QMoveEvent>
 #include <QPoint>
-#include "QTSFMLMdiSubwindow.h"
+#include "MapMdiSubwindow.h"
 
-QTSFMLMdiSubwindow::QTSFMLMdiSubwindow(QString filename, int height, int width, int margin)
+MapMdiSubwindow::MapMdiSubwindow(QString filename, int height, int width, int margin)
 {
     setGeometry(10, 10, width, height + margin);
     setWindowTitle("Qt SFML");
@@ -15,6 +15,6 @@ QTSFMLMdiSubwindow::QTSFMLMdiSubwindow(QString filename, int height, int width, 
     map_->show();
 }
 
-Map* QTSFMLMdiSubwindow::map() {
+Map* MapMdiSubwindow::map() {
 	return map_;
 }

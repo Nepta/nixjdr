@@ -31,7 +31,7 @@ SOURCES += \
     QTSFML/ActionChooser.cpp \
     QTSFML/TokenNoAction.cpp \
     QTSFML/SpriteList.cpp \
-    QTSFML/QTSFMLMdiSubwindow.cpp \
+    QTSFML/MapMdiSubwindow.cpp \
     chat/chatserver.cpp \
     chat/chatcommon.cpp \
     chat/chatclient.cpp \
@@ -67,7 +67,7 @@ HEADERS  += \
     QTSFML/TokenDelAction.h \
     QTSFML/TokenMoveAction.h \
     QTSFML/TokenNoAction.h \
-    QTSFML/QTSFMLMdiSubwindow.h \
+    QTSFML/MapMdiSubwindow.h \
     chat/chatserver.h \
     chat/chatcommon.h \
     chat/chatclient.h \
