@@ -1,11 +1,11 @@
 #include <QString>
 #include <QFileDialog>
-#include <QMdiSubWindow>
 #include <QApplication>
 #include <QDesktopWidget>
 #include <QToolBox>
 #include <QPixmap>
 #include <QGridLayout>
+
 #include "QTSFML/QTSFMLMdiSubwindow.h"
 #include "QTSFML/Map.h"
 #include "mainwindow.h"
@@ -16,6 +16,7 @@ MainWindow::MainWindow(bool role, QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     m_tokenMenu = new TokenMenu();
+    m_diceMenu = new DiceMenu();
 
     ui->setupUi(this);
     ui->actionMenu->removeItem(0);
@@ -24,12 +25,18 @@ MainWindow::MainWindow(bool role, QWidget *parent) :
     m_NicknamesListModel = new QStringListModel;
     ui->nicknamesListView->setModel(m_NicknamesListModel);
 
+    ui->tableArea->addSubWindow(m_diceMenu, Qt::WindowStaysOnTopHint | Qt::CustomizeWindowHint |
+                                Qt::WindowTitleHint | Qt::WindowMinMaxButtonsHint);
+    ui->tableArea->subWindowList().last()->setGeometry(0,0,275,100);
+
     m_role = role;
     if (m_role == ROLE_MJ) {
         setupMJ();
     } else {
         setupPlayer();
     }
+
+    connect(m_diceMenu, SIGNAL(rollDice(QString)), this, SLOT(rollDice(QString)));
 }
 
 MainWindow::~MainWindow()
@@ -37,6 +44,7 @@ MainWindow::~MainWindow()
     delete ui;
     delete m_tokenMenu;
     delete m_NicknamesListModel;
+    delete m_diceMenu;
     delete m_chatServer;
     delete m_chatClient;
 }
@@ -62,9 +70,13 @@ void MainWindow::on_actionModify_Background_triggered(){
 void MainWindow::on_msgField_returnPressed()
 {
     if (!ui->msgField->text().isEmpty()) {
-        m_chatClient->sendMessageToServer(ui->msgField->text());
+        sendMessageFromClientToServer(ui->msgField->text());
         ui->msgField->clear();
     }
+}
+
+void MainWindow::sendMessageFromClientToServer(QString message){
+    m_chatClient->sendMessageToServer(message);
 }
 
 void MainWindow::setupMJ() {
@@ -102,7 +114,12 @@ void MainWindow::setupChatClient() {
 }
 
 void MainWindow::receivedMessage(const QString &msg) {
-    ui->msgList->append(msg);
+    QString htmlMsg = QString("<div style=\" white-space: pre-wrap;\">%1</div>").arg(msg);
+    ui->msgList->append(htmlMsg);
+}
+
+void MainWindow::rollDice(QString dice){
+    sendMessageFromClientToServer(dice);
 }
 
 void MainWindow::updateNicknamesListView() {

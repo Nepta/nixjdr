@@ -23,6 +23,7 @@ SOURCES += \
     startdialog.cpp \
     user.cpp \
     tokenmenu.cpp \
+    dicemenu.cpp \
     QTSFML/Canvas.cpp \
     QTSFML/Map.cpp \
     QTSFML/Action.cpp \
@@ -53,6 +54,7 @@ HEADERS  += \
     startdialog.h \
     user.h \
     tokenmenu.h \
+    dicemenu.h \
     QTSFML/Canvas.h \
     QTSFML/Map.h \
     QTSFML/Action.h \
@@ -82,6 +84,6 @@ HEADERS  += \
     chat/commands/CmdNicknamesList.h \
     chat/commands/CmdNicknamesListAck.h
 
-FORMS    += \
-    mainwindow.ui \
-    tokenmenu.ui
+FORMS    += mainwindow.ui \
+    tokenmenu.ui \
+    dicemenu.ui

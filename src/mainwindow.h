@@ -2,10 +2,14 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QMdiSubWindow>
+
 #include "chat/chatserver.h"
 #include "chat/chatclient.h"
 #include "tokenmenu.h"
 #include "ui_tokenmenu.h"
+#include "dicemenu.h"
+#include "ui_dicemenu.h"
 
 
 namespace Ui {
@@ -28,6 +32,7 @@ private slots:
     void on_msgField_returnPressed();
     void receivedMessage(const QString &msg);
     void updateNicknamesListView();
+    void rollDice(QString);
 
 signals:
     void initMainWindow();
@@ -37,10 +42,12 @@ private:
     void setupPlayer();
     void setupChatServer();
     void setupChatClient();
+    void sendMessageFromClientToServer(QString message);
 
     Ui::MainWindow *ui;
     bool m_role;
     TokenMenu *m_tokenMenu;
+    DiceMenu *m_diceMenu;
     ChatServer *m_chatServer;
     ChatClient *m_chatClient;
     QStringListModel *m_NicknamesListModel;

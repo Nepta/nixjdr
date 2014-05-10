@@ -45,6 +45,7 @@ QString ChatCommon::stripCommandFromMessage(const QString &msg) {
 
     if (msg.startsWith("/")) {
         extractFirstWord(strippedMsg);
+        strippedMsg = strippedMsg.trimmed();
     }
 
     return strippedMsg;
