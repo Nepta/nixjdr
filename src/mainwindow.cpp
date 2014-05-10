@@ -68,8 +68,9 @@ void MainWindow::on_actionCreateMap_triggered(){
                                                     "Images (*.png *.xpm *.jpg)");
 
 	if (filename != NULL) {
-        MapMdiSubwindow* SFMLWidget = new MapMdiSubwindow(filename);
+        MapMdiSubwindow* SFMLWidget = new MapMdiSubwindow();
         ui->tableArea->addSubWindow(SFMLWidget);
+        SFMLWidget->editMapBackgroud(filename, true);
         SFMLWidget->show();
 
         connect(ui->tokenPage->getUi()->listToken, SIGNAL(itemClicked(QListWidgetItem*)),
@@ -83,8 +84,7 @@ void MainWindow::on_actionEditMap_triggered()
                                                     "Images (*.png *.xpm *.jpg)");
 
     MapMdiSubwindow *subwindow = dynamic_cast<MapMdiSubwindow*>(ui->tableArea->activeSubWindow());
-    //subwindow->map()->setMap(filename);
-    subwindow->editMapBackgroud(filename);
+    subwindow->editMapBackgroud(filename, false);
 
 }
 

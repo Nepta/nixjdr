@@ -9,10 +9,10 @@ class MapMdiSubwindow : public QMdiSubWindow {
     Q_OBJECT
 
     public:
-        explicit MapMdiSubwindow(QString filename);
+        explicit MapMdiSubwindow();
         ~MapMdiSubwindow();
         Map* map();
-        void editMapBackgroud(QString filename);
+        void editMapBackgroud(QString filename, bool newMap);
 
     private:
         static const int margin;
