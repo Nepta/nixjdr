@@ -5,7 +5,7 @@ CmdNicknamesList::CmdNicknamesList()
 {
 }
 
-void CmdNicknamesList::execute(ChatHeader &header, QString &arg) {
+void CmdNicknamesList::execute(ChatHeader &, QString &) {
 }
 
 void CmdNicknamesList::executeOnUser(User *user) {

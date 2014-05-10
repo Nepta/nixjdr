@@ -21,7 +21,7 @@ enum class ChatCodes {
 
     UNDEFINED
 };
-inline uint qHash(const ChatCodes &key);
+inline uint qHash(const ChatCodes &key) { return qHash((quint16) key); }
 
 class ChatCmds : public QObject
 {

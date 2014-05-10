@@ -5,7 +5,7 @@ ChatCmdNicknameAck::ChatCmdNicknameAck()
 {
 }
 
-void ChatCmdNicknameAck::execute(ChatHeader &header, QString &arg) {
+void ChatCmdNicknameAck::execute(ChatHeader &, QString &arg) {
     QString temp = arg;
 
     QString oldNickname = ChatCommon::extractFirstWord(temp);
@@ -21,7 +21,7 @@ void ChatCmdNicknameAck::execute(ChatHeader &header, QString &arg) {
         usersList->remove(oldNickname);
         usersList->insert(newNickname, user);
 
-        emit cmdSendMessageToUI(tr("Vous avez changé votre peudo en %1.")
+        emit cmdSendMessageToUI(tr("Vous avez changé votre pseudo en %1.")
                                 .arg(newNickname));
     }
     else if (isNew) {
@@ -31,7 +31,7 @@ void ChatCmdNicknameAck::execute(ChatHeader &header, QString &arg) {
         usersList->remove(oldNickname);
         usersList->insert(newNickname, user);
 
-        emit cmdSendMessageToUI(tr("%1 a changé son peudo en %2.")
+        emit cmdSendMessageToUI(tr("%1 a changé son pseudo en %2.")
                                 .arg(oldNickname)
                                 .arg(newNickname));
     }

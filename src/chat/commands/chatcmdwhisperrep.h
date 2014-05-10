@@ -8,7 +8,7 @@ class ChatCmdWhisperRep : public AbstractChatCmd
 public:
     ChatCmdWhisperRep();
 
-    void execute(ChatHeader &header, QString &arg);
+    void execute(ChatHeader &, QString &arg);
     QString getHelp();
 };
 

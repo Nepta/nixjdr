@@ -10,11 +10,6 @@
 #include "CmdNicknamesList.h"
 #include "CmdNicknamesListAck.h"
 
-inline uint qHash(const ChatCodes &key)
-{
-    return qHash((quint16) key);
-}
-
 const QHash<QString, ChatCodes> ChatCmds::s_CommandCodes = {
     {"/nickname", ChatCodes::USERCMD_NICK},
     {"/w", ChatCodes::USERCMD_WHISPER},

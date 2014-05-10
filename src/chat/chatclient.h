@@ -22,7 +22,7 @@ private slots:
     void socketError(QAbstractSocket::SocketError error);
     void processNewMessage(ChatHeader header, QString message);
     void clientConnected();
-    void clientDisconnected(User &user);
+    void clientDisconnected(User &);
 
 signals:
     void sendMessageToUI(const QString &msg);

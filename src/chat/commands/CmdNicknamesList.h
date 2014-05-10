@@ -9,7 +9,7 @@ class CmdNicknamesList : public AbstractChatCmd
 {
 public:
     CmdNicknamesList();
-    void execute(ChatHeader &header, QString &arg);
+    void execute(ChatHeader &, QString &);
     void executeOnUser(User *user);
     QString getHelp();
 };

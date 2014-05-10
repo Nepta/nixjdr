@@ -94,7 +94,7 @@ void ChatClient::clientConnected()
     emit sendMessageToUI(tr("<em>Connexion réussie !</em>"));
 }
 
-void ChatClient::clientDisconnected(User &user)
+void ChatClient::clientDisconnected(User &)
 {
     emit sendMessageToUI(tr("<em>Déconnecté du serveur</em>"));
 }
