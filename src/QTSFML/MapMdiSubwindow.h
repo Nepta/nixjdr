@@ -5,8 +5,11 @@
 #include "Map.h"
 
 class MapMdiSubwindow : public QMdiSubWindow {
+    Q_OBJECT
+
     public:
-        MapMdiSubwindow(QString filename);
+        explicit MapMdiSubwindow(QString filename);
+        ~MapMdiSubwindow();
         Map* map();
 
     private:

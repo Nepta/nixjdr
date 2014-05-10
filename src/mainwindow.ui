@@ -180,7 +180,7 @@
   </widget>
   <action name="actionModify_Background">
    <property name="text">
-    <string>Create Map...</string>
+    <string>Créer map...</string>
    </property>
    <property name="menuRole">
     <enum>QAction::TextHeuristicRole</enum>

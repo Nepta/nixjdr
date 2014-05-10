@@ -54,7 +54,7 @@ void MainWindow::on_actionModify_Background_triggered(){
 
 	if (filename != NULL) {
         MapMdiSubwindow* SFMLWidget = new MapMdiSubwindow(filename);
-		ui->tableArea->addSubWindow(SFMLWidget);
+        ui->tableArea->addSubWindow(SFMLWidget);
         SFMLWidget->show();
 
         connect(ui->tokenPage->getUi()->listToken, SIGNAL(itemClicked(QListWidgetItem*)),
