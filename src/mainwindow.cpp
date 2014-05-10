@@ -29,6 +29,11 @@ MainWindow::MainWindow(bool role, QWidget *parent) :
     m_NicknamesListModel = new QStringListModel;
     ui->nicknamesListView->setModel(m_NicknamesListModel);
 
+    // Menu
+    connect(ui->tableArea, SIGNAL(subWindowActivated(QMdiSubWindow*)),
+                 this, SLOT(updateMenu()));
+
+    // Setup role
     m_role = role;
     if (m_role == ROLE_MJ) {
         setupMJ();
@@ -48,6 +53,16 @@ MainWindow::~MainWindow()
     delete m_chatClient;
 }
 
+void MainWindow::updateMenu() {
+    QMdiSubWindow *subwindow  = ui->tableArea->activeSubWindow();
+    if (subwindow) {
+        QString classname = subwindow->metaObject()->className();
+
+        bool isMapMdiSubWindow = (classname == QString("MapMdiSubwindow"));
+        ui->actionEditMap->setEnabled(isMapMdiSubWindow);
+    }
+}
+
 void MainWindow::on_actionModify_Background_triggered(){
     QString filename = QFileDialog::getOpenFileName(this, "Ouvrir un fichier", "resource",
                                                     "Images (*.png *.xpm *.jpg)");
@@ -60,6 +75,15 @@ void MainWindow::on_actionModify_Background_triggered(){
         connect(ui->tokenPage->getUi()->listToken, SIGNAL(itemClicked(QListWidgetItem*)),
                 SFMLWidget->map(), SLOT(changeToken(QListWidgetItem*)));
 	}
+}
+
+void MainWindow::on_actionEditMap_triggered()
+{
+    QString filename = QFileDialog::getOpenFileName(this, "Ouvrir un fichier", "resource",
+                                                    "Images (*.png *.xpm *.jpg)");
+
+    MapMdiSubwindow *subwindow = dynamic_cast<MapMdiSubwindow*>(ui->tableArea->activeSubWindow());
+    subwindow->map()->setMap(filename);
 }
 
 void MainWindow::on_msgField_returnPressed()

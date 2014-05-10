@@ -33,6 +33,8 @@ private slots:
     void receivedMessage(const QString &msg);
     void updateNicknamesListView();
     void rollDice(QString);
+    void updateMenu();
+    void on_actionEditMap_triggered();
 
 signals:
     void initMainWindow();

@@ -175,6 +175,7 @@
      <string>File</string>
     </property>
     <addaction name="actionModify_Background"/>
+    <addaction name="actionEditMap"/>
    </widget>
    <addaction name="menuFile"/>
   </widget>
@@ -184,6 +185,14 @@
    </property>
    <property name="menuRole">
     <enum>QAction::TextHeuristicRole</enum>
+   </property>
+  </action>
+  <action name="actionEditMap">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Editer map...</string>
    </property>
   </action>
  </widget>
