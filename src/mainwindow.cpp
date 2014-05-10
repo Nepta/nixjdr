@@ -53,11 +53,7 @@ void MainWindow::on_actionModify_Background_triggered(){
                                                     "Images (*.png *.xpm *.jpg)");
 
 	if (filename != NULL) {
-        int height = 600;
-		int width = 800;
-        int margin = 24;
-
-        MapMdiSubwindow* SFMLWidget = new MapMdiSubwindow(filename, height, width, margin);
+        MapMdiSubwindow* SFMLWidget = new MapMdiSubwindow(filename);
 		ui->tableArea->addSubWindow(SFMLWidget);
         SFMLWidget->show();
 

@@ -6,7 +6,7 @@
 
 class MapMdiSubwindow : public QMdiSubWindow {
     public:
-        MapMdiSubwindow(QString filename, int height, int width, int margin);
+        MapMdiSubwindow(QString filename);
         Map* map();
 
     private:
