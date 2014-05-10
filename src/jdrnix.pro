@@ -24,6 +24,7 @@ SOURCES += \
     user.cpp \
     tokenmenu.cpp \
     dicemenu.cpp \
+    CustomMdiArea.cpp \
     QTSFML/Canvas.cpp \
     QTSFML/Map.cpp \
     QTSFML/Action.cpp \
@@ -55,6 +56,7 @@ HEADERS  += \
     user.h \
     tokenmenu.h \
     dicemenu.h \
+    CustomMdiArea.h \
     QTSFML/Canvas.h \
     QTSFML/Map.h \
     QTSFML/Action.h \

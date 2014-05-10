@@ -8,8 +8,6 @@ QTSFMLMdiSubwindow::QTSFMLMdiSubwindow(QString filename, int height, int width, 
     setGeometry(10, 10, width, height + margin);
     setWindowTitle("Qt SFML");
     setWindowFlags(Qt::CustomizeWindowHint | Qt::WindowCloseButtonHint); // hide min/max buttons
-    setOption(QMdiSubWindow::RubberBandResize, true);
-    setOption(QMdiSubWindow::RubberBandMove, true);
 
     //On crée une vue SFML dans la fenêtre principale
     map_ = new Map(this, QPoint(0, margin), QSize(width, height));

@@ -7,7 +7,6 @@ DiceMenu::DiceMenu(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::DiceMenu)
 {
-    //TODO check segfault
     ui->setupUi(this);
 }
 

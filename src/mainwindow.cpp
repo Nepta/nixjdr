@@ -8,10 +8,9 @@
 
 #include "QTSFML/QTSFMLMdiSubwindow.h"
 #include "QTSFML/Map.h"
+#include "CustomMdiArea.h"
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-
-#include <QScrollBar>
 
 MainWindow::MainWindow(bool role, QWidget *parent) :
     QMainWindow(parent),
@@ -26,7 +25,7 @@ MainWindow::MainWindow(bool role, QWidget *parent) :
 
     // Dice menu
     m_diceMenu = new DiceMenu();
-    ui->tableArea->addSubWindow(m_diceMenu, Qt::WindowStaysOnTopHint | Qt::CustomizeWindowHint |
+    ui->tableArea->addSubWindow(m_diceMenu, Qt::CustomizeWindowHint |
                                 Qt::WindowTitleHint | Qt::WindowMinMaxButtonsHint);
     ui->tableArea->subWindowList().last()->setGeometry(0,0,275,100);
     connect(m_diceMenu, SIGNAL(rollDice(QString)), this, SLOT(rollDice(QString)));
