@@ -2,6 +2,8 @@
 #define DICEMENU_H
 
 #include <QWidget>
+#include <QPushButton>
+#include <QWheelEvent>
 
 namespace Ui {
 class DiceMenu;
@@ -14,30 +16,24 @@ class DiceMenu : public QWidget
 public:
     explicit DiceMenu(QWidget *parent = 0);
     ~DiceMenu();
-/*
-protected:
-    void mousePressEvent(QMouseEvent *evt);
-    void mouseMoveEvent(QMouseEvent *evt);
-*/
 
 private slots:
-    void on_diceFourButton_clicked();
-    void on_diceSixButton_clicked();
-    void on_diceEightButton_clicked();
-    void on_diceTenButton_clicked();
-    void on_diceTwelveButton_clicked();
-    void on_diceSixteenButton_clicked();
-    void on_diceTwentyButton_clicked();
     void on_publicRollButton_clicked();
     void on_privateRollButton_clicked();
+    void on_cancelButton_clicked();
+    void modifyButton(QPushButton *buttonToModidy, bool actionToExecute);
+
 signals:
     void rollDice(QString);
+    void rightClickDiceButton(QPushButton *buttonToModify, bool actionToExecute);
 
 private:
-    void addDiceToRoll(int diceType);
     Ui::DiceMenu *ui;
-    QString m_dicesToRoll;
-//    QPoint m_oldPos;
+    QList<QPushButton*> m_DiceButtonList;
+
+    QString diceToRoll();
+    bool eventFilter(QObject *obj, QEvent *ev);
+    void fillDiceButtonList();
 };
 
 #endif // DICEMENU_H
