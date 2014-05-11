@@ -5,7 +5,7 @@
 #include <QString>
 #include <QHash>
 #include "chat/ChatHeader.h"
-#include "user.h"
+#include "User.h"
 
 enum class ChatCodes;
 

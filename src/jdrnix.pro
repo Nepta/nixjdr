@@ -18,12 +18,12 @@ TEMPLATE = app
 DESTDIR = ../
 
 SOURCES += \
-    main.cpp\
-    mainwindow.cpp \
-    startdialog.cpp \
-    user.cpp \
-    tokenmenu.cpp \
-    dicemenu.cpp \
+    Main.cpp \
+    MainWindow.cpp \
+    StartDialog.cpp \
+    User.cpp \
+    TokenMenu.cpp \
+    DiceMenu.cpp \
     CustomMdiArea.cpp \
     ChatWidget.cpp \
     QTSFML/Canvas.cpp \
@@ -52,11 +52,11 @@ SOURCES += \
     chat/commands/CmdNicknamesListAck.cpp
 
 HEADERS  += \
-    mainwindow.h \
-    startdialog.h \
-    user.h \
-    tokenmenu.h \
-    dicemenu.h \
+    MainWindow.h \
+    StartDialog.h \
+    User.h \
+    TokenMenu.h \
+    DiceMenu.h \
     CustomMdiArea.h \
     ChatWidget.h \
     QTSFML/Canvas.h \
@@ -89,6 +89,6 @@ HEADERS  += \
     chat/commands/CmdNicknamesListAck.h
 
 FORMS    += mainwindow.ui \
-    tokenmenu.ui \
-    dicemenu.ui \
+    TokenMenu.ui \
+    DiceMenu.ui \
     ChatWidget.ui

@@ -1,5 +1,5 @@
-#include "tokenmenu.h"
-#include "ui_tokenmenu.h"
+#include "TokenMenu.h"
+#include "ui_TokenMenu.h"
 #include <QDebug>
 
 TokenMenu::TokenMenu(QWidget *parent) :

@@ -1,5 +1,5 @@
-#include "startdialog.h"
-#include "mainwindow.h"
+#include "StartDialog.h"
+#include "MainWindow.h"
 
 StartDialog::StartDialog(QWidget *parent) :
     QMessageBox(parent)

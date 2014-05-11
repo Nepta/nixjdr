@@ -4,7 +4,7 @@
 #include <QtNetwork>
 #include <QString>
 #include "ChatProcessor.h"
-#include "user.h"
+#include "User.h"
 
 class ChatClient : public ChatProcessor
 {

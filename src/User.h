@@ -5,7 +5,7 @@
 #include <QString>
 #include <QtNetwork>
 #include "chat/ChatHeader.h"
-#include "user.h"
+#include "User.h"
 
 class User : public QObject
 {

@@ -1,6 +1,6 @@
 #include <QMouseEvent>
-#include "dicemenu.h"
-#include "ui_dicemenu.h"
+#include "DiceMenu.h"
+#include "ui_DiceMenu.h"
 
 DiceMenu::DiceMenu(QWidget *parent) :
     QWidget(parent),

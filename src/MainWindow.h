@@ -4,14 +4,14 @@
 #include <QMainWindow>
 #include <QMdiSubWindow>
 #include "ChatWidget.h"
-#include "tokenmenu.h"
-#include "dicemenu.h"
-#include "ui_tokenmenu.h"
-#include "ui_dicemenu.h"
+#include "TokenMenu.h"
+#include "DiceMenu.h"
+#include "ui_TokenMenu.h"
+#include "ui_DiceMenu.h"
 
 
 namespace Ui {
-class MainWindow;
+    class MainWindow;
 }
 
 class MainWindow : public QMainWindow

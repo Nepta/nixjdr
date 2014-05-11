@@ -6,7 +6,7 @@
 #include "QTSFML/MapMdiSubwindow.h"
 #include "QTSFML/Map.h"
 #include "CustomMdiArea.h"
-#include "mainwindow.h"
+#include "MainWindow.h"
 #include "ui_mainwindow.h"
 
 MainWindow::MainWindow(bool role, QWidget *parent) :

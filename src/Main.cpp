@@ -1,9 +1,9 @@
-#include "mainwindow.h"
 #include <QApplication>
 #include <QTranslator>
 #include <QString>
 #include <QLibraryInfo>
-#include "startdialog.h"
+#include "MainWindow.h"
+#include "StartDialog.h"
 
 int main(int argc, char *argv[])
 {
