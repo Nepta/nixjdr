@@ -22,9 +22,6 @@ private slots:
     void sendPacketToAll(ChatCodes code, QString message);
     void sendPacketToOne(ChatCodes code, QString message, QString receiverNickname);
 
-signals:
-    void sendMessageToChatUi(const QString &msg);
-
 private:
     QTcpServer *m_Server;
     QHash<QString, User *> m_UsersList;

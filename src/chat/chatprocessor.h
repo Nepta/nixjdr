@@ -21,6 +21,9 @@ protected:
 
 protected slots:
     virtual void processNewMessage(ChatHeader header, QString message) = 0;
+
+signals:
+    void sendMessageToChatUi(const QString &msg);
 };
 
 #endif // CHATPROCESSOR_H

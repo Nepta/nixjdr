@@ -2,7 +2,7 @@
 #include "chatclient.h"
 #include "chatcommon.h"
 
-ChatClient::ChatClient()
+ChatClient::ChatClient(const QString &serverIP, const quint16 &serverPort)
 {
     QTcpSocket *socket = new QTcpSocket(this);
     m_User = new User(socket);
@@ -21,11 +21,8 @@ ChatClient::ChatClient()
     AbstractChatCmd::setUsersListClient(&m_UsersList);
     connect(&m_ChatCmds, SIGNAL(cmdsendMessageToChatUi(QString)),
             this, SIGNAL(sendMessageToChatUi(QString)));
-}
 
-ChatClient::ChatClient(const QString &serverIP, const quint16 &serverPort) :
-    ChatClient()
-{
+    // connect the client socket to the server
     connection(serverIP, serverPort);
 }
 

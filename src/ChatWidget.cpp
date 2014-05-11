@@ -41,10 +41,8 @@ void ChatWidget::setupChatServer() {
 }
 
 void ChatWidget::setupChatClient() {
-    m_chatClient = new ChatClient;
-
     // TEST
-    m_chatClient->connection(QString("127.0.0.1"), 50885);
+    m_chatClient = new ChatClient(QString("127.0.0.1"), 50885);
     // TEST
 
     connect(m_chatClient, SIGNAL(sendMessageToChatUi(QString)),

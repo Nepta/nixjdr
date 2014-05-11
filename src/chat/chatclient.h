@@ -10,9 +10,8 @@ class ChatClient : public ChatProcessor
 {
     Q_OBJECT
 public:
-    ChatClient();
-    ~ChatClient();
     ChatClient(const QString &serverIP, const quint16 &serverPort);
+    ~ChatClient();
     void connection(const QString &serverIP, const quint16 &serverPort);
     void sendMessageToServer(const QString &msg);
     User *getUser();
@@ -22,9 +21,6 @@ private slots:
     void processNewMessage(ChatHeader header, QString message);
     void clientConnected();
     void clientDisconnected(User &);
-
-signals:
-    void sendMessageToChatUi(const QString &msg);
 
 private:
     User *m_User;
