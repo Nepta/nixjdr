@@ -9,6 +9,7 @@
 #include <QDir>
 #include <QDebug>
 #include <QMouseEvent>
+#include <cmath>
 
 Map::Map(QWidget* Parent, const QPoint& Position, const QSize& Size) :
     Canvas(Parent, Position, Size)
@@ -26,10 +27,9 @@ void Map::onInit(){
     tileHeight_ = 32;
     tileWidth_ = 32;
 
-    // Nombre de tiles en longueur et largeur (a faire en parametre)
-    // ou ennfonction de la taille de l'image et des tiles
-    nbTilesX_ = 25;
-    nbTilesY_ = 19;
+    // tile numbers
+    nbTilesX_ = ceil((double) image_.getSize().x / tileWidth_);
+    nbTilesY_ = ceil((double) image_.getSize().y / tileHeight_);
 
     // On paramètre le sprite
     sprite_.setTexture(image_);
