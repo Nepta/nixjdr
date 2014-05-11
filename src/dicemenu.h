@@ -24,8 +24,9 @@ private slots:
     void modifyButton(QPushButton *buttonToModidy, bool actionToExecute);
 
 signals:
-    void rollDice(QString);
+    void rollDice(QString, bool);
     void rightClickDiceButton(QPushButton *buttonToModify, bool actionToExecute);
+    void sendMessageToUI(QString);
 
 private:
     Ui::DiceMenu *ui;

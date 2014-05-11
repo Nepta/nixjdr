@@ -32,7 +32,7 @@ private slots:
     void on_msgField_returnPressed();
     void receivedMessage(const QString &msg);
     void updateNicknamesListView();
-    void rollDice(QString);
+    void rollDice(QString, bool hidden);
 
 signals:
     void initMainWindow();

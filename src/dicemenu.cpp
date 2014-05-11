@@ -60,17 +60,16 @@ void DiceMenu::on_cancelButton_clicked(){
 void DiceMenu::on_publicRollButton_clicked(){
     QString message = diceToRoll();
     if(message == ""){
-        emit rollDice("<em>Veuillez sélectionner des dés</em>");
+        emit sendMessageToUI("<em>Veuillez sélectionner des dés</em>");
     }
     else {
-        emit rollDice("/roll " + message);
+        emit rollDice(message, false);
     }
 }
 
 
 void DiceMenu::on_privateRollButton_clicked(){
-    //TODO passer en whisp
-    emit rollDice("/roll ");
+    emit rollDice(diceToRoll(), true);
 }
 
 QString DiceMenu::diceToRoll(){

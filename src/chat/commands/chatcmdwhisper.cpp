@@ -26,7 +26,9 @@ void ChatCmdWhisper::execute(ChatHeader &header, QString &arg) {
                 .arg(strippedMsg);
 
         emit cmdSendPacketToOne(ChatCodes::SRVCMD_WHISPER_REP, msgTarget, target);
-        emit cmdSendPacketToOne(ChatCodes::SRVCMD_WHISPER_REP, msgSender, sender);
+        if(target != sender){
+            emit cmdSendPacketToOne(ChatCodes::SRVCMD_WHISPER_REP, msgSender, sender);
+        }
     }
     else {
         QString errmsg = tr("%1 n'existe pas.")

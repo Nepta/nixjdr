@@ -98,3 +98,7 @@ void ChatClient::clientDisconnected(User &)
 {
     emit sendMessageToUI(tr("<em>Déconnecté du serveur</em>"));
 }
+
+User *ChatClient::getUser() {
+    return m_User;
+}

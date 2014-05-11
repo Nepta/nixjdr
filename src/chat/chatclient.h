@@ -17,6 +17,7 @@ public:
     ChatClient(const QString &serverIP, const quint16 &serverPort);
     void connection(const QString &serverIP, const quint16 &serverPort);
     void sendMessageToServer(const QString &msg);
+    User *getUser();
 
 private slots:
     void socketError(QAbstractSocket::SocketError error);

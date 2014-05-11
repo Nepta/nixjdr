@@ -23,7 +23,7 @@ MainWindow::MainWindow(bool role, QWidget *parent) :
     ui->tableArea->addSubWindow(m_diceMenu, Qt::CustomizeWindowHint |
                                 Qt::WindowTitleHint | Qt::WindowMinMaxButtonsHint);
     ui->tableArea->subWindowList().last()->setGeometry(0,0,275,100);
-    connect(m_diceMenu, SIGNAL(rollDice(QString)), this, SLOT(rollDice(QString)));
+    connect(m_diceMenu, SIGNAL(rollDice(QString, bool)), this, SLOT(rollDice(QString, bool)));
 
     // Chat nicknames list
     m_NicknamesListModel = new QStringListModel;
@@ -95,7 +95,8 @@ void MainWindow::setupChatServer() {
     // initialization
     MainWindow::connect(m_chatServer, SIGNAL(sendMessageToUI(QString)),
                         this, SLOT(receivedMessage(QString)));
-
+    MainWindow::connect(m_diceMenu, SIGNAL(sendMessageToUI(QString)),
+                        this, SLOT(receivedMessage(QString)));
     m_chatServer->init();
 }
 
@@ -117,8 +118,14 @@ void MainWindow::receivedMessage(const QString &msg) {
     ui->msgList->append(htmlMsg);
 }
 
-void MainWindow::rollDice(QString dice){
-    sendMessageFromClientToServer(dice);
+void MainWindow::rollDice(QString dice, bool hidden){
+    QString msg = QString("/roll %1").arg(dice);
+
+    if (hidden) {
+        msg += QString(" | %2").arg(m_chatClient->getUser()->getNickname());
+    }
+
+    sendMessageFromClientToServer(msg);
 }
 
 void MainWindow::updateNicknamesListView() {
