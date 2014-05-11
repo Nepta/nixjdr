@@ -1,9 +1,9 @@
 #ifndef CMDNICKNAMESLIST_H
 #define CMDNICKNAMESLIST_H
 
-#include "abstractchatcmd.h"
+#include "AbstractCmd.h"
 
-class CmdNicknamesList : public AbstractChatCmd
+class CmdNicknamesList : public AbstractCmd
 {
 public:
     CmdNicknamesList();

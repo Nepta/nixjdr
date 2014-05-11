@@ -1,10 +1,10 @@
-#ifndef CHATCMDS_H
-#define CHATCMDS_H
+#ifndef Commands_H
+#define Commands_H
 
 #include <QObject>
 #include <QHash>
 #include <QString>
-#include "abstractchatcmd.h"
+#include "AbstractCmd.h"
 
 enum class ChatCodes {
     USERCMD_MESSAGE = 0,
@@ -23,30 +23,30 @@ enum class ChatCodes {
 };
 inline uint qHash(const ChatCodes &key) { return qHash((quint16) key); }
 
-class ChatCmds : public QObject
+class Commands : public QObject
 {
     Q_OBJECT
 
 public:
     const static QHash<QString, ChatCodes> s_CommandCodes;
 
-    ChatCmds();
-    ~ChatCmds();
+    Commands();
+    ~Commands();
 
-    AbstractChatCmd *getUserCommand(ChatCodes code);
-    AbstractChatCmd *getServerCommand(ChatCodes code);
+    AbstractCmd *getUserCommand(ChatCodes code);
+    AbstractCmd *getServerCommand(ChatCodes code);
     QString getPrintableCommandsList();
 
 private:
-    QHash<ChatCodes, AbstractChatCmd *> m_UserCommands;
-    QHash<ChatCodes, AbstractChatCmd *> m_ServerCommands;
+    QHash<ChatCodes, AbstractCmd *> m_UserCommands;
+    QHash<ChatCodes, AbstractCmd *> m_ServerCommands;
 
 signals:
     void cmdSendPacketToAll(ChatCodes code, QString message);
     void cmdSendPacketToOne(ChatCodes code, QString message,
                             QString receiverNickname);
-    void cmdsendMessageToChatUi(const QString &msg);
+    void cmdSendMessageToChatUi(const QString &msg);
     void cmdUpdateUserListView();
 };
 
-#endif // CHATCMDS_H
+#endif // Commands_H

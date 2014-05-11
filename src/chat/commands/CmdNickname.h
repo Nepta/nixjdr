@@ -1,12 +1,12 @@
-#ifndef CHATCMDNICKNAME_H
-#define CHATCMDNICKNAME_H
+#ifndef CmdNickname_H
+#define CmdNickname_H
 
-#include "abstractchatcmd.h"
+#include "AbstractCmd.h"
 
-class ChatCmdNickname : public AbstractChatCmd
+class CmdNickname : public AbstractCmd
 {
 public:
-    ChatCmdNickname();
+    CmdNickname();
 
     void execute(ChatHeader &header, QString &arg);
     void executeOnUser(User *newUser, QString currentNickname, QString oldNickname, bool isNew);
@@ -14,4 +14,4 @@ public:
     QString verifyAndGetNickname(QString nickname);
 };
 
-#endif // CHATCMDNICKNAME_H
+#endif // CmdNickname_H

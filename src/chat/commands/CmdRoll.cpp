@@ -1,12 +1,12 @@
-#include "chat/chatcommon.h"
-#include "chatcmdroll.h"
-#include "chatcmdwhisper.h"
+#include "chat/ChatCommon.h"
+#include "CmdRoll.h"
+#include "CmdWhisper.h"
 
-ChatCmdRoll::ChatCmdRoll(QHash<ChatCodes, AbstractChatCmd *> &userCommands) {
+CmdRoll::CmdRoll(QHash<ChatCodes, AbstractCmd *> &userCommands) {
     m_UserCommands = userCommands;
 }
 
-void ChatCmdRoll::execute(ChatHeader &header, QString &arg) {
+void CmdRoll::execute(ChatHeader &header, QString &arg) {
     QString dice, sender, target, result, namedMessage, message;
     bool error;
     int separatorIndex;
@@ -26,7 +26,7 @@ void ChatCmdRoll::execute(ChatHeader &header, QString &arg) {
         dice = arg;
     }
 
-    result = ChatCmdRoll::extractDice("0"+dice, error);
+    result = CmdRoll::extractDice("0"+dice, error);
 
     namedMessage = QString("[<strong>%1</strong>]: %2")
                        .arg(sender)
@@ -36,7 +36,7 @@ void ChatCmdRoll::execute(ChatHeader &header, QString &arg) {
 
     if(!error){
         if(target != ""){
-            ChatCmdWhisper *cmd = dynamic_cast<ChatCmdWhisper*>(m_UserCommands.value(ChatCodes::USERCMD_WHISPER));
+            CmdWhisper *cmd = dynamic_cast<CmdWhisper*>(m_UserCommands.value(ChatCodes::USERCMD_WHISPER));
             cmd->execute(header, message);
         }
         else {
@@ -48,7 +48,7 @@ void ChatCmdRoll::execute(ChatHeader &header, QString &arg) {
     }
 }
 
-QString ChatCmdRoll::extractDice(QString dice, bool &error) {
+QString CmdRoll::extractDice(QString dice, bool &error) {
     QString parser, resultString, returnString;
     int X, Y, result, addToResult;
     bool addition = true;
@@ -99,7 +99,7 @@ QString ChatCmdRoll::extractDice(QString dice, bool &error) {
                         error = true;
                         return(tr("<em>nombre de dés trop grand</em>"));
                     }
-                    result +=ChatCmdRoll::rollDice(X, Y, addition, resultString);
+                    result +=CmdRoll::rollDice(X, Y, addition, resultString);
                     X=-1;
                     Y=0;
                     parser ="";
@@ -123,7 +123,7 @@ QString ChatCmdRoll::extractDice(QString dice, bool &error) {
 }
 
 
-int ChatCmdRoll::rollDice(int X, int Y, bool addition, QString &totalResultString){
+int CmdRoll::rollDice(int X, int Y, bool addition, QString &totalResultString){
     QString result, diceType;
     int rand;
     int tot= 0;
@@ -151,6 +151,6 @@ int ChatCmdRoll::rollDice(int X, int Y, bool addition, QString &totalResultStrin
 }
 
 
-QString ChatCmdRoll::getHelp() {
+QString CmdRoll::getHelp() {
     return NULL;
 }

@@ -1,19 +1,19 @@
-#include "chatcmdnickname.h"
-#include "chatcmds.h"
+#include "CmdNickname.h"
+#include "Commands.h"
 
-ChatCmdNickname::ChatCmdNickname() {
+CmdNickname::CmdNickname() {
 }
 
-void ChatCmdNickname::execute(ChatHeader &header, QString &arg) {
+void CmdNickname::execute(ChatHeader &header, QString &arg) {
     // save the user and remove the old value from the hash
     QString oldNickname = header.getSocketUserNickname();
-    User *user = AbstractChatCmd::getUsersListServer()->value(oldNickname);
-    AbstractChatCmd::getUsersListServer()->remove(oldNickname);
+    User *user = AbstractCmd::getUsersListServer()->value(oldNickname);
+    AbstractCmd::getUsersListServer()->remove(oldNickname);
 
     executeOnUser(user, arg, oldNickname, false);
 }
 
-void ChatCmdNickname::executeOnUser(User *user, QString askedNickname, QString oldNickname,
+void CmdNickname::executeOnUser(User *user, QString askedNickname, QString oldNickname,
     bool isNew)
 {
     QString checkedNickname = verifyAndGetNickname(askedNickname);
@@ -30,7 +30,7 @@ void ChatCmdNickname::executeOnUser(User *user, QString askedNickname, QString o
 
     // modify the user's nickname and add the new pair to the hash
     user->setNickname(checkedNickname);
-    AbstractChatCmd::getUsersListServer()->insert(checkedNickname, user);
+    AbstractCmd::getUsersListServer()->insert(checkedNickname, user);
 
     // acknowledge : update the client (isOwner is true)
     emit cmdSendPacketToOne(ChatCodes::SRVCMD_NICK_ACK, QString("%1 %2 %3 %4")
@@ -38,14 +38,14 @@ void ChatCmdNickname::executeOnUser(User *user, QString askedNickname, QString o
                             checkedNickname);
 }
 
-QString ChatCmdNickname::getHelp() {
+QString CmdNickname::getHelp() {
     return tr("/nickname pseudonyme - Permet de modifier votre pseudonyme.");
 }
 
-QString ChatCmdNickname::verifyAndGetNickname(QString nickname) {
+QString CmdNickname::verifyAndGetNickname(QString nickname) {
     QString tempNickname = nickname;
 
-    while (AbstractChatCmd::getUsersListServer()->contains(tempNickname)) {
+    while (AbstractCmd::getUsersListServer()->contains(tempNickname)) {
         tempNickname += "_";
     }
 

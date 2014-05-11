@@ -4,7 +4,7 @@ CmdNicknamesListAck::CmdNicknamesListAck() {
 }
 
 void CmdNicknamesListAck::execute(ChatHeader &, QString &arg) {
-    QHash<QString, User*> *userList = AbstractChatCmd::getUsersListClient();
+    QHash<QString, User*> *userList = AbstractCmd::getUsersListClient();
     QStringList nicknamesList = arg.split(" ");
 
     // Retrieve the user associated with the current client

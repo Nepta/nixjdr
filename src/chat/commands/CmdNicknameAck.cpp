@@ -1,11 +1,11 @@
-#include "chatcmdnicknameack.h"
-#include "chat/chatcommon.h"
+#include "CmdNicknameAck.h"
+#include "chat/ChatCommon.h"
 
-ChatCmdNicknameAck::ChatCmdNicknameAck()
+CmdNicknameAck::CmdNicknameAck()
 {
 }
 
-void ChatCmdNicknameAck::execute(ChatHeader &, QString &arg) {
+void CmdNicknameAck::execute(ChatHeader &, QString &arg) {
     QString temp = arg;
 
     QString oldNickname = ChatCommon::extractFirstWord(temp);
@@ -13,7 +13,7 @@ void ChatCmdNicknameAck::execute(ChatHeader &, QString &arg) {
     bool isOwner = (ChatCommon::extractFirstWord(temp) == "1" ? true : false);
     bool isNew = (temp == "1" ? true : false);
 
-    QHash<QString, User *> *usersList = AbstractChatCmd::getUsersListClient();
+    QHash<QString, User *> *usersList = AbstractCmd::getUsersListClient();
     User* user = usersList->value(oldNickname);
 
     if (isOwner) {
@@ -21,7 +21,7 @@ void ChatCmdNicknameAck::execute(ChatHeader &, QString &arg) {
         usersList->remove(oldNickname);
         usersList->insert(newNickname, user);
 
-        emit cmdsendMessageToChatUi(tr("Vous avez changé votre pseudo en %1.")
+        emit cmdSendMessageToChatUi(tr("Vous avez changé votre pseudo en %1.")
                                 .arg(newNickname));
     }
     else if (isNew) {
@@ -31,7 +31,7 @@ void ChatCmdNicknameAck::execute(ChatHeader &, QString &arg) {
         usersList->remove(oldNickname);
         usersList->insert(newNickname, user);
 
-        emit cmdsendMessageToChatUi(tr("%1 a changé son pseudo en %2.")
+        emit cmdSendMessageToChatUi(tr("%1 a changé son pseudo en %2.")
                                 .arg(oldNickname)
                                 .arg(newNickname));
     }
@@ -39,6 +39,6 @@ void ChatCmdNicknameAck::execute(ChatHeader &, QString &arg) {
     emit cmdUpdateUserListView();
 }
 
-QString ChatCmdNicknameAck::getHelp() {
+QString CmdNicknameAck::getHelp() {
     return NULL;
 }

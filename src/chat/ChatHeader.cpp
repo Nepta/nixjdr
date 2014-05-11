@@ -1,5 +1,5 @@
-#include "commands/chatcmds.h"
-#include "chatheader.h"
+#include "commands/Commands.h"
+#include "ChatHeader.h"
 
 ChatHeader::ChatHeader()
 {

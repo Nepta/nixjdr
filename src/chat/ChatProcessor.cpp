@@ -1,5 +1,5 @@
-#include "chatprocessor.h"
+#include "ChatProcessor.h"
 
-ChatCmds *ChatProcessor::getChatCmds() {
-    return &m_ChatCmds;
+Commands *ChatProcessor::getCommands() {
+    return &m_Commands;
 }

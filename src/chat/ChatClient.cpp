@@ -1,6 +1,6 @@
-#include "commands/abstractchatcmd.h"
-#include "chatclient.h"
-#include "chatcommon.h"
+#include "commands/AbstractCmd.h"
+#include "ChatClient.h"
+#include "ChatCommon.h"
 
 ChatClient::ChatClient(const QString &serverIP, const quint16 &serverPort)
 {
@@ -18,8 +18,8 @@ ChatClient::ChatClient(const QString &serverIP, const quint16 &serverPort)
             this, SLOT(socketError(QAbstractSocket::SocketError)));
 
     // init commands
-    AbstractChatCmd::setUsersListClient(&m_UsersList);
-    connect(&m_ChatCmds, SIGNAL(cmdsendMessageToChatUi(QString)),
+    AbstractCmd::setUsersListClient(&m_UsersList);
+    connect(&m_Commands, SIGNAL(cmdSendMessageToChatUi(QString)),
             this, SIGNAL(sendMessageToChatUi(QString)));
 
     // connect the client socket to the server
@@ -73,7 +73,7 @@ void ChatClient::socketError(QAbstractSocket::SocketError error)
 void ChatClient::processNewMessage(ChatHeader header, QString message) {
     ChatCodes code = (ChatCodes) header.getCmd();
 
-    m_ChatCmds.getServerCommand(code)->execute(header, message);
+    m_Commands.getServerCommand(code)->execute(header, message);
 }
 
 void ChatClient::clientConnected()

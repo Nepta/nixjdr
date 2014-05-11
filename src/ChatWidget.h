@@ -2,8 +2,8 @@
 #define CHATWIDGET_H
 
 #include <QWidget>
-#include "chat/chatserver.h"
-#include "chat/chatclient.h"
+#include "chat/ChatServer.h"
+#include "chat/ChatClient.h"
 
 namespace Ui {
 class ChatWidget;
@@ -28,8 +28,8 @@ private slots:
 
 private:
     Ui::ChatWidget *ui;
-    ChatServer *m_chatServer;
-    ChatClient *m_chatClient;
+    ChatServer *m_ChatServer;
+    ChatClient *m_ChatClient;
     QStringListModel *m_NicknamesListModel;
 };
 

@@ -25,6 +25,7 @@ SOURCES += \
     tokenmenu.cpp \
     dicemenu.cpp \
     CustomMdiArea.cpp \
+    ChatWidget.cpp \
     QTSFML/Canvas.cpp \
     QTSFML/Map.cpp \
     QTSFML/Action.cpp \
@@ -32,24 +33,23 @@ SOURCES += \
     QTSFML/TokenNoAction.cpp \
     QTSFML/SpriteList.cpp \
     QTSFML/MapMdiSubwindow.cpp \
-    chat/chatserver.cpp \
-    chat/chatcommon.cpp \
-    chat/chatclient.cpp \
-    chat/chatheader.cpp \
+    chat/ChatServer.cpp \
+    chat/ChatCommon.cpp \
+    chat/ChatClient.cpp \
+    chat/ChatHeader.cpp \
     chat/ChatProcessor.cpp \
-    chat/commands/abstractchatcmd.cpp \
-    chat/commands/chatcmdmessageall.cpp \
-    chat/commands/chatcmdnickname.cpp \
-    chat/commands/chatcmdwhisper.cpp \
-    chat/commands/chatcmds.cpp \
-    chat/commands/chatcmdmessageui.cpp \
-    chat/commands/chatcmdnicknameack.cpp \
-    chat/commands/chatcmdwhisperrep.cpp \
-    chat/commands/chatcmdroll.cpp \
-    chat/commands/chatcmddisconnect.cpp \
+    chat/commands/AbstractCmd.cpp \
+    chat/commands/CmdMessageall.cpp \
+    chat/commands/CmdNickname.cpp \
+    chat/commands/CmdWhisper.cpp \
+    chat/commands/Commands.cpp \
+    chat/commands/CmdMessageui.cpp \
+    chat/commands/CmdNicknameAck.cpp \
+    chat/commands/CmdWhisperRep.cpp \
+    chat/commands/CmdRoll.cpp \
+    chat/commands/CmdDisconnect.cpp \
     chat/commands/CmdNicknamesList.cpp \
-    chat/commands/CmdNicknamesListAck.cpp \
-    ChatWidget.cpp
+    chat/commands/CmdNicknamesListAck.cpp
 
 HEADERS  += \
     mainwindow.h \
@@ -58,6 +58,7 @@ HEADERS  += \
     tokenmenu.h \
     dicemenu.h \
     CustomMdiArea.h \
+    ChatWidget.h \
     QTSFML/Canvas.h \
     QTSFML/Map.h \
     QTSFML/Action.h \
@@ -69,24 +70,23 @@ HEADERS  += \
     QTSFML/TokenMoveAction.h \
     QTSFML/TokenNoAction.h \
     QTSFML/MapMdiSubwindow.h \
-    chat/chatserver.h \
-    chat/chatcommon.h \
-    chat/chatclient.h \
-    chat/chatheader.h \
-    chat/chatprocessor.h \
-    chat/commands/abstractchatcmd.h \
-    chat/commands/chatcmdmessageall.h \
-    chat/commands/chatcmdnickname.h \
-    chat/commands/chatcmdwhisper.h \
-    chat/commands/chatcmds.h \
-    chat/commands/chatcmdmessageui.h \
-    chat/commands/chatcmdnicknameack.h \
-    chat/commands/chatcmdwhisperrep.h \
-    chat/commands/chatcmdroll.h \
-    chat/commands/chatcmddisconnect.h \
+    chat/ChatServer.h \
+    chat/ChatCommon.h \
+    chat/ChatClient.h \
+    chat/ChatHeader.h \
+    chat/ChatProcessor.h \
+    chat/commands/AbstractCmd.h \
+    chat/commands/CmdMessageall.h \
+    chat/commands/CmdNickname.h \
+    chat/commands/CmdWhisper.h \
+    chat/commands/Commands.h \
+    chat/commands/CmdMessageui.h \
+    chat/commands/CmdNicknameAck.h \
+    chat/commands/CmdWhisperRep.h \
+    chat/commands/CmdRoll.h \
+    chat/commands/CmdDisconnect.h \
     chat/commands/CmdNicknamesList.h \
-    chat/commands/CmdNicknamesListAck.h \
-    ChatWidget.h
+    chat/commands/CmdNicknamesListAck.h
 
 FORMS    += mainwindow.ui \
     tokenmenu.ui \

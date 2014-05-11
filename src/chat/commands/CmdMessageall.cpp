@@ -1,11 +1,11 @@
-#include "chatcmdmessageall.h"
-#include "chatcmds.h"
+#include "CmdMessageall.h"
+#include "Commands.h"
 
-ChatCmdMessageAll::ChatCmdMessageAll()
+CmdMessageAll::CmdMessageAll()
 {
 }
 
-void ChatCmdMessageAll::execute(ChatHeader &header, QString &arg) {
+void CmdMessageAll::execute(ChatHeader &header, QString &arg) {
     QString namedMessage = QString("[<strong>%1</strong>]: %2")
                        .arg(header.getSocketUserNickname())
                        .arg(arg);
@@ -13,6 +13,6 @@ void ChatCmdMessageAll::execute(ChatHeader &header, QString &arg) {
     emit cmdSendPacketToAll(ChatCodes::SRVCMD_MESSAGE, namedMessage);
 }
 
-QString ChatCmdMessageAll::getHelp() {
+QString CmdMessageAll::getHelp() {
     return NULL;
 }

@@ -1,13 +1,13 @@
 #include <QString>
-#include "chat/chatcommon.h"
-#include "chatcmdwhisper.h"
-#include "chatcmds.h"
+#include "chat/ChatCommon.h"
+#include "CmdWhisper.h"
+#include "Commands.h"
 
-ChatCmdWhisper::ChatCmdWhisper()
+CmdWhisper::CmdWhisper()
 {
 }
 
-void ChatCmdWhisper::execute(ChatHeader &header, QString &arg) {
+void CmdWhisper::execute(ChatHeader &header, QString &arg) {
     QString strippedMsg, msgSender, msgTarget,
             sender, target;
 
@@ -16,7 +16,7 @@ void ChatCmdWhisper::execute(ChatHeader &header, QString &arg) {
     sender = header.getSocketUserNickname();
     target = ChatCommon::extractFirstWord(strippedMsg);
 
-    if (AbstractChatCmd::getUsersListServer()->contains(target)) {
+    if (AbstractCmd::getUsersListServer()->contains(target)) {
         msgTarget = tr("[%1] chuchote: %2")
                 .arg(sender)
                 .arg(strippedMsg);
@@ -38,6 +38,6 @@ void ChatCmdWhisper::execute(ChatHeader &header, QString &arg) {
     }
 }
 
-QString ChatCmdWhisper::getHelp() {
+QString CmdWhisper::getHelp() {
     return tr("/whisper utilisateur message - Envoie un message à utilisateur");
 }

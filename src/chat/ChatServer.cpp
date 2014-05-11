@@ -1,19 +1,19 @@
 #include<QTranslator>
-#include "commands/abstractchatcmd.h"
-#include "commands/chatcmdnickname.h"
+#include "commands/AbstractCmd.h"
+#include "commands/CmdNickname.h"
 #include "commands/CmdNicknamesList.h"
-#include "chatcommon.h"
-#include "chatserver.h"
+#include "ChatCommon.h"
+#include "ChatServer.h"
 
 ChatServer::ChatServer()
 {
     m_Server = new QTcpServer(this);
 
     // init commands
-    AbstractChatCmd::setUsersListServer(&m_UsersList);
-    connect(&m_ChatCmds, SIGNAL(cmdSendPacketToAll(ChatCodes, QString)),
+    AbstractCmd::setUsersListServer(&m_UsersList);
+    connect(&m_Commands, SIGNAL(cmdSendPacketToAll(ChatCodes, QString)),
             this, SLOT(sendPacketToAll(ChatCodes, QString)));
-    connect(&m_ChatCmds, SIGNAL(cmdSendPacketToOne(ChatCodes, QString, QString)),
+    connect(&m_Commands, SIGNAL(cmdSendPacketToOne(ChatCodes, QString, QString)),
             this, SLOT(sendPacketToOne(ChatCodes, QString, QString)));
 }
 
@@ -50,12 +50,12 @@ void ChatServer::newClientConnection()
 {
     User *newUser = new User(m_Server->nextPendingConnection());
 
-    ChatCmdNickname *cmdNickname = dynamic_cast<ChatCmdNickname*>(
-                m_ChatCmds.getUserCommand(ChatCodes::USERCMD_NICK));
+    CmdNickname *cmdNickname = dynamic_cast<CmdNickname*>(
+                m_Commands.getUserCommand(ChatCodes::USERCMD_NICK));
     cmdNickname->executeOnUser(newUser, "guest", "guest", true);
 
     CmdNicknamesList *cmdNicknamesList = dynamic_cast<CmdNicknamesList*>(
-                m_ChatCmds.getUserCommand(ChatCodes::USERCMD_LIST));
+                m_Commands.getUserCommand(ChatCodes::USERCMD_LIST));
     cmdNicknamesList->executeOnUser(newUser);
 
     // process and send a packet when fully received
@@ -79,7 +79,7 @@ void ChatServer::userDisconnected(User &user)
 void ChatServer::processNewMessage(ChatHeader header, QString message) {
     ChatCodes code = (ChatCodes) header.getCmd();
 
-    m_ChatCmds.getUserCommand(code)->execute(header, message);
+    m_Commands.getUserCommand(code)->execute(header, message);
 }
 
 void ChatServer::sendPacketToAll(ChatCodes code, QString message)

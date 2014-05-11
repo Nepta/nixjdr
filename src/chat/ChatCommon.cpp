@@ -1,7 +1,7 @@
 #include <QDataStream>
 
-#include "commands/chatcmds.h"
-#include "chatcommon.h"
+#include "commands/Commands.h"
+#include "ChatCommon.h"
 
 ChatCommon::ChatCommon()
 {
@@ -36,7 +36,7 @@ ChatCodes ChatCommon::translateCommandToCode(const QString &msg) {
     }
     else {
         // TODO remplacer par HELP
-        return ChatCmds::s_CommandCodes.value(cmd, ChatCodes::USERCMD_MESSAGE);
+        return Commands::s_CommandCodes.value(cmd, ChatCodes::USERCMD_MESSAGE);
     }
 }
 

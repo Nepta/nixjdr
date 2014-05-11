@@ -3,8 +3,8 @@
 
 #include <QObject>
 #include <QString>
-#include "commands/chatcmds.h"
-#include "chatheader.h"
+#include "commands/Commands.h"
+#include "ChatHeader.h"
 
 class ChatProcessor : public QObject
 {
@@ -16,13 +16,13 @@ public:
     virtual ~ChatProcessor(){}
 
     /**
-     * @brief getChatCmds   Gives access to the commands
-     * @return &m_ChatCmds
+     * @brief getCommands   Gives access to the commands
+     * @return &m_Commands
      */
-    ChatCmds *getChatCmds();
+    Commands *getCommands();
 
 protected:
-    ChatCmds m_ChatCmds;
+    Commands m_Commands;
 
 protected slots:
     virtual void processNewMessage(ChatHeader header, QString message) = 0;

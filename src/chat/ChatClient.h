@@ -1,9 +1,9 @@
-#ifndef CHATCLIENT_H
-#define CHATCLIENT_H
+#ifndef ChatClient_H
+#define ChatClient_H
 
 #include <QtNetwork>
 #include <QString>
-#include "chatprocessor.h"
+#include "ChatProcessor.h"
 #include "user.h"
 
 class ChatClient : public ChatProcessor
@@ -81,4 +81,4 @@ private:
     QHash<QString, User *> m_UsersList;
 };
 
-#endif // CHATCLIENT_H
+#endif // ChatClient_H

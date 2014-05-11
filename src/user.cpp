@@ -1,4 +1,4 @@
-#include "chat/chatcommon.h"
+#include "chat/ChatCommon.h"
 #include "user.h"
 
 User::User(QTcpSocket *socket)

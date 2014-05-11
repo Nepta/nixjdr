@@ -1,12 +1,12 @@
-#ifndef CHATCOMMON_H
-#define CHATCOMMON_H
+#ifndef ChatCommon_H
+#define ChatCommon_H
 
 #include <QtNetwork>
 #include <QHash>
 #include <QByteArray>
 #include <QString>
-#include "commands/chatcmds.h"
-#include "chatheader.h"
+#include "commands/Commands.h"
+#include "ChatHeader.h"
 
 class ChatCommon
 {
@@ -69,4 +69,4 @@ public:
                                       QString &msg);
 };
 
-#endif // CHATCOMMON_H
+#endif // ChatCommon_H

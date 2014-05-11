@@ -1,12 +1,12 @@
 #ifndef CHATCMDDISCONNECT_H
 #define CHATCMDDISCONNECT_H
 
-#include "abstractchatcmd.h"
+#include "AbstractCmd.h"
 
-class ChatCmdDisconnect : public AbstractChatCmd
+class CmdDisconnect : public AbstractCmd
 {
 public:
-    ChatCmdDisconnect();
+    CmdDisconnect();
 
     void execute(ChatHeader &, QString &arg);
     QString getHelp();
