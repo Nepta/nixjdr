@@ -2,7 +2,9 @@
 #define CHATPROCESSOR_H
 
 #include <QObject>
+#include <QString>
 #include "commands/chatcmds.h"
+#include "chatheader.h"
 
 class ChatProcessor : public QObject
 {

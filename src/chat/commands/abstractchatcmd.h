@@ -1,9 +1,10 @@
 #ifndef ABSTRACTCHATCMD_H
 #define ABSTRACTCHATCMD_H
 
-#include <QString>
 #include <QObject>
+#include <QString>
 #include <QHash>
+#include "chat/chatheader.h"
 #include "user.h"
 
 enum class ChatCodes;
@@ -32,7 +33,7 @@ signals:
     void cmdSendPacketToAll(ChatCodes code, QString message);
     void cmdSendPacketToOne(ChatCodes code, QString message,
                                      QString receiverNickname);
-    void cmdSendMessageToUI(const QString &msg);
+    void cmdsendMessageToChatUi(const QString &msg);
     void cmdUpdateUserListView();
 };
 

@@ -43,8 +43,8 @@ ChatCmds::ChatCmds()
 
     // Allow each command to interact with the UI (client side)
     foreach (AbstractChatCmd *command, m_ServerCommands) {
-        connect(command, SIGNAL(cmdSendMessageToUI(QString)),
-                this, SIGNAL(cmdSendMessageToUI(QString)));
+        connect(command, SIGNAL(cmdsendMessageToChatUi(QString)),
+                this, SIGNAL(cmdsendMessageToChatUi(QString)));
         connect(command, SIGNAL(cmdUpdateUserListView()),
                 this, SIGNAL(cmdUpdateUserListView()));
     }

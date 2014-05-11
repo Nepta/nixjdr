@@ -1,4 +1,3 @@
-#include <QTranslator>
 #include "chatcmdmessageall.h"
 #include "chatcmds.h"
 

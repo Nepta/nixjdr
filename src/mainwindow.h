@@ -3,12 +3,10 @@
 
 #include <QMainWindow>
 #include <QMdiSubWindow>
-
-#include "chat/chatserver.h"
-#include "chat/chatclient.h"
+#include "ChatWidget.h"
 #include "tokenmenu.h"
-#include "ui_tokenmenu.h"
 #include "dicemenu.h"
+#include "ui_tokenmenu.h"
 #include "ui_dicemenu.h"
 
 
@@ -28,30 +26,21 @@ public:
     ~MainWindow();
 
 private slots:
-    void on_msgField_returnPressed();
-    void receivedMessage(const QString &msg);
-    void updateNicknamesListView();
-    void rollDice(QString, bool hidden);
     void updateMenu();
     void on_actionCreateMap_triggered();
     void on_actionEditMap_triggered();
 
 signals:
     void initMainWindow();
+    void sendMessageToChatUi(const QString &msg);
 
 private:
     void setupMJ();
     void setupPlayer();
-    void setupChatServer();
-    void setupChatClient();
-    void sendMessageFromClientToServer(QString message);
 
     Ui::MainWindow *ui;
     bool m_role;
     DiceMenu *m_diceMenu;
-    ChatServer *m_chatServer;
-    ChatClient *m_chatClient;
-    QStringListModel *m_NicknamesListModel;
 };
 
 #endif // MAINWINDOW_H

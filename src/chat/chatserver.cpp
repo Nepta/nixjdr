@@ -31,13 +31,13 @@ void ChatServer::init() {
     //TEST
         QString msg = tr("Le serveur n'a pas pu être démarré. Raison :<br />") +
                 m_Server->errorString();
-        emit sendMessageToUI(msg);
+        emit sendMessageToChatUi(msg);
     }
     else {
         QString msg = tr("Le serveur a été démarré sur le port <strong>")
                 + QString::number(m_Server->serverPort())
                 + tr("</strong>.<br />Des clients peuvent maintenant se connecter.");
-        emit sendMessageToUI(msg);
+        emit sendMessageToChatUi(msg);
 
         connect(m_Server, SIGNAL(newConnection()), this, SLOT(newClientConnection()));
     }

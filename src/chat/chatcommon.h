@@ -3,6 +3,8 @@
 
 #include <QtNetwork>
 #include <QHash>
+#include <QByteArray>
+#include <QString>
 #include "commands/chatcmds.h"
 #include "chatheader.h"
 

@@ -3,9 +3,6 @@
 #include <QApplication>
 #include <QDesktopWidget>
 #include <QToolBox>
-#include <QPixmap>
-#include <QGridLayout>
-
 #include "QTSFML/MapMdiSubwindow.h"
 #include "QTSFML/Map.h"
 #include "CustomMdiArea.h"
@@ -23,13 +20,10 @@ MainWindow::MainWindow(bool role, QWidget *parent) :
     ui->tableArea->addSubWindow(m_diceMenu, Qt::CustomizeWindowHint |
                                 Qt::WindowTitleHint | Qt::WindowMinMaxButtonsHint);
     ui->tableArea->subWindowList().last()->setGeometry(0,0,275,100);
-    connect(m_diceMenu, SIGNAL(rollDice(QString, bool)), this, SLOT(rollDice(QString, bool)));
+    connect(m_diceMenu, SIGNAL(rollDice(QString, bool)),
+            ui->m_ChatWidget, SLOT(rollDice(QString, bool)));
 
-    // Chat nicknames list
-    m_NicknamesListModel = new QStringListModel;
-    ui->nicknamesListView->setModel(m_NicknamesListModel);
-
-    // Menu
+    // Top menu
     connect(ui->tableArea, SIGNAL(subWindowActivated(QMdiSubWindow*)),
                  this, SLOT(updateMenu()));
 
@@ -47,10 +41,7 @@ MainWindow::MainWindow(bool role, QWidget *parent) :
 MainWindow::~MainWindow()
 {
     delete ui;
-    delete m_NicknamesListModel;
     delete m_diceMenu;
-    delete m_chatServer;
-    delete m_chatClient;
 }
 
 void MainWindow::updateMenu() {
@@ -90,68 +81,17 @@ void MainWindow::on_actionEditMap_triggered()
 
 }
 
-void MainWindow::on_msgField_returnPressed()
-{
-    if (!ui->msgField->text().isEmpty()) {
-        sendMessageFromClientToServer(ui->msgField->text());
-        ui->msgField->clear();
-    }
-}
-
-void MainWindow::sendMessageFromClientToServer(QString message){
-    m_chatClient->sendMessageToServer(message);
-}
-
 void MainWindow::setupMJ() {
-    setupChatServer();
-    setupChatClient();
+    ui->m_ChatWidget->setupChatServer();
+    connect(m_diceMenu, SIGNAL(sendMessageToChatUi(QString)),
+                        this, SIGNAL(sendMessageToChatUi(QString)));
+
+    ui->m_ChatWidget->setupChatClient();
 }
 
 void MainWindow::setupPlayer() {
-    m_chatServer = NULL;
-    setupChatClient();
-}
+    ui->m_ChatWidget->setupChatClient();
 
-void MainWindow::setupChatServer() {
-    m_chatServer = new ChatServer;
-
-    // connect needed before init to display system messages in the chat during
-    // initialization
-    MainWindow::connect(m_chatServer, SIGNAL(sendMessageToUI(QString)),
-                        this, SLOT(receivedMessage(QString)));
-    MainWindow::connect(m_diceMenu, SIGNAL(sendMessageToUI(QString)),
-                        this, SLOT(receivedMessage(QString)));
-    m_chatServer->init();
-}
-
-void MainWindow::setupChatClient() {
-    m_chatClient = new ChatClient;
-
-    // TEST
-    m_chatClient->connection(QString("127.0.0.1"), 50885);
-    // TEST
-
-    MainWindow::connect(m_chatClient, SIGNAL(sendMessageToUI(QString)),
-                        this, SLOT(receivedMessage(QString)));
-    MainWindow::connect(m_chatClient->getChatCmds(), SIGNAL(cmdUpdateUserListView()),
-                        this, SLOT(updateNicknamesListView()));
-}
-
-void MainWindow::receivedMessage(const QString &msg) {
-    QString htmlMsg = QString("<div style=\" white-space: pre-wrap;\">%1</div>").arg(msg);
-    ui->msgList->append(htmlMsg);
-}
-
-void MainWindow::rollDice(QString dice, bool hidden){
-    QString msg = QString("/roll %1").arg(dice);
-
-    if (hidden) {
-        msg += QString(" | %2").arg(m_chatClient->getUser()->getNickname());
-    }
-
-    sendMessageFromClientToServer(msg);
-}
-
-void MainWindow::updateNicknamesListView() {
-    m_NicknamesListModel->setStringList(AbstractChatCmd::getUsersListClient()->keys());
+    connect(this, SIGNAL(sendMessageToChatUi(QString)),
+            ui->m_ChatWidget, SLOT(receivedMessage(QString)));
 }

@@ -5,7 +5,7 @@ ChatCmdMessageUI::ChatCmdMessageUI()
 }
 
 void ChatCmdMessageUI::execute(ChatHeader &, QString &arg) {
-    emit cmdSendMessageToUI(arg);
+    emit cmdsendMessageToChatUi(arg);
 }
 
 QString ChatCmdMessageUI::getHelp() {

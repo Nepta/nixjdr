@@ -1,6 +1,7 @@
 #ifndef STARTDIALOG_H
 #define STARTDIALOG_H
 
+#include <QWidget>
 #include <QMessageBox>
 
 class StartDialog : public QMessageBox

@@ -1,5 +1,5 @@
-#include "chatcmdroll.h"
 #include "chat/chatcommon.h"
+#include "chatcmdroll.h"
 #include "chatcmdwhisper.h"
 
 ChatCmdRoll::ChatCmdRoll(QHash<ChatCodes, AbstractChatCmd *> &userCommands) {

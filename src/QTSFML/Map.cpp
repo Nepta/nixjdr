@@ -1,15 +1,12 @@
+#include <QString>
+#include <QMouseEvent>
+#include <cmath>
 #include "Map.h"
 #include "Action.h"
 #include "TokenNoAction.h"
 #include "ActionChooser.h"
 #include "SpriteList.h"
 
-#include <iostream>
-#include <string>
-#include <QDir>
-#include <QDebug>
-#include <QMouseEvent>
-#include <cmath>
 
 Map::Map(QWidget* Parent, const QPoint& Position, const QSize& Size) :
     Canvas(Parent, Position, Size)
@@ -35,12 +32,7 @@ void Map::onInit(){
     sprite_.setTexture(image_);
     sprite_.setOrigin(0.f,0.f);
 
-//	sf::Texture texture;
-//	texture.loadFromFile("resource/cirno.png");
-//	spriteList_.newTexture(texture);
-
     spriteList_.tokenTextureToLoad_.loadFromFile("resource/cirno.png");
-//    spriteList_.newTexture(tokenTextureToLoad_);
 
     clock_.restart();
 }
@@ -88,13 +80,11 @@ void Map::changeToken(QListWidgetItem * item)
     QString textSprite;
     textSprite = QString("resource/")+item->text()+QString(".png");
     spriteList_.tokenTextureToLoad_.loadFromFile(textSprite.toStdString());
-//    spriteList_.newTexture(tokenTextureToLoad_);
 }
 
 void Map::mouseReleaseEvent(QMouseEvent *event){
 	int&& x = event->x();
 	int&& y = event->y();
-
 
 	// Pour obtenir l'origine de la case sur laquelle afficher
 	x = x/tileWidth_;

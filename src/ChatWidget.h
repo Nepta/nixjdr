@@ -1,0 +1,36 @@
+#ifndef CHATWIDGET_H
+#define CHATWIDGET_H
+
+#include <QWidget>
+#include "chat/chatserver.h"
+#include "chat/chatclient.h"
+
+namespace Ui {
+class ChatWidget;
+}
+
+class ChatWidget : public QWidget
+{
+    Q_OBJECT
+
+public:
+    explicit ChatWidget(QWidget *parent = 0);
+    ~ChatWidget();
+    void setupChatServer();
+    void setupChatClient();
+    void sendMessageFromClientToServer(QString message);
+
+private slots:
+    void on_msgField_returnPressed();
+    void receivedMessage(const QString &msg);
+    void updateNicknamesListView();
+    void rollDice(QString, bool hidden);
+
+private:
+    Ui::ChatWidget *ui;
+    ChatServer *m_chatServer;
+    ChatClient *m_chatClient;
+    QStringListModel *m_NicknamesListModel;
+};
+
+#endif // CHATWIDGET_H

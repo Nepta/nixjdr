@@ -5,8 +5,9 @@
 
 class SpriteList{
 public:
-    // List of texture paired with its sprite list
-//    std::vector<std::pair<sf::Texture&, std::vector<sf::Sprite>>> list_; //R.A.C.H.E.
+    /**
+     * @brief list_ - List of texture paired with its sprite list.
+     */
     std::vector<std::pair<sf::Texture&,sf::Sprite>> list_;
     sf::Texture tokenTextureToLoad_;
 

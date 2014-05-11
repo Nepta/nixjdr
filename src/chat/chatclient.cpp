@@ -19,8 +19,8 @@ ChatClient::ChatClient()
 
     // init commands
     AbstractChatCmd::setUsersListClient(&m_UsersList);
-    connect(&m_ChatCmds, SIGNAL(cmdSendMessageToUI(QString)),
-            this, SIGNAL(sendMessageToUI(QString)));
+    connect(&m_ChatCmds, SIGNAL(cmdsendMessageToChatUi(QString)),
+            this, SIGNAL(sendMessageToChatUi(QString)));
 }
 
 ChatClient::ChatClient(const QString &serverIP, const quint16 &serverPort) :
@@ -80,7 +80,7 @@ void ChatClient::socketError(QAbstractSocket::SocketError error)
             errMsg = tr("<em>ERREUR : ") + m_User->getSocket()->errorString() + "</em>";
     }
 
-    emit sendMessageToUI(errMsg);
+    emit sendMessageToChatUi(errMsg);
 }
 
 void ChatClient::processNewMessage(ChatHeader header, QString message) {
@@ -91,12 +91,12 @@ void ChatClient::processNewMessage(ChatHeader header, QString message) {
 
 void ChatClient::clientConnected()
 {
-    emit sendMessageToUI(tr("<em>Connexion réussie !</em>"));
+    emit sendMessageToChatUi(tr("<em>Connexion réussie !</em>"));
 }
 
 void ChatClient::clientDisconnected(User &)
 {
-    emit sendMessageToUI(tr("<em>Déconnecté du serveur</em>"));
+    emit sendMessageToChatUi(tr("<em>Déconnecté du serveur</em>"));
 }
 
 User *ChatClient::getUser() {

@@ -1,6 +1,4 @@
 #include "SpriteList.h"
-#include <iostream>
-#include <vector>
 
 void SpriteList::addSprite(int x, int y){
     sf::Texture *texture = new sf::Texture(tokenTextureToLoad_);

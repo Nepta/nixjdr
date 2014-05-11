@@ -21,7 +21,7 @@ void ChatCmdNicknameAck::execute(ChatHeader &, QString &arg) {
         usersList->remove(oldNickname);
         usersList->insert(newNickname, user);
 
-        emit cmdSendMessageToUI(tr("Vous avez changé votre pseudo en %1.")
+        emit cmdsendMessageToChatUi(tr("Vous avez changé votre pseudo en %1.")
                                 .arg(newNickname));
     }
     else if (isNew) {
@@ -31,7 +31,7 @@ void ChatCmdNicknameAck::execute(ChatHeader &, QString &arg) {
         usersList->remove(oldNickname);
         usersList->insert(newNickname, user);
 
-        emit cmdSendMessageToUI(tr("%1 a changé son pseudo en %2.")
+        emit cmdsendMessageToChatUi(tr("%1 a changé son pseudo en %2.")
                                 .arg(oldNickname)
                                 .arg(newNickname));
     }

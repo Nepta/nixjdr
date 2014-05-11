@@ -1,10 +1,8 @@
 #ifndef CHATCLIENT_H
 #define CHATCLIENT_H
 
-#include <QObject>
-#include <QtGui>
 #include <QtNetwork>
-#include "commands/chatcmds.h"
+#include <QString>
 #include "chatprocessor.h"
 #include "user.h"
 
@@ -26,7 +24,7 @@ private slots:
     void clientDisconnected(User &);
 
 signals:
-    void sendMessageToUI(const QString &msg);
+    void sendMessageToChatUi(const QString &msg);
 
 private:
     User *m_User;

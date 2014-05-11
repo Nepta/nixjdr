@@ -1,7 +1,7 @@
 #include <QString>
+#include "chat/chatcommon.h"
 #include "chatcmdwhisper.h"
 #include "chatcmds.h"
-#include "chat/chatcommon.h"
 
 ChatCmdWhisper::ChatCmdWhisper()
 {

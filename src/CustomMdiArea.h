@@ -1,6 +1,7 @@
 #ifndef CUSTOMMDIAREA_H
 #define CUSTOMMDIAREA_H
 
+#include <QWidget>
 #include <QMdiArea>
 #include <QMdiSubWindow>
 

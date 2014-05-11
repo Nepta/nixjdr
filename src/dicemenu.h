@@ -6,7 +6,7 @@
 #include <QWheelEvent>
 
 namespace Ui {
-class DiceMenu;
+    class DiceMenu;
 }
 
 class DiceMenu : public QWidget
@@ -26,7 +26,7 @@ private slots:
 signals:
     void rollDice(QString, bool);
     void rightClickDiceButton(QPushButton *buttonToModify, bool actionToExecute);
-    void sendMessageToUI(QString);
+    void sendMessageToChatUi(QString);
 
 private:
     Ui::DiceMenu *ui;

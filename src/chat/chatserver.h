@@ -2,9 +2,7 @@
 #define CHATSERVER_H
 
 #include <QtNetwork>
-#include "commands/chatcmds.h"
 #include "chatprocessor.h"
-#include "chatheader.h"
 #include "user.h"
 
 class ChatServer : public ChatProcessor
@@ -25,7 +23,7 @@ private slots:
     void sendPacketToOne(ChatCodes code, QString message, QString receiverNickname);
 
 signals:
-    void sendMessageToUI(const QString &msg);
+    void sendMessageToChatUi(const QString &msg);
 
 private:
     QTcpServer *m_Server;

@@ -1,8 +1,6 @@
 #ifndef CHATCMDNICKNAME_H
 #define CHATCMDNICKNAME_H
 
-#include <QString>
-#include "chat/chatheader.h"
 #include "abstractchatcmd.h"
 
 class ChatCmdNickname : public AbstractChatCmd

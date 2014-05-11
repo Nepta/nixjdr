@@ -2,11 +2,9 @@
 #define TOKENMENU_H
 
 #include <QWidget>
-#include <QGraphicsView>
-#include <QGraphicsScene>
 
 namespace Ui {
-class TokenMenu;
+    class TokenMenu;
 }
 
 class TokenMenu : public QWidget

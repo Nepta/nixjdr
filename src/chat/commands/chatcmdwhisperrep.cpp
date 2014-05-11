@@ -8,7 +8,7 @@ void ChatCmdWhisperRep::execute(ChatHeader &, QString &arg) {
     QString formattedMsg = QString("<div style=\" color:#9E6B94;\">%1</div>")
                            .arg(arg);
 
-    emit cmdSendMessageToUI(formattedMsg);
+    emit cmdsendMessageToChatUi(formattedMsg);
 }
 
 QString ChatCmdWhisperRep::getHelp() {
