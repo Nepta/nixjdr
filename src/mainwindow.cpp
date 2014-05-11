@@ -83,8 +83,10 @@ void MainWindow::on_actionEditMap_triggered()
     QString filename = QFileDialog::getOpenFileName(this, "Ouvrir un fichier", "resource",
                                                     "Images (*.png *.xpm *.jpg)");
 
-    MapMdiSubwindow *subwindow = dynamic_cast<MapMdiSubwindow*>(ui->tableArea->activeSubWindow());
-    subwindow->editMapBackgroud(filename, false);
+    if (filename != NULL) {
+        MapMdiSubwindow *subwindow = dynamic_cast<MapMdiSubwindow*>(ui->tableArea->activeSubWindow());
+        subwindow->editMapBackgroud(filename, false);
+    }
 
 }
 
