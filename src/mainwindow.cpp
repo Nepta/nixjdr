@@ -22,7 +22,9 @@ MainWindow::MainWindow(bool role, QWidget *parent) :
     m_diceMenu = new DiceMenu();
     ui->tableArea->addSubWindow(m_diceMenu, Qt::CustomizeWindowHint |
                                 Qt::WindowTitleHint | Qt::WindowMinMaxButtonsHint);
-    ui->tableArea->subWindowList().last()->setGeometry(0,0,275,100);
+    ui->tableArea->subWindowList().last()->setGeometry(0,0,470,90);
+    ui->tableArea->subWindowList().last()->setMinimumSize(470,90);
+    ui->tableArea->subWindowList().last()->setWindowTitle(tr("Dés"));
     connect(m_diceMenu, SIGNAL(rollDice(QString, bool)), this, SLOT(rollDice(QString, bool)));
 
     // Chat nicknames list
