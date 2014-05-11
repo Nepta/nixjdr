@@ -12,6 +12,11 @@ public:
     ChatProcessor(){}
 
     virtual ~ChatProcessor(){}
+
+    /**
+     * @brief getChatCmds   Gives access to the commands
+     * @return &m_ChatCmds
+     */
     ChatCmds *getChatCmds();
 
 protected:
