@@ -26,7 +26,7 @@ void ChatCmdRoll::execute(ChatHeader &header, QString &arg) {
         dice = arg;
     }
 
-    result = ChatCmdRoll::extractDice(dice, error);
+    result = ChatCmdRoll::extractDice("0"+dice, error);
 
     namedMessage = QString("[<strong>%1</strong>]: %2")
                        .arg(sender)
@@ -51,6 +51,7 @@ void ChatCmdRoll::execute(ChatHeader &header, QString &arg) {
 QString ChatCmdRoll::extractDice(QString dice, bool &error) {
     QString parser, resultString, returnString;
     int X, Y, result, addToResult;
+    bool addition = true;
     X = -1;
     addToResult = 0;
     result = 0;
@@ -62,6 +63,12 @@ QString ChatCmdRoll::extractDice(QString dice, bool &error) {
 
     // format : XdY
     for(int i =0; i<dice.length(); i++){
+        if(i>0 && dice.at(i-1)=='+'){
+            addition = true;
+        }
+        else if(i>0 && dice.at(i-1)== '-'){
+            addition = false;
+        }
         if(dice.at(i).isDigit()){
             parser = parser + dice.at(i);
         }
@@ -70,9 +77,14 @@ QString ChatCmdRoll::extractDice(QString dice, bool &error) {
                 X=parser.toInt();
                 parser ="";
             }
-            else if(i!=0 && dice.at(i)=='+' && parser.length()<5) {
-                if( X==-1 ){
-                    addToResult += parser.toInt();
+            else if(i!=0 && (dice.at(i)=='+' || dice.at(i) =='-') && parser.length()<5) {
+                if( X==-1){
+                    if(addition) {
+                        addToResult += parser.toInt();
+                    }
+                    else{
+                        addToResult -=parser.toInt();
+                    }
                     parser ="";
                 }
                 else {
@@ -87,7 +99,7 @@ QString ChatCmdRoll::extractDice(QString dice, bool &error) {
                         error = true;
                         return(tr("<em>nombre de dés trop grand</em>"));
                     }
-                    result +=ChatCmdRoll::rollDice(X, Y, resultString);
+                    result +=ChatCmdRoll::rollDice(X, Y, addition, resultString);
                     X=-1;
                     Y=0;
                     parser ="";
@@ -111,7 +123,7 @@ QString ChatCmdRoll::extractDice(QString dice, bool &error) {
 }
 
 
-int ChatCmdRoll::rollDice(int X, int Y, QString &totalResultString){
+int ChatCmdRoll::rollDice(int X, int Y, bool addition, QString &totalResultString){
     QString result, diceType;
     int rand;
     int tot= 0;
@@ -122,12 +134,18 @@ int ChatCmdRoll::rollDice(int X, int Y, QString &totalResultString){
         tot += rand;
     }
 
-    diceType = "<strong>" + QString::number(X) + "d" + QString::number(Y) + "</strong>";
+    diceType = QString("%1d%2").arg(QString::number(X)).arg(QString::number(Y));
+    if(!addition){
+        tot = -tot;
+        diceType.prepend("-");
+    }
+    diceType.prepend("<strong>").append("</strong>");
+
     if(X>100){
-        totalResultString += diceType + tr(" total :") + QString::number(tot);
+        totalResultString += QString("%1 total: %2").arg(diceType).arg(QString::number(tot));
     }
     else{
-        totalResultString += (diceType + tr(" résultats: ") + result + tr(" sous total: ") + QString::number(tot) + "\n");
+        totalResultString += QString("%1 résultats: %2 <em>sous total:</em> %3\n").arg(diceType).arg(result).arg(QString::number(tot));
     }
     return tot;
 }

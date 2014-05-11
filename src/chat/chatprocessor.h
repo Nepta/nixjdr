@@ -14,6 +14,11 @@ public:
     ChatProcessor(){}
 
     virtual ~ChatProcessor(){}
+
+    /**
+     * @brief getChatCmds   Gives access to the commands
+     * @return &m_ChatCmds
+     */
     ChatCmds *getChatCmds();
 
 protected:
@@ -23,6 +28,10 @@ protected slots:
     virtual void processNewMessage(ChatHeader header, QString message) = 0;
 
 signals:
+    /**
+     * @brief sendMessageToChatUi   Transmits a message that will be displayed in the chat
+     * @param msg   Reference to the message to transmit
+     */
     void sendMessageToChatUi(const QString &msg);
 };
 

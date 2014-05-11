@@ -30,22 +30,12 @@ ChatClient::~ChatClient() {
     delete m_User;
 }
 
-/**
- * @brief ChatClient::connection Connect to the specified host (IP and port).
- * @param serverIP
- * @param serverPort
- */
 void ChatClient::connection(const QString &serverIP, const quint16 &serverPort)
 {
     m_User->getSocket()->abort(); // disable previous connection
     m_User->getSocket()->connectToHost(serverIP, serverPort);
 }
 
-/**
- * @brief ChatClient::sendMessageToServer Send the message to the server in order
- * to broadcast it to all the users.
- * @param msg
- */
 void ChatClient::sendMessageToServer(const QString &msg)
 {
     QByteArray packet;

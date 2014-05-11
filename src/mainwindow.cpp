@@ -19,7 +19,10 @@ MainWindow::MainWindow(bool role, QWidget *parent) :
     m_diceMenu = new DiceMenu();
     ui->tableArea->addSubWindow(m_diceMenu, Qt::CustomizeWindowHint |
                                 Qt::WindowTitleHint | Qt::WindowMinMaxButtonsHint);
-    ui->tableArea->subWindowList().last()->setGeometry(0,0,275,100);
+
+    ui->tableArea->subWindowList().last()->setGeometry(0,0,470,90);
+    ui->tableArea->subWindowList().last()->setMinimumSize(ui->tableArea->size());
+    ui->tableArea->subWindowList().last()->setWindowTitle(tr("Dés"));
     connect(m_diceMenu, SIGNAL(rollDice(QString, bool)),
             ui->m_ChatWidget, SLOT(rollDice(QString, bool)));
 
@@ -77,6 +80,9 @@ void MainWindow::on_actionEditMap_triggered()
     if (filename != NULL) {
         MapMdiSubwindow *subwindow = dynamic_cast<MapMdiSubwindow*>(ui->tableArea->activeSubWindow());
         subwindow->editMapBackgroud(filename, false);
+
+        connect(ui->tokenPage->getUi()->listToken, SIGNAL(itemClicked(QListWidgetItem*)),
+                subwindow->map(), SLOT(changeToken(QListWidgetItem*)));
     }
 
 }

@@ -32,3 +32,4 @@ build-*
 
 # Generated Doxygen documentation
 doc/
+html/

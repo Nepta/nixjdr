@@ -8,8 +8,11 @@ DiceMenu::DiceMenu(QWidget *parent) :
 {
     ui->setupUi(this);
     DiceMenu::fillDiceButtonList();
+    foreach(QPushButton* button, m_DiceButtonList) {
+        button->setMinimumSize(50,5);
+    }
     connect(this, SIGNAL(rightClickDiceButton(QPushButton*,bool)),
-            this, SLOT(modifyButton(QPushButton*, bool)));
+        this, SLOT(modifyButton(QPushButton*, bool)));
 }
 
 DiceMenu::~DiceMenu()
@@ -24,12 +27,12 @@ bool DiceMenu::eventFilter(QObject *obj, QEvent *event){
         Qt::MouseButton mouseButton = static_cast<QMouseEvent*>(event)->button();
         int delta = static_cast<QWheelEvent*>(event)->delta();
 
-        if(mouseButton == Qt::LeftButton || delta > 0) {
-            emit rightClickDiceButton((QPushButton*) obj, true);
+        if(mouseButton == Qt::RightButton || delta < 0) {
+            emit rightClickDiceButton((QPushButton*) obj, false);
             eventHandled = true;
         }
-        else if(mouseButton == Qt::RightButton || delta < 0) {
-            emit rightClickDiceButton((QPushButton*) obj, false);
+        else if(mouseButton == Qt::LeftButton || delta > 0) {
+            emit rightClickDiceButton((QPushButton*) obj, true);
             eventHandled = true;
         }
     }
@@ -51,8 +54,12 @@ void DiceMenu::fillDiceButtonList(){
 void DiceMenu::on_cancelButton_clicked(){
     foreach(QPushButton* button, m_DiceButtonList) {
         QString buttonText = button->text();
-        buttonText.replace(0, buttonText.indexOf("d"), "");
-
+        if(buttonText.contains("d")){
+            buttonText.replace(0, buttonText.indexOf("d"), "");
+        }
+        else{
+            buttonText.setNum(0);
+        }
         button->setText(buttonText);
     }
 }
@@ -69,7 +76,13 @@ void DiceMenu::on_publicRollButton_clicked(){
 
 
 void DiceMenu::on_privateRollButton_clicked(){
-    emit rollDice(diceToRoll(), true);
+    QString message = diceToRoll();
+    if(message == ""){
+        emit sendMessageToChatUi("<em>Veuillez sélectionner des dés</em>");
+    }
+    else {
+        emit rollDice(message, true);
+    }
 }
 
 QString DiceMenu::diceToRoll(){
@@ -78,10 +91,14 @@ QString DiceMenu::diceToRoll(){
     foreach(QPushButton *button, m_DiceButtonList) {
         QString buttonText = button->text();
         if (buttonText.at(0) != 'd') {
-            message += buttonText + "+";
+            if(buttonText.at(0) == '-'){
+                message += '-' + buttonText ;
+            }
+            else{
+                message += '+' + buttonText;
+            }
         }
     }
-    message.chop(1); //removes the last '+'
 
     return message;
 }
@@ -91,14 +108,19 @@ void DiceMenu::modifyButton(QPushButton *buttonToModify, bool actionToExecute){
     QString buttonText;
 
     buttonText = buttonToModify->text();
-    indexOfDiceSeparator = buttonText.indexOf("d");
+    if(buttonText.contains("d")){
+        indexOfDiceSeparator = buttonText.indexOf("d");
+    }
+    else{
+        indexOfDiceSeparator = buttonText.length();
+    }
     diceCount = buttonText.left(indexOfDiceSeparator).toInt();
 
     buttonText.replace(0, indexOfDiceSeparator, "");
     if(actionToExecute){
         diceCount++;
     }
-    else if(diceCount!=0){
+    else {
         diceCount --;
     }
     buttonToModify->setText(buttonText.prepend(QString::number(diceCount)));
