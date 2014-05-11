@@ -88,6 +88,9 @@ void MainWindow::on_actionEditMap_triggered()
     if (filename != NULL) {
         MapMdiSubwindow *subwindow = dynamic_cast<MapMdiSubwindow*>(ui->tableArea->activeSubWindow());
         subwindow->editMapBackgroud(filename, false);
+
+        connect(ui->tokenPage->getUi()->listToken, SIGNAL(itemClicked(QListWidgetItem*)),
+                subwindow->map(), SLOT(changeToken(QListWidgetItem*)));
     }
 
 }
