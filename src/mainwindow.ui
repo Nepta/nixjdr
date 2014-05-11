@@ -174,16 +174,25 @@
     <property name="title">
      <string>File</string>
     </property>
-    <addaction name="actionModify_Background"/>
+    <addaction name="actionCreateMap"/>
+    <addaction name="actionEditMap"/>
    </widget>
    <addaction name="menuFile"/>
   </widget>
-  <action name="actionModify_Background">
+  <action name="actionCreateMap">
    <property name="text">
-    <string>Create Map...</string>
+    <string>Créer map...</string>
    </property>
    <property name="menuRole">
     <enum>QAction::TextHeuristicRole</enum>
+   </property>
+  </action>
+  <action name="actionEditMap">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Editer map...</string>
    </property>
   </action>
  </widget>

@@ -28,11 +28,13 @@ public:
     ~MainWindow();
 
 private slots:
-    void on_actionModify_Background_triggered();
     void on_msgField_returnPressed();
     void receivedMessage(const QString &msg);
     void updateNicknamesListView();
     void rollDice(QString, bool hidden);
+    void updateMenu();
+    void on_actionCreateMap_triggered();
+    void on_actionEditMap_triggered();
 
 signals:
     void initMainWindow();

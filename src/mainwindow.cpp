@@ -29,6 +29,11 @@ MainWindow::MainWindow(bool role, QWidget *parent) :
     m_NicknamesListModel = new QStringListModel;
     ui->nicknamesListView->setModel(m_NicknamesListModel);
 
+    // Menu
+    connect(ui->tableArea, SIGNAL(subWindowActivated(QMdiSubWindow*)),
+                 this, SLOT(updateMenu()));
+
+    // Setup role
     m_role = role;
     if (m_role == ROLE_MJ) {
         setupMJ();
@@ -48,22 +53,41 @@ MainWindow::~MainWindow()
     delete m_chatClient;
 }
 
-void MainWindow::on_actionModify_Background_triggered(){
+void MainWindow::updateMenu() {
+    QMdiSubWindow *subwindow  = ui->tableArea->activeSubWindow();
+    if (subwindow) {
+        QString classname = subwindow->metaObject()->className();
+
+        bool isMapMdiSubWindow = (classname == QString("MapMdiSubwindow"));
+        ui->actionEditMap->setEnabled(isMapMdiSubWindow);
+    }
+}
+
+void MainWindow::on_actionCreateMap_triggered(){
     QString filename = QFileDialog::getOpenFileName(this, "Ouvrir un fichier", "resource",
                                                     "Images (*.png *.xpm *.jpg)");
 
 	if (filename != NULL) {
-        int height = 600;
-		int width = 800;
-        int margin = 24;
-
-        MapMdiSubwindow* SFMLWidget = new MapMdiSubwindow(filename, height, width, margin);
-		ui->tableArea->addSubWindow(SFMLWidget);
+        MapMdiSubwindow* SFMLWidget = new MapMdiSubwindow();
+        ui->tableArea->addSubWindow(SFMLWidget);
+        SFMLWidget->editMapBackgroud(filename, true);
         SFMLWidget->show();
 
         connect(ui->tokenPage->getUi()->listToken, SIGNAL(itemClicked(QListWidgetItem*)),
                 SFMLWidget->map(), SLOT(changeToken(QListWidgetItem*)));
 	}
+}
+
+void MainWindow::on_actionEditMap_triggered()
+{
+    QString filename = QFileDialog::getOpenFileName(this, "Ouvrir un fichier", "resource",
+                                                    "Images (*.png *.xpm *.jpg)");
+
+    if (filename != NULL) {
+        MapMdiSubwindow *subwindow = dynamic_cast<MapMdiSubwindow*>(ui->tableArea->activeSubWindow());
+        subwindow->editMapBackgroud(filename, false);
+    }
+
 }
 
 void MainWindow::on_msgField_returnPressed()
