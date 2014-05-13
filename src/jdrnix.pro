@@ -26,6 +26,7 @@ SOURCES += \
     DiceMenu.cpp \
     CustomMdiArea.cpp \
     ChatWidget.cpp \
+    ConnectionHelper.cpp \
     QTSFML/Canvas.cpp \
     QTSFML/Map.cpp \
     QTSFML/Action.cpp \
@@ -49,8 +50,7 @@ SOURCES += \
     chat/commands/CmdRoll.cpp \
     chat/commands/CmdDisconnect.cpp \
     chat/commands/CmdNicknamesList.cpp \
-    chat/commands/CmdNicknamesListAck.cpp \
-	 ConnexionHelper.cpp
+    chat/commands/CmdNicknamesListAck.cpp
 
 HEADERS  += \
     MainWindow.h \
@@ -58,6 +58,7 @@ HEADERS  += \
     User.h \
     TokenMenu.h \
     DiceMenu.h \
+    ConnectionHelper.h \
     CustomMdiArea.h \
     ChatWidget.h \
     QTSFML/Canvas.h \
@@ -87,11 +88,10 @@ HEADERS  += \
     chat/commands/CmdRoll.h \
     chat/commands/CmdDisconnect.h \
     chat/commands/CmdNicknamesList.h \
-    chat/commands/CmdNicknamesListAck.h \
-	 ConnexionHelper.h
+    chat/commands/CmdNicknamesListAck.h
 
 FORMS    += mainwindow.ui \
     TokenMenu.ui \
     DiceMenu.ui \
     ChatWidget.ui \
-	 ConnexionHelper.ui
+    ConnectionHelper.ui

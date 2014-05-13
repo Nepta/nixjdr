@@ -8,7 +8,7 @@
 #include "CustomMdiArea.h"
 #include "MainWindow.h"
 #include "ui_mainwindow.h"
-#include "ConnexionHelper.h"
+#include "ConnectionHelper.h"
 
 MainWindow::MainWindow(bool role, QWidget *parent) :
     QMainWindow(parent),
@@ -31,7 +31,7 @@ MainWindow::MainWindow(bool role, QWidget *parent) :
     connect(ui->tableArea, SIGNAL(subWindowActivated(QMdiSubWindow*)),
                  this, SLOT(updateMenu()));
 
-	 ConnexionHelper *connectionHelper = new ConnexionHelper();
+	 ConnectionHelper *connectionHelper = new ConnectionHelper();
 	 connect(connectionHelper,SIGNAL(ipAddrSent(QString)),ui->m_ChatWidget,SLOT(setupChatClient(QString)));
 	 connectionHelper->show();
 
