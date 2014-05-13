@@ -8,7 +8,7 @@
 #include "CustomMdiArea.h"
 #include "MainWindow.h"
 #include "ui_mainwindow.h"
-#include "connexionHelper.h"
+#include "ConnexionHelper.h"
 
 MainWindow::MainWindow(bool role, QWidget *parent) :
     QMainWindow(parent),

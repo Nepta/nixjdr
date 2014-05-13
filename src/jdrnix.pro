@@ -50,7 +50,7 @@ SOURCES += \
     chat/commands/CmdDisconnect.cpp \
     chat/commands/CmdNicknamesList.cpp \
     chat/commands/CmdNicknamesListAck.cpp \
-    connexionHelper.cpp
+	 ConnexionHelper.cpp
 
 HEADERS  += \
     MainWindow.h \
@@ -88,10 +88,10 @@ HEADERS  += \
     chat/commands/CmdDisconnect.h \
     chat/commands/CmdNicknamesList.h \
     chat/commands/CmdNicknamesListAck.h \
-    connexionHelper.h
+	 ConnexionHelper.h
 
 FORMS    += mainwindow.ui \
     TokenMenu.ui \
     DiceMenu.ui \
     ChatWidget.ui \
-    connexionHelper.ui
+	 ConnexionHelper.ui

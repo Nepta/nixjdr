@@ -1,4 +1,4 @@
-#include "connexionHelper.h"
+#include "ConnexionHelper.h"
 #include "ui_connexionHelper.h"
 #include <QIntValidator>
 #include <QDebug>
