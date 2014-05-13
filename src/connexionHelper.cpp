@@ -17,5 +17,11 @@ ConnexionHelper::~ConnexionHelper(){
 }
 
 void ConnexionHelper::on_pushButton_clicked(){
-	qDebug() << ui->ipA->text() + "." + ui->ipB->text() + "." + ui->ipC->text() + "." + ui->ipD->text();
+	emit ipAddrSent(QString(
+							 ui->ipA->text() + "." +
+							 ui->ipB->text() + "." +
+							 ui->ipC->text() + "." +
+							 ui->ipD->text()
+						));
+	close();
 }

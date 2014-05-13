@@ -17,8 +17,10 @@ public:
     explicit ChatWidget(QWidget *parent = 0);
     ~ChatWidget();
     void setupChatServer();
-    void setupChatClient();
     void sendMessageFromClientToServer(QString message);
+
+public slots:
+	 void setupChatClient(QString ipAddr);
 
 private slots:
     void on_msgField_returnPressed();

@@ -17,6 +17,10 @@ public:
 
 public slots:
 	void on_pushButton_clicked();
+
+signals:
+	void ipAddrSent(QString ipAddr);
+
 private:
 	Ui::ConnexionHelper *ui;
 };

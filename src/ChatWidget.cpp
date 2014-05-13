@@ -40,9 +40,9 @@ void ChatWidget::setupChatServer() {
     m_ChatServer->init();
 }
 
-void ChatWidget::setupChatClient() {
+void ChatWidget::setupChatClient(QString ipAddr) {
     // TEST
-    m_ChatClient = new ChatClient(QString("127.0.0.1"), 50885);
+	 m_ChatClient = new ChatClient(ipAddr, 50885);
     // TEST
 
     connect(m_ChatClient, SIGNAL(sendMessageToChatUi(QString)),
