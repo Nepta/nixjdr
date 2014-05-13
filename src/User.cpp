@@ -14,6 +14,10 @@ User::User(QTcpSocket *socket)
             SIGNAL(socketErrorNotify(QAbstractSocket::SocketError)));
 }
 
+User::User() : User(new QTcpSocket)
+{
+}
+
 User::~User() {
     m_Socket->deleteLater();
 }
@@ -50,16 +54,36 @@ QTcpSocket* User::getSocket() {
     return m_Socket;
 }
 
-QString User::getNickname() {
-    return m_Nickname;
-}
-
 ChatHeader User::getHeader() {
     return m_Header;
 }
 
+QString User::getNickname() {
+    return m_Nickname;
+}
+
+QString User::getIpAddress() {
+    return m_IpAddress;
+}
+
+Role User::getRole() {
+    return m_Role;
+}
+
 User* User::setNickname(const QString &nickname) {
     m_Nickname = nickname;
+
+    return this;
+}
+
+User* User::setIpAddress(const QString &ipAddress) {
+    m_IpAddress = ipAddress;
+
+    return this;
+}
+
+User* User::setRole(const Role &role) {
+    m_Role = role;
 
     return this;
 }

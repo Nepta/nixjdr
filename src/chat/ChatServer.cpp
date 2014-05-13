@@ -25,10 +25,7 @@ ChatServer::~ChatServer()
 }
 
 void ChatServer::init() {
-    //if (!m_Server->listen(QHostAddress::Any)) {
-    //TEST
     if (!m_Server->listen(QHostAddress::Any, 50885)) {
-    //TEST
         QString msg = tr("Le serveur n'a pas pu être démarré. Raison :<br />") +
                 m_Server->errorString();
         emit sendMessageToChatUi(msg);

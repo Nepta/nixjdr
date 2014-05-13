@@ -3,7 +3,8 @@
 #include <QString>
 #include <QLibraryInfo>
 #include "MainWindow.h"
-#include "StartDialog.h"
+#include "ConnectionHelper.h"
+#include "User.h"
 
 int main(int argc, char *argv[])
 {
@@ -16,12 +17,12 @@ int main(int argc, char *argv[])
                     QLibraryInfo::location(QLibraryInfo::TranslationsPath));
     a.installTranslator(&translator);
 
-    bool role;
-    StartDialog startDialog(NULL);
-    role = startDialog.resultExec();
+    User *user = new User();
+    ConnectionHelper connectionHelper(user);
+    connectionHelper.exec();
 
-    MainWindow w(role);
-    w.show();
+    MainWindow mainWindow(user);
+    mainWindow.show();
 
     return a.exec();
 }

@@ -15,10 +15,9 @@ public:
     /**
      * @brief ChatClient::ChatClient    Connects signals, initializes the userlist, and connects to
      * the server's IP and port
-     * @param serverIP  Reference to the IP of the server you want to connect to
-     * @param serverPort    Reference to the port to use on the server you want to connect to
+     * @param user - user behind the ChatClient, holds server information (IP)
      */
-    ChatClient(const QString &serverIP, const quint16 &serverPort);
+    ChatClient(User *user);
     ~ChatClient();
 
 

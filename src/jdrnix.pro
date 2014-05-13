@@ -20,7 +20,6 @@ DESTDIR = ../
 SOURCES += \
     Main.cpp \
     MainWindow.cpp \
-    StartDialog.cpp \
     User.cpp \
     TokenMenu.cpp \
     DiceMenu.cpp \
@@ -54,7 +53,6 @@ SOURCES += \
 
 HEADERS  += \
     MainWindow.h \
-    StartDialog.h \
     User.h \
     TokenMenu.h \
     DiceMenu.h \

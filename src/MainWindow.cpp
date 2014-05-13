@@ -8,9 +8,8 @@
 #include "CustomMdiArea.h"
 #include "MainWindow.h"
 #include "ui_mainwindow.h"
-#include "ConnectionHelper.h"
 
-MainWindow::MainWindow(bool role, QWidget *parent) :
+MainWindow::MainWindow(User *user, QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
@@ -31,13 +30,9 @@ MainWindow::MainWindow(bool role, QWidget *parent) :
     connect(ui->tableArea, SIGNAL(subWindowActivated(QMdiSubWindow*)),
                  this, SLOT(updateMenu()));
 
-	 ConnectionHelper *connectionHelper = new ConnectionHelper();
-	 connect(connectionHelper,SIGNAL(ipAddrSent(QString)),ui->m_ChatWidget,SLOT(setupChatClient(QString)));
-	 connectionHelper->show();
-
     // Setup role
-    m_role = role;
-    if (m_role == ROLE_MJ) {
+    m_User = user;
+    if (m_User->getRole() == Role::ROLE_MJ) {
         setupMJ();
     } else {
         setupPlayer();
@@ -50,6 +45,7 @@ MainWindow::~MainWindow()
 {
     delete ui;
     delete m_diceMenu;
+    delete m_User;
 }
 
 void MainWindow::updateMenu() {
@@ -97,11 +93,11 @@ void MainWindow::setupMJ() {
     connect(m_diceMenu, SIGNAL(sendMessageToChatUi(QString)),
                         this, SIGNAL(sendMessageToChatUi(QString)));
 
-//    ui->m_ChatWidget->setupChatClient();
+    setupPlayer();
 }
 
 void MainWindow::setupPlayer() {
-//    ui->m_ChatWidget->setupChatClient();
+    ui->m_ChatWidget->setupChatClient(m_User);
 
     connect(this, SIGNAL(sendMessageToChatUi(QString)),
             ui->m_ChatWidget, SLOT(receivedMessage(QString)));

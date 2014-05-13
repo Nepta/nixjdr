@@ -19,10 +19,7 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    static const bool ROLE_MJ = true;
-    static const bool ROLE_PLAYER = false;
-
-    explicit MainWindow(bool role, QWidget *parent = 0);
+    explicit MainWindow(User *user, QWidget *parent = 0);
     ~MainWindow();
 
 private slots:
@@ -39,7 +36,7 @@ private:
     void setupPlayer();
 
     Ui::MainWindow *ui;
-    bool m_role;
+    User *m_User;
     DiceMenu *m_diceMenu;
 };
 

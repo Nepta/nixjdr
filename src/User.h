@@ -7,17 +7,29 @@
 #include "chat/ChatHeader.h"
 #include "User.h"
 
+enum class Role {
+    ROLE_MJ = 0,
+    ROLE_PLAYER
+};
+
 class User : public QObject
 {
     Q_OBJECT
 
 public:
+    User();
     User(QTcpSocket *socket);
     ~User();
+
     QTcpSocket *getSocket();
-    QString getNickname();
     ChatHeader getHeader();
+    QString getNickname();
+    QString getIpAddress();
+    Role getRole();
+
     User* setNickname(const QString &nickname);
+    User* setIpAddress(const QString &ipAddress);
+    User* setRole(const Role &role);
 
 private slots:
     void receivedData();
@@ -31,8 +43,10 @@ signals:
 
 private:
     QTcpSocket *m_Socket;
-    QString m_Nickname;
     ChatHeader m_Header;
+    QString m_Nickname;
+    QString m_IpAddress;
+    Role m_Role;
 };
 
 #endif // USER_H

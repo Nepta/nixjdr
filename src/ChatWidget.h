@@ -4,6 +4,7 @@
 #include <QWidget>
 #include "chat/ChatServer.h"
 #include "chat/ChatClient.h"
+#include "User.h"
 
 namespace Ui {
 class ChatWidget;
@@ -17,10 +18,8 @@ public:
     explicit ChatWidget(QWidget *parent = 0);
     ~ChatWidget();
     void setupChatServer();
+    void setupChatClient(User *user);
     void sendMessageFromClientToServer(QString message);
-
-public slots:
-	 void setupChatClient(QString ipAddr);
 
 private slots:
     void on_msgField_returnPressed();
