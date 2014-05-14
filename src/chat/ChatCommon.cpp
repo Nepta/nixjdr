@@ -17,6 +17,7 @@ QByteArray ChatCommon::preparePacket(const QString &msg) {
     return preparePacket(cmdCode, strippedMsg);
 }
 
+//TODO prepare packet 3 arg (+target) QString->QObject
 QByteArray ChatCommon::preparePacket(ChatCodes cmdCode, const QString &msg) {
     QByteArray packet;
     QDataStream out(&packet, QIODevice::WriteOnly);
@@ -60,6 +61,7 @@ QString ChatCommon::extractFirstWord(QString &msg) {
     return firstWord;
 }
 
+//TODO 3 argument (+target) et QString->QObject
 bool ChatCommon::messageReadyToReceive(QTcpSocket *socket, ChatHeader &header, QString &msg) {
     if (socket == 0) {
         return false;
