@@ -8,7 +8,7 @@ class CmdConnectionAck : public AbstractCmd
 public:
     CmdConnectionAck();
 
-    void execute(ChatHeader &, QString &);
+    void execute(ChatHeader &header, QString &);
     QString getHelp();
 };
 
