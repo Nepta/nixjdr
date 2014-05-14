@@ -21,9 +21,7 @@ QByteArray ChatCommon::preparePacket(ChatCodes cmdCode, const QString &msg) {
     QByteArray packet;
     QDataStream out(&packet, QIODevice::WriteOnly);
 
-    out << quint16(0) << (quint16) cmdCode << msg;
-    out.device()->seek(0);
-    out << (quint16) (packet.size() - 2*sizeof(quint16));
+    out << (quint16) msg.size() << (quint16) cmdCode << msg;
 
     return packet;
 }

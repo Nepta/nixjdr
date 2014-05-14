@@ -4,7 +4,7 @@ CmdConnectionAck::CmdConnectionAck()
 {
 }
 
-void CmdConnectionAck::execute(ChatHeader &, QString &arg) {
+void CmdConnectionAck::execute(ChatHeader &, QString &) {
     // Retrieve the user associated with the client
     User *user = AbstractCmd::getUsersListClient()->values().at(0);
 
