@@ -4,7 +4,7 @@
 User::User(QTcpSocket *socket)
 {
     m_Socket = socket;
-    m_Header = ChatHeader();
+    m_Header = Header();
     m_Nickname = QString("guest");
 
     connect(m_Socket, SIGNAL(readyRead()), this, SLOT(receivedData()));
@@ -24,7 +24,7 @@ User::~User() {
 
 void User::receivedData()
 {
-    ChatHeader header;
+    Header header;
     QString message;
 
     if (ChatCommon::messageReadyToReceive(m_Socket, header, message)) {
@@ -54,7 +54,7 @@ QTcpSocket* User::getSocket() {
     return m_Socket;
 }
 
-ChatHeader User::getHeader() {
+Header User::getHeader() {
     return m_Header;
 }
 

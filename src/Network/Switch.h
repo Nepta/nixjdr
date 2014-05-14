@@ -3,27 +3,35 @@
 
 #include <QHash>
 #include <QString>
-#include "../chat/ChatHeader.h"
+#include <QObject>
+#include "Header.h"
 #include "Receiver.h"
 
+enum class TargetCode {
+    MAP_SERVER = 0,
+    MAP_CLIENT,
 
-enum class TargetCode{
-	MAP = 0,
-	CHAT
+    CHAT_SERVER,
+    CHAT_CLIENT,
+
+    UNDEFINED
 };
+inline uint qHash(const TargetCode &key) { return qHash((quint16) key); }
 
-class Switch{
-	QHash<TargetCode,Receiver&> nodes;
+class Switch : public QObject {
+    Q_OBJECT
 
 private:
-	/**
-	 * @brief addNode add a possible target
-	 * @param receiver the target to Add
-	 */
-	Switch& addNode(Receiver& receiver);
+    QHash<TargetCode, Receiver*> m_Nodes;
 
 public:
 	Switch();
+
+    /**
+     * @brief addNode add a possible target
+     * @param receiver the target to Add
+     */
+    Switch& addNode(TargetCode targetCode, Receiver *receiver);
 
 public slots:
 	/**
@@ -31,7 +39,7 @@ public slots:
 	 * @param header a header containing especially a target
 	 * @param message the message to send
 	 */
-	void switchNewMessage(ChatHeader header, QString message);
+    void switchNewMessage(Header &header, QString &message);
 };
 
 #endif // SWITCH_H

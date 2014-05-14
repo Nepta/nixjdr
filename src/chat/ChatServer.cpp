@@ -56,8 +56,8 @@ void ChatServer::newClientConnection()
     cmdNicknamesList->executeOnUser(newUser);
 
     // process and send a packet when fully received
-    connect(newUser, SIGNAL(receivedFullData(ChatHeader, QString)),
-            this, SLOT(processNewMessage(ChatHeader, QString)));
+    connect(newUser, SIGNAL(receivedFullData(Header, QString)),
+            this, SLOT(processNewMessage(Header, QString)));
     connect(newUser, SIGNAL(userDisconnectedNotify(User&)), this, SLOT(userDisconnected(User&)));
 }
 
@@ -73,8 +73,8 @@ void ChatServer::userDisconnected(User &user)
 }
 
 
-void ChatServer::processNewMessage(ChatHeader header, QString message) {
-    ChatCodes code = (ChatCodes) header.getCmd();
+void ChatServer::processNewMessage(Header header, QString message) {
+    ChatCodes code = (ChatCodes) header.getCode();
 
     m_Commands.getUserCommand(code)->execute(header, message);
 }

@@ -8,7 +8,7 @@ class CmdRoll:public AbstractCmd
 public:
     CmdRoll(QHash<ChatCodes, AbstractCmd *> &userCommands);
 
-    void execute(ChatHeader &header, QString &arg);
+    void execute(Header &header, QString &arg);
     QString getHelp();
 
 private :

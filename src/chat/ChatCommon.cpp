@@ -62,7 +62,7 @@ QString ChatCommon::extractFirstWord(QString &msg) {
 }
 
 //TODO 3 argument (+target) et QString->QObject
-bool ChatCommon::messageReadyToReceive(QTcpSocket *socket, ChatHeader &header, QString &msg) {
+bool ChatCommon::messageReadyToReceive(QTcpSocket *socket, Header &header, QString &msg) {
     if (socket == 0) {
         return false;
     }
@@ -83,15 +83,15 @@ bool ChatCommon::messageReadyToReceive(QTcpSocket *socket, ChatHeader &header, Q
     }
 
     // command
-    if (header.getCmd() == (quint16) ChatCodes::UNDEFINED) {
-        quint16 cmd;
+    if (header.getCode() == (quint16) ChatCodes::UNDEFINED) {
+        quint16 code;
 
         if (socket->bytesAvailable() < (qint64) sizeof(quint16)) {
             return false;
         }
 
-        in >> cmd;
-        header.setCmd(cmd);
+        in >> code;
+        header.setCode(code);
     }
 
     // message

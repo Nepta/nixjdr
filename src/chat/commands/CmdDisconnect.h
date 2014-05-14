@@ -8,7 +8,7 @@ class CmdDisconnect : public AbstractCmd
 public:
     CmdDisconnect();
 
-    void execute(ChatHeader &, QString &arg);
+    void execute(Header &, QString &arg);
     QString getHelp();
 };
 

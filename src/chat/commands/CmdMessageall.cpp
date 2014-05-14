@@ -5,7 +5,7 @@ CmdMessageAll::CmdMessageAll()
 {
 }
 
-void CmdMessageAll::execute(ChatHeader &header, QString &arg) {
+void CmdMessageAll::execute(Header &header, QString &arg) {
     QString namedMessage = QString("[<strong>%1</strong>]: %2")
                        .arg(header.getSocketUserNickname())
                        .arg(arg);

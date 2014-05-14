@@ -7,7 +7,7 @@ CmdWhisper::CmdWhisper()
 {
 }
 
-void CmdWhisper::execute(ChatHeader &header, QString &arg) {
+void CmdWhisper::execute(Header &header, QString &arg) {
     QString strippedMsg, msgSender, msgTarget,
             sender, target;
 

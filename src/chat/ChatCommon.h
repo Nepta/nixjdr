@@ -6,7 +6,7 @@
 #include <QByteArray>
 #include <QString>
 #include "commands/Commands.h"
-#include "ChatHeader.h"
+#include "Network/Header.h"
 
 class ChatCommon
 {
@@ -65,7 +65,7 @@ public:
      * @param msg       Reference to the message contained by the socket
      * @return          True if the message was fully received, and false if it was not.
      */
-    static bool messageReadyToReceive(QTcpSocket *socket, ChatHeader &header,
+    static bool messageReadyToReceive(QTcpSocket *socket, Header &header,
                                       QString &msg);
 };
 

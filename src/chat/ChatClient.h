@@ -62,7 +62,7 @@ private slots:
      * @param header    message's header, contains the command to interpret
      * @param message   message to process
      */
-    void processNewMessage(ChatHeader header, QString message);
+    void processNewMessage(Header header, QString message);
 
     /**
      * @brief clientConnected   Emits a message in the chatwindow indicating that the user successfully connected

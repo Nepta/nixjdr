@@ -4,7 +4,7 @@
 #include <QObject>
 #include <QString>
 #include "commands/Commands.h"
-#include "ChatHeader.h"
+#include "Network/Header.h"
 
 class ChatProcessor : public QObject
 {
@@ -25,7 +25,7 @@ protected:
     Commands m_Commands;
 
 protected slots:
-    virtual void processNewMessage(ChatHeader header, QString message) = 0;
+    virtual void processNewMessage(Header header, QString message) = 0;
 
 signals:
     /**

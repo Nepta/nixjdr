@@ -2,12 +2,12 @@
 #define RECEIVER_H
 
 #include <QString>
-#include "../chat/ChatHeader.h"
+#include "Header.h"
 
 class Receiver{
 public:
 	Receiver();
-	void processNewMessage(ChatHeader header, QString message) = 0;
+    virtual void processNewMessage(Header header, QString message) = 0;
 };
 
 #endif // RECEIVER_H

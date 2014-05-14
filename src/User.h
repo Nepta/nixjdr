@@ -4,7 +4,7 @@
 #include <QObject>
 #include <QString>
 #include <QtNetwork>
-#include "chat/ChatHeader.h"
+#include "Network/Header.h"
 #include "User.h"
 
 enum class Role {
@@ -22,7 +22,7 @@ public:
     ~User();
 
     QTcpSocket *getSocket();
-    ChatHeader getHeader();
+    Header getHeader();
     QString getNickname();
     QString getIpAddress();
     Role getRole();
@@ -39,11 +39,11 @@ signals:
     void userConnectedNotify();
     void userDisconnectedNotify(User &user);
     void socketErrorNotify(QAbstractSocket::SocketError);
-    void receivedFullData(ChatHeader header, QString message);
+    void receivedFullData(Header header, QString message);
 
 private:
     QTcpSocket *m_Socket;
-    ChatHeader m_Header;
+    Header m_Header;
     QString m_Nickname;
     QString m_IpAddress;
     Role m_Role;

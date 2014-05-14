@@ -46,7 +46,7 @@ private slots:
      * @param header    Incoming message's header
      * @param message   incomming message's content
      */
-    void processNewMessage(ChatHeader header, QString message);
+    void processNewMessage(Header header, QString message);
 
     /**
      * @brief sendPacketToAll   Prepares a packet and forwards it to all the users of m_UsersList

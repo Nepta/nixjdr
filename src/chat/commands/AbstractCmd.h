@@ -4,7 +4,7 @@
 #include <QObject>
 #include <QString>
 #include <QHash>
-#include "chat/ChatHeader.h"
+#include "Network/Header.h"
 #include "User.h"
 
 enum class ChatCodes;
@@ -22,7 +22,7 @@ public:
     AbstractCmd();
 
     virtual ~AbstractCmd(){}
-    virtual void execute(ChatHeader &header, QString &arg) = 0;
+    virtual void execute(Header &header, QString &arg) = 0;
     virtual QString getHelp() = 0;
 
 private:

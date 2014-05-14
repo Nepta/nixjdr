@@ -4,20 +4,13 @@
 #include <QtGlobal>
 #include <QString>
 
-class ChatHeader
+class Header
 {
 public:
     /**
      * @brief ChatHeader Default constructor, initializes m_MsgSize to 0 and m_Cmd to an undefined command
      */
-    ChatHeader();
-
-    /**
-     * @brief ChatHeader Initializes m_MsgSize and m_cmd with the specified parameters
-     * @param msgSize   Size of the message
-     * @param cmd       Command's code
-     */
-    ChatHeader(quint16 msgSize, quint16 cmd);
+    Header();
 
     /**
      * @brief getMsgSize    Returns the message's size
@@ -29,7 +22,7 @@ public:
      * @brief getCmd    Returns the message's command's code
      * @return  m_Cmd
      */
-    quint16 getCmd();
+    quint16 getCode();
 
     /**
      * @brief getSocketUserNickname     Returns the socket's sender's nickname
@@ -42,25 +35,39 @@ public:
      * @param msgSize   New message size
      * @return  A pointer towards the current header
      */
-    ChatHeader *setMsgSize(quint16 msgSize);
+    Header *setMsgSize(quint16 msgSize);
 
     /**
-     * @brief setCmd    Sets the message's command's code to the specified value
-     * @param cmd   New command code
+     * @brief setCode    Sets the message's code to the specified value
+     * @param code   New code
      * @return  A pointer towards the current header
      */
-    ChatHeader *setCmd(quint16 cmd);
+    Header *setCode(quint16 code);
 
     /**
-     * @brief setSocketUserNickname     Sets the socket's user to the specified value
-     * @param socketUser    New socket's user
-     * @return A pointer towards the current header
-     */
-    ChatHeader *setSocketUserNickname(QString socketUser);
+    * @brief setSocketUserNickname     Sets the socket's user to the specified value
+    * @param socketUser    New socket's user
+    * @return A pointer towards the current header
+    */
+    Header *setSocketUserNickname(QString socketUser);
 
 private:
+    /**
+     * @brief m_MsgSize Message size (= packet size - header size)
+     */
     quint16 m_MsgSize;
-    quint16 m_Cmd;
+
+    /**
+     * @brief m_Target Module (Receiver) to which the packet should be sent
+     */
+    quint16 m_Target;
+
+    /**
+     * @brief m_Code Code meant to be translated by the Receiver in order to launch the appropriate
+     * action
+     */
+    quint16 m_Code;
+
     QString m_SocketUserNickName;
 };
 

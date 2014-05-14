@@ -36,7 +36,6 @@ SOURCES += \
     chat/ChatServer.cpp \
     chat/ChatCommon.cpp \
     chat/ChatClient.cpp \
-    chat/ChatHeader.cpp \
     chat/ChatProcessor.cpp \
     chat/commands/AbstractCmd.cpp \
     chat/commands/CmdMessageall.cpp \
@@ -52,7 +51,8 @@ SOURCES += \
     chat/commands/CmdNicknamesListAck.cpp \
     Network/Switch.cpp \
     Network/Receiver.cpp \
-    Network/Decoder.cpp
+    Network/Decoder.cpp \
+    Network/Header.cpp
 
 HEADERS  += \
     MainWindow.h \
@@ -76,7 +76,6 @@ HEADERS  += \
     chat/ChatServer.h \
     chat/ChatCommon.h \
     chat/ChatClient.h \
-    chat/ChatHeader.h \
     chat/ChatProcessor.h \
     chat/commands/AbstractCmd.h \
     chat/commands/CmdMessageall.h \
@@ -92,7 +91,8 @@ HEADERS  += \
     chat/commands/CmdNicknamesListAck.h \
     Network/Switch.h \
     Network/Receiver.h \
-    Network/Decoder.h
+    Network/Decoder.h \
+    Network/Header.h
 
 FORMS    += mainwindow.ui \
     TokenMenu.ui \

@@ -8,7 +8,7 @@ class CmdMessageUI : public AbstractCmd
 public:
     CmdMessageUI();
 
-    void execute(ChatHeader &, QString &arg);
+    void execute(Header &, QString &arg);
     QString getHelp();
 };
 

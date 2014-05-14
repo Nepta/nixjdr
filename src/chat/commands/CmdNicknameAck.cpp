@@ -5,7 +5,7 @@ CmdNicknameAck::CmdNicknameAck()
 {
 }
 
-void CmdNicknameAck::execute(ChatHeader &, QString &arg) {
+void CmdNicknameAck::execute(Header &, QString &arg) {
     QString temp = arg;
 
     QString oldNickname = ChatCommon::extractFirstWord(temp);

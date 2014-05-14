@@ -7,8 +7,8 @@ ChatClient::ChatClient(User *user)
     m_User = user;
     m_UsersList.insert(m_User->getNickname(), m_User);
 
-    connect(m_User, SIGNAL(receivedFullData(ChatHeader, QString)),
-            this, SLOT(processNewMessage(ChatHeader, QString)));
+    connect(m_User, SIGNAL(receivedFullData(Header, QString)),
+            this, SLOT(processNewMessage(Header, QString)));
     connect(m_User, SIGNAL(userDisconnectedNotify(User&)),
             this, SLOT(clientDisconnected(User&)));
     connect(m_User, SIGNAL(userConnectedNotify()),
@@ -69,8 +69,8 @@ void ChatClient::socketError(QAbstractSocket::SocketError error)
     emit sendMessageToChatUi(errMsg);
 }
 
-void ChatClient::processNewMessage(ChatHeader header, QString message) {
-    ChatCodes code = (ChatCodes) header.getCmd();
+void ChatClient::processNewMessage(Header header, QString message) {
+    ChatCodes code = (ChatCodes) header.getCode();
 
     m_Commands.getServerCommand(code)->execute(header, message);
 }

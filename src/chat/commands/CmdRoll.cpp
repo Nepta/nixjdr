@@ -6,7 +6,7 @@ CmdRoll::CmdRoll(QHash<ChatCodes, AbstractCmd *> &userCommands) {
     m_UserCommands = userCommands;
 }
 
-void CmdRoll::execute(ChatHeader &header, QString &arg) {
+void CmdRoll::execute(Header &header, QString &arg) {
     QString dice, sender, target, result, namedMessage, message;
     bool error;
     int separatorIndex;

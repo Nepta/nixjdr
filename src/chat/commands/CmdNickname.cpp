@@ -4,7 +4,7 @@
 CmdNickname::CmdNickname() {
 }
 
-void CmdNickname::execute(ChatHeader &header, QString &arg) {
+void CmdNickname::execute(Header &header, QString &arg) {
     // save the user and remove the old value from the hash
     QString oldNickname = header.getSocketUserNickname();
     User *user = AbstractCmd::getUsersListServer()->value(oldNickname);
