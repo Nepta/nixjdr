@@ -18,6 +18,7 @@ enum class ChatCodes {
     SRVCMD_WHISPER_REP,
     SRVCMD_DISCONNECT,
     SRVCMD_LIST,
+    SRVCMD_CONNECT_ACK,
 
     UNDEFINED
 };
@@ -46,6 +47,7 @@ signals:
     void cmdSendPacketToOne(ChatCodes code, QString message,
                             QString receiverNickname);
     void cmdSendMessageToChatUi(const QString &msg);
+    void cmdSendMessageToServer(const QString &msg);
     void cmdUpdateUserListView();
 };
 

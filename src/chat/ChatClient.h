@@ -28,12 +28,6 @@ public:
      */
     void connection(const QString &serverIP, const quint16 &serverPort);
 
-    /**
-     * @brief ChatClient::sendMessageToServer   Sends the message to the server in order
-     * to broadcast it to all the users.
-     * @param msg   Reference to the message to send
-     */
-    void sendMessageToServer(const QString &msg);
 
     /**
      * @brief getUser   Returns the user associated with the client
@@ -48,6 +42,15 @@ signals:
      * @param msg   Reference to the message to the message to transmit
      */
     void sendMessageToUI(const QString &msg);
+
+/*------------------------------------------------------------------------------------------------*/
+public slots:
+    /**
+     * @brief ChatClient::sendMessageToServer   Sends the message to the server in order
+     * to broadcast it to all the users.
+     * @param msg   Reference to the message to send
+     */
+    void sendMessageToServer(const QString &msg);
 
 /*-------------------------------------------------------------------------------------------------------*/
 private slots:

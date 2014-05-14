@@ -62,6 +62,10 @@ QString User::getNickname() {
     return m_Nickname;
 }
 
+QString User::getPendingNickname() {
+    return m_PendingNickname;
+}
+
 QString User::getIpAddress() {
     return m_IpAddress;
 }
@@ -72,6 +76,12 @@ Role User::getRole() {
 
 User* User::setNickname(const QString &nickname) {
     m_Nickname = nickname;
+
+    return this;
+}
+
+User* User::setPendingNickname(const QString &nickname) {
+    m_PendingNickname = nickname;
 
     return this;
 }

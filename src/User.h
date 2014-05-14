@@ -24,10 +24,12 @@ public:
     QTcpSocket *getSocket();
     ChatHeader getHeader();
     QString getNickname();
+    QString getPendingNickname();
     QString getIpAddress();
     Role getRole();
 
     User* setNickname(const QString &nickname);
+    User* setPendingNickname(const QString &nickname);
     User* setIpAddress(const QString &ipAddress);
     User* setRole(const Role &role);
 
@@ -45,6 +47,7 @@ private:
     QTcpSocket *m_Socket;
     ChatHeader m_Header;
     QString m_Nickname;
+    QString m_PendingNickname;
     QString m_IpAddress;
     Role m_Role;
 };

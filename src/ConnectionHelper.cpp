@@ -54,8 +54,8 @@ void ConnectionHelper::on_endButton_clicked() {
         m_User->setIpAddress("127.0.0.1");
     }
 
-    m_User->setNickname(QString("guest")); // TODO refacto
-    // TODO m_User->setNickname(ui->nickname->text());
+    m_User->setNickname(QString("guest"));
+    m_User->setPendingNickname(ui->nickname->text());
 
     accept();
 }

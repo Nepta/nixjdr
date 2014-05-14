@@ -20,6 +20,8 @@ ChatClient::ChatClient(User *user)
     AbstractCmd::setUsersListClient(&m_UsersList);
     connect(&m_Commands, SIGNAL(cmdSendMessageToChatUi(QString)),
             this, SIGNAL(sendMessageToChatUi(QString)));
+    connect(&m_Commands, SIGNAL(cmdSendMessageToServer(QString)),
+            this, SLOT(sendMessageToServer(QString)));
 
     // connect the client socket to the server
     connection(m_User->getIpAddress(), 50885);

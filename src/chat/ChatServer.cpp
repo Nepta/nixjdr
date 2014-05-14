@@ -47,10 +47,15 @@ void ChatServer::newClientConnection()
 {
     User *newUser = new User(m_Server->nextPendingConnection());
 
+    // identify the user on both the client and server side
     CmdNickname *cmdNickname = dynamic_cast<CmdNickname*>(
                 m_Commands.getUserCommand(ChatCodes::USERCMD_NICK));
     cmdNickname->executeOnUser(newUser, "guest", "guest", true);
 
+    emit sendPacketToOne(ChatCodes::SRVCMD_CONNECT_ACK, QString(), newUser->getNickname());
+
+
+    // update the nicknames list on the new client side
     CmdNicknamesList *cmdNicknamesList = dynamic_cast<CmdNicknamesList*>(
                 m_Commands.getUserCommand(ChatCodes::USERCMD_LIST));
     cmdNicknamesList->executeOnUser(newUser);

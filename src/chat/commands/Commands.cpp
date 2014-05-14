@@ -9,6 +9,7 @@
 #include "CmdRoll.h"
 #include "CmdNicknamesList.h"
 #include "CmdNicknamesListAck.h"
+#include "CmdConnectionAck.h"
 
 const QHash<QString, ChatCodes> Commands::s_CommandCodes = {
     {"/nickname", ChatCodes::USERCMD_NICK},
@@ -30,6 +31,7 @@ Commands::Commands()
     m_ServerCommands.insert(ChatCodes::SRVCMD_WHISPER_REP, new CmdWhisperRep);
     m_ServerCommands.insert(ChatCodes::SRVCMD_DISCONNECT, new CmdDisconnect);
     m_ServerCommands.insert(ChatCodes::SRVCMD_LIST, new CmdNicknamesListAck);
+    m_ServerCommands.insert(ChatCodes::SRVCMD_CONNECT_ACK, new CmdConnectionAck);
 
 
     // Allow each command to send packets (server side)
@@ -41,12 +43,14 @@ Commands::Commands()
                 this, SIGNAL(cmdSendPacketToOne(ChatCodes, QString,QString )));
     }
 
-    // Allow each command to interact with the UI (client side)
+    // Allow each command to interact with the UI and send messages to the server (client side)
     foreach (AbstractCmd *command, m_ServerCommands) {
         connect(command, SIGNAL(cmdSendMessageToChatUi(QString)),
                 this, SIGNAL(cmdSendMessageToChatUi(QString)));
         connect(command, SIGNAL(cmdUpdateUserListView()),
                 this, SIGNAL(cmdUpdateUserListView()));
+        connect(command, SIGNAL(cmdSendMessageToServer(QString)),
+                this, SIGNAL(cmdSendMessageToServer(QString)));
     }
 }
 
