@@ -49,7 +49,10 @@ SOURCES += \
     chat/commands/CmdRoll.cpp \
     chat/commands/CmdDisconnect.cpp \
     chat/commands/CmdNicknamesList.cpp \
-    chat/commands/CmdNicknamesListAck.cpp
+    chat/commands/CmdNicknamesListAck.cpp \
+    Network/Switch.cpp \
+    Network/Receiver.cpp \
+    Network/Decoder.cpp
 
 HEADERS  += \
     MainWindow.h \
@@ -86,7 +89,10 @@ HEADERS  += \
     chat/commands/CmdRoll.h \
     chat/commands/CmdDisconnect.h \
     chat/commands/CmdNicknamesList.h \
-    chat/commands/CmdNicknamesListAck.h
+    chat/commands/CmdNicknamesListAck.h \
+    Network/Switch.h \
+    Network/Receiver.h \
+    Network/Decoder.h
 
 FORMS    += mainwindow.ui \
     TokenMenu.ui \
