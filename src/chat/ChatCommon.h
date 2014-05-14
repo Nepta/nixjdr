@@ -33,7 +33,7 @@ public:
      * @param msg   Reference to the message to transfer, stripped of the command
      * @return  a fully prepared packet
      */
-    static QByteArray preparePacket(ChatCodes cmdCode, const QString &msg);
+    static QByteArray preparePacket(quint16 code, const QString &msg);
 
     /**
      * @brief translateCommandToCode    Finds out if the user specified a command for his message.

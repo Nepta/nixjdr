@@ -6,7 +6,7 @@
 #include <QString>
 #include "AbstractCmd.h"
 
-enum class ChatCodes {
+enum class ChatCodes : quint16 {
     USERCMD_MESSAGE = 0,
     USERCMD_NICK,
     USERCMD_WHISPER,
@@ -41,12 +41,15 @@ private:
     QHash<ChatCodes, AbstractCmd *> m_UserCommands;
     QHash<ChatCodes, AbstractCmd *> m_ServerCommands;
 
-signals:
+private slots:
     void cmdSendPacketToAll(ChatCodes code, QString message);
-    void cmdSendPacketToOne(ChatCodes code, QString message,
-                            QString receiverNickname);
+    void cmdSendPacketToOne(ChatCodes code, QString message, QString receiverNickname);
+
+signals:
     void cmdSendMessageToChatUi(const QString &msg);
     void cmdUpdateUserListView();
+    void sendPacketToAll(quint16 code, QString message);
+    void sendPacketToOne(quint16 code, QString message, QString receiverNickname);
 };
 
 #endif // Commands_H

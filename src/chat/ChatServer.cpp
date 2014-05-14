@@ -9,12 +9,13 @@ ChatServer::ChatServer()
 {
     m_Server = new QTcpServer(this);
 
-    // init commands
     AbstractCmd::setUsersListServer(&m_UsersList);
-    connect(&m_Commands, SIGNAL(cmdSendPacketToAll(ChatCodes, QString)),
-            this, SLOT(sendPacketToAll(ChatCodes, QString)));
-    connect(&m_Commands, SIGNAL(cmdSendPacketToOne(ChatCodes, QString, QString)),
-            this, SLOT(sendPacketToOne(ChatCodes, QString, QString)));
+
+    // init commands
+    connect(&m_Commands, SIGNAL(sendPacketToAll(quint16, QString)),
+            this, SLOT(sendPacketToAll(quint16, QString)));
+    connect(&m_Commands, SIGNAL(sendPacketToOne(quint16, QString, QString)),
+            this, SLOT(sendPacketToOne(quint16, QString, QString)));
 }
 
 ChatServer::~ChatServer()
@@ -40,9 +41,6 @@ void ChatServer::init() {
     }
 }
 
-/**
- * @brief ChatServer::newClientConnection
- */
 void ChatServer::newClientConnection()
 {
     User *newUser = new User(m_Server->nextPendingConnection());
@@ -63,7 +61,7 @@ void ChatServer::newClientConnection()
 
 void ChatServer::userDisconnected(User &user)
 {
-    sendPacketToAll(ChatCodes::SRVCMD_DISCONNECT, user.getNickname());
+    sendPacketToAll((quint16) ChatCodes::SRVCMD_DISCONNECT, user.getNickname());
 
     m_UsersList.remove(user.getNickname());
 
@@ -77,28 +75,4 @@ void ChatServer::processNewMessage(Header header, QString message) {
     ChatCodes code = (ChatCodes) header.getCode();
 
     m_Commands.getUserCommand(code)->execute(header, message);
-}
-
-void ChatServer::sendPacketToAll(ChatCodes code, QString message)
-{
-    QByteArray packet;
-    packet = ChatCommon::preparePacket(code, message);
-
-    for (int i = 0; i < m_UsersList.values().size(); i++)
-    {
-        m_UsersList.values()[i]->getSocket()->write(packet);
-    }
-}
-
-void ChatServer::sendPacketToOne(ChatCodes code, QString message,
-                                 QString receiverNickname) {
-    QByteArray packet;
-
-    packet = ChatCommon::preparePacket(code, message);
-    m_UsersList.value(receiverNickname)->getSocket()->write(packet);
-}
-
-quint16 ChatServer::getPort()
-{
-    return m_Server->serverPort();
 }

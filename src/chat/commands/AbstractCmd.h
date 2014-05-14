@@ -7,7 +7,7 @@
 #include "Network/Header.h"
 #include "User.h"
 
-enum class ChatCodes;
+enum class ChatCodes : quint16;
 
 class AbstractCmd : public QObject
 {

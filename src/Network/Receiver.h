@@ -1,12 +1,16 @@
 #ifndef RECEIVER_H
 #define RECEIVER_H
 
+#include <QObject>
 #include <QString>
 #include "Header.h"
 
-class Receiver{
+class Receiver : public QObject {
+    Q_OBJECT
 public:
-	Receiver();
+    Receiver(){}
+
+protected slots:
     virtual void processNewMessage(Header header, QString message) = 0;
 };
 

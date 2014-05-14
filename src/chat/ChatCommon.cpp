@@ -14,15 +14,15 @@ QByteArray ChatCommon::preparePacket(const QString &msg) {
     cmdCode = translateCommandToCode(msg);
     strippedMsg = stripCommandFromMessage(msg);
 
-    return preparePacket(cmdCode, strippedMsg);
+    return preparePacket((quint16) cmdCode, strippedMsg);
 }
 
 //TODO prepare packet 3 arg (+target) QString->QObject
-QByteArray ChatCommon::preparePacket(ChatCodes cmdCode, const QString &msg) {
+QByteArray ChatCommon::preparePacket(quint16 code, const QString &msg) {
     QByteArray packet;
     QDataStream out(&packet, QIODevice::WriteOnly);
 
-    out << quint16(0) << (quint16) cmdCode << msg;
+    out << quint16(0) << code << msg;
     out.device()->seek(0);
     out << (quint16) (packet.size() - 2*sizeof(quint16));
 

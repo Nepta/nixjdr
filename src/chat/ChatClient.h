@@ -6,7 +6,7 @@
 #include "ChatProcessor.h"
 #include "User.h"
 
-class ChatClient : public ChatProcessor
+class ChatClient : public QObject, public ChatProcessor
 {
     Q_OBJECT
 
@@ -42,14 +42,6 @@ public:
     User *getUser();
 
 /*-------------------------------------------------------------------------------------------------------*/
-signals:
-    /**
-     * @brief sendMessageToUI   Transmits a message that will be displayed in the chat
-     * @param msg   Reference to the message to the message to transmit
-     */
-    void sendMessageToUI(const QString &msg);
-
-/*-------------------------------------------------------------------------------------------------------*/
 private slots:
     /**
      * @brief socketError   Displays a message depending on the error's type
@@ -75,6 +67,10 @@ private slots:
     void clientDisconnected(User &);
 
 /*-------------------------------------------------------------------------------------------------------*/
+
+signals:
+    void sendMessageToChatUi(const QString &msg);
+
 private:
     User *m_User;
     QHash<QString, User *> m_UsersList;
