@@ -12,9 +12,9 @@ ChatServer::ChatServer(QHash<QString, User *> *usersList)
 
     // init commands
     connect(&m_Commands, SIGNAL(sendPacketToAll(quint16, quint16, QString)),
-            this, SIGNAL(sendPacketToAll(quint16, quint16, QString)));
+            this, SLOT(sendPacketToAll(quint16, quint16, QString)));
     connect(&m_Commands, SIGNAL(sendPacketToOne(quint16, quint16, QString, QString)),
-            this, SIGNAL(sendPacketToOne(quint16, quint16, QString, QString)));
+            this, SLOT(sendPacketToOne(quint16, quint16, QString, QString)));
 }
 
 ChatServer::~ChatServer()
@@ -30,6 +30,13 @@ void ChatServer::newClientConnection(User *newUser)
     CmdNicknamesList *cmdNicknamesList = dynamic_cast<CmdNicknamesList*>(
                 m_Commands.getUserCommand(ChatCodes::USERCMD_LIST));
     cmdNicknamesList->executeOnUser(newUser);
+}
+
+void ChatServer::userDisconnected(User &user)
+{
+    sendPacketToAll((quint16) TargetCode::CHAT_CLIENT,
+                    (quint16) ChatCodes::SRVCMD_DISCONNECT,
+                    user.getNickname());
 }
 
 void ChatServer::processNewMessage(Header header, QString message) {

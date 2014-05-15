@@ -1,5 +1,4 @@
 #include "chat/ChatServer.h"
-#include "chat/ChatCommon.h"
 #include "Server.h"
 
 Server::Server() {
@@ -7,18 +6,6 @@ Server::Server() {
 
     m_Nodes.insert(TargetCode::CHAT_SERVER, new ChatServer(&m_UsersList));
     // TODO m_Nodes.insert(TargetCode::MAP_SERVER, new MapServer(m_UsersList));
-
-    foreach(Receiver *node, m_Nodes) {
-        connect(node, SIGNAL(sendPacketToAll(quint16, quint16, QString)),
-                this, SLOT(sendPacketToAll(quint16, quint16, QString)));
-        connect(node, SIGNAL(sendPacketToOne(quint16, quint16, QString, QString)),
-                this, SLOT(sendPacketToOne(quint16, quint16, QString, QString)));
-    }
-}
-
-Server::Server(QTcpServer *server, QHash<QString, User *> usersList) {
-    m_Server = server;
-    m_UsersList = usersList;
 }
 
 Server::~Server() {
@@ -48,9 +35,9 @@ void Server::newClientConnection()
     User *newUser = new User(m_Server->nextPendingConnection());
 
     // identify User and update his nicknames list
-    ChatServer *chatServerReceiver = dynamic_cast<ChatServer*>(
+    ChatServer *chatServer = dynamic_cast<ChatServer*>(
                 m_Nodes.value(TargetCode::CHAT_SERVER));
-    chatServerReceiver->newClientConnection(newUser);
+    chatServer->newClientConnection(newUser);
 
     // send a packet to the intended Receiver when fully received
     connect(newUser, SIGNAL(receivedFullData(Header, QString)),
@@ -60,29 +47,14 @@ void Server::newClientConnection()
 
 void Server::userDisconnected(User &user)
 {
-    sendPacketToAll((quint16) TargetCode::CHAT_CLIENT,
-                    (quint16) ChatCodes::SRVCMD_DISCONNECT,
-                    user.getNickname());
+    // Notify everyone on the chat that a user has been disconnected
+    ChatServer *chatServer = dynamic_cast<ChatServer*>(
+                m_Nodes.value(TargetCode::CHAT_SERVER));
+    chatServer->userDisconnected(user);
 
     m_UsersList.remove(user.getNickname());
 
     // The socket may still be in use even though the client is disconnected (e.g.
     // message still being sent).
     user.deleteLater();
-}
-
-void Server::sendPacketToAll(quint16 target, quint16 code, QString message) {
-    QByteArray packet;
-    packet = ChatCommon::preparePacket(code, target, message);
-
-    foreach (User *user, m_UsersList) {
-        user->getSocket()->write(packet);
-    }
-}
-
-void Server::sendPacketToOne(quint16 target, quint16 code, QString message, QString receiverNickname) {
-    QByteArray packet;
-
-    packet = ChatCommon::preparePacket(code, target, message);
-    m_UsersList.value(receiverNickname)->getSocket()->write(packet);
 }

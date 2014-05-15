@@ -2,11 +2,11 @@
 #define ChatServer_H
 
 #include <QtNetwork>
-#include "Network/Receiver.h"
+#include "Network/ServerReceiver.h"
 #include "ChatProcessor.h"
 #include "User.h"
 
-class ChatServer : public Receiver, public ChatProcessor
+class ChatServer : public ServerReceiver, public ChatProcessor
 {
     Q_OBJECT
 
@@ -30,17 +30,12 @@ public:
      */
     void newClientConnection(User *newUser);
 
-private:
-    QHash<QString, User *> *m_UsersList;
+    void userDisconnected(User &user);
+
+/*private:
+    QHash<QString, User *> *m_UsersList;*/
 
 private slots:
-    /**
-     * @brief userDisconnected  Informs other users of the disconnection, and supresses both
-     * the client and the user from the database
-     * @param user  Reference to the user who disconnected
-     *
-    void userDisconnected(User &user);*/
-
     /**
      * @brief processNewMessage     Executes the command associated with an incoming message
      * @param header    Incoming message's header
@@ -49,8 +44,6 @@ private slots:
     void processNewMessage(Header header, QString message);
 
 signals:
-    void sendPacketToAll(quint16 target, quint16 code, QString message);
-    void sendPacketToOne(quint16 target, quint16 code, QString message, QString receiverNickname);
     void sendMessageToChatUi(const QString &msg);
 };
 
