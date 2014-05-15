@@ -11,8 +11,8 @@ class CanvasEventHandler : public QObject
     Q_OBJECT
 
 signals:
-    void addSprite(QPixmap* sprite, int x, int y, int z);
-    void removeSprite(int x, int y, int z);
+    void addSprite(QPixmap* sprite, int x, int y, bool isMoving);
+    void removeSprite(int x, int y);
 
 public:
     CanvasEventHandler();
@@ -20,9 +20,11 @@ public:
 
 public slots:
     void setSpritePath(QListWidgetItem *sprite);
+    void moveSprite();
 
 private:
     QString m_spritePath;
+    bool m_isMoving;
 };
 
 #endif // CANVASEVENTHANDLER_H

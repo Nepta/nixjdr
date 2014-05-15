@@ -19,10 +19,14 @@ Canvas::Canvas(QString filename, int step) {
     const int height = m_background->height();
 
     for(int i = 0; i < height/step; i++){
-        QList<QGraphicsItem*> list;
-        m_SpriteMatrix.append(list);
+        QList<QList<QGraphicsPixmapItem*>> listHeight;
+        m_SpriteMatrix.append(listHeight);
         for(int j = 0; j < width/step; j++){
-            m_SpriteMatrix[i].append(NULL);
+            QList<QGraphicsPixmapItem*> listWidth;
+            m_SpriteMatrix[i].append(listWidth);
+            for(int k = 0; k < LAYER_MAX; k++){
+                m_SpriteMatrix[i][j].append(NULL);
+            }
         }
     }
 
@@ -41,10 +45,12 @@ Canvas::Canvas(QString filename, int step) {
 
     m_canvasEventHandler = new CanvasEventHandler();
     this->m_view->installEventFilter(m_canvasEventHandler);
-    connect(m_canvasEventHandler, SIGNAL(addSprite(QPixmap*, int, int, int)),
-                        this, SLOT(addSprite(QPixmap*, int, int, int)));
-    connect(m_canvasEventHandler, SIGNAL(removeSprite(int, int, int)),
-                        this, SLOT(removeSprite(int, int, int)));
+    this->m_scene->installEventFilter(m_canvasEventHandler);
+    connect(m_canvasEventHandler, SIGNAL(addSprite(QPixmap*, int, int, bool)),
+                        this, SLOT(addSprite(QPixmap*, int, int, bool)));
+    connect(m_canvasEventHandler, SIGNAL(removeSprite(int, int)),
+                        this, SLOT(removeSprite(int, int)));
+    connect(this, SIGNAL(moveSprite()), m_canvasEventHandler, SLOT(moveSprite()));
 }
 
 
@@ -77,9 +83,10 @@ void Canvas::drawGrid(int width, int height){
     painter.end();
 }
 
-void Canvas::addSprite(QPixmap* sprite, int x, int y, int z){
+void Canvas::addSprite(QPixmap* sprite, int x, int y, bool isMoving){
 
-    QGraphicsItem* item;
+    QGraphicsPixmapItem* item;
+    int z = 1;
 
     int xTab = x/m_step;
     int yTab = y/m_step;
@@ -87,24 +94,42 @@ void Canvas::addSprite(QPixmap* sprite, int x, int y, int z){
     int xTile = xTab*m_step;
     int yTile = yTab*m_step;
 
-    if(m_SpriteMatrix[yTab][xTab] == NULL){
-        item = m_scene->addPixmap(*sprite);
-        item->setPos(xTile, yTile);
-        item->setZValue(z);
+    item = m_SpriteMatrix[yTab][xTab][z];
 
-        m_SpriteMatrix[yTab][xTab] = item;
+    for(z = 1; z < LAYER_MAX; z++){
+        item = m_SpriteMatrix[yTab][xTab][z];
+        if(item == NULL){
+            item = m_scene->addPixmap(*sprite);
+            item->setPos(xTile, yTile);
+            item->setZValue(z);
+            m_SpriteMatrix[yTab][xTab][z] = item;
+            break;
+        }
     }
+    if(z == LAYER_MAX){
+        // emit fenetre de ialoge
+        qDebug() << "layer max dépassé";
+    }
+
+//    else if(item->pixmap().toImage() == sprite->toImage() && isMoving == false){
+//        removeSprite(x, y, z);
+//        emit moveSprite();
+//    }
 }
 
-void Canvas::removeSprite(int x, int y, int z){
+void Canvas::removeSprite(int x, int y){
     int xTab = x/m_step;
     int yTab = y/m_step;
 
-    qDebug() << "remove Sprite";
+    for(int z = LAYER_MAX-1; z > 0; z--){
+        if(m_SpriteMatrix[yTab][xTab][z] != NULL){
+            QGraphicsItem* item;
+            item = m_SpriteMatrix[yTab][xTab][z];
+            m_scene->removeItem(item);
 
-    QGraphicsItem* item;
-    item = m_SpriteMatrix[yTab][xTab];
-    m_scene->removeItem(item);
+            m_SpriteMatrix[yTab][xTab][z] = NULL;
+            break;
+        }
+    }
 
-    m_SpriteMatrix[yTab][xTab] = NULL;
 }

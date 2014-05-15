@@ -13,8 +13,11 @@
 #include <QPainter>
 #include <QList>
 #include <QEvent>
+#include <QGraphicsPixmapItem>
 
 #include "canvaseventhandler.h"
+
+#define LAYER_MAX 4
 
 class Canvas : public QWidget
 {
@@ -34,11 +37,14 @@ private:
     QPixmap* m_background;
     CanvasEventHandler* m_canvasEventHandler;
     int m_step;
-    QList<QList<QGraphicsItem*>> m_SpriteMatrix;
+    QList<QList<QList<QGraphicsPixmapItem*>>> m_SpriteMatrix;
+
+signals:
+    void moveSprite();
 
 public slots:
-    void addSprite(QPixmap* sprite, int x, int y, int z);
-    void removeSprite(int x, int y, int z);
+    void addSprite(QPixmap* sprite, int x, int y, bool isMoving);
+    void removeSprite(int x, int y);
 };
 
 #endif // CANVAS_H
