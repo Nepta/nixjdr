@@ -10,7 +10,7 @@ void CmdMessageAll::execute(Header &header, QString &arg) {
                        .arg(header.getSocketUserNickname())
                        .arg(arg);
 
-    emit cmdSendPacketToAll(ChatCodes::SRVCMD_MESSAGE, namedMessage);
+    emit cmdSendPacketToAll(TargetCode::CHAT_CLIENT, ChatCodes::SRVCMD_MESSAGE, namedMessage);
 }
 
 QString CmdMessageAll::getHelp() {

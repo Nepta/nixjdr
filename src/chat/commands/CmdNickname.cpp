@@ -19,23 +19,36 @@ void CmdNickname::executeOnUser(User *user, QString askedNickname, QString oldNi
     QString checkedNickname = verifyAndGetNickname(askedNickname);
 
     if (isNew) {
-        emit cmdSendPacketToAll(ChatCodes::SRVCMD_MESSAGE,
-                                tr("<em>%1 vient de se connecter</em>").arg(checkedNickname));
+        emit cmdSendPacketToAll(
+            TargetCode::CHAT_CLIENT,
+            ChatCodes::SRVCMD_MESSAGE,
+            tr("<em>%1 vient de se connecter</em>").arg(checkedNickname)
+        );
     }
 
     /* update all the connected clients usersList (except the owner of the nickname being modified)
        with the following data : oldNickname, newNickname, isOwner (false) and isNew */
-    emit cmdSendPacketToAll(ChatCodes::SRVCMD_NICK_ACK, QString("%1 %2 %3 %4")
-                            .arg(oldNickname).arg(checkedNickname).arg(false).arg(isNew));
+    emit cmdSendPacketToAll(
+        TargetCode::CHAT_CLIENT,
+        ChatCodes::SRVCMD_NICK_ACK,
+        QString("%1 %2 %3 %4").arg(oldNickname)
+                              .arg(checkedNickname)
+                              .arg(false)
+                              .arg(isNew)
+    );
 
     // modify the user's nickname and add the new pair to the hash
     user->setNickname(checkedNickname);
     AbstractCmd::getUsersListServer()->insert(checkedNickname, user);
 
     // acknowledge : update the client (isOwner is true)
-    emit cmdSendPacketToOne(ChatCodes::SRVCMD_NICK_ACK, QString("%1 %2 %3 %4")
-                            .arg(oldNickname).arg(checkedNickname).arg(true).arg(isNew),
-                            checkedNickname);
+    emit cmdSendPacketToOne(
+        TargetCode::CHAT_CLIENT,
+        ChatCodes::SRVCMD_NICK_ACK,
+        QString("%1 %2 %3 %4").arg(oldNickname)
+                              .arg(checkedNickname)
+                              .arg(true).arg(isNew),
+        checkedNickname);
 }
 
 QString CmdNickname::getHelp() {

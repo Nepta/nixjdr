@@ -36,15 +36,25 @@ void CmdRoll::execute(Header &header, QString &arg) {
 
     if(!error){
         if(target != ""){
-            CmdWhisper *cmd = dynamic_cast<CmdWhisper*>(m_UserCommands.value(ChatCodes::USERCMD_WHISPER));
+            CmdWhisper *cmd = dynamic_cast<CmdWhisper*>(
+                        m_UserCommands.value(ChatCodes::USERCMD_WHISPER));
             cmd->execute(header, message);
         }
         else {
-            emit cmdSendPacketToAll(ChatCodes::SRVCMD_MESSAGE, namedMessage);
+            emit cmdSendPacketToAll(
+                TargetCode::CHAT_CLIENT,
+                ChatCodes::SRVCMD_MESSAGE,
+                namedMessage
+            );
         }
     }
     else{
-        emit cmdSendPacketToOne(ChatCodes::SRVCMD_MESSAGE, result, header.getSocketUserNickname());
+        emit cmdSendPacketToOne(
+            TargetCode::CHAT_CLIENT,
+            ChatCodes::SRVCMD_MESSAGE,
+            result,
+            header.getSocketUserNickname()
+        );
     }
 }
 

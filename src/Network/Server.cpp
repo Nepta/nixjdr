@@ -8,12 +8,11 @@ Server::Server() {
     m_Nodes.insert(TargetCode::CHAT_SERVER, new ChatServer(&m_UsersList));
     // TODO m_Nodes.insert(TargetCode::MAP_SERVER, new MapServer(m_UsersList));
 
-    // TODO connect les signaux/slots de Server à ceux de ChatServer
     foreach(Receiver *node, m_Nodes) {
-        connect(node, SIGNAL(sendPacketToAll(quint16, QString)),
-                this, SLOT(sendPacketToAll(quint16, QString)));
-        connect(node, SIGNAL(sendPacketToOne(quint16, QString, QString)),
-                this, SLOT(sendPacketToOne(quint16, QString, QString)));
+        connect(node, SIGNAL(sendPacketToAll(quint16, quint16, QString)),
+                this, SLOT(sendPacketToAll(quint16, quint16, QString)));
+        connect(node, SIGNAL(sendPacketToOne(quint16, quint16, QString, QString)),
+                this, SLOT(sendPacketToOne(quint16, quint16, QString, QString)));
     }
 }
 
@@ -53,25 +52,17 @@ void Server::newClientConnection()
                 m_Nodes.value(TargetCode::CHAT_SERVER));
     chatServerReceiver->newClientConnection(newUser);
 
-    /*
-    CmdNickname *cmdNickname = dynamic_cast<CmdNickname*>(
-                m_Commands.getUserCommand(ChatCodes::USERCMD_NICK));
-    cmdNickname->executeOnUser(newUser, "guest", "guest", true);
-
-    CmdNicknamesList *cmdNicknamesList = dynamic_cast<CmdNicknamesList*>(
-                m_Commands.getUserCommand(ChatCodes::USERCMD_LIST));
-    cmdNicknamesList->executeOnUser(newUser);
-    */
-
-    // process and send a packet when fully received
+    // send a packet to the intended Receiver when fully received
     connect(newUser, SIGNAL(receivedFullData(Header, QString)),
-            this, SLOT(processNewMessage(Header, QString)));
+            this, SLOT(switchNewMessage(Header, QString)));
     connect(newUser, SIGNAL(userDisconnectedNotify(User&)), this, SLOT(userDisconnected(User&)));
 }
 
 void Server::userDisconnected(User &user)
 {
-    sendPacketToAll((quint16) ChatCodes::SRVCMD_DISCONNECT, user.getNickname());
+    sendPacketToAll((quint16) TargetCode::CHAT_CLIENT,
+                    (quint16) ChatCodes::SRVCMD_DISCONNECT,
+                    user.getNickname());
 
     m_UsersList.remove(user.getNickname());
 
@@ -80,19 +71,18 @@ void Server::userDisconnected(User &user)
     user.deleteLater();
 }
 
-void Server::sendPacketToAll(quint16 code, QString message) {
+void Server::sendPacketToAll(quint16 target, quint16 code, QString message) {
     QByteArray packet;
-    packet = ChatCommon::preparePacket(code, message);
+    packet = ChatCommon::preparePacket(code, target, message);
 
-    for (int i = 0; i < m_UsersList.values().size(); i++)
-    {
-        m_UsersList.values()[i]->getSocket()->write(packet);
+    foreach (User *user, m_UsersList) {
+        user->getSocket()->write(packet);
     }
 }
 
-void Server::sendPacketToOne(quint16 code, QString message, QString receiverNickname) {
+void Server::sendPacketToOne(quint16 target, quint16 code, QString message, QString receiverNickname) {
     QByteArray packet;
 
-    packet = ChatCommon::preparePacket(code, message);
+    packet = ChatCommon::preparePacket(code, target, message);
     m_UsersList.value(receiverNickname)->getSocket()->write(packet);
 }

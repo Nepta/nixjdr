@@ -1,5 +1,5 @@
 #include <QDataStream>
-
+#include "Network/Switch.h"
 #include "commands/Commands.h"
 #include "ChatCommon.h"
 
@@ -7,24 +7,27 @@ ChatCommon::ChatCommon()
 {
 }
 
+// TODO est-ce que cette surcharge de preparePacket est toujours utile?
+// TODO QString->QObject
+// TODO prepareChatPacket?
 QByteArray ChatCommon::preparePacket(const QString &msg) {
     ChatCodes cmdCode;
+    TargetCode target;
     QString strippedMsg;
 
     cmdCode = translateCommandToCode(msg);
+    target = TargetCode::CHAT_SERVER;
     strippedMsg = stripCommandFromMessage(msg);
 
-    return preparePacket((quint16) cmdCode, strippedMsg);
+    return preparePacket((quint16) cmdCode, (quint16) target, strippedMsg);
 }
 
-//TODO prepare packet 3 arg (+target) QString->QObject
-QByteArray ChatCommon::preparePacket(quint16 code, const QString &msg) {
+//TODO QString->QObject
+QByteArray ChatCommon::preparePacket(quint16 code, quint16 target, const QString &msg) {
     QByteArray packet;
     QDataStream out(&packet, QIODevice::WriteOnly);
 
-    out << quint16(0) << code << msg;
-    out.device()->seek(0);
-    out << (quint16) (packet.size() - 2*sizeof(quint16));
+    out << (quint16) msg.size() << target << code << msg;
 
     return packet;
 }
@@ -80,6 +83,18 @@ bool ChatCommon::messageReadyToReceive(QTcpSocket *socket, Header &header, QStri
 
         in >> msgSize;
         header.setMsgSize(msgSize);
+    }
+
+    // target
+    if (header.getTarget() == (quint16) TargetCode::UNDEFINED) {
+        quint16 target;
+
+        if (socket->bytesAvailable() < (qint64) sizeof(quint16)) {
+            return false;
+        }
+
+        in >> target;
+        header.setTarget(target);
     }
 
     // command

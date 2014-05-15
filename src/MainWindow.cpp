@@ -92,16 +92,14 @@ void MainWindow::setupMJ() {
     // during the initialization.
     connect(&m_Server, SIGNAL(sendMessageToChatUi(QString)),
             ui->m_ChatWidget, SLOT(receivedMessage(QString)));
+
+    // Server Initialization
     m_Server.init();
 
-    // Initialize ChatWidget
+    // Initialize ChatWidget with the ChatServer
     ChatServer* chatServerReceiver = dynamic_cast<ChatServer*>(
                 m_Server.getReceiver(TargetCode::CHAT_SERVER));
     ui->m_ChatWidget->setupChatServer(chatServerReceiver);
-
-    // The dice menu is able to send system messages to the Chat in order
-    connect(m_diceMenu, SIGNAL(sendMessageToChatUi(QString)),
-                        this, SIGNAL(sendMessageToChatUi(QString)));
 
     setupPlayer();
 }
@@ -109,7 +107,8 @@ void MainWindow::setupMJ() {
 void MainWindow::setupPlayer() {
     ui->m_ChatWidget->setupChatClient(m_User);
 
-    /* TODO seems useless
-       connect(this, SIGNAL(sendMessageToChatUi(QString)),
-            ui->m_ChatWidget, SLOT(receivedMessage(QString))); */
+    /* The dice menu is able to send system messages to the Chat in order to display error messages
+     * or warnings */
+    connect(m_diceMenu, SIGNAL(sendMessageToChatUi(QString)),
+                         ui->m_ChatWidget, SLOT(receivedMessage(QString)));
 }

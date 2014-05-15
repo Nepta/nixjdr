@@ -39,7 +39,7 @@ protected slots:
      * @param header   A header containing especially a target
      * @param message  The message to send
 	 */
-    void switchNewMessage(Header &header, QString &message);
+    void switchNewMessage(Header header, QString message);
 };
 
 #endif // SWITCH_H

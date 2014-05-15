@@ -5,6 +5,7 @@
 #include <QString>
 #include <QHash>
 #include "Network/Header.h"
+#include "Network/Switch.h"
 #include "User.h"
 
 enum class ChatCodes : quint16;
@@ -30,9 +31,8 @@ private:
     static QHash<QString, User *> *s_UsersListServer;
 
 signals:
-    void cmdSendPacketToAll(ChatCodes code, QString message);
-    void cmdSendPacketToOne(ChatCodes code, QString message,
-                                     QString receiverNickname);
+    void cmdSendPacketToAll(TargetCode target, ChatCodes code, QString message);
+    void cmdSendPacketToOne(TargetCode target, ChatCodes code, QString message, QString receiverNickname);
     void cmdSendMessageToChatUi(const QString &msg);
     void cmdUpdateUserListView();
 };

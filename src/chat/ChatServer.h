@@ -49,8 +49,8 @@ private slots:
     void processNewMessage(Header header, QString message);
 
 signals:
-    void sendPacketToAll(quint16 code, QString message);
-    void sendPacketToOne(quint16 code, QString message, QString receiverNickname);
+    void sendPacketToAll(quint16 target, quint16 code, QString message);
+    void sendPacketToOne(quint16 target, quint16 code, QString message, QString receiverNickname);
     void sendMessageToChatUi(const QString &msg);
 };
 

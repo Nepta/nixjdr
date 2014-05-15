@@ -25,16 +25,32 @@ void CmdWhisper::execute(Header &header, QString &arg) {
                 .arg(target)
                 .arg(strippedMsg);
 
-        emit cmdSendPacketToOne(ChatCodes::SRVCMD_WHISPER_REP, msgTarget, target);
-        if(target != sender){
-            emit cmdSendPacketToOne(ChatCodes::SRVCMD_WHISPER_REP, msgSender, sender);
+        emit cmdSendPacketToOne(
+            TargetCode::CHAT_CLIENT,
+            ChatCodes::SRVCMD_WHISPER_REP,
+            msgTarget,
+            target
+        );
+
+        if(target != sender) {
+            emit cmdSendPacketToOne(
+                TargetCode::CHAT_CLIENT,
+                ChatCodes::SRVCMD_WHISPER_REP,
+                msgSender,
+                sender
+            );
         }
     }
     else {
         QString errmsg = tr("%1 n'existe pas.")
                          .arg(target);
 
-        emit cmdSendPacketToOne(ChatCodes::SRVCMD_MESSAGE, errmsg, sender);
+        emit cmdSendPacketToOne(
+            TargetCode::CHAT_CLIENT,
+            ChatCodes::SRVCMD_MESSAGE,
+            errmsg,
+            sender
+        );
     }
 }
 

@@ -43,7 +43,7 @@ private slots:
      * @param code            Forwarded message's command code
      * @param message         Forwarded message's content
      */
-    void sendPacketToAll(quint16 code, QString message);
+    void sendPacketToAll(quint16 target, quint16 code, QString message);
 
     /**
      * @brief sendPacketToOne   Prepares a packet and forwards it to the specified user
@@ -51,7 +51,7 @@ private slots:
      * @param message           Forwarded message's content
      * @param receiverNickname  User to forward the message to
      */
-    void sendPacketToOne(quint16 code, QString message, QString receiverNickname);
+    void sendPacketToOne(quint16 target, quint16 code, QString message, QString receiverNickname);
 
 signals:
     void sendMessageToChatUi(const QString &msg);

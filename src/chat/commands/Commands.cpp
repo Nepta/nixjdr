@@ -34,11 +34,11 @@ Commands::Commands()
 
     // Allow each command to send packets (server side)
     foreach (AbstractCmd *command, m_UserCommands) {
-        connect(command, SIGNAL(cmdSendPacketToAll(ChatCodes, QString)),
-                this, SLOT(cmdSendPacketToAll(ChatCodes, QString)));
+        connect(command, SIGNAL(cmdSendPacketToAll(TargetCode, ChatCodes, QString)),
+                this, SLOT(cmdSendPacketToAll(TargetCode, ChatCodes, QString)));
 
-        connect(command, SIGNAL(cmdSendPacketToOne(ChatCodes, QString, QString)),
-                this, SLOT(cmdSendPacketToOne(ChatCodes, QString, QString)));
+        connect(command, SIGNAL(cmdSendPacketToOne(TargetCode, ChatCodes, QString, QString)),
+                this, SLOT(cmdSendPacketToOne(TargetCode, ChatCodes, QString, QString)));
     }
 
     // Allow each command to interact with the UI (client side)
@@ -69,10 +69,10 @@ QString Commands::getPrintableCommandsList() {
     return NULL;
 }
 
-void Commands::cmdSendPacketToAll(ChatCodes code, QString message) {
-    emit sendPacketToAll((quint16) code, message);
+void Commands::cmdSendPacketToAll(TargetCode target, ChatCodes code, QString message) {
+    emit sendPacketToAll((quint16) target, (quint16) code, message);
 }
 
-void Commands::cmdSendPacketToOne(ChatCodes code, QString message, QString receiverNickname) {
-    emit sendPacketToOne((quint16) code, message, receiverNickname);
+void Commands::cmdSendPacketToOne(TargetCode target, ChatCodes code, QString message, QString receiverNickname) {
+    emit sendPacketToOne((quint16) target, (quint16) code, message, receiverNickname);
 }
