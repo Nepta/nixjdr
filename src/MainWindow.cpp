@@ -38,7 +38,7 @@ MainWindow::MainWindow(User *user, QWidget *parent) :
         setupPlayer();
     }
 
-    showFullScreen();
+    //showFullScreen();
 }
 
 MainWindow::~MainWindow()
@@ -85,11 +85,21 @@ void MainWindow::on_actionEditMap_triggered()
         connect(ui->tokenPage->getUi()->listToken, SIGNAL(itemClicked(QListWidgetItem*)),
                 subwindow->map(), SLOT(changeToken(QListWidgetItem*)));
     }
-
 }
 
 void MainWindow::setupMJ() {
-    ui->m_ChatWidget->setupChatServer();
+    // Connect sendMessageToChatUi from m_Server to m_ChatWidget in order to display system messages
+    // during the initialization.
+    connect(&m_Server, SIGNAL(sendMessageToChatUi(QString)),
+            ui->m_ChatWidget, SLOT(receivedMessage(QString)));
+    m_Server.init();
+
+    // Initialize ChatWidget
+    ChatServer* chatServerReceiver = dynamic_cast<ChatServer*>(
+                m_Server.getReceiver(TargetCode::CHAT_SERVER));
+    ui->m_ChatWidget->setupChatServer(chatServerReceiver);
+
+    // The dice menu is able to send system messages to the Chat in order
     connect(m_diceMenu, SIGNAL(sendMessageToChatUi(QString)),
                         this, SIGNAL(sendMessageToChatUi(QString)));
 
@@ -99,6 +109,7 @@ void MainWindow::setupMJ() {
 void MainWindow::setupPlayer() {
     ui->m_ChatWidget->setupChatClient(m_User);
 
-    connect(this, SIGNAL(sendMessageToChatUi(QString)),
-            ui->m_ChatWidget, SLOT(receivedMessage(QString)));
+    /* TODO seems useless
+       connect(this, SIGNAL(sendMessageToChatUi(QString)),
+            ui->m_ChatWidget, SLOT(receivedMessage(QString))); */
 }

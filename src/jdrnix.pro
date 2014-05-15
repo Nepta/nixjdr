@@ -49,10 +49,10 @@ SOURCES += \
     chat/commands/CmdDisconnect.cpp \
     chat/commands/CmdNicknamesList.cpp \
     chat/commands/CmdNicknamesListAck.cpp \
-    Network/Switch.cpp \
     Network/Decoder.cpp \
     Network/Header.cpp \
-    Network/ServerNode.cpp
+    Network/Server.cpp \
+    Network/Switch.cpp
 
 HEADERS  += \
     MainWindow.h \
@@ -93,7 +93,7 @@ HEADERS  += \
     Network/Receiver.h \
     Network/Decoder.h \
     Network/Header.h \
-    Network/ServerNode.h
+    Network/Server.h
 
 FORMS    += mainwindow.ui \
     TokenMenu.ui \

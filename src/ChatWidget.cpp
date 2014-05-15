@@ -19,8 +19,8 @@ ChatWidget::~ChatWidget()
 {
     delete ui;
     delete m_NicknamesListModel;
-    delete m_ChatServer;
-    delete m_ChatClient;
+    /*delete m_ChatServer;
+    delete m_ChatClient;*/
 }
 
 void ChatWidget::on_msgField_returnPressed()
@@ -31,13 +31,13 @@ void ChatWidget::on_msgField_returnPressed()
     }
 }
 
-void ChatWidget::setupChatServer() {
-    m_ChatServer = new ChatServer;
+void ChatWidget::setupChatServer(ChatServer *chatServer) {
+    //m_ChatServer = new ChatServer;
+    m_ChatServer = chatServer;
 
-    // connect needed before init to display system messages in the chat during initialization
     connect(m_ChatServer, SIGNAL(sendMessageToChatUi(QString)),
                         this, SLOT(receivedMessage(QString)));
-    m_ChatServer->init();
+    //m_ChatServer->init();
 }
 
 void ChatWidget::setupChatClient(User *user) {

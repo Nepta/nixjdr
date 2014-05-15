@@ -10,7 +10,7 @@ class Receiver : public QObject {
 public:
     Receiver(){}
 
-protected slots:
+public slots:
     virtual void processNewMessage(Header header, QString message) = 0;
 };
 

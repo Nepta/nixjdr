@@ -5,27 +5,27 @@
 #include "ChatCommon.h"
 #include "ChatServer.h"
 
-ChatServer::ChatServer()
+ChatServer::ChatServer(QHash<QString, User *> *usersList)
 {
-    m_Server = new QTcpServer(this);
-
-    AbstractCmd::setUsersListServer(&m_UsersList);
+    //m_Server = new QTcpServer(this);
+    m_UsersList = usersList;
+    AbstractCmd::setUsersListServer(m_UsersList);
 
     // init commands
     connect(&m_Commands, SIGNAL(sendPacketToAll(quint16, QString)),
-            this, SLOT(sendPacketToAll(quint16, QString)));
+            this, SIGNAL(sendPacketToAll(quint16, QString)));
     connect(&m_Commands, SIGNAL(sendPacketToOne(quint16, QString, QString)),
-            this, SLOT(sendPacketToOne(quint16, QString, QString)));
+            this, SIGNAL(sendPacketToOne(quint16, QString, QString)));
 }
 
 ChatServer::~ChatServer()
 {
-    m_Server->deleteLater();
-    qDeleteAll(m_UsersList.begin(), m_UsersList.end());
-    m_UsersList.clear();
+    //m_Server->deleteLater();
+    //qDeleteAll(m_UsersList.begin(), m_UsersList.end());
+    //m_UsersList.clear();
 }
 
-void ChatServer::init() {
+/*void ChatServer::init() {
     if (!m_Server->listen(QHostAddress::Any, 50885)) {
         QString msg = tr("Le serveur n'a pas pu être démarré. Raison :<br />") +
                 m_Server->errorString();
@@ -39,11 +39,11 @@ void ChatServer::init() {
 
         connect(m_Server, SIGNAL(newConnection()), this, SLOT(newClientConnection()));
     }
-}
+}*/
 
-void ChatServer::newClientConnection()
+void ChatServer::newClientConnection(User *newUser)
 {
-    User *newUser = new User(m_Server->nextPendingConnection());
+    //User *newUser = new User(m_Server->nextPendingConnection());
 
     CmdNickname *cmdNickname = dynamic_cast<CmdNickname*>(
                 m_Commands.getUserCommand(ChatCodes::USERCMD_NICK));
@@ -53,13 +53,13 @@ void ChatServer::newClientConnection()
                 m_Commands.getUserCommand(ChatCodes::USERCMD_LIST));
     cmdNicknamesList->executeOnUser(newUser);
 
-    // process and send a packet when fully received
+    /*// process and send a packet when fully received
     connect(newUser, SIGNAL(receivedFullData(Header, QString)),
             this, SLOT(processNewMessage(Header, QString)));
-    connect(newUser, SIGNAL(userDisconnectedNotify(User&)), this, SLOT(userDisconnected(User&)));
+    connect(newUser, SIGNAL(userDisconnectedNotify(User&)), this, SLOT(userDisconnected(User&)));*/
 }
 
-void ChatServer::userDisconnected(User &user)
+/*void ChatServer::userDisconnected(User &user)
 {
     sendPacketToAll((quint16) ChatCodes::SRVCMD_DISCONNECT, user.getNickname());
 
@@ -68,7 +68,7 @@ void ChatServer::userDisconnected(User &user)
     // The socket may still be in use even though the client is disconnected (e.g.
     // message still being sent).
     user.deleteLater();
-}
+}*/
 
 
 void ChatServer::processNewMessage(Header header, QString message) {

@@ -17,7 +17,7 @@ class ChatWidget : public QWidget
 public:
     explicit ChatWidget(QWidget *parent = 0);
     ~ChatWidget();
-    void setupChatServer();
+    void setupChatServer(ChatServer *chatServer);
     void setupChatClient(User *user);
     void sendMessageFromClientToServer(QString message);
 

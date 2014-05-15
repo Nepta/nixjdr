@@ -18,6 +18,8 @@ public:
      */
     quint16 getMsgSize();
 
+    quint16 getTarget();
+
     /**
      * @brief getCmd    Returns the message's command's code
      * @return  m_Cmd
@@ -36,6 +38,8 @@ public:
      * @return  A pointer towards the current header
      */
     Header *setMsgSize(quint16 msgSize);
+
+    Header *setTarget(quint16 target);
 
     /**
      * @brief setCode    Sets the message's code to the specified value

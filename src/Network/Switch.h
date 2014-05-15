@@ -21,23 +21,23 @@ inline uint qHash(const TargetCode &key) { return qHash((quint16) key); }
 class Switch : public QObject {
     Q_OBJECT
 
-private:
-    QHash<TargetCode, Receiver*> m_Nodes;
+/*private:
+    QHash<TargetCode, Receiver*> m_Nodes;*/
 
 public:
-	Switch();
+    Switch() {}
+    virtual ~Switch() {}
 
-    /**
-     * @brief addNode add a possible target
-     * @param receiver the target to Add
-     */
-    Switch& addNode(TargetCode targetCode, Receiver *receiver);
+    Receiver *getReceiver(TargetCode code);
 
-public slots:
+protected:
+    QHash<TargetCode, Receiver*> m_Nodes;
+
+protected slots:
 	/**
-	 * @brief redirect a message received by socket to right module
-	 * @param header a header containing especially a target
-	 * @param message the message to send
+     * @brief redirect A message received by socket to right module
+     * @param header   A header containing especially a target
+     * @param message  The message to send
 	 */
     void switchNewMessage(Header &header, QString &message);
 };

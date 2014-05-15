@@ -13,6 +13,10 @@ quint16 Header::getMsgSize() {
     return m_MsgSize;
 }
 
+quint16 Header::getTarget() {
+    return m_Target;
+}
+
 quint16 Header::getCode() {
     return m_Code;
 }
@@ -23,6 +27,12 @@ QString Header::getSocketUserNickname() {
 
 Header *Header::setMsgSize(quint16 msgSize) {
     m_MsgSize = msgSize;
+
+    return this;
+}
+
+Header *Header::setTarget(quint16 target) {
+    m_Target = target;
 
     return this;
 }

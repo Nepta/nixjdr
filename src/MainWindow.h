@@ -6,6 +6,7 @@
 #include "ChatWidget.h"
 #include "TokenMenu.h"
 #include "DiceMenu.h"
+#include "Network/Server.h"
 #include "ui_TokenMenu.h"
 #include "ui_DiceMenu.h"
 
@@ -38,6 +39,7 @@ private:
     Ui::MainWindow *ui;
     User *m_User;
     DiceMenu *m_diceMenu;
+    Server m_Server;
 };
 
 #endif // MAINWINDOW_H
