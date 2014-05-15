@@ -9,7 +9,7 @@
 class Receiver : public QObject {
     Q_OBJECT
 public:
-    Receiver(){}
+    Receiver(QHash<QString, User *> *usersList);
     virtual ~Receiver(){}
 
 protected:

@@ -1,13 +1,13 @@
-#include<QTranslator>
+#include <QTranslator>
 #include "commands/AbstractCmd.h"
 #include "commands/CmdNickname.h"
 #include "commands/CmdNicknamesList.h"
 #include "ChatCommon.h"
 #include "ChatServer.h"
 
-ChatServer::ChatServer(QHash<QString, User *> *usersList)
+ChatServer::ChatServer(QHash<QString, User *> *usersList) :
+    ServerReceiver(usersList)
 {
-    m_UsersList = usersList;
     AbstractCmd::setUsersListServer(m_UsersList);
 
     // init commands

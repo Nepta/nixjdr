@@ -3,25 +3,6 @@
 #include "commands/Commands.h"
 #include "ChatCommon.h"
 
-ChatCommon::ChatCommon()
-{
-}
-
-// TODO est-ce que cette surcharge de preparePacket est toujours utile?
-// TODO QString->QObject
-// TODO prepareChatPacket?
-QByteArray ChatCommon::preparePacket(const QString &msg) {
-    ChatCodes cmdCode;
-    TargetCode target;
-    QString strippedMsg;
-
-    cmdCode = translateCommandToCode(msg);
-    target = TargetCode::CHAT_SERVER;
-    strippedMsg = stripCommandFromMessage(msg);
-
-    return preparePacket((quint16) cmdCode, (quint16) target, strippedMsg);
-}
-
 //TODO QString->QObject
 QByteArray ChatCommon::preparePacket(quint16 code, quint16 target, const QString &msg) {
     QByteArray packet;
@@ -30,29 +11,6 @@ QByteArray ChatCommon::preparePacket(quint16 code, quint16 target, const QString
     out << (quint16) msg.size() << target << code << msg;
 
     return packet;
-}
-
-ChatCodes ChatCommon::translateCommandToCode(const QString &msg) {
-    QString cmd = msg.split(" ").at(0);
-
-    if (!msg.startsWith("/")) {
-        return ChatCodes::USERCMD_MESSAGE;
-    }
-    else {
-        // TODO remplacer par HELP
-        return Commands::s_CommandCodes.value(cmd, ChatCodes::USERCMD_MESSAGE);
-    }
-}
-
-QString ChatCommon::stripCommandFromMessage(const QString &msg) {
-    QString strippedMsg = msg;
-
-    if (msg.startsWith("/")) {
-        extractFirstWord(strippedMsg);
-        strippedMsg = strippedMsg.trimmed();
-    }
-
-    return strippedMsg;
 }
 
 QString ChatCommon::extractFirstWord(QString &msg) {

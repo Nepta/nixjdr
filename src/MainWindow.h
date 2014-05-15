@@ -3,10 +3,11 @@
 
 #include <QMainWindow>
 #include <QMdiSubWindow>
+#include "Network/Server.h"
+#include "Network/Client.h"
 #include "ChatWidget.h"
 #include "TokenMenu.h"
 #include "DiceMenu.h"
-#include "Network/Server.h"
 #include "ui_TokenMenu.h"
 #include "ui_DiceMenu.h"
 
@@ -37,9 +38,10 @@ private:
     void setupPlayer();
 
     Ui::MainWindow *ui;
-    User *m_User;
     DiceMenu *m_diceMenu;
-    Server m_Server;
+    User *m_User;
+    Server *m_Server;
+    Client *m_Client;
 };
 
 #endif // MAINWINDOW_H

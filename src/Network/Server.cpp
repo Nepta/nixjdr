@@ -54,7 +54,7 @@ void Server::userDisconnected(User &user)
 
     m_UsersList.remove(user.getNickname());
 
-    // The socket may still be in use even though the client is disconnected (e.g.
-    // message still being sent).
+    /* The socket may still be in use even though the client is disconnected (e.g.
+     * message still being sent).*/
     user.deleteLater();
 }

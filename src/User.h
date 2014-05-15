@@ -24,11 +24,11 @@ public:
     QTcpSocket *getSocket();
     Header getHeader();
     QString getNickname();
-    QString getIpAddress();
+    QString getServerIpAddress();
     Role getRole();
 
     User* setNickname(const QString &nickname);
-    User* setIpAddress(const QString &ipAddress);
+    User* setServerIpAddress(const QString &serverIpAddress);
     User* setRole(const Role &role);
 
 private slots:
@@ -45,7 +45,7 @@ private:
     QTcpSocket *m_Socket;
     Header m_Header;
     QString m_Nickname;
-    QString m_IpAddress;
+    QString m_serverIpAddress;
     Role m_Role;
 };
 

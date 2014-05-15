@@ -32,9 +32,6 @@ public:
 
     void userDisconnected(User &user);
 
-/*private:
-    QHash<QString, User *> *m_UsersList;*/
-
 private slots:
     /**
      * @brief processNewMessage     Executes the command associated with an incoming message

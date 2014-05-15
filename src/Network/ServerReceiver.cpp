@@ -1,6 +1,8 @@
 #include "ServerReceiver.h"
 #include "chat/ChatCommon.h"
 
+ServerReceiver::ServerReceiver(QHash<QString, User *> *usersList) : Receiver(usersList) {}
+
 void ServerReceiver::sendPacketToAll(quint16 target, quint16 code, QString message) {
     QByteArray packet;
     packet = ChatCommon::preparePacket(code, target, message);

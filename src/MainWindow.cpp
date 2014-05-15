@@ -15,6 +15,9 @@ MainWindow::MainWindow(User *user, QWidget *parent) :
 {
     ui->setupUi(this);
 
+    // Sets Null pointer for later deletion if m_Server is not used
+    m_Server = NULL;
+
     // Dice menu
     m_diceMenu = new DiceMenu();
     ui->tableArea->addSubWindow(m_diceMenu, Qt::CustomizeWindowHint |
@@ -46,6 +49,8 @@ MainWindow::~MainWindow()
     delete ui;
     delete m_diceMenu;
     delete m_User;
+    delete m_Server;
+    delete m_Client;
 }
 
 void MainWindow::updateMenu() {
@@ -88,27 +93,35 @@ void MainWindow::on_actionEditMap_triggered()
 }
 
 void MainWindow::setupMJ() {
-    // Connect sendMessageToChatUi from m_Server to m_ChatWidget in order to display system messages
-    // during the initialization.
-    connect(&m_Server, SIGNAL(sendMessageToChatUi(QString)),
+    m_Server = new Server;
+
+    /* Connect sendMessageToChatUi from m_Server to m_ChatWidget in order to display system messages
+     * during the initialization.*/
+    connect(m_Server, SIGNAL(sendMessageToChatUi(QString)),
             ui->m_ChatWidget, SLOT(receivedMessage(QString)));
 
     // Server Initialization
-    m_Server.init();
+    m_Server->init();
 
     // Initialize ChatWidget with the ChatServer
-    ChatServer* chatServerReceiver = dynamic_cast<ChatServer*>(
-                m_Server.getReceiver(TargetCode::CHAT_SERVER));
-    ui->m_ChatWidget->setupChatServer(chatServerReceiver);
+    ChatServer* chatServer = dynamic_cast<ChatServer*>(
+                m_Server->getReceiver(TargetCode::CHAT_SERVER));
+    ui->m_ChatWidget->setupChatServer(chatServer);
 
     setupPlayer();
 }
 
 void MainWindow::setupPlayer() {
-    ui->m_ChatWidget->setupChatClient(m_User);
+    m_Client = new Client(m_User);
+
+    // Initialize ChatWidget with the ChatClient
+    ChatClient* chatClient = dynamic_cast<ChatClient*>(
+                m_Client->getReceiver(TargetCode::CHAT_CLIENT));
+    ui->m_ChatWidget->setupChatClient(chatClient);
 
     /* The dice menu is able to send system messages to the Chat in order to display error messages
      * or warnings */
     connect(m_diceMenu, SIGNAL(sendMessageToChatUi(QString)),
-                         ui->m_ChatWidget, SLOT(receivedMessage(QString)));
+            ui->m_ChatWidget, SLOT(receivedMessage(QString))
+    );
 }

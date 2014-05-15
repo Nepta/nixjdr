@@ -62,8 +62,8 @@ QString User::getNickname() {
     return m_Nickname;
 }
 
-QString User::getIpAddress() {
-    return m_IpAddress;
+QString User::getServerIpAddress() {
+    return m_serverIpAddress;
 }
 
 Role User::getRole() {
@@ -76,8 +76,8 @@ User* User::setNickname(const QString &nickname) {
     return this;
 }
 
-User* User::setIpAddress(const QString &ipAddress) {
-    m_IpAddress = ipAddress;
+User* User::setServerIpAddress(const QString &serverIpAddress) {
+    m_serverIpAddress = serverIpAddress;
 
     return this;
 }

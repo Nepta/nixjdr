@@ -48,10 +48,10 @@ void ConnectionHelper::on_endButton_clicked() {
                 .arg(ui->ipC->text())
                 .arg(ui->ipD->text());
 
-        m_User->setIpAddress(ipAddress);
+        m_User->setServerIpAddress(ipAddress);
     }
     else {
-        m_User->setIpAddress("127.0.0.1");
+        m_User->setServerIpAddress("127.0.0.1");
     }
 
     m_User->setNickname(QString("guest")); // TODO refacto

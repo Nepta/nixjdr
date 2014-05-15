@@ -8,7 +8,7 @@ class ServerReceiver : public Receiver
     Q_OBJECT
 
 public:
-    ServerReceiver(){}
+    ServerReceiver(QHash<QString, User *> *usersList);
     virtual ~ServerReceiver(){}
 
 protected slots:

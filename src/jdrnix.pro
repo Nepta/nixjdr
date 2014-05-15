@@ -53,7 +53,10 @@ SOURCES += \
     Network/Header.cpp \
     Network/Server.cpp \
     Network/Switch.cpp \
-    Network/ServerReceiver.cpp
+    Network/ServerReceiver.cpp \
+    Network/Client.cpp \
+    Network/ClientReceiver.cpp \
+    Network/Receiver.cpp
 
 HEADERS  += \
     MainWindow.h \
@@ -95,7 +98,9 @@ HEADERS  += \
     Network/Decoder.h \
     Network/Header.h \
     Network/Server.h \
-    Network/ServerReceiver.h
+    Network/ServerReceiver.h \
+    Network/Client.h \
+    Network/ClientReceiver.h
 
 FORMS    += mainwindow.ui \
     TokenMenu.ui \
