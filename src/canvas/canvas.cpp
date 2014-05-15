@@ -1,5 +1,7 @@
 #include "canvas.h"
 
+#include <QDebug>
+
 Canvas::Canvas()
 {
     m_scene = new QGraphicsScene();
@@ -41,6 +43,8 @@ Canvas::Canvas(QString filename, int step) {
     this->m_view->installEventFilter(m_canvasEventHandler);
     connect(m_canvasEventHandler, SIGNAL(addSprite(QPixmap*, int, int, int)),
                         this, SLOT(addSprite(QPixmap*, int, int, int)));
+    connect(m_canvasEventHandler, SIGNAL(removeSprite(int, int, int)),
+                        this, SLOT(removeSprite(int, int, int)));
 }
 
 
@@ -83,9 +87,24 @@ void Canvas::addSprite(QPixmap* sprite, int x, int y, int z){
     int xTile = xTab*m_step;
     int yTile = yTab*m_step;
 
-    item = m_scene->addPixmap(*sprite);
-    item->setPos(xTile, yTile);
-    item->setZValue(z);
+    if(m_SpriteMatrix[yTab][xTab] == NULL){
+        item = m_scene->addPixmap(*sprite);
+        item->setPos(xTile, yTile);
+        item->setZValue(z);
 
-    m_SpriteMatrix[yTab][xTab] = item;
+        m_SpriteMatrix[yTab][xTab] = item;
+    }
+}
+
+void Canvas::removeSprite(int x, int y, int z){
+    int xTab = x/m_step;
+    int yTab = y/m_step;
+
+    qDebug() << "remove Sprite";
+
+    QGraphicsItem* item;
+    item = m_SpriteMatrix[yTab][xTab];
+    m_scene->removeItem(item);
+
+    m_SpriteMatrix[yTab][xTab] = NULL;
 }

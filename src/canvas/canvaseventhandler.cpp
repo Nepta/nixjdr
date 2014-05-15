@@ -11,17 +11,26 @@ bool CanvasEventHandler::eventFilter(QObject *obj, QEvent *event){
     bool eventHandled = false;
 //Qt::MouseButton mouseButton = static_cast<QMouseEvent*>(event)->button();
     if(event->type()==QEvent::MouseButtonPress){
+
+        Qt::MouseButton mouseButton = static_cast<QMouseEvent*>(event)->button();
         QMouseEvent *mouseEvent = static_cast<QMouseEvent*>(event);
         int x = mouseEvent->x();
         int y = mouseEvent->y();
-        QPixmap* sprite = new QPixmap(m_spritePath);
-        emit addSprite(sprite, x, y, 1);
+
+        if(mouseButton == Qt::LeftButton) {
+            QPixmap* sprite = new QPixmap(m_spritePath);
+            emit addSprite(sprite, x, y, 1);
+        }
+
+        else if(mouseButton == Qt::RightButton) {
+            emit removeSprite(x, y, 1);
+        }
+
         eventHandled = true;
     }
     else{
         return QObject::eventFilter(obj, event);
     }
-
     return eventHandled;
 }
 

@@ -12,6 +12,7 @@ class CanvasEventHandler : public QObject
 
 signals:
     void addSprite(QPixmap* sprite, int x, int y, int z);
+    void removeSprite(int x, int y, int z);
 
 public:
     CanvasEventHandler();
