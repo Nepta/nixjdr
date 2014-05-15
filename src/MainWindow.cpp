@@ -3,11 +3,12 @@
 #include <QApplication>
 #include <QDesktopWidget>
 #include <QToolBox>
-#include "QTSFML/MapMdiSubwindow.h"
-#include "QTSFML/Map.h"
 #include "CustomMdiArea.h"
 #include "MainWindow.h"
 #include "ui_mainwindow.h"
+
+#include "canvas/canvas.h"
+#include "canvas/canvaseventhandler.h"
 
 MainWindow::MainWindow(User *user, QWidget *parent) :
     QMainWindow(parent),
@@ -62,15 +63,23 @@ void MainWindow::on_actionCreateMap_triggered(){
     QString filename = QFileDialog::getOpenFileName(this, "Ouvrir un fichier", "resource",
                                                     "Images (*.png *.xpm *.jpg)");
 
-	if (filename != NULL) {
-        MapMdiSubwindow* SFMLWidget = new MapMdiSubwindow();
-        ui->tableArea->addSubWindow(SFMLWidget);
-        SFMLWidget->editMapBackgroud(filename, true);
-        SFMLWidget->show();
+    if (filename != NULL) {
+            Canvas* canvas = new Canvas(filename, 32);
+    //        CanvasEventHandler* canvasEventHandler = new CanvasEventHandler();
+            QSize sizeWindow;
+            QSize sizeWidget;
 
-        connect(ui->tokenPage->getUi()->listToken, SIGNAL(itemClicked(QListWidgetItem*)),
-                SFMLWidget->map(), SLOT(changeToken(QListWidgetItem*)));
-	}
+            ui->tableArea->addSubWindow(canvas->getView());
+            sizeWidget = canvas->getScene()->sceneRect().size().toSize();
+            sizeWindow = ui->tableArea->subWindowList().last()->frameGeometry().size();
+            ui->tableArea->subWindowList().last()->setMaximumSize(2*sizeWidget-sizeWindow);
+            ui->tableArea->subWindowList().last()->show();
+
+    //         ui->tableArea->subWindowList().last()->installEventFilter(canvasEventHandler);
+    //        connect(canvasEventHandler, SIGNAL(addSprite(QPixmap*, int, int, int)),
+    //                            canvas, SLOT(addSprite(QPixmap*, int, int, int)));
+
+    }
 }
 
 void MainWindow::on_actionEditMap_triggered()
@@ -79,12 +88,7 @@ void MainWindow::on_actionEditMap_triggered()
                                                     "Images (*.png *.xpm *.jpg)");
 
     if (filename != NULL) {
-        MapMdiSubwindow *subwindow = dynamic_cast<MapMdiSubwindow*>(ui->tableArea->activeSubWindow());
-        subwindow->editMapBackgroud(filename, false);
-
-        connect(ui->tokenPage->getUi()->listToken, SIGNAL(itemClicked(QListWidgetItem*)),
-                subwindow->map(), SLOT(changeToken(QListWidgetItem*)));
-    }
+        }
 
 }
 

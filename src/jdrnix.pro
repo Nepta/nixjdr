@@ -26,13 +26,6 @@ SOURCES += \
     CustomMdiArea.cpp \
     ChatWidget.cpp \
     ConnectionHelper.cpp \
-    QTSFML/Canvas.cpp \
-    QTSFML/Map.cpp \
-    QTSFML/Action.cpp \
-    QTSFML/ActionChooser.cpp \
-    QTSFML/TokenNoAction.cpp \
-    QTSFML/SpriteList.cpp \
-    QTSFML/MapMdiSubwindow.cpp \
     chat/ChatServer.cpp \
     chat/ChatCommon.cpp \
     chat/ChatClient.cpp \
@@ -50,7 +43,9 @@ SOURCES += \
     chat/commands/CmdDisconnect.cpp \
     chat/commands/CmdNicknamesList.cpp \
     chat/commands/CmdNicknamesListAck.cpp \
-    chat/commands/CmdConnectionAck.cpp
+    chat/commands/CmdConnectionAck.cpp \
+    canvas/canvas.cpp \
+    canvas/canvaseventhandler.cpp
 
 HEADERS  += \
     MainWindow.h \
@@ -60,17 +55,6 @@ HEADERS  += \
     ConnectionHelper.h \
     CustomMdiArea.h \
     ChatWidget.h \
-    QTSFML/Canvas.h \
-    QTSFML/Map.h \
-    QTSFML/Action.h \
-    QTSFML/ActionChooser.h \
-    QTSFML/GraphicAction.h \
-    QTSFML/SpriteList.h \
-    QTSFML/TokenAddAction.h \
-    QTSFML/TokenDelAction.h \
-    QTSFML/TokenMoveAction.h \
-    QTSFML/TokenNoAction.h \
-    QTSFML/MapMdiSubwindow.h \
     chat/ChatServer.h \
     chat/ChatCommon.h \
     chat/ChatClient.h \
@@ -88,7 +72,9 @@ HEADERS  += \
     chat/commands/CmdDisconnect.h \
     chat/commands/CmdNicknamesList.h \
     chat/commands/CmdNicknamesListAck.h \
-    chat/commands/CmdConnectionAck.h
+    chat/commands/CmdConnectionAck.h \
+    canvas\canvas.h \
+    canvas\canvaseventhandler.h
 
 FORMS    += mainwindow.ui \
     TokenMenu.ui \
