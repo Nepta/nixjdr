@@ -4,6 +4,7 @@
 
 CanvasEventHandler::CanvasEventHandler()
 {
+    m_spritePath = "resource/suwako.png";
 }
 
 bool CanvasEventHandler::eventFilter(QObject *obj, QEvent *event){
@@ -13,8 +14,8 @@ bool CanvasEventHandler::eventFilter(QObject *obj, QEvent *event){
         QMouseEvent *mouseEvent = static_cast<QMouseEvent*>(event);
         int x = mouseEvent->x();
         int y = mouseEvent->y();
-        QPixmap* cirno = new QPixmap("resource/cirno.png");
-        emit addSprite(cirno, x, y, 1);
+        QPixmap* sprite = new QPixmap(m_spritePath);
+        emit addSprite(sprite, x, y, 1);
         eventHandled = true;
     }
     else{
@@ -22,4 +23,9 @@ bool CanvasEventHandler::eventFilter(QObject *obj, QEvent *event){
     }
 
     return eventHandled;
+}
+
+void CanvasEventHandler::setSpritePath(QListWidgetItem* sprite){
+    QString newPath = QString("resource/%1").arg(sprite->text())+QString(".png");
+    m_spritePath = newPath;
 }

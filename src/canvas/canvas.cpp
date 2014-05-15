@@ -1,5 +1,4 @@
 #include "canvas.h"
-#include "canvaseventhandler.h"
 
 Canvas::Canvas()
 {
@@ -32,18 +31,15 @@ Canvas::Canvas(QString filename, int step) {
     m_scene = new QGraphicsScene();
     m_scene->setSceneRect(0, 0, width, height);
 
-    QPixmap* cirno = new QPixmap("resource/cirno.png");
-    addSprite(cirno, 50, 80, 1);
-
     m_view = new QGraphicsView(m_scene);
 
 
     m_scene->setBackgroundBrush(*m_background);
     m_view->ensureVisible ( m_scene->sceneRect() );
 
-    CanvasEventHandler* canvasEventHandler = new CanvasEventHandler();
-    this->m_view->installEventFilter(canvasEventHandler);
-    connect(canvasEventHandler, SIGNAL(addSprite(QPixmap*, int, int, int)),
+    m_canvasEventHandler = new CanvasEventHandler();
+    this->m_view->installEventFilter(m_canvasEventHandler);
+    connect(m_canvasEventHandler, SIGNAL(addSprite(QPixmap*, int, int, int)),
                         this, SLOT(addSprite(QPixmap*, int, int, int)));
 }
 
@@ -55,6 +51,10 @@ QGraphicsScene* Canvas::getScene() {
 
 QGraphicsView* Canvas::getView() {
     return m_view;
+}
+
+CanvasEventHandler* Canvas::getCanvasEventHandler(){
+    return m_canvasEventHandler;
 }
 
 void Canvas::drawGrid(int width, int height){

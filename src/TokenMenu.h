@@ -16,9 +16,6 @@ public:
     ~TokenMenu();
     Ui::TokenMenu *getUi();
 
-private slots:
-    void on_researchButton_clicked();
-
 private:
     Ui::TokenMenu *ui;
 };

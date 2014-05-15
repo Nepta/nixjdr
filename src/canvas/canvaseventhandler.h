@@ -4,6 +4,7 @@
 #include <QEvent>
 #include <QPixmap>
 #include <QObject>
+#include <QListWidgetItem>
 
 class CanvasEventHandler : public QObject
 {
@@ -15,6 +16,12 @@ signals:
 public:
     CanvasEventHandler();
     bool eventFilter(QObject *obj, QEvent *event);
+
+public slots:
+    void setSpritePath(QListWidgetItem *sprite);
+
+private:
+    QString m_spritePath;
 };
 
 #endif // CANVASEVENTHANDLER_H

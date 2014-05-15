@@ -75,9 +75,7 @@ void MainWindow::on_actionCreateMap_triggered(){
             ui->tableArea->subWindowList().last()->setMaximumSize(2*sizeWidget-sizeWindow);
             ui->tableArea->subWindowList().last()->show();
 
-    //         ui->tableArea->subWindowList().last()->installEventFilter(canvasEventHandler);
-    //        connect(canvasEventHandler, SIGNAL(addSprite(QPixmap*, int, int, int)),
-    //                            canvas, SLOT(addSprite(QPixmap*, int, int, int)));
+            connect(ui->tokenPage->getUi()->listToken,SIGNAL(itemClicked(QListWidgetItem*)), canvas->getCanvasEventHandler(), SLOT(setSpritePath(QListWidgetItem*)));
 
     }
 }

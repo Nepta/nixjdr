@@ -14,6 +14,8 @@
 #include <QList>
 #include <QEvent>
 
+#include "canvaseventhandler.h"
+
 class Canvas : public QWidget
 {
     Q_OBJECT
@@ -23,12 +25,14 @@ public:
     Canvas(QString filename, int step=1);
     QGraphicsScene* getScene();
     QGraphicsView *getView();
+    CanvasEventHandler *getCanvasEventHandler();
     void drawGrid(int width, int height);
 
 private:
     QGraphicsScene* m_scene;
     QGraphicsView* m_view;
     QPixmap* m_background;
+    CanvasEventHandler* m_canvasEventHandler;
     int m_step;
     QList<QList<QGraphicsItem*>> m_SpriteMatrix;
 

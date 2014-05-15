@@ -43,8 +43,3 @@ TokenMenu::~TokenMenu()
 Ui::TokenMenu *TokenMenu::getUi() {
     return ui;
 }
-
-void TokenMenu::on_researchButton_clicked()
-{
-    qDebug() << "ALERT";
-}
