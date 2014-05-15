@@ -1,6 +1,6 @@
 #include "commands/AbstractCmd.h"
 #include "ChatClient.h"
-#include "ChatCommon.h"
+#include "Common.h"
 
 ChatClient::ChatClient(User *user, QHash<QString, User *> *usersList) :
     ClientReceiver(user, usersList)
@@ -47,7 +47,7 @@ QString ChatClient::stripCommandFromMessage(const QString &msg) {
     QString strippedMsg = msg;
 
     if (msg.startsWith("/")) {
-        ChatCommon::extractFirstWord(strippedMsg);
+        Common::extractFirstWord(strippedMsg);
         strippedMsg = strippedMsg.trimmed();
     }
 

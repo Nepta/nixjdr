@@ -34,7 +34,6 @@ SOURCES += \
     QTSFML/SpriteList.cpp \
     QTSFML/MapMdiSubwindow.cpp \
     chat/ChatServer.cpp \
-    chat/ChatCommon.cpp \
     chat/ChatClient.cpp \
     chat/ChatProcessor.cpp \
     chat/commands/AbstractCmd.cpp \
@@ -56,7 +55,9 @@ SOURCES += \
     Network/ServerReceiver.cpp \
     Network/Client.cpp \
     Network/ClientReceiver.cpp \
-    Network/Receiver.cpp
+    Network/Receiver.cpp \
+    Network/NetworkCommon.cpp \
+    Common.cpp
 
 HEADERS  += \
     MainWindow.h \
@@ -78,7 +79,6 @@ HEADERS  += \
     QTSFML/TokenNoAction.h \
     QTSFML/MapMdiSubwindow.h \
     chat/ChatServer.h \
-    chat/ChatCommon.h \
     chat/ChatClient.h \
     chat/ChatProcessor.h \
     chat/commands/AbstractCmd.h \
@@ -100,7 +100,9 @@ HEADERS  += \
     Network/Server.h \
     Network/ServerReceiver.h \
     Network/Client.h \
-    Network/ClientReceiver.h
+    Network/ClientReceiver.h \
+    Network/NetworkCommon.h \
+    Common.h
 
 FORMS    += mainwindow.ui \
     TokenMenu.ui \

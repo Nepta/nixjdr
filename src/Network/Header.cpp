@@ -4,13 +4,16 @@
 
 Header::Header()
 {
-    m_MsgSize = 0;
+    m_DataSize = 0;
     m_Target = (quint16) TargetCode::UNDEFINED;
     m_Code = (quint16) ChatCodes::UNDEFINED;
 }
 
-quint16 Header::getMsgSize() {
-    return m_MsgSize;
+Header::~Header() {
+}
+
+quint16 Header::getDataSize() {
+    return m_DataSize;
 }
 
 quint16 Header::getTarget() {
@@ -25,8 +28,8 @@ QString Header::getSocketUserNickname() {
     return m_SocketUserNickName;
 }
 
-Header *Header::setMsgSize(quint16 msgSize) {
-    m_MsgSize = msgSize;
+Header *Header::setDataSize(quint16 dataSize) {
+    m_DataSize = dataSize;
 
     return this;
 }

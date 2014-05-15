@@ -39,7 +39,7 @@ signals:
     void userConnectedNotify();
     void userDisconnectedNotify(User &user);
     void socketErrorNotify(QAbstractSocket::SocketError);
-    void receivedFullData(Header header, QString message);
+    void receivedFullData(Header header, QString data);
 
 private:
     QTcpSocket *m_Socket;

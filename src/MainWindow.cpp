@@ -98,7 +98,8 @@ void MainWindow::setupMJ() {
     /* Connect sendMessageToChatUi from m_Server to m_ChatWidget in order to display system messages
      * during the initialization.*/
     connect(m_Server, SIGNAL(sendMessageToChatUi(QString)),
-            ui->m_ChatWidget, SLOT(receivedMessage(QString)));
+            ui->m_ChatWidget, SLOT(receivedMessage(QString))
+    );
 
     // Server Initialization
     m_Server->init();
@@ -113,6 +114,10 @@ void MainWindow::setupMJ() {
 
 void MainWindow::setupPlayer() {
     m_Client = new Client(m_User);
+
+    connect(m_Client, SIGNAL(sendMessageToChatUi(QString)),
+            ui->m_ChatWidget, SLOT(receivedMessage(QString))
+    );
 
     // Initialize ChatWidget with the ChatClient
     ChatClient* chatClient = dynamic_cast<ChatClient*>(

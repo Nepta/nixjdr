@@ -1,6 +1,5 @@
-#include "Client.h"
-#include "chat/ChatCommon.h"
 #include "chat/ChatClient.h"
+#include "Client.h"
 
 Client::Client(User *user)
 {    

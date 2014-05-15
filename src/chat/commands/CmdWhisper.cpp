@@ -1,6 +1,6 @@
 #include <QString>
-#include "chat/ChatCommon.h"
 #include "CmdWhisper.h"
+#include "Common.h"
 #include "Commands.h"
 
 CmdWhisper::CmdWhisper()
@@ -14,7 +14,7 @@ void CmdWhisper::execute(Header &header, QString &arg) {
     strippedMsg = arg;
 
     sender = header.getSocketUserNickname();
-    target = ChatCommon::extractFirstWord(strippedMsg);
+    target = Common::extractFirstWord(strippedMsg);
 
     if (AbstractCmd::getUsersListServer()->contains(target)) {
         msgTarget = tr("[%1] chuchote: %2")

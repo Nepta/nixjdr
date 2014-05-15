@@ -1,4 +1,4 @@
-#include "chat/ChatCommon.h"
+#include "Network/NetworkCommon.h"
 #include "User.h"
 
 User::User(QTcpSocket *socket)
@@ -25,12 +25,12 @@ User::~User() {
 void User::receivedData()
 {
     Header header;
-    QString message;
+    QString data;
 
-    if (ChatCommon::messageReadyToReceive(m_Socket, header, message)) {
+    if (NetworkCommon::packetReadyToReceive(m_Socket, header, data)) {
         header.setSocketUserNickname(getNickname());
-        emit receivedFullData(header, message);
-        m_Header.setMsgSize(0);
+        emit receivedFullData(header, data);
+        m_Header.setDataSize(0);
     }
 
     // receivedData() is called by the signal readyRead() when new data is available.

@@ -2,7 +2,6 @@
 #include "commands/AbstractCmd.h"
 #include "commands/CmdNickname.h"
 #include "commands/CmdNicknamesList.h"
-#include "ChatCommon.h"
 #include "ChatServer.h"
 
 ChatServer::ChatServer(QHash<QString, User *> *usersList) :

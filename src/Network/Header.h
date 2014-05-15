@@ -4,62 +4,34 @@
 #include <QtGlobal>
 #include <QString>
 
+/**
+ * @brief The Header holds information being sent in the header of a packet.
+ */
 class Header
 {
 public:
     /**
-     * @brief ChatHeader Default constructor, initializes m_MsgSize to 0 and m_Cmd to an undefined command
+     * @brief ChatHeader Default constructor, initializes m_DataSize to 0, m_Code to an undefined
+     * command and m_Target to an undefined target.
      */
     Header();
+    ~Header();
 
-    /**
-     * @brief getMsgSize    Returns the message's size
-     * @return  m_MsgSize
-     */
-    quint16 getMsgSize();
-
+    quint16 getDataSize();
     quint16 getTarget();
-
-    /**
-     * @brief getCmd    Returns the message's command's code
-     * @return  m_Cmd
-     */
     quint16 getCode();
-
-    /**
-     * @brief getSocketUserNickname     Returns the socket's sender's nickname
-     * @return  m_SocketUserNickName
-     */
     QString getSocketUserNickname();
 
-    /**
-     * @brief setMsgSize    Sets the message's size to the specified value
-     * @param msgSize   New message size
-     * @return  A pointer towards the current header
-     */
-    Header *setMsgSize(quint16 msgSize);
-
+    Header *setDataSize(quint16 dataSize);
     Header *setTarget(quint16 target);
-
-    /**
-     * @brief setCode    Sets the message's code to the specified value
-     * @param code   New code
-     * @return  A pointer towards the current header
-     */
     Header *setCode(quint16 code);
-
-    /**
-    * @brief setSocketUserNickname     Sets the socket's user to the specified value
-    * @param socketUser    New socket's user
-    * @return A pointer towards the current header
-    */
     Header *setSocketUserNickname(QString socketUser);
 
 private:
     /**
-     * @brief m_MsgSize Message size (= packet size - header size)
+     * @brief m_DataSize Size of the data being sent (packet size - header size)
      */
-    quint16 m_MsgSize;
+    quint16 m_DataSize;
 
     /**
      * @brief m_Target Module (Receiver) to which the packet should be sent
@@ -72,6 +44,10 @@ private:
      */
     quint16 m_Code;
 
+    /**
+     * @brief m_SocketUserNickName This attribute is set after a packet has been received in order
+     * to retrieve easily who sent the packet.
+     */
     QString m_SocketUserNickName;
 };
 

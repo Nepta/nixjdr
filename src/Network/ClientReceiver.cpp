@@ -1,5 +1,5 @@
+#include "NetworkCommon.h"
 #include "ClientReceiver.h"
-#include "chat/ChatCommon.h"
 
 ClientReceiver::ClientReceiver(User *user, QHash<QString, User *> *usersList) :
     Receiver(usersList)
@@ -9,7 +9,7 @@ ClientReceiver::ClientReceiver(User *user, QHash<QString, User *> *usersList) :
 
 void ClientReceiver::sendPacketToServer(quint16 code, quint16 target, const QString &msg)
 {
-    QByteArray packet = ChatCommon::preparePacket(code, target, msg);
+    QByteArray packet = NetworkCommon::preparePacket(code, target, msg);
 
     m_User->getSocket()->write(packet);
 }
