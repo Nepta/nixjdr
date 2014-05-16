@@ -43,7 +43,6 @@ SOURCES += \
     chat/commands/CmdConnectionAck.cpp \
     canvas/canvas.cpp \
     canvas/canvaseventhandler.cpp \
-    Network/Decoder.cpp \
     Network/Header.cpp \
     Network/Server.cpp \
     Network/Switch.cpp \
@@ -82,7 +81,6 @@ HEADERS  += \
     canvas/canvaseventhandler.h \
     Network/Switch.h \
     Network/Receiver.h \
-    Network/Decoder.h \
     Network/Header.h \
     Network/Server.h \
     Network/ServerReceiver.h \
