@@ -9,8 +9,8 @@ Client::Client(User *user)
     m_Nodes.insert(TargetCode::CHAT_CLIENT, new ChatClient(m_User, &m_UsersList));
     // TODO m_Nodes.insert(TargetCode::MAP_CLIENT, new MapClient(m_UsersList));
 
-    connect(m_User, SIGNAL(receivedFullData(Header, QString)),
-            this, SLOT(switchNewMessage(Header, QString)));
+    connect(m_User, SIGNAL(receivedFullData(Header, QByteArray)),
+            this, SLOT(switchNewMessage(Header, QByteArray)));
     connect(m_User, SIGNAL(userDisconnectedNotify(User&)),
             this, SLOT(clientDisconnected(User&)));
     connect(m_User, SIGNAL(userConnectedNotify()),
@@ -36,8 +36,7 @@ void Client::socketError(QAbstractSocket::SocketError error)
 {
     QString errMsg;
 
-    switch(error)
-    {
+    switch(error) {
         case QAbstractSocket::HostNotFoundError:
             errMsg = tr("<em>ERREUR : le serveur n'a pas pu être trouvé. Vérifiez l'IP et le port.</em>");
             break;

@@ -8,22 +8,22 @@ CmdWhisper::CmdWhisper()
 }
 
 void CmdWhisper::execute(Header &header, QString &arg) {
-    QString strippedMsg, msgSender, msgTarget,
-            sender, target;
-
+    QString strippedMsg, sender, target;
     strippedMsg = arg;
 
     sender = header.getSocketUserNickname();
     target = Common::extractFirstWord(strippedMsg);
 
     if (AbstractCmd::getUsersListServer()->contains(target)) {
-        msgTarget = tr("[%1] chuchote: %2")
-                .arg(sender)
-                .arg(strippedMsg);
+        Message msgTarget(tr("[%1] chuchote: %2")
+            .arg(sender)
+            .arg(strippedMsg)
+        );
 
-        msgSender = tr("à [%1]: %2")
+        Message msgSender(tr("à [%1]: %2")
                 .arg(target)
-                .arg(strippedMsg);
+                .arg(strippedMsg)
+        );
 
         emit cmdSendPacketToOne(
             TargetCode::CHAT_CLIENT,
@@ -42,9 +42,9 @@ void CmdWhisper::execute(Header &header, QString &arg) {
         }
     }
     else {
-        QString errmsg = tr("%1 n'existe pas.")
-                         .arg(target);
-
+        Message errmsg(tr("%1 n'existe pas.")
+            .arg(target)
+        );
         emit cmdSendPacketToOne(
             TargetCode::CHAT_CLIENT,
             ChatCodes::SRVCMD_MESSAGE,

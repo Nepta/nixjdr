@@ -3,7 +3,7 @@
 #include "NetworkCommon.h"
 #include "Switch.h"
 
-QByteArray NetworkCommon::preparePacket(quint16 code, quint16 target, const QString &data) {
+QByteArray NetworkCommon::preparePacket(quint16 code, quint16 target, const QByteArray &data) {
     QByteArray packet;
     QDataStream out(&packet, QIODevice::WriteOnly);
 
@@ -12,7 +12,7 @@ QByteArray NetworkCommon::preparePacket(quint16 code, quint16 target, const QStr
     return packet;
 }
 
-bool NetworkCommon::packetReadyToReceive(QTcpSocket *socket, Header &header, QString &data) {
+bool NetworkCommon::packetReadyToReceive(QTcpSocket *socket, Header &header, QByteArray &data) {
     if (socket == 0) {
         return false;
     }

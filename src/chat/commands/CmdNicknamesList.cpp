@@ -10,7 +10,7 @@ void CmdNicknamesList::execute(Header &, QString &) {
 
 void CmdNicknamesList::executeOnUser(User *user) {
     QStringList nicknamesList = AbstractCmd::getUsersListServer()->keys();
-    QString nicknames = nicknamesList.join(" ");
+    Message nicknames(nicknamesList.join(" "));
 
     emit cmdSendPacketToOne(
         TargetCode::CHAT_CLIENT,

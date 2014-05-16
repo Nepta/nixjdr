@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include <QString>
+#include "Serializable.h"
 #include "Header.h"
 #include "User.h"
 
@@ -16,7 +17,7 @@ protected:
     QHash<QString, User *> *m_UsersList;
 
 public slots:
-    virtual void processNewMessage(Header header, QString message) = 0;
+    virtual void processNewMessage(Header header, QByteArray& data) = 0;
 };
 
 #endif // RECEIVER_H

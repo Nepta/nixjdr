@@ -57,7 +57,8 @@ SOURCES += \
     Network/ClientReceiver.cpp \
     Network/Receiver.cpp \
     Network/NetworkCommon.cpp \
-    Common.cpp
+    Common.cpp \
+    chat/Message.cpp
 
 HEADERS  += \
     MainWindow.h \
@@ -102,7 +103,9 @@ HEADERS  += \
     Network/Client.h \
     Network/ClientReceiver.h \
     Network/NetworkCommon.h \
-    Common.h
+    Common.h \
+    Network/Serializable.h \
+    chat/Message.h
 
 FORMS    += mainwindow.ui \
     TokenMenu.ui \

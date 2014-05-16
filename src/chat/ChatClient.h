@@ -33,7 +33,7 @@ private slots:
      * @param header    message's header, contains the command to interpret
      * @param message   message to process
      */
-    void processNewMessage(Header header, QString message);
+    void processNewMessage(Header header, QByteArray &data);
 
 signals:
     void sendMessageToChatUi(const QString &msg);

@@ -4,6 +4,7 @@
 #include <QHash>
 #include <QString>
 #include <QObject>
+#include "Serializable.h"
 #include "Header.h"
 #include "Receiver.h"
 
@@ -21,9 +22,6 @@ inline uint qHash(const TargetCode &key) { return qHash((quint16) key); }
 class Switch : public QObject {
     Q_OBJECT
 
-/*private:
-    QHash<TargetCode, Receiver*> m_Nodes;*/
-
 public:
     Switch() {}
     virtual ~Switch() {}
@@ -39,7 +37,7 @@ protected slots:
      * @param header   A header containing especially a target
      * @param message  The message to send
 	 */
-    void switchNewMessage(Header header, QString message);
+    void switchNewMessage(Header header, QByteArray message);
 };
 
 #endif // SWITCH_H

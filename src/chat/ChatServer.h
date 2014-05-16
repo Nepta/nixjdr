@@ -19,13 +19,6 @@ public:
     ~ChatServer();
 
     /**
-     * @brief init Initializes the server to listen to any IP adress on the port 50885, and checks
-     * if the connection went as expected.
-     *
-    void init();*/
-
-
-    /**
      * @brief newClientConnection identify the new client user and send him the list of nicknames.
      */
     void newClientConnection(User *newUser);
@@ -38,7 +31,7 @@ private slots:
      * @param header    Incoming message's header
      * @param message   incomming message's content
      */
-    void processNewMessage(Header header, QString message);
+    void processNewMessage(Header header, QByteArray &data);
 
 signals:
     void sendMessageToChatUi(const QString &msg);

@@ -2,6 +2,7 @@
 #define CLIENTRECEIVER_H
 
 #include  "Receiver.h"
+#include "Serializable.h"
 
 class ClientReceiver : public Receiver
 {
@@ -23,7 +24,7 @@ public slots:
      * to broadcast it to all the users.
      * @param msg   Reference to the message to send
      */
-    void sendPacketToServer(quint16 code, quint16 target, const QString &msg);
+    void sendPacketToServer(quint16 code, quint16 target, Serializable &data);
 
 protected:
     User *m_User;

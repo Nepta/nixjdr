@@ -7,7 +7,7 @@ CmdRoll::CmdRoll(QHash<ChatCodes, AbstractCmd *> &userCommands) {
 }
 
 void CmdRoll::execute(Header &header, QString &arg) {
-    QString dice, sender, target, result, namedMessage, message;
+    QString dice, sender, target, result;
     bool error;
     int separatorIndex;
 
@@ -28,19 +28,20 @@ void CmdRoll::execute(Header &header, QString &arg) {
 
     result = CmdRoll::extractDice("0"+dice, error);
 
-    namedMessage = QString("[<strong>%1</strong>]: %2")
-                       .arg(sender)
-                       .arg(result);
-
-    message = QString("%1 %2").arg(target).arg(result);
-
     if(!error){
         if(target != ""){
+            QString msg = QString("%1 %2")
+                .arg(target)
+                .arg(result);
             CmdWhisper *cmd = dynamic_cast<CmdWhisper*>(
                         m_UserCommands.value(ChatCodes::USERCMD_WHISPER));
-            cmd->execute(header, message);
+            cmd->execute(header, msg);
         }
         else {
+            Message namedMessage(QString("[<strong>%1</strong>]: %2")
+               .arg(sender)
+               .arg(result)
+            );
             emit cmdSendPacketToAll(
                 TargetCode::CHAT_CLIENT,
                 ChatCodes::SRVCMD_MESSAGE,
@@ -49,10 +50,11 @@ void CmdRoll::execute(Header &header, QString &arg) {
         }
     }
     else{
+        Message resultMsg(result);
         emit cmdSendPacketToOne(
             TargetCode::CHAT_CLIENT,
             ChatCodes::SRVCMD_MESSAGE,
-            result,
+            resultMsg,
             header.getSocketUserNickname()
         );
     }

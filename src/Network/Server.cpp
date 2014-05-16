@@ -40,8 +40,8 @@ void Server::newClientConnection()
     chatServer->newClientConnection(newUser);
 
     // send a packet to the intended Receiver when fully received
-    connect(newUser, SIGNAL(receivedFullData(Header, QString)),
-            this, SLOT(switchNewMessage(Header, QString)));
+    connect(newUser, SIGNAL(receivedFullData(Header, QByteArray)),
+            this, SLOT(switchNewMessage(Header, QByteArray)));
     connect(newUser, SIGNAL(userDisconnectedNotify(User&)), this, SLOT(userDisconnected(User&)));
 }
 

@@ -25,7 +25,7 @@ User::~User() {
 void User::receivedData()
 {
     Header header;
-    QString data;
+    QByteArray data;
 
     if (NetworkCommon::packetReadyToReceive(m_Socket, header, data)) {
         header.setSocketUserNickname(getNickname());

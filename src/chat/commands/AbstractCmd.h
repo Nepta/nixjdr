@@ -6,6 +6,8 @@
 #include <QHash>
 #include "Network/Header.h"
 #include "Network/Switch.h"
+#include "Network/NetworkCommon.h"
+#include "chat/Message.h"
 #include "User.h"
 
 enum class ChatCodes : quint16;
@@ -23,7 +25,7 @@ public:
     AbstractCmd();
 
     virtual ~AbstractCmd(){}
-    virtual void execute(Header &header, QString &arg) = 0;
+    virtual void execute(Header &header, QString& arg) = 0;
     virtual QString getHelp() = 0;
 
 private:
@@ -31,8 +33,8 @@ private:
     static QHash<QString, User *> *s_UsersListServer;
 
 signals:
-    void cmdSendPacketToAll(TargetCode target, ChatCodes code, QString message);
-    void cmdSendPacketToOne(TargetCode target, ChatCodes code, QString message, QString receiverNickname);
+    void cmdSendPacketToAll(TargetCode target, ChatCodes code, Serializable& data);
+    void cmdSendPacketToOne(TargetCode target, ChatCodes code, Serializable& data, QString receiverNickname);
     void cmdSendMessageToChatUi(const QString &msg);
     void cmdUpdateUserListView();
 };

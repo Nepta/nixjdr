@@ -1,4 +1,6 @@
 #include "commands/AbstractCmd.h"
+#include "Network/NetworkCommon.h"
+#include "Message.h"
 #include "ChatClient.h"
 #include "Common.h"
 
@@ -17,16 +19,17 @@ ChatClient::ChatClient(User *user, QHash<QString, User *> *usersList) :
 ChatClient::~ChatClient() {
 }
 
-void ChatClient::processNewMessage(Header header, QString message) {
+void ChatClient::processNewMessage(Header header, QByteArray& data) {
     ChatCodes code = (ChatCodes) header.getCode();
+    Message message(data);
 
-    m_Commands.getServerCommand(code)->execute(header, message);
+    m_Commands.getServerCommand(code)->execute(header, message.getString());
 }
 
 void ChatClient::sendMessageToServer(const QString &msg) {
     ChatCodes cmdCode = translateCommandToCode(msg);
     TargetCode target = TargetCode::CHAT_SERVER;
-    QString strippedMsg = stripCommandFromMessage(msg);
+    Message strippedMsg(stripCommandFromMessage(msg));
 
     sendPacketToServer((quint16) cmdCode, (quint16) target, strippedMsg);
 }

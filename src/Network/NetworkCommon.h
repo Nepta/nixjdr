@@ -22,7 +22,7 @@ public:
      * @param data content of the packet
      * @return a packet
      */
-    static QByteArray preparePacket(quint16 code, quint16 target, const QString &data);
+    static QByteArray preparePacket(quint16 code, quint16 target, const QByteArray &data);
 
     /**
      * @brief packetReadyToReceive Returns if the packet has been fully received, and fill the
@@ -32,7 +32,7 @@ public:
      * @param data data to fill
      * @return packet reception state (true: fully received, false: being received)
      */
-    static bool packetReadyToReceive(QTcpSocket *socket, Header &header, QString &data);
+    static bool packetReadyToReceive(QTcpSocket *socket, Header &header, QByteArray &data);
 };
 
 #endif // NETWORKCOMMON_H
