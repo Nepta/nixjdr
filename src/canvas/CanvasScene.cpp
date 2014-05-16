@@ -83,6 +83,7 @@ void CanvasScene::addSprite(QPixmap *sprite, int x, int y)
 
 void CanvasScene::removeSprite(int x, int y)
 {
+    qDebug() << "debut remove sprite";
     int xTab = x/m_step;
     int yTab = y/m_step;
 
@@ -95,6 +96,7 @@ void CanvasScene::removeSprite(int x, int y)
     }
 
     m_spriteMatrix[yTab][xTab][z] = NULL;
+    qDebug() << "fin remove sprite";
 }
 
 void CanvasScene::initMatrix(int width, int height)
@@ -132,8 +134,8 @@ void CanvasScene::drawGrid(int width, int height)
 
 QGraphicsPixmapItem *CanvasScene::getPixmapItem(int x, int y)
 {
-    int xTab = x/m_step*m_step;
-    int yTab = y/m_step*m_step;
+    int xTab = x/m_step;
+    int yTab = y/m_step;
 
     int z = indexOfUpperItem(xTab, yTab);
     return m_spriteMatrix[yTab][xTab][z];
