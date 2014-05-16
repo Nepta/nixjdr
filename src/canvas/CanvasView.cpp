@@ -63,7 +63,7 @@ void CanvasView::mousePressEvent(QMouseEvent *event)
     }
 
     else if(event->button() == Qt::RightButton){
-
+        m_scene->removeSprite(x, y);
     }
 }
 
