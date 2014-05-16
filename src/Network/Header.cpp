@@ -3,12 +3,17 @@
 
 Header::Header()
 {
-    m_DataSize = 0;
-    m_Target = (quint16) TargetCode::UNDEFINED;
-    m_Code = Receiver::UNDEFINED_CODE;
+    reset();
 }
 
 Header::~Header() {
+}
+
+void Header::reset() {
+    m_DataSize = 0;
+    m_Target = (quint16) TargetCode::UNDEFINED;
+    m_Code = Receiver::UNDEFINED_CODE;
+    m_SocketUserNickName = QString("");
 }
 
 quint16 Header::getDataSize() {

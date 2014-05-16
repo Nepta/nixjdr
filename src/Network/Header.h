@@ -17,6 +17,8 @@ public:
     Header();
     ~Header();
 
+    void reset();
+
     quint16 getDataSize();
     quint16 getTarget();
     quint16 getCode();

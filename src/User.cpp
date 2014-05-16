@@ -25,13 +25,12 @@ User::~User() {
 
 void User::receivedData()
 {
-    Header header;
     QByteArray data;
 
-    if (packetReadyToReceive(m_Socket, header, data)) {
-        header.setSocketUserNickname(getNickname());
-        emit receivedFullData(header, data);
-        m_Header.setDataSize(0);
+    if (packetReadyToReceive(m_Socket, m_Header, data)) {
+        m_Header.setSocketUserNickname(getNickname());
+        emit receivedFullData(m_Header, data);
+        m_Header.reset();
     }
 
     // receivedData() is called by the signal readyRead() when new data is available.
