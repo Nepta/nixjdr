@@ -10,9 +10,6 @@ QMAKE_LFLAGS = -std=c++11
 QT += core gui network
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-# SFML
-LIBS += -L /usr/local/lib -lsfml-audio -lsfml-graphics -lsfml-network -lsfml-window -lsfml-system
-
 TARGET = jdrnix.out
 TEMPLATE = app
 DESTDIR = ../
@@ -73,8 +70,8 @@ HEADERS  += \
     chat/commands/CmdNicknamesList.h \
     chat/commands/CmdNicknamesListAck.h \
     chat/commands/CmdConnectionAck.h \
-	 canvas/canvas.h \
-	 canvas/canvaseventhandler.h
+    canvas/canvas.h \
+    canvas/canvaseventhandler.h
 
 FORMS    += mainwindow.ui \
     TokenMenu.ui \
