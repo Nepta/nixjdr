@@ -1,5 +1,4 @@
 #include <QTranslator>
-#include "Network/NetworkCommon.h"
 #include "commands/AbstractCmd.h"
 #include "commands/CmdNickname.h"
 #include "commands/CmdNicknamesList.h"

@@ -1,4 +1,3 @@
-#include "chat/commands/Commands.h"
 #include "Switch.h"
 #include "Header.h"
 
@@ -6,7 +5,7 @@ Header::Header()
 {
     m_DataSize = 0;
     m_Target = (quint16) TargetCode::UNDEFINED;
-    m_Code = (quint16) ChatCodes::UNDEFINED;
+    m_Code = Receiver::UNDEFINED_CODE;
 }
 
 Header::~Header() {

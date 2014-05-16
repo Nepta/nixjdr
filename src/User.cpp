@@ -1,4 +1,5 @@
-#include "Network/NetworkCommon.h"
+#include "Network/Receiver.h"
+#include "Network/Switch.h"
 #include "User.h"
 
 User::User(QTcpSocket *socket)
@@ -27,7 +28,7 @@ void User::receivedData()
     Header header;
     QByteArray data;
 
-    if (NetworkCommon::packetReadyToReceive(m_Socket, header, data)) {
+    if (packetReadyToReceive(m_Socket, header, data)) {
         header.setSocketUserNickname(getNickname());
         emit receivedFullData(header, data);
         m_Header.setDataSize(0);
@@ -41,6 +42,61 @@ void User::receivedData()
         receivedData();
     }
 }
+
+bool User::packetReadyToReceive(QTcpSocket *socket, Header &header, QByteArray &data) {
+    if (socket == 0) {
+        return false;
+    }
+
+    QDataStream in(socket);
+
+    // object size
+    if (header.getDataSize() == 0) { // new packet being received
+        quint16 dataSize;
+
+        if (socket->bytesAvailable() < (qint64) sizeof(quint16)) {
+            // The size has not been fully received
+            return false;
+        }
+
+        in >> dataSize;
+        header.setDataSize(dataSize);
+    }
+
+    // target
+    if (header.getTarget() == (quint16) TargetCode::UNDEFINED) {
+        quint16 target;
+
+        if (socket->bytesAvailable() < (qint64) sizeof(quint16)) {
+            return false;
+        }
+
+        in >> target;
+        header.setTarget(target);
+    }
+
+    // command
+    if (header.getCode() == Receiver::UNDEFINED_CODE) {
+        quint16 code;
+
+        if (socket->bytesAvailable() < (qint64) sizeof(quint16)) {
+            return false;
+        }
+
+        in >> code;
+        header.setCode(code);
+    }
+
+    // content
+    if (socket->bytesAvailable() < header.getDataSize()) {
+        // the data has not been fully received
+        return false;
+    }
+
+    in >> data;
+    return true;
+}
+
 
 /**
  * @brief User::userDisconnected notify the client or the server that a user

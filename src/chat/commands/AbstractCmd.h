@@ -6,7 +6,6 @@
 #include <QHash>
 #include "Network/Header.h"
 #include "Network/Switch.h"
-#include "Network/NetworkCommon.h"
 #include "chat/Message.h"
 #include "User.h"
 

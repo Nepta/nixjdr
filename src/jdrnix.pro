@@ -26,6 +26,7 @@ SOURCES += \
     CustomMdiArea.cpp \
     ChatWidget.cpp \
     ConnectionHelper.cpp \
+    Common.cpp \
     QTSFML/Canvas.cpp \
     QTSFML/Map.cpp \
     QTSFML/Action.cpp \
@@ -33,6 +34,7 @@ SOURCES += \
     QTSFML/TokenNoAction.cpp \
     QTSFML/SpriteList.cpp \
     QTSFML/MapMdiSubwindow.cpp \
+    chat/Message.cpp \
     chat/ChatServer.cpp \
     chat/ChatClient.cpp \
     chat/ChatProcessor.cpp \
@@ -55,10 +57,7 @@ SOURCES += \
     Network/ServerReceiver.cpp \
     Network/Client.cpp \
     Network/ClientReceiver.cpp \
-    Network/Receiver.cpp \
-    Network/NetworkCommon.cpp \
-    Common.cpp \
-    chat/Message.cpp
+    Network/Receiver.cpp
 
 HEADERS  += \
     MainWindow.h \
@@ -68,6 +67,7 @@ HEADERS  += \
     ConnectionHelper.h \
     CustomMdiArea.h \
     ChatWidget.h \
+    Common.h \
     QTSFML/Canvas.h \
     QTSFML/Map.h \
     QTSFML/Action.h \
@@ -79,6 +79,7 @@ HEADERS  += \
     QTSFML/TokenMoveAction.h \
     QTSFML/TokenNoAction.h \
     QTSFML/MapMdiSubwindow.h \
+    chat/Message.h \
     chat/ChatServer.h \
     chat/ChatClient.h \
     chat/ChatProcessor.h \
@@ -102,10 +103,7 @@ HEADERS  += \
     Network/ServerReceiver.h \
     Network/Client.h \
     Network/ClientReceiver.h \
-    Network/NetworkCommon.h \
-    Common.h \
-    Network/Serializable.h \
-    chat/Message.h
+    Network/Serializable.h
 
 FORMS    += mainwindow.ui \
     TokenMenu.ui \

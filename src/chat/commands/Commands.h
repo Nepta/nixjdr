@@ -4,10 +4,13 @@
 #include <QObject>
 #include <QHash>
 #include <QString>
+#include "Network/Receiver.h"
 #include "AbstractCmd.h"
 
 enum class ChatCodes : quint16 {
-    USERCMD_MESSAGE = 0,
+    UNDEFINED = Receiver::UNDEFINED_CODE,
+
+    USERCMD_MESSAGE,
     USERCMD_NICK,
     USERCMD_WHISPER,
     USERCMD_ROLL,
@@ -17,9 +20,7 @@ enum class ChatCodes : quint16 {
     SRVCMD_NICK_ACK,
     SRVCMD_WHISPER_REP,
     SRVCMD_DISCONNECT,
-    SRVCMD_LIST,
-
-    UNDEFINED
+    SRVCMD_LIST
 };
 inline uint qHash(const ChatCodes &key) { return qHash((quint16) key); }
 

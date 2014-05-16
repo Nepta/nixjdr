@@ -1,4 +1,3 @@
-#include "NetworkCommon.h"
 #include "ClientReceiver.h"
 
 ClientReceiver::ClientReceiver(User *user, QHash<QString, User *> *usersList) :
@@ -9,7 +8,7 @@ ClientReceiver::ClientReceiver(User *user, QHash<QString, User *> *usersList) :
 
 void ClientReceiver::sendPacketToServer(quint16 code, quint16 target, Serializable &data)
 {
-    QByteArray packet = NetworkCommon::preparePacket(code, target, data.serialize());
+    QByteArray packet = preparePacket(code, target, data.serialize());
 
     m_User->getSocket()->write(packet);
 }

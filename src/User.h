@@ -42,6 +42,16 @@ signals:
     void receivedFullData(Header header, QByteArray data);
 
 private:
+    /**
+     * @brief packetReadyToReceive Returns if the packet has been fully received, and fill the
+     * header and the object.
+     * @param socket Socket receiving a packet
+     * @param header Header to fill
+     * @param data data to fill
+     * @return packet reception state (true: fully received, false: being received)
+     */
+    bool packetReadyToReceive(QTcpSocket *socket, Header &header, QByteArray &data);
+
     QTcpSocket *m_Socket;
     Header m_Header;
     QString m_Nickname;
