@@ -4,10 +4,13 @@
 #include <QObject>
 #include <QHash>
 #include <QString>
+#include "Network/Receiver.h"
 #include "AbstractCmd.h"
 
-enum class ChatCodes {
-    USERCMD_MESSAGE = 0,
+enum class ChatCodes : quint16 {
+    UNDEFINED = Receiver::UNDEFINED_CODE,
+
+    USERCMD_MESSAGE,
     USERCMD_NICK,
     USERCMD_WHISPER,
     USERCMD_ROLL,
@@ -18,9 +21,7 @@ enum class ChatCodes {
     SRVCMD_WHISPER_REP,
     SRVCMD_DISCONNECT,
     SRVCMD_LIST,
-    SRVCMD_CONNECT_ACK,
-
-    UNDEFINED
+    SRVCMD_CONNECT_ACK
 };
 inline uint qHash(const ChatCodes &key) { return qHash((quint16) key); }
 
@@ -42,13 +43,16 @@ private:
     QHash<ChatCodes, AbstractCmd *> m_UserCommands;
     QHash<ChatCodes, AbstractCmd *> m_ServerCommands;
 
+private slots:
+    void cmdSendPacketToAll(TargetCode target, ChatCodes code, Serializable& data);
+    void cmdSendPacketToOne(TargetCode target, ChatCodes code, Serializable& data, QString receiverNickname);
+
 signals:
-    void cmdSendPacketToAll(ChatCodes code, QString message);
-    void cmdSendPacketToOne(ChatCodes code, QString message,
-                            QString receiverNickname);
     void cmdSendMessageToChatUi(const QString &msg);
     void cmdSendMessageToServer(const QString &msg);
     void cmdUpdateUserListView();
+    void sendPacketToAll(quint16 target, quint16 code, Serializable& message);
+    void sendPacketToOne(quint16 target, quint16 code, Serializable& message, QString receiverNickname);
 };
 
 #endif // Commands_H

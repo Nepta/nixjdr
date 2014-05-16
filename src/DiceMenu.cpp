@@ -66,23 +66,15 @@ void DiceMenu::on_cancelButton_clicked(){
 
 void DiceMenu::on_publicRollButton_clicked(){
     QString message = diceToRoll();
-    if(message == ""){
-        emit sendMessageToChatUi("<em>Veuillez sélectionner des dés</em>");
-    }
-    else {
-        emit rollDice(message, false);
-    }
+
+    emit rollDice(message, false);
 }
 
 
 void DiceMenu::on_privateRollButton_clicked(){
     QString message = diceToRoll();
-    if(message == ""){
-        emit sendMessageToChatUi("<em>Veuillez sélectionner des dés</em>");
-    }
-    else {
-        emit rollDice(message, true);
-    }
+
+    emit rollDice(message, true);
 }
 
 QString DiceMenu::diceToRoll(){

@@ -4,7 +4,7 @@ CmdDisconnect::CmdDisconnect()
 {
 }
 
-void CmdDisconnect::execute(ChatHeader &, QString &arg) {
+void CmdDisconnect::execute(Header &, QString &arg) {
     AbstractCmd::getUsersListClient()->remove(arg);
 
     emit cmdSendMessageToChatUi(tr("<strong>%1</strong><em> vient de se déconnecter</em>")

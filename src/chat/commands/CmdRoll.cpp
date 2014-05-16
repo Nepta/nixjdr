@@ -1,4 +1,4 @@
-#include "chat/ChatCommon.h"
+#include "chat/commands/Commands.h"
 #include "CmdRoll.h"
 #include "CmdWhisper.h"
 
@@ -6,8 +6,8 @@ CmdRoll::CmdRoll(QHash<ChatCodes, AbstractCmd *> &userCommands) {
     m_UserCommands = userCommands;
 }
 
-void CmdRoll::execute(ChatHeader &header, QString &arg) {
-    QString dice, sender, target, result, namedMessage, message;
+void CmdRoll::execute(Header &header, QString &arg) {
+    QString dice, sender, target, result;
     bool error;
     int separatorIndex;
 
@@ -28,23 +28,35 @@ void CmdRoll::execute(ChatHeader &header, QString &arg) {
 
     result = CmdRoll::extractDice("0"+dice, error);
 
-    namedMessage = QString("[<strong>%1</strong>]: %2")
-                       .arg(sender)
-                       .arg(result);
-
-    message = QString("%1 %2").arg(target).arg(result);
-
     if(!error){
         if(target != ""){
-            CmdWhisper *cmd = dynamic_cast<CmdWhisper*>(m_UserCommands.value(ChatCodes::USERCMD_WHISPER));
-            cmd->execute(header, message);
+            QString msg = QString("%1 %2")
+                .arg(target)
+                .arg(result);
+            CmdWhisper *cmd = dynamic_cast<CmdWhisper*>(
+                        m_UserCommands.value(ChatCodes::USERCMD_WHISPER));
+            cmd->execute(header, msg);
         }
         else {
-            emit cmdSendPacketToAll(ChatCodes::SRVCMD_MESSAGE, namedMessage);
+            Message namedMessage(QString("[<strong>%1</strong>]: %2")
+               .arg(sender)
+               .arg(result)
+            );
+            emit cmdSendPacketToAll(
+                TargetCode::CHAT_CLIENT,
+                ChatCodes::SRVCMD_MESSAGE,
+                namedMessage
+            );
         }
     }
     else{
-        emit cmdSendPacketToOne(ChatCodes::SRVCMD_MESSAGE, result, header.getSocketUserNickname());
+        Message resultMsg(result);
+        emit cmdSendPacketToOne(
+            TargetCode::CHAT_CLIENT,
+            ChatCodes::SRVCMD_MESSAGE,
+            resultMsg,
+            header.getSocketUserNickname()
+        );
     }
 }
 

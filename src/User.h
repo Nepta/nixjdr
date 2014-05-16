@@ -4,7 +4,7 @@
 #include <QObject>
 #include <QString>
 #include <QtNetwork>
-#include "chat/ChatHeader.h"
+#include "Network/Header.h"
 #include "User.h"
 
 enum class Role {
@@ -22,15 +22,15 @@ public:
     ~User();
 
     QTcpSocket *getSocket();
-    ChatHeader getHeader();
+    Header getHeader();
     QString getNickname();
     QString getPendingNickname();
-    QString getIpAddress();
+    QString getServerIpAddress();
     Role getRole();
 
     User* setNickname(const QString &nickname);
     User* setPendingNickname(const QString &nickname);
-    User* setIpAddress(const QString &ipAddress);
+    User* setServerIpAddress(const QString &serverIpAddress);
     User* setRole(const Role &role);
 
 private slots:
@@ -41,14 +41,24 @@ signals:
     void userConnectedNotify();
     void userDisconnectedNotify(User &user);
     void socketErrorNotify(QAbstractSocket::SocketError);
-    void receivedFullData(ChatHeader header, QString message);
+    void receivedFullData(Header header, QByteArray data);
 
 private:
+    /**
+     * @brief packetReadyToReceive Returns if the packet has been fully received, and fill the
+     * header and the object.
+     * @param socket Socket receiving a packet
+     * @param header Header to fill
+     * @param data data to fill
+     * @return packet reception state (true: fully received, false: being received)
+     */
+    bool packetReadyToReceive(QTcpSocket *socket, Header &header, QByteArray &data);
+
     QTcpSocket *m_Socket;
-    ChatHeader m_Header;
+    Header m_Header;
     QString m_Nickname;
     QString m_PendingNickname;
-    QString m_IpAddress;
+    QString m_serverIpAddress;
     Role m_Role;
 };
 

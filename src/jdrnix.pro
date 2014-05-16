@@ -23,10 +23,10 @@ SOURCES += \
     CustomMdiArea.cpp \
     ChatWidget.cpp \
     ConnectionHelper.cpp \
+    Common.cpp \
+    chat/Message.cpp \
     chat/ChatServer.cpp \
-    chat/ChatCommon.cpp \
     chat/ChatClient.cpp \
-    chat/ChatHeader.cpp \
     chat/ChatProcessor.cpp \
     chat/commands/AbstractCmd.cpp \
     chat/commands/CmdMessageall.cpp \
@@ -42,7 +42,15 @@ SOURCES += \
     chat/commands/CmdNicknamesListAck.cpp \
     chat/commands/CmdConnectionAck.cpp \
     canvas/canvas.cpp \
-    canvas/canvaseventhandler.cpp
+    canvas/canvaseventhandler.cpp \
+    Network/Decoder.cpp \
+    Network/Header.cpp \
+    Network/Server.cpp \
+    Network/Switch.cpp \
+    Network/ServerReceiver.cpp \
+    Network/Client.cpp \
+    Network/ClientReceiver.cpp \
+    Network/Receiver.cpp
 
 HEADERS  += \
     MainWindow.h \
@@ -52,10 +60,10 @@ HEADERS  += \
     ConnectionHelper.h \
     CustomMdiArea.h \
     ChatWidget.h \
+    Common.h \
+    chat/Message.h \
     chat/ChatServer.h \
-    chat/ChatCommon.h \
     chat/ChatClient.h \
-    chat/ChatHeader.h \
     chat/ChatProcessor.h \
     chat/commands/AbstractCmd.h \
     chat/commands/CmdMessageall.h \
@@ -71,7 +79,16 @@ HEADERS  += \
     chat/commands/CmdNicknamesListAck.h \
     chat/commands/CmdConnectionAck.h \
     canvas/canvas.h \
-    canvas/canvaseventhandler.h
+    canvas/canvaseventhandler.h \
+    Network/Switch.h \
+    Network/Receiver.h \
+    Network/Decoder.h \
+    Network/Header.h \
+    Network/Server.h \
+    Network/ServerReceiver.h \
+    Network/Client.h \
+    Network/ClientReceiver.h \
+    Network/Serializable.h
 
 FORMS    += mainwindow.ui \
     TokenMenu.ui \

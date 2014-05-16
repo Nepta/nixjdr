@@ -36,11 +36,11 @@ Commands::Commands()
 
     // Allow each command to send packets (server side)
     foreach (AbstractCmd *command, m_UserCommands) {
-        connect(command, SIGNAL(cmdSendPacketToAll(ChatCodes, QString)),
-                this, SIGNAL(cmdSendPacketToAll(ChatCodes, QString)));
+        connect(command, SIGNAL(cmdSendPacketToAll(TargetCode, ChatCodes, Serializable&)),
+                this, SLOT(cmdSendPacketToAll(TargetCode, ChatCodes, Serializable&)));
 
-        connect(command, SIGNAL(cmdSendPacketToOne(ChatCodes, QString, QString)),
-                this, SIGNAL(cmdSendPacketToOne(ChatCodes, QString,QString )));
+        connect(command, SIGNAL(cmdSendPacketToOne(TargetCode, ChatCodes, Serializable&, QString)),
+                this, SLOT(cmdSendPacketToOne(TargetCode, ChatCodes, Serializable&, QString)));
     }
 
     // Allow each command to interact with the UI and send messages to the server (client side)
@@ -71,4 +71,12 @@ QString Commands::getPrintableCommandsList() {
     // TODO
 
     return NULL;
+}
+
+void Commands::cmdSendPacketToAll(TargetCode target, ChatCodes code, Serializable &data) {
+    emit sendPacketToAll((quint16) target, (quint16) code, data);
+}
+
+void Commands::cmdSendPacketToOne(TargetCode target, ChatCodes code, Serializable &data, QString receiverNickname) {
+    emit sendPacketToOne((quint16) target, (quint16) code, data, receiverNickname);
 }
