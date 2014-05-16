@@ -73,8 +73,8 @@ HEADERS  += \
     chat/commands/CmdNicknamesList.h \
     chat/commands/CmdNicknamesListAck.h \
     chat/commands/CmdConnectionAck.h \
-    canvas\canvas.h \
-    canvas\canvaseventhandler.h
+	 canvas/canvas.h \
+	 canvas/canvaseventhandler.h
 
 FORMS    += mainwindow.ui \
     TokenMenu.ui \
