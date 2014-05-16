@@ -44,8 +44,8 @@ SOURCES += \
     chat/commands/CmdNicknamesList.cpp \
     chat/commands/CmdNicknamesListAck.cpp \
     chat/commands/CmdConnectionAck.cpp \
-    canvas/canvas.cpp \
-    canvas/canvaseventhandler.cpp
+    canvas/CanvasView.cpp \
+    canvas/CanvasScene.cpp
 
 HEADERS  += \
     MainWindow.h \
@@ -74,7 +74,9 @@ HEADERS  += \
     chat/commands/CmdNicknamesListAck.h \
     chat/commands/CmdConnectionAck.h \
     canvas\canvas.h \
-    canvas\canvaseventhandler.h
+    canvas\canvaseventhandler.h \
+    canvas/CanvasScene.h \
+    canvas/CanvasView.h
 
 FORMS    += mainwindow.ui \
     TokenMenu.ui \
