@@ -3,7 +3,6 @@
 #include <QApplication>
 #include <QDesktopWidget>
 #include <QToolBox>
-#include <QDebug>
 
 #include "CustomMdiArea.h"
 #include "MainWindow.h"
@@ -74,10 +73,8 @@ void MainWindow::on_actionCreateMap_triggered(){
             sizeWidget = view->getCanvasScene()->sceneRect().size().toSize();
             ui->tableArea->subWindowList().last()->setMaximumSize(sizeWidget);
             ui->tableArea->subWindowList().last()->show();
-            ui->tableArea->subWindowList().last()->setAcceptDrops(true);
-            qDebug()<<ui->tableArea->subWindowList().last()->children();
-
-            connect(ui->tokenPage->getUi()->listToken,SIGNAL(itemClicked(QListWidgetItem*)), view->getCanvasScene(), SLOT(setSpritePath(QListWidgetItem*)));
+            connect(ui->tokenPage->getUi()->listToken,SIGNAL(itemClicked(QListWidgetItem*)),
+                    view->getCanvasScene(), SLOT(setSpritePath(QListWidgetItem*)));
 
     }
 }

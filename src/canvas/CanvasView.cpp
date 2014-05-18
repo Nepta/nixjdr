@@ -1,5 +1,3 @@
-#include <QDebug>
-
 #include "CanvasView.h"
 
 CanvasView::CanvasView()
@@ -14,7 +12,7 @@ CanvasView::CanvasView(CanvasScene* scene)
     m_yClick = 0;
     this->setScene(m_scene);
     this->ensureVisible(m_scene->sceneRect());
-//    this->setAcceptDrops(true);
+    this->setAcceptDrops(true);
 
 }
 
@@ -47,24 +45,23 @@ void CanvasView::dragEnterEvent(QDragEnterEvent *event)
     }
 }
 
+void CanvasView::dragMoveEvent(QDragMoveEvent * event){
+    if(event->mimeData()->hasImage()){
+        event->acceptProposedAction();
+    }
+}
+
 void CanvasView::dropEvent(QDropEvent *event)
 {
     int x = event->pos().x();
     int y = event->pos().y();
-    QPixmap* sprite;
+    QPixmap* sprite = new QPixmap();
     QImage image = qvariant_cast<QImage>(event->mimeData()->imageData());
-    sprite->fromImage(image);
-
+    *sprite = sprite->fromImage(image);
 
     m_scene->addSprite(sprite, x, y);
 
     event->acceptProposedAction();
-}
-
-
-void CanvasView::mouseReleaseEvent(QMouseEvent *event)
-{
-
 }
 
 
@@ -80,10 +77,6 @@ void CanvasView::mousePressEvent(QMouseEvent *event)
         QPixmap* sprite = new QPixmap(this->getCanvasScene()->getSpritePath());
 
         m_scene->addSprite(sprite, m_xClick, m_yClick);
-
-//        QDrag *drag = new QDrag(this);
-
-//        drag->setPixmap(m_scene->getPixmapItem(x, y)->pixmap());
     }
 
     else if(event->button() == Qt::RightButton){

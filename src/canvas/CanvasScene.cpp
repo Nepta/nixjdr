@@ -83,7 +83,6 @@ void CanvasScene::addSprite(QPixmap *sprite, int x, int y)
 
 void CanvasScene::removeSprite(int x, int y)
 {
-    qDebug() << "debut remove sprite";
     int xTab = x/m_step;
     int yTab = y/m_step;
 
@@ -96,7 +95,6 @@ void CanvasScene::removeSprite(int x, int y)
     }
 
     m_spriteMatrix[yTab][xTab][z] = NULL;
-    qDebug() << "fin remove sprite";
 }
 
 void CanvasScene::initMatrix(int width, int height)
@@ -152,7 +150,6 @@ int CanvasScene::indexOfUpperItem(int x, int y)
 
     for(z = LAYER_MAX-1; z > 0; z--){
         if(m_spriteMatrix[y][x][z] != NULL){
-            qDebug() << z;
             break;
         }
     }

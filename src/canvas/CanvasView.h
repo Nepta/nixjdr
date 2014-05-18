@@ -26,8 +26,8 @@ public:
 private:
     void setCanvasScene(CanvasScene* scene);
     void dragEnterEvent(QDragEnterEvent *event);
+    void dragMoveEvent(QDragMoveEvent * event);
     void dropEvent(QDropEvent *event);
-    void mouseReleaseEvent(QMouseEvent *event);
     void mousePressEvent(QMouseEvent *event);
     void mouseMoveEvent(QMouseEvent * event);
 
