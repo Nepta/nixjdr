@@ -3,6 +3,8 @@
 CustomMdiArea::CustomMdiArea(QWidget *parent) :
     QMdiArea(parent)
 {
+    setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
+    setHorizontalScrollBarPolicy(Qt::ScrollBarAsNeeded);
 }
 
 QMdiSubWindow *CustomMdiArea::addSubWindow(QWidget *widget, Qt::WindowFlags flags) {
