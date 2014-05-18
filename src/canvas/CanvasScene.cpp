@@ -31,21 +31,9 @@ CanvasScene::CanvasScene(QString filename, int step)
 
 CanvasScene::~CanvasScene()
 {
-    for(int i = 0; i < m_spriteMatrix.size(); i++){
-        for(int j = 0; j < m_spriteMatrix[i].size(); j++){
-            for(int k = 0; k < m_spriteMatrix[i][j].size(); k++){
-                delete &m_spriteMatrix[i][j][k];
-            }
-            delete &m_spriteMatrix[i][j];
-        }
-        delete &m_spriteMatrix[i];
-    }
-    delete &m_spriteMatrix;
-
-    delete &m_step;
     delete m_background;
-    delete &m_spritePath;
 }
+
 
 
 CanvasScene *CanvasScene::getCanvasScene()
