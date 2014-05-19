@@ -76,7 +76,7 @@ void CanvasView::mousePressEvent(QMouseEvent *event)
 
         QPixmap* sprite = new QPixmap(this->getCanvasScene()->getSpritePath());
 
-        m_scene->addSprite(sprite, m_xClick, m_yClick);
+//        m_scene->addSprite(sprite, m_xClick, m_yClick);
     }
 
     else if(event->button() == Qt::RightButton){
@@ -95,7 +95,12 @@ void CanvasView::mouseMoveEvent(QMouseEvent *event)
     QDrag *drag = new QDrag(this);
     QMimeData *mimeData = new QMimeData;
 
-    QPixmap spriteToMove = m_scene->getPixmapItem(m_xClick, m_yClick)->pixmap();
+    QGraphicsPixmapItem *pixmapItem = m_scene->getPixmapItem(m_xClick, m_yClick);
+    if (pixmapItem == NULL) {
+        return;
+    }
+
+    QPixmap spriteToMove = pixmapItem->pixmap();
     drag->setPixmap(spriteToMove);
 
     mimeData->setImageData(spriteToMove.toImage());
@@ -104,4 +109,18 @@ void CanvasView::mouseMoveEvent(QMouseEvent *event)
     m_scene->removeSprite(m_xClick, m_yClick);
 
     Qt::DropAction dropAction = drag->exec(Qt::CopyAction | Qt::MoveAction);
+}
+
+void CanvasView::mouseReleaseEvent(QMouseEvent *event){
+    m_xClick = event->x();
+    m_yClick = event->y();
+
+    if(event->button() == Qt::LeftButton){
+
+        m_dragStartPosition = event->pos();
+
+        QPixmap* sprite = new QPixmap(this->getCanvasScene()->getSpritePath());
+
+        m_scene->addSprite(sprite, m_xClick, m_yClick);
+    }
 }
