@@ -8,7 +8,7 @@ class CmdNicknameAck : public AbstractCmd
 public:
     CmdNicknameAck();
 
-    void execute(ChatHeader &, QString &arg);
+    void execute(Header &, QString &arg);
     QString getHelp();
 };
 

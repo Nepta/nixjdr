@@ -1,38 +1,28 @@
 #ifndef CHATPROCESSOR_H
 #define CHATPROCESSOR_H
 
-#include <QObject>
 #include <QString>
 #include "commands/Commands.h"
-#include "ChatHeader.h"
-
-class ChatProcessor : public QObject
+class ChatProcessor
 {
-    Q_OBJECT
+    public:
+        ChatProcessor(){}
+        virtual ~ChatProcessor(){}
 
-public:
-    ChatProcessor(){}
+        /**
+         * @brief getCommands   Gives access to the commands
+         * @return &m_Commands
+         */
+        Commands *getCommands();
 
-    virtual ~ChatProcessor(){}
+    protected:
+        Commands m_Commands;
 
-    /**
-     * @brief getCommands   Gives access to the commands
-     * @return &m_Commands
-     */
-    Commands *getCommands();
-
-protected:
-    Commands m_Commands;
-
-protected slots:
-    virtual void processNewMessage(ChatHeader header, QString message) = 0;
-
-signals:
-    /**
-     * @brief sendMessageToChatUi   Transmits a message that will be displayed in the chat
-     * @param msg   Reference to the message to transmit
-     */
-    void sendMessageToChatUi(const QString &msg);
+        /**
+         * @brief sendMessageToChatUi   Transmits a message that will be displayed in the chat
+         * @param msg   Reference to the message to transmit
+         */
+        virtual void sendMessageToChatUi(const QString &msg) = 0;
 };
 
 #endif // CHATPROCESSOR_H

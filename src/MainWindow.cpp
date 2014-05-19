@@ -17,6 +17,9 @@ MainWindow::MainWindow(User *user, QWidget *parent) :
 {
     ui->setupUi(this);
 
+    // Sets Null pointer for later deletion if m_Server is not used
+    m_Server = NULL;
+
     // Dice menu
     m_diceMenu = new DiceMenu();
     ui->tableArea->addSubWindow(m_diceMenu, Qt::CustomizeWindowHint |
@@ -40,7 +43,7 @@ MainWindow::MainWindow(User *user, QWidget *parent) :
         setupPlayer();
     }
 
-    showFullScreen();
+    //showFullScreen();
 }
 
 MainWindow::~MainWindow()
@@ -48,15 +51,20 @@ MainWindow::~MainWindow()
     delete ui;
     delete m_diceMenu;
     delete m_User;
+    delete m_Server;
+    delete m_Client;
 }
 
 void MainWindow::updateMenu() {
     QMdiSubWindow *subwindow  = ui->tableArea->activeSubWindow();
     if (subwindow) {
-        QString classname = subwindow->metaObject()->className();
+        /* TODO
+         * QString classname = subwindow->metaObject()->className();
+         * isMapSubwindow = (classname == QString("MapMdiSubwindow"));
+         */
 
-        bool isMapMdiSubWindow = (classname == QString("MapMdiSubwindow"));
-        ui->actionEditMap->setEnabled(isMapMdiSubWindow);
+        bool isMapSubwindow = false;
+        ui->actionEditMap->setEnabled(isMapSubwindow);
     }
 }
 
@@ -85,21 +93,45 @@ void MainWindow::on_actionEditMap_triggered()
                                                     "Images (*.png *.xpm *.jpg)");
 
     if (filename != NULL) {
-        }
-
+        // TODO
+    }
 }
 
 void MainWindow::setupMJ() {
-    ui->m_ChatWidget->setupChatServer();
-    connect(m_diceMenu, SIGNAL(sendMessageToChatUi(QString)),
-                        this, SIGNAL(sendMessageToChatUi(QString)));
+    m_Server = new Server;
+
+    /* Connect sendMessageToChatUi from m_Server to m_ChatWidget in order to display system messages
+     * during the initialization.*/
+    connect(m_Server, SIGNAL(sendMessageToChatUi(QString)),
+            ui->m_ChatWidget, SLOT(receivedMessage(QString))
+    );
+
+    // Server Initialization
+    m_Server->init();
+
+    // Initialize ChatWidget with the ChatServer
+    ChatServer* chatServer = dynamic_cast<ChatServer*>(
+                m_Server->getReceiver(TargetCode::CHAT_SERVER));
+    ui->m_ChatWidget->setupChatServer(chatServer);
 
     setupPlayer();
 }
 
 void MainWindow::setupPlayer() {
-    ui->m_ChatWidget->setupChatClient(m_User);
+    m_Client = new Client(m_User);
 
-    connect(this, SIGNAL(sendMessageToChatUi(QString)),
-            ui->m_ChatWidget, SLOT(receivedMessage(QString)));
+    connect(m_Client, SIGNAL(sendMessageToChatUi(QString)),
+            ui->m_ChatWidget, SLOT(receivedMessage(QString))
+    );
+
+    // Initialize ChatWidget with the ChatClient
+    ChatClient* chatClient = dynamic_cast<ChatClient*>(
+                m_Client->getReceiver(TargetCode::CHAT_CLIENT));
+    ui->m_ChatWidget->setupChatClient(chatClient);
+
+    /* The dice menu is able to send system messages to the Chat in order to display error messages
+     * or warnings */
+    connect(m_diceMenu, SIGNAL(sendMessageToChatUi(QString)),
+            ui->m_ChatWidget, SLOT(receivedMessage(QString))
+    );
 }

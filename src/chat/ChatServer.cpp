@@ -1,109 +1,60 @@
-#include<QTranslator>
+#include <QTranslator>
 #include "commands/AbstractCmd.h"
 #include "commands/CmdNickname.h"
 #include "commands/CmdNicknamesList.h"
-#include "ChatCommon.h"
+#include "Message.h"
 #include "ChatServer.h"
 
-ChatServer::ChatServer()
+ChatServer::ChatServer(QHash<QString, User *> *usersList) :
+    ServerReceiver(usersList)
 {
-    m_Server = new QTcpServer(this);
+    AbstractCmd::setUsersListServer(m_UsersList);
 
     // init commands
-    AbstractCmd::setUsersListServer(&m_UsersList);
-    connect(&m_Commands, SIGNAL(cmdSendPacketToAll(ChatCodes, QString)),
-            this, SLOT(sendPacketToAll(ChatCodes, QString)));
-    connect(&m_Commands, SIGNAL(cmdSendPacketToOne(ChatCodes, QString, QString)),
-            this, SLOT(sendPacketToOne(ChatCodes, QString, QString)));
+    connect(&m_Commands, SIGNAL(sendPacketToAll(quint16, quint16, Serializable&)),
+            this, SLOT(sendPacketToAll(quint16, quint16, Serializable&)));
+    connect(&m_Commands, SIGNAL(sendPacketToOne(quint16, quint16, Serializable&, QString)),
+            this, SLOT(sendPacketToOne(quint16, quint16, Serializable&, QString)));
 }
 
 ChatServer::~ChatServer()
 {
-    m_Server->deleteLater();
-    qDeleteAll(m_UsersList.begin(), m_UsersList.end());
-    m_UsersList.clear();
 }
 
-void ChatServer::init() {
-    if (!m_Server->listen(QHostAddress::Any, 50885)) {
-        QString msg = tr("Le serveur n'a pas pu être démarré. Raison :<br />") +
-                m_Server->errorString();
-        emit sendMessageToChatUi(msg);
-    }
-    else {
-        QString msg = tr("Le serveur a été démarré sur le port <strong>")
-                + QString::number(m_Server->serverPort())
-                + tr("</strong>.<br />Des clients peuvent maintenant se connecter.");
-        emit sendMessageToChatUi(msg);
-
-        connect(m_Server, SIGNAL(newConnection()), this, SLOT(newClientConnection()));
-    }
-}
-
-/**
- * @brief ChatServer::newClientConnection
- */
-void ChatServer::newClientConnection()
+void ChatServer::newClientConnection(User *newUser)
 {
-    User *newUser = new User(m_Server->nextPendingConnection());
-
     // identify the user on both the client and server side
     CmdNickname *cmdNickname = dynamic_cast<CmdNickname*>(
                 m_Commands.getUserCommand(ChatCodes::USERCMD_NICK));
     cmdNickname->executeOnUser(newUser, "guest", "guest", true);
 
-    emit sendPacketToOne(ChatCodes::SRVCMD_CONNECT_ACK, QString(), newUser->getNickname());
+    Message msg("");
+    sendPacketToOne(
+        (quint16) TargetCode::CHAT_CLIENT,
+        (quint16) ChatCodes::SRVCMD_CONNECT_ACK,
+        msg,
+        newUser->getNickname()
+    );
 
 
     // update the nicknames list on the new client side
     CmdNicknamesList *cmdNicknamesList = dynamic_cast<CmdNicknamesList*>(
                 m_Commands.getUserCommand(ChatCodes::USERCMD_LIST));
     cmdNicknamesList->executeOnUser(newUser);
-
-    // process and send a packet when fully received
-    connect(newUser, SIGNAL(receivedFullData(ChatHeader, QString)),
-            this, SLOT(processNewMessage(ChatHeader, QString)));
-    connect(newUser, SIGNAL(userDisconnectedNotify(User&)), this, SLOT(userDisconnected(User&)));
 }
 
 void ChatServer::userDisconnected(User &user)
 {
-    sendPacketToAll(ChatCodes::SRVCMD_DISCONNECT, user.getNickname());
+    Message msg(user.getNickname());
 
-    m_UsersList.remove(user.getNickname());
-
-    // The socket may still be in use even though the client is disconnected (e.g.
-    // message still being sent).
-    user.deleteLater();
+    sendPacketToAll((quint16) TargetCode::CHAT_CLIENT,
+                    (quint16) ChatCodes::SRVCMD_DISCONNECT,
+                    msg);
 }
 
+void ChatServer::processNewMessage(Header header, QByteArray &data) {
+    ChatCodes code = (ChatCodes) header.getCode();
+    Message message(data);
 
-void ChatServer::processNewMessage(ChatHeader header, QString message) {
-    ChatCodes code = (ChatCodes) header.getCmd();
-
-    m_Commands.getUserCommand(code)->execute(header, message);
-}
-
-void ChatServer::sendPacketToAll(ChatCodes code, QString message)
-{
-    QByteArray packet;
-    packet = ChatCommon::preparePacket(code, message);
-
-    for (int i = 0; i < m_UsersList.values().size(); i++)
-    {
-        m_UsersList.values()[i]->getSocket()->write(packet);
-    }
-}
-
-void ChatServer::sendPacketToOne(ChatCodes code, QString message,
-                                 QString receiverNickname) {
-    QByteArray packet;
-
-    packet = ChatCommon::preparePacket(code, message);
-    m_UsersList.value(receiverNickname)->getSocket()->write(packet);
-}
-
-quint16 ChatServer::getPort()
-{
-    return m_Server->serverPort();
+    m_Commands.getUserCommand(code)->execute(header, message.getString());
 }

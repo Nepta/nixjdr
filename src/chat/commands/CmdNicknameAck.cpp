@@ -1,16 +1,16 @@
 #include "CmdNicknameAck.h"
-#include "chat/ChatCommon.h"
+#include "Common.h"
 
 CmdNicknameAck::CmdNicknameAck()
 {
 }
 
-void CmdNicknameAck::execute(ChatHeader &, QString &arg) {
+void CmdNicknameAck::execute(Header &, QString &arg) {
     QString temp = arg;
 
-    QString oldNickname = ChatCommon::extractFirstWord(temp);
-    QString newNickname = ChatCommon::extractFirstWord(temp);
-    bool isOwner = (ChatCommon::extractFirstWord(temp) == "1" ? true : false);
+    QString oldNickname = Common::extractFirstWord(temp);
+    QString newNickname = Common::extractFirstWord(temp);
+    bool isOwner = (Common::extractFirstWord(temp) == "1" ? true : false);
     bool isNew = (temp == "1" ? true : false);
 
     QHash<QString, User *> *usersList = AbstractCmd::getUsersListClient();

@@ -8,7 +8,7 @@ class CmdNickname : public AbstractCmd
 public:
     CmdNickname();
 
-    void execute(ChatHeader &header, QString &arg);
+    void execute(Header &header, QString &arg);
     void executeOnUser(User *newUser, QString currentNickname, QString oldNickname, bool isNew);
     QString getHelp();
     QString verifyAndGetNickname(QString nickname);

@@ -4,9 +4,9 @@ CmdConnectionAck::CmdConnectionAck()
 {
 }
 
-void CmdConnectionAck::execute(ChatHeader &, QString &) {
+void CmdConnectionAck::execute(Header &header, QString &) {
     // Retrieve the user associated with the client
-    User *user = AbstractCmd::getUsersListClient()->values().at(0);
+    User *user = AbstractCmd::getUsersListClient()->value(header.getSocketUserNickname());
 
     // Modify the temp nickname by the one asked by the user
     emit cmdSendMessageToServer(QString("/nickname %1").arg(user->getPendingNickname()));

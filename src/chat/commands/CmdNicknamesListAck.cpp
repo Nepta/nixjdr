@@ -3,7 +3,7 @@
 CmdNicknamesListAck::CmdNicknamesListAck() {
 }
 
-void CmdNicknamesListAck::execute(ChatHeader &, QString &arg) {
+void CmdNicknamesListAck::execute(Header &, QString &arg) {
     QHash<QString, User*> *userList = AbstractCmd::getUsersListClient();
     QStringList nicknamesList = arg.split(" ");
 

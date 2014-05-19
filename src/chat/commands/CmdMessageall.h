@@ -8,7 +8,7 @@ class CmdMessageAll : public AbstractCmd
 public:
     CmdMessageAll();
 
-    void execute(ChatHeader &header, QString &arg);
+    void execute(Header &header, QString &arg);
     QString getHelp();
 };
 

@@ -4,7 +4,7 @@ CmdMessageUI::CmdMessageUI()
 {
 }
 
-void CmdMessageUI::execute(ChatHeader &, QString &arg) {
+void CmdMessageUI::execute(Header &, QString &arg) {
     emit cmdSendMessageToChatUi(arg);
 }
 

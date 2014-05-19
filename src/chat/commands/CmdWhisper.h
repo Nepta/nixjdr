@@ -8,7 +8,7 @@ class CmdWhisper : public AbstractCmd
 public:
     CmdWhisper();
 
-    void execute(ChatHeader &header, QString &arg);
+    void execute(Header &header, QString &arg);
     QString getHelp();
 };
 

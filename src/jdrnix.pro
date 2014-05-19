@@ -10,9 +10,6 @@ QMAKE_LFLAGS = -std=c++11
 QT += core gui network
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-# SFML
-LIBS += -L /usr/local/lib -lsfml-audio -lsfml-graphics -lsfml-network -lsfml-window -lsfml-system
-
 TARGET = jdrnix.out
 TEMPLATE = app
 DESTDIR = ../
@@ -26,10 +23,10 @@ SOURCES += \
     CustomMdiArea.cpp \
     ChatWidget.cpp \
     ConnectionHelper.cpp \
+    Common.cpp \
+    chat/Message.cpp \
     chat/ChatServer.cpp \
-    chat/ChatCommon.cpp \
     chat/ChatClient.cpp \
-    chat/ChatHeader.cpp \
     chat/ChatProcessor.cpp \
     chat/commands/AbstractCmd.cpp \
     chat/commands/CmdMessageall.cpp \
@@ -45,7 +42,14 @@ SOURCES += \
     chat/commands/CmdNicknamesListAck.cpp \
     chat/commands/CmdConnectionAck.cpp \
     canvas/CanvasView.cpp \
-    canvas/CanvasScene.cpp
+    canvas/CanvasScene.cpp \
+    Network/Header.cpp \
+    Network/Server.cpp \
+    Network/Switch.cpp \
+    Network/ServerReceiver.cpp \
+    Network/Client.cpp \
+    Network/ClientReceiver.cpp \
+    Network/Receiver.cpp
 
 HEADERS  += \
     MainWindow.h \
@@ -55,10 +59,10 @@ HEADERS  += \
     ConnectionHelper.h \
     CustomMdiArea.h \
     ChatWidget.h \
+    Common.h \
+    chat/Message.h \
     chat/ChatServer.h \
-    chat/ChatCommon.h \
     chat/ChatClient.h \
-    chat/ChatHeader.h \
     chat/ChatProcessor.h \
     chat/commands/AbstractCmd.h \
     chat/commands/CmdMessageall.h \
@@ -73,10 +77,16 @@ HEADERS  += \
     chat/commands/CmdNicknamesList.h \
     chat/commands/CmdNicknamesListAck.h \
     chat/commands/CmdConnectionAck.h \
-    canvas\canvas.h \
-    canvas\canvaseventhandler.h \
     canvas/CanvasScene.h \
     canvas/CanvasView.h
+    Network/Switch.h \
+    Network/Receiver.h \
+    Network/Header.h \
+    Network/Server.h \
+    Network/ServerReceiver.h \
+    Network/Client.h \
+    Network/ClientReceiver.h \
+    Network/Serializable.h
 
 FORMS    += mainwindow.ui \
     TokenMenu.ui \

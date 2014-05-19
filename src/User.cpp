@@ -1,10 +1,11 @@
-#include "chat/ChatCommon.h"
+#include "Network/Receiver.h"
+#include "Network/Switch.h"
 #include "User.h"
 
 User::User(QTcpSocket *socket)
 {
     m_Socket = socket;
-    m_Header = ChatHeader();
+    m_Header = Header();
     m_Nickname = QString("guest");
 
     connect(m_Socket, SIGNAL(readyRead()), this, SLOT(receivedData()));
@@ -24,13 +25,12 @@ User::~User() {
 
 void User::receivedData()
 {
-    ChatHeader header;
-    QString message;
+    QByteArray data;
 
-    if (ChatCommon::messageReadyToReceive(m_Socket, header, message)) {
-        header.setSocketUserNickname(getNickname());
-        emit receivedFullData(header, message);
-        m_Header.setMsgSize(0);
+    if (packetReadyToReceive(m_Socket, m_Header, data)) {
+        m_Header.setSocketUserNickname(getNickname());
+        emit receivedFullData(m_Header, data);
+        m_Header.reset();
     }
 
     // receivedData() is called by the signal readyRead() when new data is available.
@@ -41,6 +41,61 @@ void User::receivedData()
         receivedData();
     }
 }
+
+bool User::packetReadyToReceive(QTcpSocket *socket, Header &header, QByteArray &data) {
+    if (socket == 0) {
+        return false;
+    }
+
+    QDataStream in(socket);
+
+    // object size
+    if (header.getDataSize() == 0) { // new packet being received
+        quint16 dataSize;
+
+        if (socket->bytesAvailable() < (qint64) sizeof(quint16)) {
+            // The size has not been fully received
+            return false;
+        }
+
+        in >> dataSize;
+        header.setDataSize(dataSize);
+    }
+
+    // target
+    if (header.getTarget() == (quint16) TargetCode::UNDEFINED) {
+        quint16 target;
+
+        if (socket->bytesAvailable() < (qint64) sizeof(quint16)) {
+            return false;
+        }
+
+        in >> target;
+        header.setTarget(target);
+    }
+
+    // command
+    if (header.getCode() == Receiver::UNDEFINED_CODE) {
+        quint16 code;
+
+        if (socket->bytesAvailable() < (qint64) sizeof(quint16)) {
+            return false;
+        }
+
+        in >> code;
+        header.setCode(code);
+    }
+
+    // content
+    if (socket->bytesAvailable() < header.getDataSize()) {
+        // the data has not been fully received
+        return false;
+    }
+
+    in >> data;
+    return true;
+}
+
 
 /**
  * @brief User::userDisconnected notify the client or the server that a user
@@ -54,7 +109,7 @@ QTcpSocket* User::getSocket() {
     return m_Socket;
 }
 
-ChatHeader User::getHeader() {
+Header User::getHeader() {
     return m_Header;
 }
 
@@ -66,8 +121,8 @@ QString User::getPendingNickname() {
     return m_PendingNickname;
 }
 
-QString User::getIpAddress() {
-    return m_IpAddress;
+QString User::getServerIpAddress() {
+    return m_serverIpAddress;
 }
 
 Role User::getRole() {
@@ -86,8 +141,8 @@ User* User::setPendingNickname(const QString &nickname) {
     return this;
 }
 
-User* User::setIpAddress(const QString &ipAddress) {
-    m_IpAddress = ipAddress;
+User* User::setServerIpAddress(const QString &serverIpAddress) {
+    m_serverIpAddress = serverIpAddress;
 
     return this;
 }
