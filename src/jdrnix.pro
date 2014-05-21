@@ -7,7 +7,7 @@
 QMAKE_CXXFLAGS = -std=c++11
 QMAKE_LFLAGS = -std=c++11
 
-QT += core gui network
+QT += core gui network sql
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = jdrnix.out
@@ -50,7 +50,8 @@ SOURCES += \
     token/TokenMenu.cpp \
     token/TokenList.cpp \
     canvas/CanvasView.cpp \
-    canvas/CanvasScene.cpp
+    canvas/CanvasScene.cpp \
+    DataBase/DataBase.cpp
 
 HEADERS  += \
     MainWindow.h \
@@ -90,7 +91,8 @@ HEADERS  += \
     token/TokenMenu.h \
     token/TokenList.h \
     canvas/CanvasView.h \
-    canvas/CanvasScene.h
+    canvas/CanvasScene.h \ 
+    DataBase/DataBase.h
 
 FORMS    += mainwindow.ui \
     TokenMenu.ui \
