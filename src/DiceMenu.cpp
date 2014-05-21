@@ -117,3 +117,8 @@ void DiceMenu::modifyButton(QPushButton *buttonToModify, bool actionToExecute){
     }
     buttonToModify->setText(buttonText.prepend(QString::number(diceCount)));
 }
+
+
+void DiceMenu::requestRoll(QString &msg){
+    msg = QString("/roll %1").arg(diceToRoll());
+}

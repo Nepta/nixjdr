@@ -2,6 +2,7 @@
 #define CHATWIDGET_H
 
 #include <QWidget>
+#include <QContextMenuEvent>
 #include "chat/ChatServer.h"
 #include "chat/ChatClient.h"
 #include "User.h"
@@ -21,11 +22,15 @@ public:
     void setupChatClient(ChatClient *chatClient);
     void sendMessageFromClientToServer(QString message);
 
+signals:
+    void requestDice(QString &msg);
+
 private slots:
     void on_msgField_returnPressed();
     void receivedMessage(const QString &msg);
     void updateNicknamesListView();
     void rollDice(QString, bool hidden);
+    void ShowContextMenu(const QPoint& pos);
 
 private:
     Ui::ChatWidget *ui;

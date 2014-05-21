@@ -28,8 +28,11 @@ MainWindow::MainWindow(User *user, QWidget *parent) :
     ui->tableArea->subWindowList().last()->setGeometry(0,0,470,90);
     ui->tableArea->subWindowList().last()->setMinimumSize(ui->tableArea->size());
     ui->tableArea->subWindowList().last()->setWindowTitle(tr("Dés"));
+
+    // Connect chat & dice menus
     connect(m_diceMenu, SIGNAL(rollDice(QString, bool)),
             ui->m_ChatWidget, SLOT(rollDice(QString, bool)));
+    connect(ui->m_ChatWidget, SIGNAL(requestDice(QString&)), m_diceMenu, SLOT(requestRoll(QString&)));
 
     // Top menu
     connect(ui->tableArea, SIGNAL(subWindowActivated(QMdiSubWindow*)),

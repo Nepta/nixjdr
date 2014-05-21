@@ -22,6 +22,7 @@ private slots:
     void on_privateRollButton_clicked();
     void on_cancelButton_clicked();
     void modifyButton(QPushButton *buttonToModidy, bool actionToExecute);
+    void requestRoll(QString &msg);
 
 signals:
     void rollDice(QString, bool);

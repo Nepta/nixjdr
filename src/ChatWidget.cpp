@@ -1,3 +1,4 @@
+#include <QMenu>
 #include "ChatWidget.h"
 #include "ui_ChatWidget.h"
 
@@ -6,6 +7,11 @@ ChatWidget::ChatWidget(QWidget *parent) :
     ui(new Ui::ChatWidget)
 {
     ui->setupUi(this);
+    ui->nicknamesListView->setContextMenuPolicy(Qt::CustomContextMenu);
+
+    // for right-clicking on the user list
+    connect(ui->nicknamesListView, SIGNAL(customContextMenuRequested(const QPoint&)),
+        this, SLOT(ShowContextMenu(const QPoint&)));
 
     // Chat nicknames list
     m_NicknamesListModel = new QStringListModel;
@@ -59,4 +65,24 @@ void ChatWidget::rollDice(QString dice, bool hidden){
     }
 
      m_ChatClient->sendMessageToServer(msg);
+}
+
+
+
+
+void ChatWidget::ShowContextMenu(const QPoint& pos){
+    QPoint globalPos = this->mapToGlobal(pos);
+    QString msg;
+    QMenu menu;
+    menu.addAction(tr("Lancer les dés"));
+
+    QAction* selectedItem = menu.exec(globalPos);
+    if (selectedItem)
+    {
+        emit requestDice(msg);
+        int index = ui->nicknamesListView->currentIndex().row();
+        msg += QString("| %1").arg(m_NicknamesListModel->stringList().at(index));
+        m_ChatClient->sendMessageToServer(msg);
+    }
+
 }
