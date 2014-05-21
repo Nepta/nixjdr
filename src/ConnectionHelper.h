@@ -32,6 +32,7 @@ private:
      * @param event
      */
     void closeEvent(QCloseEvent * event);
+    void keyPressEvent(QKeyEvent * event);
 
     Ui::ConnectionHelper *ui;
     User *m_User;

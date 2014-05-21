@@ -28,6 +28,7 @@ private slots:
     void updateMenu();
     void on_actionCreateMap_triggered();
     void on_actionEditMap_triggered();
+    void on_actionConnection_triggered();
 
 signals:
     void initMainWindow();

@@ -3,10 +3,11 @@
 #include <QApplication>
 #include <QDesktopWidget>
 #include <QToolBox>
+
 #include "CustomMdiArea.h"
 #include "MainWindow.h"
 #include "ui_mainwindow.h"
-
+#include "ConnectionHelper.h"
 #include "canvas/canvas.h"
 #include "canvas/canvaseventhandler.h"
 
@@ -96,6 +97,18 @@ void MainWindow::on_actionEditMap_triggered()
     if (filename != NULL) {
         // TODO
     }
+}
+
+void MainWindow::on_actionConnection_triggered(){
+    User* tmpUser = new User();
+    ConnectionHelper connectionHelper(tmpUser);
+    connectionHelper.exec();
+    MainWindow* mainWindow = new MainWindow(tmpUser);
+    mainWindow->show();
+    delete m_User;
+    delete m_Server;
+    delete m_Client;
+    this->destroy();
 }
 
 void MainWindow::setupMJ() {

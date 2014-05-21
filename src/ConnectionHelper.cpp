@@ -63,3 +63,11 @@ void ConnectionHelper::on_endButton_clicked() {
 void ConnectionHelper::closeEvent(QCloseEvent * event) {
     event->ignore();
 }
+
+void ConnectionHelper::keyPressEvent(QKeyEvent *event){
+    if(event->key() == Qt::Key_Escape){
+        ui->stackedWidget->setCurrentIndex(0);
+        ui->ipAddress->show();
+        ui->ipAddressLabel->show();
+    }
+}

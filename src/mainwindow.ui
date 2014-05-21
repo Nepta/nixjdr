@@ -127,6 +127,7 @@
     </property>
     <addaction name="actionCreateMap"/>
     <addaction name="actionEditMap"/>
+    <addaction name="actionConnection"/>
    </widget>
    <addaction name="menuFile"/>
   </widget>
@@ -144,6 +145,11 @@
    </property>
    <property name="text">
     <string>Editer map...</string>
+   </property>
+  </action>
+  <action name="actionConnection">
+   <property name="text">
+    <string>Connexion</string>
    </property>
   </action>
  </widget>
