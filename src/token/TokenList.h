@@ -10,7 +10,7 @@
 class TokenList: public QListWidget
 {
 public:
-    TokenList();
+    TokenList(QWidget * parent = 0);
     QListWidgetItem getCurrentItem();
 
 private:

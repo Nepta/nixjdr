@@ -1,6 +1,7 @@
 #include "TokenList.h"
 
-TokenList::TokenList()
+TokenList::TokenList(QWidget *parent) :
+    QListWidget(parent)
 {
     this->insertItem(0, new QListWidgetItem(
         QIcon("resource/flandre.png"), "flandre"));

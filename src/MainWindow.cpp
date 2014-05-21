@@ -71,7 +71,7 @@ void MainWindow::updateMenu() {
 }
 
 void MainWindow::createMap(QString filename) {
-    QListWidget *tokenList = ui->tokenPage->getTokenList();
+    QListWidget *tokenList = ui->tokenPage->getUi()->m_tokenList;
 
     // TODO should be able to choose the step value in a message box
     m_Map = new Map(filename, tokenList->currentItem()->text(), 32);

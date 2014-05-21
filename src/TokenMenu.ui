@@ -56,10 +56,20 @@
        </item>
       </layout>
      </item>
+     <item>
+      <widget class="TokenList" name="m_tokenList"/>
+     </item>
     </layout>
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>TokenList</class>
+   <extends>QListWidget</extends>
+   <header>token/TokenList.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>
