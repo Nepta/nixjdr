@@ -2,8 +2,8 @@
 #define CHATWIDGET_H
 
 #include <QWidget>
-#include "chat/ChatServer.h"
-#include "chat/ChatClient.h"
+#include "Chat/ChatServer.h"
+#include "Chat/ChatClient.h"
 #include "User.h"
 
 namespace Ui {

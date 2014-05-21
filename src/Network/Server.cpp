@@ -1,4 +1,4 @@
-#include "chat/ChatServer.h"
+#include "Chat/ChatServer.h"
 #include "Server.h"
 
 Server::Server() {

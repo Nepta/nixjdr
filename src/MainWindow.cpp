@@ -4,9 +4,9 @@
 #include <QDesktopWidget>
 #include <QToolBox>
 
-#include "canvas/CanvasScene.h"
-#include "canvas/CanvasView.h"
-#include "canvas/MapLayer.h"
+#include "Canvas/CanvasScene.h"
+#include "Canvas/CanvasView.h"
+#include "Canvas/MapLayer.h"
 
 #include "CustomMdiArea.h"
 #include "MainWindow.h"
@@ -55,6 +55,7 @@ MainWindow::~MainWindow()
     delete m_User;
     delete m_Server;
     delete m_Client;
+    delete m_Map;
 }
 
 void MainWindow::updateMenu() {
@@ -77,20 +78,14 @@ void MainWindow::on_actionCreateMap_triggered(){
     if (filename != NULL) {
         QListWidget *listWidget = ui->tokenPage->getUi()->listToken;
 
-        // TODO Map class
-        CanvasScene* scene = new CanvasScene(filename);
-
         // TODO should be able to choose the step value in a message box
-        MapLayer *mapLayer = new MapLayer(listWidget->currentItem()->text(), 32);
-        scene->addLayer(mapLayer);
+        m_Map = new Map(filename, listWidget->currentItem()->text(), 32);
 
-        CanvasView* view = new CanvasView(scene);
-        ui->tableArea->addSubWindow(view);
-        view->show();
+        ui->tableArea->addSubWindow(m_Map->getView());
+        m_Map->getView()->show();
 
-        connect(listWidget, SIGNAL(itemClicked(QListWidgetItem*)),
-                mapLayer, SLOT(setTokenPath(QListWidgetItem*)));
-
+        connect(listWidget, SIGNAL(itemChanged(QListWidgetItem*)),
+                m_Map->getMapLayer(), SLOT(setTokenPath(QListWidgetItem*)));
     }
 }
 

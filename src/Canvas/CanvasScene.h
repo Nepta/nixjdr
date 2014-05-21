@@ -1,13 +1,9 @@
 #ifndef CANVASSCENE_H
 #define CANVASSCENE_H
 
-#include <QPainter>
 #include <QPixmap>
-#include <QGraphicsItem>
-#include <QGraphicsPixmapItem>
 #include <QGraphicsScene>
-#include <QListWidgetItem>
-#include <QGraphicsSceneMouseEvent>
+#include <QList>
 #include "Layer.h"
 
 class CanvasScene : public QGraphicsScene {

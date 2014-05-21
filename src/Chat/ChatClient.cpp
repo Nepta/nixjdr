@@ -1,4 +1,4 @@
-#include "commands/AbstractCmd.h"
+#include "Commands/AbstractCmd.h"
 #include "Message.h"
 #include "ChatClient.h"
 #include "Common.h"

@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <QMdiSubWindow>
+#include "Canvas/Map.h"
 #include "Network/Server.h"
 #include "Network/Client.h"
 #include "ChatWidget.h"
@@ -42,6 +43,7 @@ private:
     User *m_User;
     Server *m_Server;
     Client *m_Client;
+    Map *m_Map;
 };
 
 #endif // MAINWINDOW_H

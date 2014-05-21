@@ -43,14 +43,17 @@ void MapLayer::removeSprite(QGraphicsItem *sprite) {
 }
 
 void MapLayer::initDragEvent(QGraphicsItem *watched, QGraphicsSceneMouseEvent *mouseEvent) {
-    QGraphicsPixmapItem *pixmapItem = dynamic_cast<QGraphicsPixmapItem*>(watched);
+    // only start the drag event when a certain distance has been traveled
+    if ((mouseEvent->scenePos() - m_dragStartPosition).manhattanLength() < START_DRAG_DISTANCE) {
+        return;
+    }
 
     QDrag *drag = new QDrag(mouseEvent->widget());
     QMimeData *mime = new QMimeData;
 
+    QGraphicsPixmapItem *pixmapItem = dynamic_cast<QGraphicsPixmapItem*>(watched);
     mime->setImageData(pixmapItem->pixmap().toImage());
     drag->setMimeData(mime);
-
     drag->setPixmap(pixmapItem->pixmap());
 
     removeSprite(watched);
@@ -74,7 +77,11 @@ void MapLayer::drawBackground(QPainter *painter, const QRectF &rect) {
     }
 }
 
-void MapLayer::mousePressEvent(QGraphicsSceneMouseEvent *) {}
+void MapLayer::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent) {
+    if (mouseEvent->button() == Qt::LeftButton) {
+        m_dragStartPosition = mouseEvent->scenePos().toPoint();
+    }
+}
 
 void MapLayer::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent) {
     if (mouseEvent->button() == Qt::LeftButton) {
@@ -83,13 +90,16 @@ void MapLayer::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent) {
     }
 }
 
+void MapLayer::mouseMoveEvent(QGraphicsSceneMouseEvent *) {
+}
+
 void MapLayer::dragEnterEvent(QGraphicsSceneDragDropEvent *event) {
     if (event->mimeData()->hasImage()){
         event->acceptProposedAction();
     }
 }
 
-void MapLayer::dragMoveEvent(QGraphicsSceneDragDropEvent * event) {
+void MapLayer::dragMoveEvent(QGraphicsSceneDragDropEvent *event) {
     if(event->mimeData()->hasImage()){
         event->acceptProposedAction();
     }
@@ -105,10 +115,6 @@ void MapLayer::dropEvent(QGraphicsSceneDragDropEvent *event)
 
     event->acceptProposedAction();
 }
-
-void MapLayer::mouseMoveEvent(QGraphicsSceneMouseEvent *) {
-}
-
 
 bool MapLayer::sceneEventFilter(QGraphicsItem *watched, QEvent *event) {
     bool eventHandled = true;
