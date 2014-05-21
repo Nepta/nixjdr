@@ -6,7 +6,7 @@
 #include <QHash>
 #include "Network/Header.h"
 #include "Network/Switch.h"
-#include "chat/Message.h"
+#include "Chat/Message.h"
 #include "User.h"
 
 enum class ChatCodes : quint16;

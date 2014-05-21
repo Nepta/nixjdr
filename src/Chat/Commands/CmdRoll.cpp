@@ -1,4 +1,4 @@
-#include "chat/commands/Commands.h"
+#include "Chat/Commands/Commands.h"
 #include "CmdRoll.h"
 #include "CmdWhisper.h"
 

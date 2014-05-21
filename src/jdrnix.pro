@@ -23,23 +23,29 @@ SOURCES += \
     ChatWidget.cpp \
     ConnectionHelper.cpp \
     Common.cpp \
-    chat/Message.cpp \
-    chat/ChatServer.cpp \
-    chat/ChatClient.cpp \
-    chat/ChatProcessor.cpp \
-    chat/commands/AbstractCmd.cpp \
-    chat/commands/CmdMessageall.cpp \
-    chat/commands/CmdNickname.cpp \
-    chat/commands/CmdWhisper.cpp \
-    chat/commands/Commands.cpp \
-    chat/commands/CmdMessageui.cpp \
-    chat/commands/CmdNicknameAck.cpp \
-    chat/commands/CmdWhisperRep.cpp \
-    chat/commands/CmdRoll.cpp \
-    chat/commands/CmdDisconnect.cpp \
-    chat/commands/CmdNicknamesList.cpp \
-    chat/commands/CmdNicknamesListAck.cpp \
-    chat/commands/CmdConnectionAck.cpp \
+    Chat/Message.cpp \
+    Chat/ChatServer.cpp \
+    Chat/ChatClient.cpp \
+    Chat/ChatProcessor.cpp \
+    Chat/Commands/AbstractCmd.cpp \
+    Chat/Commands/CmdMessageall.cpp \
+    Chat/Commands/CmdNickname.cpp \
+    Chat/Commands/CmdWhisper.cpp \
+    Chat/Commands/Commands.cpp \
+    Chat/Commands/CmdMessageui.cpp \
+    Chat/Commands/CmdNicknameAck.cpp \
+    Chat/Commands/CmdWhisperRep.cpp \
+    Chat/Commands/CmdRoll.cpp \
+    Chat/Commands/CmdDisconnect.cpp \
+    Chat/Commands/CmdNicknamesList.cpp \
+    Chat/Commands/CmdNicknamesListAck.cpp \
+    Chat/Commands/CmdConnectionAck.cpp \
+    Canvas/CanvasView.cpp \
+    Canvas/CanvasScene.cpp \
+    Canvas/Sprite.cpp \
+    Canvas/MapLayer.cpp \
+    Canvas/Layer.cpp \
+    Canvas/Map.cpp \
     Network/Header.cpp \
     Network/Server.cpp \
     Network/Switch.cpp \
@@ -48,9 +54,7 @@ SOURCES += \
     Network/ClientReceiver.cpp \
     Network/Receiver.cpp \
     token/TokenMenu.cpp \
-    token/TokenList.cpp \
-    canvas/CanvasView.cpp \
-    canvas/CanvasScene.cpp
+    token/TokenList.cpp
 
 HEADERS  += \
     MainWindow.h \
@@ -60,25 +64,29 @@ HEADERS  += \
     CustomMdiArea.h \
     ChatWidget.h \
     Common.h \
-    chat/Message.h \
-    chat/ChatServer.h \
-    chat/ChatClient.h \
-    chat/ChatProcessor.h \
-    chat/commands/AbstractCmd.h \
-    chat/commands/CmdMessageall.h \
-    chat/commands/CmdNickname.h \
-    chat/commands/CmdWhisper.h \
-    chat/commands/Commands.h \
-    chat/commands/CmdMessageui.h \
-    chat/commands/CmdNicknameAck.h \
-    chat/commands/CmdWhisperRep.h \
-    chat/commands/CmdRoll.h \
-    chat/commands/CmdDisconnect.h \
-    chat/commands/CmdNicknamesList.h \
-    chat/commands/CmdNicknamesListAck.h \
-    chat/commands/CmdConnectionAck.h \
-    canvas/canvas.h \
-    canvas/canvaseventhandler.h \
+    Chat/Message.h \
+    Chat/ChatServer.h \
+    Chat/ChatClient.h \
+    Chat/ChatProcessor.h \
+    Chat/Commands/AbstractCmd.h \
+    Chat/Commands/CmdMessageall.h \
+    Chat/Commands/CmdNickname.h \
+    Chat/Commands/CmdWhisper.h \
+    Chat/Commands/Commands.h \
+    Chat/Commands/CmdMessageui.h \
+    Chat/Commands/CmdNicknameAck.h \
+    Chat/Commands/CmdWhisperRep.h \
+    Chat/Commands/CmdRoll.h \
+    Chat/Commands/CmdDisconnect.h \
+    Chat/Commands/CmdNicknamesList.h \
+    Chat/Commands/CmdNicknamesListAck.h \
+    Chat/Commands/CmdConnectionAck.h \
+    Canvas/CanvasScene.h \
+    Canvas/CanvasView.h \
+    Canvas/Sprite.h \
+    Canvas/Layer.h \
+    Canvas/MapLayer.h \
+    Canvas/Map.h \
     Network/Switch.h \
     Network/Receiver.h \
     Network/Header.h \
@@ -88,9 +96,7 @@ HEADERS  += \
     Network/ClientReceiver.h \
     Network/Serializable.h \
     token/TokenMenu.h \
-    token/TokenList.h \
-    canvas/CanvasView.h \
-    canvas/CanvasScene.h
+    token/TokenList.h
 
 FORMS    += mainwindow.ui \
     TokenMenu.ui \

@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <QMdiSubWindow>
+#include "Canvas/Map.h"
 #include "Network/Server.h"
 #include "Network/Client.h"
 #include "ChatWidget.h"
@@ -37,12 +38,14 @@ signals:
 private:
     void setupMJ();
     void setupPlayer();
+    void createMap(QString filename);
 
     Ui::MainWindow *ui;
     DiceMenu *m_diceMenu;
     User *m_User;
     Server *m_Server;
     Client *m_Client;
+    Map *m_Map;
 };
 
 #endif // MAINWINDOW_H

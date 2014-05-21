@@ -1,7 +1,7 @@
 #include <QTranslator>
-#include "commands/AbstractCmd.h"
-#include "commands/CmdNickname.h"
-#include "commands/CmdNicknamesList.h"
+#include "Commands/AbstractCmd.h"
+#include "Commands/CmdNickname.h"
+#include "Commands/CmdNicknamesList.h"
 #include "Message.h"
 #include "ChatServer.h"
 

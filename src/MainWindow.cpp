@@ -3,12 +3,15 @@
 #include <QApplication>
 #include <QDesktopWidget>
 #include <QToolBox>
+
+#include "Canvas/CanvasScene.h"
+#include "Canvas/CanvasView.h"
+#include "Canvas/MapLayer.h"
+
 #include "CustomMdiArea.h"
+#include "ConnectionHelper.h"
 #include "MainWindow.h"
 #include "ui_mainwindow.h"
-#include "ConnectionHelper.h"
-#include <canvas/CanvasScene.h>
-#include <canvas/CanvasView.h>
 
 MainWindow::MainWindow(User *user, QWidget *parent) :
     QMainWindow(parent),
@@ -55,19 +58,30 @@ MainWindow::~MainWindow()
     delete m_User;
     delete m_Server;
     delete m_Client;
+    delete m_Map;
 }
 
 void MainWindow::updateMenu() {
     QMdiSubWindow *subwindow  = ui->tableArea->activeSubWindow();
-    if (subwindow) {
-        /* TODO
-         * QString classname = subwindow->metaObject()->className();
-         * isMapSubwindow = (classname == QString("MapMdiSubwindow"));
-         */
+    if (subwindow != NULL) {
+        bool isMapSubwindow = (subwindow->windowTitle() == tr("Carte"));
 
-        bool isMapSubwindow = false;
         ui->actionEditMap->setEnabled(isMapSubwindow);
     }
+}
+
+void MainWindow::createMap(QString filename) {
+    QListWidget *tokenList = ui->tokenPage->getTokenList();
+
+    // TODO should be able to choose the step value in a message box
+    m_Map = new Map(filename, tokenList->currentItem()->text(), 32);
+
+    ui->tableArea->addSubWindow(m_Map);
+    m_Map->show();
+    ui->tableArea->subWindowList().last()->move(0, 0);
+
+    connect(tokenList, SIGNAL(currentItemChanged(QListWidgetItem*,  QListWidgetItem *)),
+            m_Map->getMapLayer(), SLOT(setTokenPath(QListWidgetItem*)));
 }
 
 void MainWindow::on_actionCreateMap_triggered(){
@@ -75,17 +89,7 @@ void MainWindow::on_actionCreateMap_triggered(){
                                                     "Images (*.png *.xpm *.jpg)");
 
     if (filename != NULL) {
-            CanvasScene* canvas = new CanvasScene(filename, 32);
-            CanvasView* view = new CanvasView(canvas);
-            QSize sizeWidget;
-
-            ui->tableArea->addSubWindow(view);
-            sizeWidget = view->getCanvasScene()->sceneRect().size().toSize();
-            ui->tableArea->subWindowList().last()->setMaximumSize(sizeWidget);
-            ui->tableArea->subWindowList().last()->show();
-            connect(ui->tokenPage->getTokenList(),SIGNAL(itemClicked(QListWidgetItem*)),
-                    view->getCanvasScene(), SLOT(setSpritePath(QListWidgetItem*)));
-
+        createMap(filename);
     }
 }
 
@@ -95,7 +99,8 @@ void MainWindow::on_actionEditMap_triggered()
                                                     "Images (*.png *.xpm *.jpg)");
 
     if (filename != NULL) {
-        // TODO
+        delete ui->tableArea->activeSubWindow();
+        createMap(filename);
     }
 }
 
@@ -115,7 +120,7 @@ void MainWindow::setupMJ() {
     m_Server = new Server;
 
     /* Connect sendMessageToChatUi from m_Server to m_ChatWidget in order to display system messages
-     * during the initialization.*/
+     * during the initialization. */
     connect(m_Server, SIGNAL(sendMessageToChatUi(QString)),
             ui->m_ChatWidget, SLOT(receivedMessage(QString))
     );

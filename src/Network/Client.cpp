@@ -1,4 +1,4 @@
-#include "chat/ChatClient.h"
+#include "Chat/ChatClient.h"
 #include "Client.h"
 
 Client::Client(User *user)

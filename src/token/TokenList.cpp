@@ -26,6 +26,8 @@ TokenList::TokenList()
         QIcon("resource/sanae.png"), "sanae"));
     this->insertItem(11, new QListWidgetItem(
         QIcon("resource/aya.png"), "aya"));
+
+    setCurrentItem(item(0));
 }
 
 void TokenList::dragMoveEvent(QDragMoveEvent * event){
@@ -53,7 +55,7 @@ void TokenList::mousePressEvent(QMouseEvent *event)
     mimeData->setImageData(spriteToMove.toImage());
     drag->setMimeData(mimeData);
 
-    Qt::DropAction dropAction = drag->exec(Qt::CopyAction | Qt::MoveAction);
+    drag->exec(Qt::CopyAction | Qt::MoveAction);
 }
 
 QListWidgetItem TokenList::getCurrentItem(){
