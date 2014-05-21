@@ -3,13 +3,12 @@
 #include <QApplication>
 #include <QDesktopWidget>
 #include <QToolBox>
-
 #include "CustomMdiArea.h"
 #include "MainWindow.h"
 #include "ui_mainwindow.h"
 #include "ConnectionHelper.h"
-#include "canvas/canvas.h"
-#include "canvas/canvaseventhandler.h"
+#include <canvas/CanvasScene.h>
+#include <canvas/CanvasView.h>
 
 MainWindow::MainWindow(User *user, QWidget *parent) :
     QMainWindow(parent),
@@ -24,7 +23,7 @@ MainWindow::MainWindow(User *user, QWidget *parent) :
     m_diceMenu = new DiceMenu();
     ui->tableArea->addSubWindow(m_diceMenu, Qt::CustomizeWindowHint |
                                 Qt::WindowTitleHint | Qt::WindowMinMaxButtonsHint);
-
+        //get a nice dice menu window
     ui->tableArea->subWindowList().last()->setGeometry(0,0,470,90);
     ui->tableArea->subWindowList().last()->setMinimumSize(ui->tableArea->size());
     ui->tableArea->subWindowList().last()->setWindowTitle(tr("Dés"));
@@ -76,18 +75,16 @@ void MainWindow::on_actionCreateMap_triggered(){
                                                     "Images (*.png *.xpm *.jpg)");
 
     if (filename != NULL) {
-            Canvas* canvas = new Canvas(filename, 32);
-    //        CanvasEventHandler* canvasEventHandler = new CanvasEventHandler();
-            QSize sizeWindow;
+            CanvasScene* canvas = new CanvasScene(filename, 32);
+            CanvasView* view = new CanvasView(canvas);
             QSize sizeWidget;
 
-            ui->tableArea->addSubWindow(canvas->getView());
-            sizeWidget = canvas->getScene()->sceneRect().size().toSize();
-            sizeWindow = ui->tableArea->subWindowList().last()->frameGeometry().size();
-            ui->tableArea->subWindowList().last()->setMaximumSize(2*sizeWidget-sizeWindow);
+            ui->tableArea->addSubWindow(view);
+            sizeWidget = view->getCanvasScene()->sceneRect().size().toSize();
+            ui->tableArea->subWindowList().last()->setMaximumSize(sizeWidget);
             ui->tableArea->subWindowList().last()->show();
-
-            connect(ui->tokenPage->getUi()->listToken,SIGNAL(itemClicked(QListWidgetItem*)), canvas->getCanvasEventHandler(), SLOT(setSpritePath(QListWidgetItem*)));
+            connect(ui->tokenPage->getTokenList(),SIGNAL(itemClicked(QListWidgetItem*)),
+                    view->getCanvasScene(), SLOT(setSpritePath(QListWidgetItem*)));
 
     }
 }

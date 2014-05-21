@@ -164,7 +164,7 @@
   <customwidget>
    <class>TokenMenu</class>
    <extends>QWidget</extends>
-   <header>TokenMenu.h</header>
+   <header>token/TokenMenu.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>

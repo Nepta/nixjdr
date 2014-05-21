@@ -18,7 +18,6 @@ SOURCES += \
     Main.cpp \
     MainWindow.cpp \
     User.cpp \
-    TokenMenu.cpp \
     DiceMenu.cpp \
     CustomMdiArea.cpp \
     ChatWidget.cpp \
@@ -41,20 +40,21 @@ SOURCES += \
     chat/commands/CmdNicknamesList.cpp \
     chat/commands/CmdNicknamesListAck.cpp \
     chat/commands/CmdConnectionAck.cpp \
-    canvas/canvas.cpp \
-    canvas/canvaseventhandler.cpp \
     Network/Header.cpp \
     Network/Server.cpp \
     Network/Switch.cpp \
     Network/ServerReceiver.cpp \
     Network/Client.cpp \
     Network/ClientReceiver.cpp \
-    Network/Receiver.cpp
+    Network/Receiver.cpp \
+    token/TokenMenu.cpp \
+    token/TokenList.cpp \
+    canvas/CanvasView.cpp \
+    canvas/CanvasScene.cpp
 
 HEADERS  += \
     MainWindow.h \
     User.h \
-    TokenMenu.h \
     DiceMenu.h \
     ConnectionHelper.h \
     CustomMdiArea.h \
@@ -86,7 +86,11 @@ HEADERS  += \
     Network/ServerReceiver.h \
     Network/Client.h \
     Network/ClientReceiver.h \
-    Network/Serializable.h
+    Network/Serializable.h \
+    token/TokenMenu.h \
+    token/TokenList.h \
+    canvas/CanvasView.h \
+    canvas/CanvasScene.h
 
 FORMS    += mainwindow.ui \
     TokenMenu.ui \
