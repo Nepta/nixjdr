@@ -4,7 +4,7 @@
 #include <QMainWindow>
 #include <QMdiSubWindow>
 #include "ChatWidget.h"
-#include "TokenMenu.h"
+#include "token/TokenMenu.h"
 #include "DiceMenu.h"
 #include "ui_TokenMenu.h"
 #include "ui_DiceMenu.h"

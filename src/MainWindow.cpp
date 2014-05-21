@@ -21,7 +21,7 @@ MainWindow::MainWindow(User *user, QWidget *parent) :
     m_diceMenu = new DiceMenu();
     ui->tableArea->addSubWindow(m_diceMenu, Qt::CustomizeWindowHint |
                                 Qt::WindowTitleHint | Qt::WindowMinMaxButtonsHint);
-
+        //get a nice dice menu window
     ui->tableArea->subWindowList().last()->setGeometry(0,0,470,90);
     ui->tableArea->subWindowList().last()->setMinimumSize(ui->tableArea->size());
     ui->tableArea->subWindowList().last()->setWindowTitle(tr("Dés"));
@@ -73,7 +73,7 @@ void MainWindow::on_actionCreateMap_triggered(){
             sizeWidget = view->getCanvasScene()->sceneRect().size().toSize();
             ui->tableArea->subWindowList().last()->setMaximumSize(sizeWidget);
             ui->tableArea->subWindowList().last()->show();
-            connect(ui->tokenPage->getUi()->listToken,SIGNAL(itemClicked(QListWidgetItem*)),
+            connect(ui->tokenPage->getTokenList(),SIGNAL(itemClicked(QListWidgetItem*)),
                     view->getCanvasScene(), SLOT(setSpritePath(QListWidgetItem*)));
 
     }
