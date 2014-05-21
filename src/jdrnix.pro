@@ -51,7 +51,8 @@ SOURCES += \
     token/TokenList.cpp \
     canvas/CanvasView.cpp \
     canvas/CanvasScene.cpp \
-    DataBase/DataBase.cpp
+    DataBase/DataBase.cpp \
+    DataBase/DBItem.cpp
 
 HEADERS  += \
     MainWindow.h \
@@ -92,7 +93,8 @@ HEADERS  += \
     token/TokenList.h \
     canvas/CanvasView.h \
     canvas/CanvasScene.h \ 
-    DataBase/DataBase.h
+    DataBase/DataBase.h \
+    DataBase/DBItem.h
 
 FORMS    += mainwindow.ui \
     TokenMenu.ui \
