@@ -123,8 +123,10 @@ bool MapLayer::sceneEventFilter(QGraphicsItem *watched, QEvent *event) {
 
     switch ((int) event->type()) {
         case QEvent::GraphicsSceneMouseRelease: {
-            if (mouseEvent->button() == Qt::RightButton &&
-                    mouseEvent->buttonDownScenePos(Qt::RightButton) == mouseEvent->scenePos()) {
+            qreal distanceCovered = (mouseEvent->buttonDownScenePos(Qt::RightButton)
+                                            - mouseEvent->scenePos()).manhattanLength();
+
+            if (mouseEvent->button() == Qt::RightButton && distanceCovered < DELTA_DELETE_SPRITE) {
                 removeSprite(watched);
             }
             else if (mouseEvent->button() == Qt::LeftButton) {

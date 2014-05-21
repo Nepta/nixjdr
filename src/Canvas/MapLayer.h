@@ -18,6 +18,12 @@ public:
      */
     static const int START_DRAG_DISTANCE = 10;
 
+    /**
+     * @brief DELTA_DELETE_SPRITE The event called to delete a Sprite is valid if the cursor does not
+     * cover a distance superior to this constant.
+     */
+    static const int DELTA_DELETE_SPRITE = 40;
+
     MapLayer(QString tokenPath, int step = 1);
     ~MapLayer();
 
