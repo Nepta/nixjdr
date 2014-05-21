@@ -7,34 +7,25 @@
 #include <QGraphicsPixmapItem>
 #include <QGraphicsScene>
 #include <QListWidgetItem>
+#include <QGraphicsSceneMouseEvent>
+#include "Layer.h"
 
-class CanvasScene : public QGraphicsScene{
+class CanvasScene : public QGraphicsScene {
     Q_OBJECT
 
 public:
-    CanvasScene();
-    CanvasScene(QString filename, int step=1);
+    CanvasScene(QString filename);
     ~CanvasScene();
-    CanvasScene* getCanvasScene();
-    QGraphicsPixmapItem* getPixmapItem(int x, int y);
-    QString getSpritePath();
-    void addSprite(QPixmap* sprite, int x, int y);
-    void removeSprite(int x, int y);
+    void addLayer(Layer *layer);
 
 private:
-    void initMatrix(int width, int height);
-    void drawGrid(int width, int height);
-    int indexOfUpperItem(int x, int y);
+    void drawBackground (QPainter *painter, const QRectF &rect);
 
-private:
     int m_step;
-    QPixmap* m_background;
-    QList<QList<QList<QGraphicsPixmapItem*>>> m_spriteMatrix;
-    QString m_spritePath;
-
-public slots:
-    void setSpritePath(QListWidgetItem* sprite);
-
+    QPixmap *m_background;
+    QList<Layer*> m_Layers;
 };
 
 #endif // CANVASSCENE_H
+
+

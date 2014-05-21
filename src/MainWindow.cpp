@@ -4,12 +4,14 @@
 #include <QDesktopWidget>
 #include <QToolBox>
 
+#include "canvas/CanvasScene.h"
+#include "canvas/CanvasView.h"
+#include "canvas/MapLayer.h"
+
 #include "CustomMdiArea.h"
 #include "MainWindow.h"
 #include "ui_mainwindow.h"
 
-#include <canvas/CanvasScene.h>
-#include <canvas/CanvasView.h>
 
 MainWindow::MainWindow(User *user, QWidget *parent) :
     QMainWindow(parent),
@@ -57,7 +59,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::updateMenu() {
     QMdiSubWindow *subwindow  = ui->tableArea->activeSubWindow();
-    if (subwindow) {
+    if (subwindow != NULL) {
         /* TODO
          * QString classname = subwindow->metaObject()->className();
          * isMapSubwindow = (classname == QString("MapMdiSubwindow"));
@@ -73,16 +75,21 @@ void MainWindow::on_actionCreateMap_triggered(){
                                                     "Images (*.png *.xpm *.jpg)");
 
     if (filename != NULL) {
-            CanvasScene* canvas = new CanvasScene(filename, 32);
-            CanvasView* view = new CanvasView(canvas);
-            QSize sizeWidget;
+        QListWidget *listWidget = ui->tokenPage->getUi()->listToken;
 
-            ui->tableArea->addSubWindow(view);
-            sizeWidget = view->getCanvasScene()->sceneRect().size().toSize();
-            ui->tableArea->subWindowList().last()->setMaximumSize(sizeWidget);
-            ui->tableArea->subWindowList().last()->show();
-            connect(ui->tokenPage->getUi()->listToken,SIGNAL(itemClicked(QListWidgetItem*)),
-                    view->getCanvasScene(), SLOT(setSpritePath(QListWidgetItem*)));
+        // TODO Map class
+        CanvasScene* scene = new CanvasScene(filename);
+
+        // TODO should be able to choose the step value in a message box
+        MapLayer *mapLayer = new MapLayer(listWidget->currentItem()->text(), 32);
+        scene->addLayer(mapLayer);
+
+        CanvasView* view = new CanvasView(scene);
+        ui->tableArea->addSubWindow(view);
+        view->show();
+
+        connect(listWidget, SIGNAL(itemClicked(QListWidgetItem*)),
+                mapLayer, SLOT(setTokenPath(QListWidgetItem*)));
 
     }
 }
@@ -101,7 +108,7 @@ void MainWindow::setupMJ() {
     m_Server = new Server;
 
     /* Connect sendMessageToChatUi from m_Server to m_ChatWidget in order to display system messages
-     * during the initialization.*/
+     * during the initialization. &*/
     connect(m_Server, SIGNAL(sendMessageToChatUi(QString)),
             ui->m_ChatWidget, SLOT(receivedMessage(QString))
     );

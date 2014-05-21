@@ -43,13 +43,16 @@ SOURCES += \
     chat/commands/CmdConnectionAck.cpp \
     canvas/CanvasView.cpp \
     canvas/CanvasScene.cpp \
+    canvas/Sprite.cpp \
     Network/Header.cpp \
     Network/Server.cpp \
     Network/Switch.cpp \
     Network/ServerReceiver.cpp \
     Network/Client.cpp \
     Network/ClientReceiver.cpp \
-    Network/Receiver.cpp
+    Network/Receiver.cpp \
+    canvas/MapLayer.cpp \
+    canvas/Layer.cpp
 
 HEADERS  += \
     MainWindow.h \
@@ -78,7 +81,8 @@ HEADERS  += \
     chat/commands/CmdNicknamesListAck.h \
     chat/commands/CmdConnectionAck.h \
     canvas/CanvasScene.h \
-    canvas/CanvasView.h
+    canvas/CanvasView.h \
+    canvas/Sprite.h \
     Network/Switch.h \
     Network/Receiver.h \
     Network/Header.h \
@@ -86,7 +90,9 @@ HEADERS  += \
     Network/ServerReceiver.h \
     Network/Client.h \
     Network/ClientReceiver.h \
-    Network/Serializable.h
+    Network/Serializable.h \
+    canvas/Layer.h \
+    canvas/MapLayer.h
 
 FORMS    += mainwindow.ui \
     TokenMenu.ui \

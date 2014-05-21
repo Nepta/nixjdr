@@ -1,19 +1,12 @@
 #include "CanvasView.h"
 
-CanvasView::CanvasView()
-{
-
-}
+#include <QDebug>
 
 CanvasView::CanvasView(CanvasScene* scene)
 {
     m_scene = scene;
-    m_xClick = 0;
-    m_yClick = 0;
-    this->setScene(m_scene);
-    this->ensureVisible(m_scene->sceneRect());
-    this->setAcceptDrops(true);
-
+    setScene(m_scene);
+    setAcceptDrops(true);
 }
 
 CanvasView::~CanvasView()
@@ -21,38 +14,25 @@ CanvasView::~CanvasView()
     delete m_scene;
 }
 
-
-CanvasView *CanvasView::getCanvasView()
-{
-    return this;
-}
-
-CanvasScene *CanvasView::getCanvasScene()
-{
-    return m_scene;
-}
-
-
-void CanvasView::setCanvasScene(CanvasScene *scene)
-{
-    m_scene = scene;
-}
-
-void CanvasView::dragEnterEvent(QDragEnterEvent *event)
+/*void CanvasView::dragEnterEvent(QDragEnterEvent *event)
 {
     if (event->mimeData()->hasImage()){
             event->acceptProposedAction();
     }
-}
+}*/
 
-void CanvasView::dragMoveEvent(QDragMoveEvent * event){
+/*void CanvasView::dragMoveEvent(QDragMoveEvent * event) {
+    QGraphicsView;;dragMoveEvent(event);
+
     if(event->mimeData()->hasImage()){
         event->acceptProposedAction();
     }
-}
+}*/
 
-void CanvasView::dropEvent(QDropEvent *event)
+/*void CanvasView::dropEvent(QDropEvent *event)
 {
+    QGraphicsView::dropEvent(event);
+
     int x = event->pos().x();
     int y = event->pos().y();
     QPixmap* sprite = new QPixmap();
@@ -62,30 +42,34 @@ void CanvasView::dropEvent(QDropEvent *event)
     m_scene->addSprite(sprite, x, y);
 
     event->acceptProposedAction();
-}
+}*/
 
 
-void CanvasView::mousePressEvent(QMouseEvent *event)
+/*void CanvasView::mousePressEvent(QMouseEvent *event)
 {
+    QGraphicsView::mousePressEvent(event);
+
     m_xClick = event->x();
     m_yClick = event->y();
 
-    if(event->button() == Qt::LeftButton){
+    qDebug() << __FILE__
+             << "pos: " << event->pos()
+             << "local pos: " << event->localPos()
+             << "global pos: " << event->globalPos()
+             << "window pos: " << event->windowPos();
 
+    if (event->button() == Qt::LeftButton) {
         m_dragStartPosition = event->pos();
-
-        QPixmap* sprite = new QPixmap(this->getCanvasScene()->getSpritePath());
-
-//        m_scene->addSprite(sprite, m_xClick, m_yClick);
     }
-
-    else if(event->button() == Qt::RightButton){
-        m_scene->removeSprite(m_xClick, m_yClick);
+    else if (event->button() == Qt::RightButton) {
+        //m_scene->removeSprite(m_xClick, m_yClick);
     }
-}
+}*/
 
-void CanvasView::mouseMoveEvent(QMouseEvent *event)
+/*void CanvasView::mouseMoveEvent(QMouseEvent *event)
 {
+    QGraphicsView::mouseMoveEvent(event);
+
     if (!(event->buttons() & Qt::LeftButton))
         return;
     if ((event->pos() - m_dragStartPosition).manhattanLength()
@@ -109,18 +93,18 @@ void CanvasView::mouseMoveEvent(QMouseEvent *event)
     m_scene->removeSprite(m_xClick, m_yClick);
 
     Qt::DropAction dropAction = drag->exec(Qt::CopyAction | Qt::MoveAction);
-}
+}*/
 
-void CanvasView::mouseReleaseEvent(QMouseEvent *event){
+/*void CanvasView::mouseReleaseEvent(QMouseEvent *event) {
+    QGraphicsView::mouseReleaseEvent(event);
+
     m_xClick = event->x();
     m_yClick = event->y();
 
-    if(event->button() == Qt::LeftButton){
+    if (event->button() == Qt::LeftButton) {
+        // TODO purpose? m_dragStartPosition = event->pos();
 
-        m_dragStartPosition = event->pos();
-
-        QPixmap* sprite = new QPixmap(this->getCanvasScene()->getSpritePath());
-
-        m_scene->addSprite(sprite, m_xClick, m_yClick);
+        //QPixmap* sprite = new QPixmap(m_scene->getSpritePath());
+        //m_scene->addSprite(sprite, m_xClick, m_yClick);
     }
-}
+}*/

@@ -33,6 +33,7 @@ TokenMenu::TokenMenu(QWidget *parent) :
     ui->listToken->insertItem(11, new QListWidgetItem(
         QIcon("resource/aya.png"), "aya"));
 
+    ui->listToken->setCurrentItem(ui->listToken->item(0));
 }
 
 TokenMenu::~TokenMenu()

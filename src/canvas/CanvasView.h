@@ -1,6 +1,7 @@
 #ifndef CANVASVIEW_H
 #define CANVASVIEW_H
 
+// TODO faire le tri dans les includes
 #include <QGraphicsView>
 #include <QMouseEvent>
 #include <QMouseEvent>
@@ -12,31 +13,18 @@
 
 #include "CanvasScene.h"
 
-#define START_DRAG_DISTANCE 4
-
-class CanvasView : public QGraphicsView{
+class CanvasView : public QGraphicsView {
 
 public:
+    //static const int START_DRAG_DISTANCE = 4;
+
     CanvasView();
     CanvasView(CanvasScene* scene);
     ~CanvasView();
-    CanvasView* getCanvasView();
-    CanvasScene* getCanvasScene();
-
-private:
-    void setCanvasScene(CanvasScene* scene);
-    void dragEnterEvent(QDragEnterEvent *event);
-    void dragMoveEvent(QDragMoveEvent * event);
-    void dropEvent(QDropEvent *event);
-    void mousePressEvent(QMouseEvent *event);
-    void mouseMoveEvent(QMouseEvent * event);
-    void mouseReleaseEvent(QMouseEvent *event);
 
 private:
     CanvasScene* m_scene;
-    QPoint m_dragStartPosition;
-    int m_xClick;
-    int m_yClick;
+    //QPoint m_dragStartPosition;
 };
 
 #endif // CANVASVIEW_H
