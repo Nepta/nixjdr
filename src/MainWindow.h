@@ -45,7 +45,6 @@ private:
     User *m_User;
     Server *m_Server;
     Client *m_Client;
-    Map *m_Map;
 };
 
 #endif // MAINWINDOW_H

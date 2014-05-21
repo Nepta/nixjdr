@@ -6,15 +6,16 @@ CmdNickname::CmdNickname() {
 
 void CmdNickname::execute(Header &header, QString &arg) {
     QString oldNickname = header.getSocketUserNickname();
-    if(arg != ""){
-    // save the user and remove the old value from the hash
+
+    if (arg != "") {
+        // save the user and remove the old value from the hash
         User *user = AbstractCmd::getUsersListServer()->value(oldNickname);
         AbstractCmd::getUsersListServer()->remove(oldNickname);
 
         executeOnUser(user, arg, oldNickname, false);
     }
-    else{
-        Message msg(QString("<em>Veuillez spécifier un pseudonyme</em>"));
+    else {
+        Message msg(tr("<em>Veuillez spécifier un pseudonyme</em>"));
         emit cmdSendPacketToOne(TargetCode::CHAT_CLIENT, ChatCodes::SRVCMD_MESSAGE, msg, oldNickname);
     }
 }

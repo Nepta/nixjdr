@@ -58,7 +58,6 @@ MainWindow::~MainWindow()
     delete m_User;
     delete m_Server;
     delete m_Client;
-    delete m_Map;
 }
 
 void MainWindow::updateMenu() {
@@ -74,14 +73,14 @@ void MainWindow::createMap(QString filename) {
     QListWidget *tokenList = ui->tokenPage->getUi()->m_tokenList;
 
     // TODO should be able to choose the step value in a message box
-    m_Map = new Map(filename, tokenList->currentItem()->text(), 32);
+    Map *map = new Map(filename, tokenList->currentItem()->text(), 32);
 
-    ui->tableArea->addSubWindow(m_Map);
-    m_Map->show();
+    ui->tableArea->addSubWindow(map);
+    map->show();
     ui->tableArea->subWindowList().last()->move(0, 0);
 
     connect(tokenList, SIGNAL(currentItemChanged(QListWidgetItem*,  QListWidgetItem *)),
-            m_Map->getMapLayer(), SLOT(setTokenPath(QListWidgetItem*)));
+            map->getMapLayer(), SLOT(setTokenPath(QListWidgetItem*)));
 }
 
 void MainWindow::on_actionCreateMap_triggered(){
