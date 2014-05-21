@@ -5,18 +5,15 @@
 #include "CanvasScene.h"
 #include "MapLayer.h"
 
-class Map
+class Map : public CanvasView
 {
 public:
     Map(QString bgFilename, QString tokenPath, int tileStep);
     ~Map();
 
-    CanvasView *getView();
     MapLayer *getMapLayer();
 
 private:
-    CanvasScene m_Scene;
-    CanvasView m_View;
     MapLayer m_MapLayer;
 };
 

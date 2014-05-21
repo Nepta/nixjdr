@@ -1,15 +1,13 @@
 #include "CanvasView.h"
 
-#include <QDebug>
-
-CanvasView::CanvasView(CanvasScene* scene)
-{
-    m_scene = scene;
-    setScene(m_scene);
+CanvasView::CanvasView() {
     setAcceptDrops(true);
 }
 
-CanvasView::~CanvasView()
+CanvasView::CanvasView(CanvasScene* scene) :
+    CanvasView()
 {
-    delete m_scene;
+    setScene(scene);
 }
+
+CanvasView::~CanvasView() {}

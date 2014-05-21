@@ -37,6 +37,7 @@ signals:
 private:
     void setupMJ();
     void setupPlayer();
+    void createMap(QString filename);
 
     Ui::MainWindow *ui;
     DiceMenu *m_diceMenu;

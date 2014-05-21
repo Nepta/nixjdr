@@ -16,7 +16,7 @@ public:
     /**
      * @brief START_DRAG_DISTANCE Distance to cover in order to start a drag event.
      */
-    static const int START_DRAG_DISTANCE = 10;
+    static const int START_DRAG_DISTANCE = 40;
 
     /**
      * @brief DELTA_DELETE_SPRITE The event called to delete a Sprite is valid if the cursor does not

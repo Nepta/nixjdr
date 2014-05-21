@@ -10,9 +10,6 @@ public:
     CanvasView();
     CanvasView(CanvasScene* scene);
     ~CanvasView();
-
-private:
-    CanvasScene* m_scene;
 };
 
 #endif // CANVASVIEW_H

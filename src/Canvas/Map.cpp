@@ -1,15 +1,15 @@
 #include "Map.h"
 
 Map::Map(QString bgFilename, QString tokenPath, int tileStep) :
-    m_Scene(bgFilename), m_View(&m_Scene), m_MapLayer(tokenPath, tileStep)
+    m_MapLayer(tokenPath, tileStep)
 {
-    m_Scene.addLayer(&m_MapLayer);
+    CanvasScene *scene = new CanvasScene(bgFilename);
+    scene->addLayer(&m_MapLayer);
+    setScene(scene);
+    setWindowTitle(tr("Carte"));
 }
 
-Map::~Map() {}
-
-CanvasView *Map::getView() {
-    return &m_View;
+Map::~Map() {
 }
 
 MapLayer *Map::getMapLayer() {

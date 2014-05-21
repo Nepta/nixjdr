@@ -61,14 +61,24 @@ MainWindow::~MainWindow()
 void MainWindow::updateMenu() {
     QMdiSubWindow *subwindow  = ui->tableArea->activeSubWindow();
     if (subwindow != NULL) {
-        /* TODO
-         * QString classname = subwindow->metaObject()->className();
-         * isMapSubwindow = (classname == QString("MapMdiSubwindow"));
-         */
+        bool isMapSubwindow = (subwindow->windowTitle() == tr("Carte"));
 
-        bool isMapSubwindow = false;
         ui->actionEditMap->setEnabled(isMapSubwindow);
     }
+}
+
+void MainWindow::createMap(QString filename) {
+    QListWidget *listWidget = ui->tokenPage->getUi()->listToken;
+
+    // TODO should be able to choose the step value in a message box
+    m_Map = new Map(filename, listWidget->currentItem()->text(), 32);
+
+    ui->tableArea->addSubWindow(m_Map);
+    m_Map->show();
+    ui->tableArea->subWindowList().last()->move(0, 0);
+
+    connect(listWidget, SIGNAL(currentItemChanged(QListWidgetItem*,  QListWidgetItem *)),
+            m_Map->getMapLayer(), SLOT(setTokenPath(QListWidgetItem*)));
 }
 
 void MainWindow::on_actionCreateMap_triggered(){
@@ -76,16 +86,7 @@ void MainWindow::on_actionCreateMap_triggered(){
                                                     "Images (*.png *.xpm *.jpg)");
 
     if (filename != NULL) {
-        QListWidget *listWidget = ui->tokenPage->getUi()->listToken;
-
-        // TODO should be able to choose the step value in a message box
-        m_Map = new Map(filename, listWidget->currentItem()->text(), 32);
-
-        ui->tableArea->addSubWindow(m_Map->getView());
-        m_Map->getView()->show();
-
-        connect(listWidget, SIGNAL(currentItemChanged(QListWidgetItem*,  QListWidgetItem *)),
-                m_Map->getMapLayer(), SLOT(setTokenPath(QListWidgetItem*)));
+        createMap(filename);
     }
 }
 
@@ -95,7 +96,8 @@ void MainWindow::on_actionEditMap_triggered()
                                                     "Images (*.png *.xpm *.jpg)");
 
     if (filename != NULL) {
-        // TODO
+        delete ui->tableArea->activeSubWindow();
+        createMap(filename);
     }
 }
 
