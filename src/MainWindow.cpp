@@ -84,7 +84,7 @@ void MainWindow::on_actionCreateMap_triggered(){
         ui->tableArea->addSubWindow(m_Map->getView());
         m_Map->getView()->show();
 
-        connect(listWidget, SIGNAL(itemChanged(QListWidgetItem*)),
+        connect(listWidget, SIGNAL(currentItemChanged(QListWidgetItem*,  QListWidgetItem *)),
                 m_Map->getMapLayer(), SLOT(setTokenPath(QListWidgetItem*)));
     }
 }
