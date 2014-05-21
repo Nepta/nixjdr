@@ -16,15 +16,12 @@
 class CanvasView : public QGraphicsView {
 
 public:
-    //static const int START_DRAG_DISTANCE = 4;
-
     CanvasView();
     CanvasView(CanvasScene* scene);
     ~CanvasView();
 
 private:
     CanvasScene* m_scene;
-    //QPoint m_dragStartPosition;
 };
 
 #endif // CANVASVIEW_H

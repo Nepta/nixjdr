@@ -3,10 +3,7 @@
 #include <QDebug>
 
 Sprite::Sprite(const QPixmap &pixmap, QGraphicsItem *parent) :
-    QGraphicsPixmapItem(pixmap, parent)
-{
-    setAcceptDrops(true);
-}
+    QGraphicsPixmapItem(pixmap, parent) {}
 
 Sprite::Sprite(QByteArray& data) {
     unserialize(data);
@@ -23,21 +20,4 @@ QByteArray Sprite::serialize() {
 
 void Sprite::unserialize(QByteArray& data) {
     // TODO retrieve pixmap, x ,y, which scene
-}
-
-// Reimplemented from QGraphicsPixmapItems
-
-void Sprite::dragEnterEvent(QGraphicsSceneDragDropEvent *event) {
-    // TODO
-    qDebug() << __FILE__ << "dragEnterEvent";
-}
-
-void Sprite::dragLeaveEvent(QGraphicsSceneDragDropEvent *event) {
-    // TODO
-    qDebug() << __FILE__ << "dragLeaveEvent";
-}
-
-void Sprite::dropEvent(QGraphicsSceneDragDropEvent *event) {
-    // TODO
-    qDebug() << __FILE__ << "dropEvent";
 }

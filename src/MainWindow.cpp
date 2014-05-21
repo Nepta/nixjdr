@@ -108,7 +108,7 @@ void MainWindow::setupMJ() {
     m_Server = new Server;
 
     /* Connect sendMessageToChatUi from m_Server to m_ChatWidget in order to display system messages
-     * during the initialization. &*/
+     * during the initialization. */
     connect(m_Server, SIGNAL(sendMessageToChatUi(QString)),
             ui->m_ChatWidget, SLOT(receivedMessage(QString))
     );

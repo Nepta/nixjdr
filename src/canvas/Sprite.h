@@ -16,10 +16,6 @@ public:
 
 private:
     void unserialize(QByteArray& data);
-
-    void dragEnterEvent(QGraphicsSceneDragDropEvent *event);
-    void dragLeaveEvent(QGraphicsSceneDragDropEvent *event);
-    void dropEvent(QGraphicsSceneDragDropEvent *event);
 };
 
 #endif // SPRITE_H
