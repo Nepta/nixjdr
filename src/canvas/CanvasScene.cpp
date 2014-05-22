@@ -16,9 +16,7 @@ CanvasScene::CanvasScene(QString filename, int step) : DBItem("Map")
 {
 	 m_step = step;
 	 pushDB(filename);
-	 pushDB(QString::number(step));
-	 qDebug() << "step: " << step;
-	 qDebug() << value(1);
+	 pushDB(step);
     m_spritePath = "resource/sakuya.png";
     m_background = new QPixmap(filename);
     const int width = m_background->width();

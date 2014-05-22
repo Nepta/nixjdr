@@ -24,12 +24,11 @@ void DataBase::initDB(){
 
 void DataBase::addItem(DBItem& item){
 	//table map(name,tileSize)
-	QString queryString = QString("insert into %1 values(%2, %3)")
+	QString queryString = QString("insert into %1 values(\"%2\", \"%3\")")
 			.arg(item.type())
 			.arg(item.value(0))
 			.arg(item.value(1))
 	;
-	qDebug() << item.value(1);
 	QSqlQuery query(queryString);
 	query.exec();
 }
