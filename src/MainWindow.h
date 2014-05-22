@@ -11,8 +11,6 @@
 #include "DiceMenu.h"
 #include "ui_TokenMenu.h"
 #include "ui_DiceMenu.h"
-#include "DataBase/DataBase.h"
-
 
 namespace Ui {
     class MainWindow;
@@ -46,7 +44,6 @@ private:
     User *m_User;
     Server *m_Server;
 	 Client *m_Client;
-	 DataBase *m_db;
 };
 
 #endif // MAINWINDOW_H

@@ -18,7 +18,6 @@ MainWindow::MainWindow(User *user, QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-	 m_db = new DataBase("miaou");
 
     // Sets Null pointer for later deletion if m_Server is not used
     m_Server = NULL;
@@ -59,7 +58,6 @@ MainWindow::~MainWindow()
     delete m_User;
     delete m_Server;
     delete m_Client;
-	 delete m_db;
 }
 
 void MainWindow::updateMenu() {

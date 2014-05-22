@@ -6,6 +6,7 @@
 #include <QtNetwork>
 #include "Network/Header.h"
 #include "User.h"
+#include "DataBase/DataBase.h"
 
 enum class Role {
     ROLE_MJ = 0,
@@ -60,6 +61,7 @@ private:
     QString m_PendingNickname;
     QString m_serverIpAddress;
     Role m_Role;
+	 DataBase *m_DataBase;
 };
 
 #endif // USER_H

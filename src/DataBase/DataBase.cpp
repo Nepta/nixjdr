@@ -7,19 +7,17 @@
 #include <QDebug>
 #include <QSqlError>
 
-DataBase::DataBase(const QString dbName){
+DataBase::DataBase(const QString dbName, const QString& serverIpAddress){
 	dbName_ = dbName;
 	db_ = QSqlDatabase::addDatabase("QPSQL");
-//	db_.setDatabaseName(dbName_ + ".sqlite");
 	db_.setUserName("jdr");
 	db_.setDatabaseName("jdrDB");
 	db_.setPassword("password");
-	db_.setHostName("localhost");
+	db_.setHostName(serverIpAddress);
 	db_.open();
-//	bool isAlreadyDB = QFile::exists(dbName_ + ".sqlite");
-//	if(!isAlreadyDB){
+	if(serverIpAddress == "127.0.0.1"){
 		initDB();
-//	}
+	}
 }
 
 void DataBase::initDB(){
@@ -36,7 +34,6 @@ void DataBase::addItem(DBItem& item){
 	;
 	QSqlQuery query(queryString);
 	query.exec();
-	qDebug() << db_.lastError();
 }
 
 DataBase::~DataBase(){

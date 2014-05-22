@@ -21,6 +21,7 @@ User::User() : User(new QTcpSocket)
 
 User::~User() {
     m_Socket->deleteLater();
+	 delete m_DataBase;
 }
 
 void User::receivedData()
@@ -143,6 +144,7 @@ User* User::setPendingNickname(const QString &nickname) {
 
 User* User::setServerIpAddress(const QString &serverIpAddress) {
     m_serverIpAddress = serverIpAddress;
+	 m_DataBase = new DataBase("jdrDB", serverIpAddress);
 
     return this;
 }
