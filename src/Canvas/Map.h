@@ -1,19 +1,32 @@
 #ifndef MAP_H
 #define MAP_H
 
+#include <QWidget>
+#include <QAbstractButton>
 #include "CanvasView.h"
 #include "CanvasScene.h"
 #include "MapLayer.h"
 
-class Map : public CanvasView
+namespace Ui {
+    class Map;
+}
+
+class Map : public QWidget
 {
+    Q_OBJECT
+
 public:
-    Map(QString bgFilename, QString tokenPath, int tileStep);
+    explicit Map(QString bgFilename, QString tokenPath, int tileStep, QWidget *parent = 0);
     ~Map();
 
+    Ui::Map *getUi();
     MapLayer *getMapLayer();
 
+private slots:
+    void selectedEditionLayer(QAbstractButton *button, bool checked);
+
 private:
+    Ui::Map *ui;
     MapLayer m_MapLayer;
 };
 

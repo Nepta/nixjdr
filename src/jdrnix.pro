@@ -102,4 +102,5 @@ FORMS    += mainwindow.ui \
     TokenMenu.ui \
     DiceMenu.ui \
     ChatWidget.ui \
-    ConnectionHelper.ui
+    ConnectionHelper.ui \
+    Map.ui
