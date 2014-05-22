@@ -6,6 +6,7 @@
 #include "CanvasView.h"
 #include "CanvasScene.h"
 #include "MapLayer.h"
+#include "FoWLayer.h"
 
 namespace Ui {
     class Map;
@@ -28,6 +29,7 @@ private slots:
 private:
     Ui::Map *ui;
     MapLayer m_MapLayer;
+    FoWLayer m_FoWLayer;
 };
 
 #endif // MAP_H

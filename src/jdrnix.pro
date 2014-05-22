@@ -54,7 +54,9 @@ SOURCES += \
     Network/ClientReceiver.cpp \
     Network/Receiver.cpp \
     token/TokenMenu.cpp \
-    token/TokenList.cpp
+    token/TokenList.cpp \
+    Canvas/GridLayer.cpp \
+    Canvas/FoWLayer.cpp
 
 HEADERS  += \
     MainWindow.h \
@@ -96,7 +98,9 @@ HEADERS  += \
     Network/ClientReceiver.h \
     Network/Serializable.h \
     token/TokenMenu.h \
-    token/TokenList.h
+    token/TokenList.h \
+    Canvas/GridLayer.h \
+    Canvas/FoWLayer.h
 
 FORMS    += mainwindow.ui \
     TokenMenu.ui \

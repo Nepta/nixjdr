@@ -4,12 +4,18 @@
 Map::Map(QString bgFilename, QString tokenPath, int tileStep, QWidget *parent) :
     QWidget(parent),
     ui(new Ui::Map),
-    m_MapLayer(tokenPath, tileStep)
+    m_MapLayer(tokenPath, tileStep),
+    m_FoWLayer(tileStep)
 {
     ui->setupUi(this);
 
     CanvasScene *scene = new CanvasScene(bgFilename);
     scene->addLayer(&m_MapLayer);
+    scene->addLayer(&m_FoWLayer);
+
+    m_MapLayer.setEnabled(true);
+    m_FoWLayer.setEnabled(false);
+    scene->setFocusItem(&m_MapLayer);
 
     ui->m_View->setScene(scene);
     setWindowTitle(tr("Carte"));
@@ -29,12 +35,14 @@ void Map::selectedEditionLayer(QAbstractButton *button, bool checked) {
         selectedLayer = &m_MapLayer;
     }
     else if (button->objectName() == QString("m_FowEdit")) {
-        selectedLayer = NULL; // TODO selectedLayer = m_FowLayer;
+        selectedLayer = &m_FoWLayer;
     }
 
-    if (selectedLayer != NULL) { // TODO temp check
-        selectedLayer->setEnabled(checked);
+    if (checked) {
+        ui->m_View->scene()->setFocusItem(selectedLayer);
     }
+
+    selectedLayer->setEnabled(checked);
 }
 
 Ui::Map *Map::getUi() {
