@@ -2,18 +2,23 @@
 
 #include <QDebug>
 
+
 #define LAYER_MAX 4
 
-CanvasScene::CanvasScene()
+CanvasScene::CanvasScene() : DBItem("Map")
 {
     this->setSceneRect(0, 0, 800, 600);
     m_spritePath = "resource/sakuya.png";
 }
 
 
-CanvasScene::CanvasScene(QString filename, int step)
+CanvasScene::CanvasScene(QString filename, int step) : DBItem("Map")
 {
-    m_step = step;
+	 m_step = step;
+	 pushDB(filename);
+	 pushDB(QString::number(step));
+	 qDebug() << "step: " << step;
+	 qDebug() << value(1);
     m_spritePath = "resource/sakuya.png";
     m_background = new QPixmap(filename);
     const int width = m_background->width();

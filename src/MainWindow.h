@@ -10,6 +10,7 @@
 #include "DiceMenu.h"
 #include "ui_TokenMenu.h"
 #include "ui_DiceMenu.h"
+#include "DataBase/DataBase.h"
 
 
 namespace Ui {
@@ -42,7 +43,8 @@ private:
     DiceMenu *m_diceMenu;
     User *m_User;
     Server *m_Server;
-    Client *m_Client;
+	 Client *m_Client;
+	 DataBase *m_db;
 };
 
 #endif // MAINWINDOW_H

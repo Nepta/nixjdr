@@ -7,8 +7,9 @@
 #include <QGraphicsPixmapItem>
 #include <QGraphicsScene>
 #include <QListWidgetItem>
+#include "DataBase/DBItem.h"
 
-class CanvasScene : public QGraphicsScene{
+class CanvasScene : public QGraphicsScene, public DBItem{
     Q_OBJECT
 
 public:
