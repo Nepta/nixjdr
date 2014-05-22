@@ -5,7 +5,7 @@
 
 #define LAYER_MAX 4
 
-CanvasScene::CanvasScene() : DBItem("Map")
+CanvasScene::CanvasScene() : DBItem("map")
 {
     this->setSceneRect(0, 0, 800, 600);
     m_spritePath = "resource/sakuya.png";
