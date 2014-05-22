@@ -43,7 +43,7 @@ void TurnList::moveItemList(QList<QListWidgetItem*> itemsToMove, bool direction)
     int move = directionToInt(direction);
     foreach (QListWidgetItem *oldItem, itemsToMove) {
         int oldRow = this->indexFromItem(oldItem).row();
-        int newRow = oldRow + move;;
+        int newRow = oldRow + move;
 
         while(newRow>0 && newRow < this->count() && this->item(newRow)->isSelected()){
             newRow += move;
@@ -63,10 +63,8 @@ void TurnList::moveItemList(QList<QListWidgetItem*> itemsToMove, bool direction)
 }
 
 void TurnList::selectNearestItem(bool direction){
-    int move = directionToInt(direction);
     this->currentItem()->setSelected(true);
-    this->item(this->currentRow()+move)->setSelected(true);
-    this->setCurrentRow(this->currentRow()+move);
+    moveToItemInDirection(direction);
 }
 
 void TurnList::moveToItemInDirection(bool direction){
@@ -112,6 +110,9 @@ void TurnList::keyPressEvent(QKeyEvent *event){
         }
     }
 
+    else if(event->key() == Qt::Key_Space){
+        selectNearestItem(RIGHT);
+    }
     else if(event->key() == Qt::Key_Escape){
         foreach (QListWidgetItem* itemToUnselect, this->selectedItems()) {
             itemToUnselect->setSelected(false);
