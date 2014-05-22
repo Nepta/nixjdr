@@ -33,3 +33,6 @@ build-*
 # Generated Doxygen documentation
 doc/
 html/
+
+# Database
+*.sqlite

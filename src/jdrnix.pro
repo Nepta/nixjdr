@@ -7,7 +7,7 @@
 QMAKE_CXXFLAGS = -std=c++11
 QMAKE_LFLAGS = -std=c++11
 
-QT += core gui network
+QT += core gui network sql
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = jdrnix.out
@@ -54,7 +54,9 @@ SOURCES += \
     Network/ClientReceiver.cpp \
     Network/Receiver.cpp \
     token/TokenMenu.cpp \
-    token/TokenList.cpp
+	 token/TokenList.cpp \
+    DataBase/DataBase.cpp \
+    DataBase/DBItem.cpp
 
 HEADERS  += \
     MainWindow.h \
@@ -96,7 +98,9 @@ HEADERS  += \
     Network/ClientReceiver.h \
     Network/Serializable.h \
     token/TokenMenu.h \
-    token/TokenList.h
+    token/TokenList.h \
+    DataBase/DataBase.h \
+    DataBase/DBItem.h
 
 FORMS    += mainwindow.ui \
     TokenMenu.ui \
