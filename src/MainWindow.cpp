@@ -35,7 +35,6 @@ MainWindow::MainWindow(User *user, QWidget *parent) :
 MainWindow::~MainWindow()
 {
     delete ui;
-    delete m_User;
     delete m_Server;
     delete m_Client;
 }

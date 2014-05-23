@@ -38,7 +38,7 @@ public:
      * @param painter
      * @param step
      * @param limit
-     * @param orientation
+     * @param orientation true vertical, false horizontal
      */
     void drawRows(QPainter *painter, int step, int limit, bool orientation);
 
