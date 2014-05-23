@@ -5,6 +5,7 @@
 #include <QAbstractButton>
 #include "CanvasView.h"
 #include "CanvasScene.h"
+#include "BackgroundLayer.h"
 #include "MapLayer.h"
 #include "FoWLayer.h"
 
@@ -30,6 +31,7 @@ private slots:
 
 private:
     Ui::Map *ui;
+    BackgroundLayer m_BgLayer;
     MapLayer m_MapLayer;
     FoWLayer m_FoWLayer;
 };

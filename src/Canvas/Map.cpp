@@ -4,15 +4,18 @@
 Map::Map(QString bgFilename, QString tokenPath, int tileStep, QWidget *parent) :
     QWidget(parent),
     ui(new Ui::Map),
+    m_BgLayer(bgFilename),
     m_MapLayer(tokenPath, tileStep),
     m_FoWLayer(tileStep)
 {
     ui->setupUi(this);
 
-    CanvasScene *scene = new CanvasScene(bgFilename);
+    CanvasScene *scene = new CanvasScene(1280, 1024); // TODO pass those value through a dialog box
+    scene->addLayer(&m_BgLayer);
     scene->addLayer(&m_MapLayer);
     scene->addLayer(&m_FoWLayer);
 
+    m_BgLayer.setEnabled(false);
     m_MapLayer.setEnabled(true);
     m_FoWLayer.setEnabled(false);
 
@@ -45,7 +48,10 @@ void Map::selectedEditionLayer(QAbstractButton *button, bool checked) {
 void Map::selectedDisplayLayer(QAbstractButton *button, bool checked) {
     Layer *selectedLayer;
 
-    if (button->objectName() == QString("m_MapDisplay")) {
+    if (button->objectName() == QString("m_BgDisplay")) {
+        selectedLayer = &m_BgLayer;
+    }
+    else if (button->objectName() == QString("m_MapDisplay")) {
         selectedLayer = &m_MapLayer;
     }
     else if (button->objectName() == QString("m_FowDisplay")) {
@@ -53,6 +59,7 @@ void Map::selectedDisplayLayer(QAbstractButton *button, bool checked) {
     }
 
     selectedLayer->setVisible(checked);
+    ui->m_View->scene()->update(); // update the bakckground part of the Scene
 }
 
 Ui::Map *Map::getUi() {
