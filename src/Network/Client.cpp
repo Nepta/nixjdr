@@ -23,7 +23,7 @@ Client::Client(User *user)
 }
 
 Client::~Client() {
-    delete m_User;
+    qDeleteAll(m_Nodes);
 }
 
 void Client::connection(const QString &serverIP, const quint16 &serverPort)

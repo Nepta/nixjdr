@@ -42,9 +42,6 @@ MainWindow::~MainWindow()
     delete m_Client;
 }
 
-
-
-
 void MainWindow::initDiceMenu(){
     m_diceMenu = new DiceMenu();
     ui->tableArea->addSubWindow(m_diceMenu, Qt::CustomizeWindowHint |

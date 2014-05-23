@@ -18,7 +18,7 @@ User::User(QTcpSocket *socket)
 User::User() : User(new QTcpSocket) {}
 
 User::~User() {
-    m_Socket->deleteLater();
+    delete m_Socket;
     delete m_DataBase;
 }
 
