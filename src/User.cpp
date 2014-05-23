@@ -15,13 +15,11 @@ User::User(QTcpSocket *socket)
             SIGNAL(socketErrorNotify(QAbstractSocket::SocketError)));
 }
 
-User::User() : User(new QTcpSocket)
-{
-}
+User::User() : User(new QTcpSocket) {}
 
 User::~User() {
     m_Socket->deleteLater();
-	 delete m_DataBase;
+    delete m_DataBase;
 }
 
 void User::receivedData()

@@ -19,8 +19,10 @@ MainWindow::MainWindow(User *user, QWidget *parent) :
 {
     ui->setupUi(this);
 
-    // Sets Null pointer for later deletion if m_Server is not used
+    // Sets Null pointer for later deletion if m_Server and/or m_Client are not used
     m_Server = NULL;
+    m_Client = NULL;
+
     m_User = user;
 
     initDiceMenu();
@@ -80,11 +82,6 @@ void MainWindow::initRole(){
         setupPlayer();
     }
 }
-
-
-
-
-
 
 void MainWindow::updateMenu() {
     QMdiSubWindow *subwindow  = ui->tableArea->activeSubWindow();

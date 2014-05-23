@@ -111,5 +111,5 @@ FORMS    += \
     DiceMenu.ui \
     ChatWidget.ui \
     ConnectionHelper.ui \
-    MainWindow.ui
+    MainWindow.ui \
     TurnMenu.ui
