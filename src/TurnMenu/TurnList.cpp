@@ -18,9 +18,6 @@ TurnList::TurnList(QWidget *parent)
     //style
     this->setStyleSheet( "QListWidget::item {background: lightgray; border: 1px solid black; \
                          selection-background-color: blue;}" );
-    for(int i=0; i<10;i++){
-        this->insertItem(i, new QListWidgetItem(QString("creep %1").arg(i)));
-    }
 
     // selection & drag / drop
     this->setSelectionMode(QAbstractItemView::ExtendedSelection);
@@ -40,6 +37,7 @@ void TurnList::addQStringAsItem(QString p_string){
     this->setFocus();
     this->addItem(new QListWidgetItem(p_string));
     this->setCurrentRow(this->count()-1);
+    this->item(this->count()-1)->setSelected(false);
 }
 
 void TurnList::deleteCurrentItems(){
@@ -118,6 +116,10 @@ int TurnList::directionToInt(bool direction){
 void TurnList::keyPressEvent(QKeyEvent *event){
     if(event->key() == Qt::Key_Delete){
         deleteCurrentItems();
+    }
+
+    else if(event->key() == Qt::Key_A && event->modifiers() == Qt::ControlModifier){
+        this->selectAll();
     }
 
     else if(event->key() == Qt::Key_Right || event->key() == Qt::Key_Left){

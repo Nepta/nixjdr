@@ -173,7 +173,7 @@
   <customwidget>
    <class>TurnMenu</class>
    <extends>QWidget</extends>
-   <header>turnmenu/TurnMenu.h</header>
+   <header>TurnMenu/TurnMenu.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

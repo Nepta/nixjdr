@@ -30,6 +30,7 @@ void TurnMenu::on_addItemEdit_returnPressed()
     if (!ui->addItemEdit->text().isEmpty()) {
         m_turnList->addQStringAsItem(QString(" %1 ").arg(ui->addItemEdit->text()));
         ui->addItemEdit->clear();
+        ui->addItemEdit->setFocus();
     }
 }
 

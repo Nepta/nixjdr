@@ -8,7 +8,7 @@
 #include "Network/Client.h"
 #include "ChatWidget.h"
 #include "token/TokenMenu.h"
-#include "turnmenu/TurnMenu.h"
+#include "TurnMenu/TurnMenu.h"
 #include "DiceMenu.h"
 #include "ui_TokenMenu.h"
 #include "ui_DiceMenu.h"
