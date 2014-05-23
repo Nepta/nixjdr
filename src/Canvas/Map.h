@@ -25,6 +25,7 @@ public:
 
 private slots:
     void selectedEditionLayer(QAbstractButton *button, bool checked);
+    void selectedDisplayLayer(QAbstractButton *button, bool checked);
 
 private:
     Ui::Map *ui;
