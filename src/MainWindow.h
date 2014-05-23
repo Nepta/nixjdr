@@ -46,7 +46,6 @@ private:
     void initTableTurnSplitter();
 
     Ui::MainWindow *ui;
-    DiceMenu *m_diceMenu;
     User *m_User;
     Server *m_Server;
     Client *m_Client;

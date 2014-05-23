@@ -31,9 +31,25 @@ void TokenList::dragMoveEvent(QDragMoveEvent * event){
     }
 }
 
-void TokenList::mousePressEvent(QMouseEvent *event)
-{
-    if (event->button() != Qt::LeftButton){
+QListWidgetItem TokenList::getCurrentItem(){
+    return this->getCurrentItem();
+}
+
+
+void TokenList::mousePressEvent(QMouseEvent *mouseEvent) {
+    if (mouseEvent->button() == Qt::LeftButton) {
+        m_dragStartPosition = mouseEvent->pos();
+        this->setCurrentItem(this->itemAt(mouseEvent->pos()));
+    }
+}
+
+
+void TokenList::mouseMoveEvent(QMouseEvent *event){
+    if (!(event->buttons() & Qt::LeftButton)){
+        return;
+    }
+
+    if ((event->pos() - m_dragStartPosition).manhattanLength() < START_DRAG_DISTANCE) {
         return;
     }
 
@@ -51,8 +67,4 @@ void TokenList::mousePressEvent(QMouseEvent *event)
     drag->setMimeData(mimeData);
 
     drag->exec(Qt::CopyAction | Qt::MoveAction);
-}
-
-QListWidgetItem TokenList::getCurrentItem(){
-    return this->getCurrentItem();
 }
