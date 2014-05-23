@@ -50,6 +50,16 @@ private:
     void drawBackground(QPainter *painter, const QRectF &rect);
 
     /**
+     * @brief drawRows Draws parallel lines with the given painter with an interval equal to the
+     * given step. Every two lines, draws a thicker line.
+     * @param painter
+     * @param step
+     * @param limit
+     * @param orientation
+     */
+    void drawRows(QPainter *painter, int step, int limit, bool orientation);
+
+    /**
      * @brief sceneEventFilter Handles events on Sprites.
      * @param watched
      * @param event

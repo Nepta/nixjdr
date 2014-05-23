@@ -65,17 +65,26 @@ void MapLayer::initDragEvent(QGraphicsItem *watched, QGraphicsSceneMouseEvent *m
 
 void MapLayer::drawBackground(QPainter *painter, const QRectF &rect) {
     if(m_Step > 1) {
-        painter->setPen(Qt::black);
+        drawRows(painter, rect.height(), rect.width(), true);
+        drawRows(painter, rect.width(), rect.height(), false);
+    }
+}
 
-        for (int i = 0 ; i < rect.width() ; i += m_Step) {
-            painter->drawLine(i, 0, i, rect.height());
+void MapLayer::drawRows(QPainter *painter, int step, int limit, bool orientation){
+    for (int i = 0 ; i < limit ; i ++) {
+        painter->setPen(QPen(QBrush(Qt::black), 1));
+        if(i%2 == 0){
+            painter->setPen(QPen(QBrush(Qt::black), 2));
         }
-
-        for (int i = 0 ; i < rect.height() ; i += m_Step) {
-            painter->drawLine(0, i, rect.width(), i);
+        if(orientation){
+            painter->drawLine(i*m_Step, 0, i*m_Step, step);
+        }
+        else{
+            painter->drawLine(0, i*m_Step, step, i*m_Step);
         }
     }
 }
+
 
 void MapLayer::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent) {
     if (mouseEvent->button() == Qt::LeftButton) {
