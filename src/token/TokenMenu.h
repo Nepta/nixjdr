@@ -2,6 +2,7 @@
 #define TOKENMENU_H
 
 #include <QWidget>
+#include <QSqlQueryModel>
 #include "TokenList.h"
 
 namespace Ui {
@@ -19,6 +20,7 @@ public:
 
 private:
     Ui::TokenMenu *ui;
+	 QSqlQueryModel *model_;
 };
 
 #endif // TOKENMENU_H
