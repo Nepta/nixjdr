@@ -6,10 +6,13 @@
 class FoWLayer : public GridLayer
 {
 public:
-    FoWLayer(int step = 1);
+    FoWLayer(int step = 1, bool transparentSprites = true);
     ~FoWLayer();
 
+    Sprite *addSprite(QPixmap *spritePixmap, QPoint position);
+
 private:
+    bool m_TransparentSprites;
 
     /**
      * @brief mousePressEvent Reimplemented from GridLayer in order to grab mouse events

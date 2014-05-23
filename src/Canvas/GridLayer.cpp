@@ -1,5 +1,4 @@
 #include "GridLayer.h"
-#include "Sprite.h"
 
 GridLayer::GridLayer(int step) {
     m_Step = step;
@@ -16,7 +15,7 @@ void GridLayer::addSprite(QPoint position) {
     addSprite(spritePixmap, position);
 }
 
-void GridLayer::addSprite(QPixmap *spritePixmap, QPoint position) {
+Sprite *GridLayer::addSprite(QPixmap *spritePixmap, QPoint position) {
     QPoint spritePos(position.x()/m_Step, position.y()/m_Step);
     spritePos *= m_Step;
 
@@ -24,6 +23,8 @@ void GridLayer::addSprite(QPixmap *spritePixmap, QPoint position) {
     sprite->setPos(spritePos);
 
     sprite->installSceneEventFilter(this);
+
+    return sprite;
 }
 
 void GridLayer::removeSprite(QGraphicsItem *sprite) {

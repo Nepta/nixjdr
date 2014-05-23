@@ -11,10 +11,13 @@ public:
     Sprite(const QPixmap &pixmap, QGraphicsItem *parent = 0);
     Sprite(QByteArray& data);
     ~Sprite();
+    void setTransparent(bool enabled);
 
     QByteArray serialize();
 
 private:
+    bool m_Transparent;
+
     void unserialize(QByteArray& data);
 };
 

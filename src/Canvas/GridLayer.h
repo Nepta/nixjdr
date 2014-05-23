@@ -4,6 +4,7 @@
 #include <QPainter>
 #include <QRectF>
 #include <QString>
+#include "Sprite.h"
 #include "Layer.h"
 
 class GridLayer : public Layer
@@ -21,7 +22,7 @@ public:
     void setSpritePath(QString spritePath);
 
     virtual void addSprite(QPoint position);
-    virtual void addSprite(QPixmap *spritePixmap, QPoint spritePos);
+    virtual Sprite *addSprite(QPixmap *spritePixmap, QPoint spritePos);
     virtual void removeSprite(QGraphicsItem *sprite);
 
     /**

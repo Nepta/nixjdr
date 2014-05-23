@@ -10,6 +10,14 @@ Sprite::Sprite(QByteArray& data) {
 Sprite::~Sprite() {
 }
 
+void Sprite::setTransparent(bool enabled) {
+    if (enabled) {
+        setOpacity(0.75);
+    } else {
+        setOpacity(1.0);
+    }
+}
+
 // Reimplemented from Serializable
 
 QByteArray Sprite::serialize() {

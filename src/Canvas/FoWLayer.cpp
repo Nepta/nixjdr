@@ -2,8 +2,9 @@
 
 #include <QDebug>
 
-FoWLayer::FoWLayer(int step) :
-    GridLayer(step)
+FoWLayer::FoWLayer(int step, bool transparentSprites) :
+    GridLayer(step),
+    m_TransparentSprites(transparentSprites)
 {
     // TODO multiple colors for multiple players (shift the hue of the pixmap?)
     GridLayer::setSpritePath("fow");
@@ -12,6 +13,14 @@ FoWLayer::FoWLayer(int step) :
 FoWLayer::~FoWLayer() {}
 
 // reimplemented from GridLayer
+Sprite *FoWLayer::addSprite(QPixmap *spritePixmap, QPoint position) {
+    Sprite* sprite = GridLayer::addSprite(spritePixmap, position);
+
+    sprite->setTransparent(m_TransparentSprites);
+
+    return sprite;
+}
+
 void FoWLayer::mousePressEvent(QGraphicsSceneMouseEvent *) {}
 
 bool FoWLayer::sceneEventFilter(QGraphicsItem *watched, QEvent *event) {
