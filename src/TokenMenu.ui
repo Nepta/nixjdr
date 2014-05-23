@@ -48,9 +48,9 @@
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="researchButton">
+        <widget class="QPushButton" name="tokenButton">
          <property name="text">
-          <string>Button</string>
+          <string>Ajouter</string>
          </property>
         </widget>
        </item>

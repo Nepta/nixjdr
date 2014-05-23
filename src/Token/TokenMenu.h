@@ -17,6 +17,9 @@ public:
     ~TokenMenu();
     Ui::TokenMenu *getUi();
 
+private slots:
+    void on_tokenButton_clicked();
+
 private:
     Ui::TokenMenu *ui;
 };

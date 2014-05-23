@@ -3,33 +3,27 @@
 TokenList::TokenList(QWidget *parent) :
     QListWidget(parent)
 {
-    this->insertItem(0, new QListWidgetItem(
-        QIcon("resource/flandre.png"), "flandre"));
-    this->insertItem(1, new QListWidgetItem(
-        QIcon("resource/cirno.png"), "cirno"));
-    this->insertItem(2, new QListWidgetItem(
-        QIcon("resource/sakuya.png"), "sakuya"));
-    this->insertItem(3, new QListWidgetItem(
-        QIcon("resource/marisa.png"), "marisa"));
-    this->insertItem(4, new QListWidgetItem(
-        QIcon("resource/rumia.png"), "rumia"));
-    this->insertItem(5, new QListWidgetItem(
-        QIcon("resource/reimu.png"), "reimu"));
-    this->insertItem(6, new QListWidgetItem(
-        QIcon("resource/patchouli.png"), "patchouli"));
-    this->insertItem(7, new QListWidgetItem(
-        QIcon("resource/youmu.png"), "youmu"));
-    this->insertItem(8, new QListWidgetItem(
-        QIcon("resource/remilia.png"), "remilia"));
-    this->insertItem(9, new QListWidgetItem(
-        QIcon("resource/yuyuko.png"), "yuyuko"));
-    this->insertItem(10, new QListWidgetItem(
-        QIcon("resource/sanae.png"), "sanae"));
-    this->insertItem(11, new QListWidgetItem(
-        QIcon("resource/aya.png"), "aya"));
+    appendCustomItem(QIcon("resource/flandre.png"), "flandre");
+    appendCustomItem(QIcon("resource/cirno.png"), "cirno");
+    appendCustomItem(QIcon("resource/sakuya.png"), "sakuya");
+    appendCustomItem(QIcon("resource/marisa.png"), "marisa");
+    appendCustomItem(QIcon("resource/rumia.png"), "rumia");
+    appendCustomItem(QIcon("resource/reimu.png"), "remiu");
+    appendCustomItem(QIcon("resource/youmu.png"), "youmu");
+    appendCustomItem(QIcon("resource/remilia.png"), "remilia");
+    appendCustomItem(QIcon("resource/yuyuko.png"), "yuyuko");
+    appendCustomItem(QIcon("resource/sanae.png"), "sanae");
+    appendCustomItem(QIcon("resource/aya.png"), "aya");
+    appendCustomItem(QIcon("resource/patchouli.png"), "patchouli");
 
     setCurrentItem(item(0));
 }
+
+void TokenList::appendCustomItem(QIcon icon, QString name){
+    this->insertItem(this->count(), new QListWidgetItem(icon, name));
+}
+
+
 
 void TokenList::dragMoveEvent(QDragMoveEvent * event){
     if(event->mimeData()->hasImage()){
