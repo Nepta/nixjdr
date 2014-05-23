@@ -2,6 +2,7 @@
 #define TURNMENU_H
 
 #include <QWidget>
+#include <QContextMenuEvent>
 
 #include "TurnList.h"
 
@@ -19,11 +20,8 @@ public:
 
 private slots:
     void on_addItemEdit_returnPressed();
-
     void on_addButton_clicked();
-
     void on_nextButton_clicked();
-
     void on_deleteButton_clicked();
 
 private:

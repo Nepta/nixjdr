@@ -1,22 +1,34 @@
+#include <QMenu>
+#include <QAction>
+
 #include "TurnList.h"
+
 #define RIGHT true
 #define LEFT false
 
 TurnList::TurnList(QWidget *parent)
     : QListWidget(parent)
 {
+    //orientation & navigation
     this->setFlow(QListView::LeftToRight);
-    this->setStyleSheet( "QListWidget::item {background: lightgray; border: 1px solid black; \
-                         selection-background-color: blue;}" );
     this->setHorizontalScrollMode(QAbstractItemView::ScrollPerPixel);
     this->setMovement(QListView::Static);
     this->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+
+    //style
+    this->setStyleSheet( "QListWidget::item {background: lightgray; border: 1px solid black; \
+                         selection-background-color: blue;}" );
     for(int i=0; i<10;i++){
         this->insertItem(i, new QListWidgetItem(QString("creep %1").arg(i)));
     }
 
+    // selection & drag / drop
     this->setSelectionMode(QAbstractItemView::ExtendedSelection);
     this->setDragDropMode(QAbstractItemView::InternalMove);
+
+    this->setContextMenuPolicy(Qt::CustomContextMenu);
+    connect(this, SIGNAL(customContextMenuRequested(const QPoint&)),
+        SLOT(ShowContextMenu(const QPoint&)));
 }
 
 TurnList::~TurnList()
@@ -41,24 +53,38 @@ void TurnList::selectNextItem(){
 
 void TurnList::moveItemList(QList<QListWidgetItem*> itemsToMove, bool direction){
     int move = directionToInt(direction);
-    foreach (QListWidgetItem *oldItem, itemsToMove) {
-        int oldRow = this->indexFromItem(oldItem).row();
-        int newRow = oldRow + move;
+    int rowOfFirstItem = this->row(itemsToMove.first());
 
-        while(newRow>0 && newRow < this->count() && this->item(newRow)->isSelected()){
-            newRow += move;
+    if((this->currentRow() < rowOfFirstItem && direction == LEFT)
+            || (this->currentRow() > rowOfFirstItem && direction == RIGHT))
+    {
+        for(int i=0; i<itemsToMove.size()/2; i++){
+            itemsToMove.swap(i, itemsToMove.size()-(1+i));
         }
+        rowOfFirstItem = this->row(itemsToMove.first());
+    }
 
-        if(newRow < 0){
-            newRow = 0;
-        }
-        else if(newRow >= this->count()){
-            newRow = this->count()-1;
-        }
+    if((rowOfFirstItem != 0 && direction == LEFT)
+            || (rowOfFirstItem != this->count()-1 && direction == RIGHT)){
+        foreach (QListWidgetItem *oldItem, itemsToMove) {
+            int oldRow = this->indexFromItem(oldItem).row();
+            int newRow = oldRow + move;
 
-        QListWidgetItem *newItem = this->takeItem(oldRow);
-        this->insertItem(newRow, newItem);
-        this->setCurrentRow(newRow);
+            while(newRow>0 && newRow < this->count() && this->item(newRow)->isSelected()){
+                newRow += move;
+            }
+
+            if(newRow < 0){
+                newRow = 0;
+            }
+            else if(newRow >= this->count()){
+                newRow = this->count()-1;
+            }
+
+            QListWidgetItem *newItem = this->takeItem(oldRow);
+            this->insertItem(newRow, newItem);
+            this->setCurrentRow(newRow);
+        }
     }
 }
 
@@ -111,12 +137,26 @@ void TurnList::keyPressEvent(QKeyEvent *event){
     }
 
     else if(event->key() == Qt::Key_Space){
-        selectNearestItem(RIGHT);
+        moveToItemInDirection(RIGHT);
     }
     else if(event->key() == Qt::Key_Escape){
         foreach (QListWidgetItem* itemToUnselect, this->selectedItems()) {
             itemToUnselect->setSelected(false);
         }
         this->currentItem()->setSelected(true);
+    }
+}
+
+
+void TurnList::ShowContextMenu(const QPoint& pos){
+    QPoint globalPos = this->mapToGlobal(pos);
+    QString msg;
+    QMenu menu;
+
+    QAction* deleteAction = menu.addAction(tr("Supprimer"));
+    QAction* selectedItem = menu.exec(globalPos);
+    if (selectedItem == deleteAction)
+    {
+        deleteCurrentItems();
     }
 }

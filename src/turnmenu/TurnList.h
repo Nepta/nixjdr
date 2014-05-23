@@ -2,7 +2,9 @@
 #define TURNLIST_H
 
 #include <QListWidget>
+#include <QPoint>
 #include <QKeyEvent>
+#include <QContextMenuEvent>
 
 class TurnList : public QListWidget
 {
@@ -14,6 +16,9 @@ public:
     void selectNextItem();
     void deleteCurrentItems();
     void addQStringAsItem(QString p_string);
+
+private slots:
+    void ShowContextMenu(const QPoint& pos);
 
 private:
     void keyPressEvent(QKeyEvent *event);
