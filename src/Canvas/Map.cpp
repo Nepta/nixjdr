@@ -63,3 +63,6 @@ MapLayer *Map::getMapLayer() {
     return &m_MapLayer;
 }
 
+void Map::on_collapseButton_clicked(bool checked) {
+    ui->collapsibleWidget->setVisible(checked);
+}
