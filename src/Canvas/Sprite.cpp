@@ -1,7 +1,5 @@
 #include "Sprite.h"
 
-#include <QDebug>
-
 Sprite::Sprite(const QPixmap &pixmap, QGraphicsItem *parent) :
     QGraphicsPixmapItem(pixmap, parent) {}
 

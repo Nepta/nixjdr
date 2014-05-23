@@ -4,8 +4,6 @@
 #include "MapLayer.h"
 #include "Sprite.h"
 
-#include <QDebug>
-
 MapLayer::MapLayer(QString spritePath, int step) :
     GridLayer(step)
 {
@@ -44,8 +42,6 @@ void MapLayer::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent) {
     if (mouseEvent->button() == Qt::LeftButton) {
         m_dragStartPosition = mouseEvent->scenePos().toPoint();
     }
-
-    qDebug() << __FILE__ << "mousePressEvent";
 }
 
 void MapLayer::mouseMoveEvent(QGraphicsSceneMouseEvent *) {

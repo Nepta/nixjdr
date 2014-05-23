@@ -12,9 +12,7 @@ FoWLayer::FoWLayer(int step) :
 FoWLayer::~FoWLayer() {}
 
 // reimplemented from GridLayer
-void FoWLayer::mousePressEvent(QGraphicsSceneMouseEvent *) {
-    qDebug() << __FILE__ << "mousePressEvent";
-}
+void FoWLayer::mousePressEvent(QGraphicsSceneMouseEvent *) {}
 
 bool FoWLayer::sceneEventFilter(QGraphicsItem *watched, QEvent *event) {
     bool eventHandled = true;

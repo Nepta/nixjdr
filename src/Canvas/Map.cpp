@@ -15,7 +15,6 @@ Map::Map(QString bgFilename, QString tokenPath, int tileStep, QWidget *parent) :
 
     m_MapLayer.setEnabled(true);
     m_FoWLayer.setEnabled(false);
-    scene->setFocusItem(&m_MapLayer);
 
     ui->m_View->setScene(scene);
     setWindowTitle(tr("Carte"));
@@ -36,10 +35,6 @@ void Map::selectedEditionLayer(QAbstractButton *button, bool checked) {
     }
     else if (button->objectName() == QString("m_FowEdit")) {
         selectedLayer = &m_FoWLayer;
-    }
-
-    if (checked) {
-        ui->m_View->scene()->setFocusItem(selectedLayer);
     }
 
     selectedLayer->setEnabled(checked);
