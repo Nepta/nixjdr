@@ -80,7 +80,8 @@ void MapLayer::drawRows(QPainter *painter, int step, int limit, bool orientation
             painter->drawLine(i*m_Step, 0, i*m_Step, step);
         }
         else{
-            painter->drawLine(0, i*m_Step, step, i*m_Step);
+            painter->drawLine(0, i*m_Step, step
+                              , i*m_Step);
         }
     }
 }

@@ -18,6 +18,8 @@ public:
     explicit TurnMenu(QWidget *parent = 0);
     ~TurnMenu();
 
+    QWidget *getDiceWidget();
+
 private slots:
     void on_addItemEdit_returnPressed();
     void on_addButton_clicked();

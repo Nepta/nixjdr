@@ -11,7 +11,8 @@ TurnMenu::TurnMenu(QWidget *parent) :
 
     QList<int> sizes;
     sizes.push_back(60);
-    sizes.push_back(1000);
+    sizes.push_back(600);
+    sizes.push_back(300);
     ui->splitter->setSizes(sizes);
 
     m_turnList = new TurnList();
@@ -47,4 +48,8 @@ void TurnMenu::on_nextButton_clicked()
 void TurnMenu::on_deleteButton_clicked()
 {
     m_turnList->deleteCurrentItems();
+}
+
+QWidget* TurnMenu::getDiceWidget(){
+    return ui->diceMenuWidget;
 }
