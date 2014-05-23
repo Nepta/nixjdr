@@ -56,7 +56,9 @@ SOURCES += \
     DataBase/DataBase.cpp \
     DataBase/DBItem.cpp \
     Token/TokenMenu.cpp \
-    Token/TokenList.cpp
+    Token/TokenList.cpp \
+    TurnMenu/TurnList.cpp \
+    TurnMenu/TurnMenu.cpp
 
 HEADERS  += \
     MainWindow.h \
@@ -100,7 +102,9 @@ HEADERS  += \
     DataBase/DataBase.h \
     DataBase/DBItem.h \
     Token/TokenMenu.h \
-    Token/TokenList.h
+    Token/TokenList.h \
+    TurnMenu/TurnList.h \
+    TurnMenu/TurnMenu.h
 
 FORMS    += \
     TokenMenu.ui \
@@ -108,3 +112,4 @@ FORMS    += \
     ChatWidget.ui \
     ConnectionHelper.ui \
     MainWindow.ui
+    TurnMenu.ui

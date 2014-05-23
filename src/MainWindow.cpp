@@ -21,32 +21,12 @@ MainWindow::MainWindow(User *user, QWidget *parent) :
 
     // Sets Null pointer for later deletion if m_Server is not used
     m_Server = NULL;
-
-    // Dice menu
-    m_diceMenu = new DiceMenu();
-    ui->tableArea->addSubWindow(m_diceMenu, Qt::CustomizeWindowHint |
-                                Qt::WindowTitleHint | Qt::WindowMinMaxButtonsHint);
-        //get a nice dice menu window
-    ui->tableArea->subWindowList().last()->setGeometry(0,0,470,90);
-    ui->tableArea->subWindowList().last()->setMinimumSize(ui->tableArea->size());
-    ui->tableArea->subWindowList().last()->setWindowTitle(tr("Dés"));
-
-    // Connect chat & dice menus
-    connect(m_diceMenu, SIGNAL(rollDice(QString, bool)),
-            ui->m_ChatWidget, SLOT(rollDice(QString, bool)));
-    connect(ui->m_ChatWidget, SIGNAL(requestDice(QString&)), m_diceMenu, SLOT(requestRoll(QString&)));
-
-    // Top menu
-    connect(ui->tableArea, SIGNAL(subWindowActivated(QMdiSubWindow*)),
-                 this, SLOT(updateMenu()));
-
-    // Setup role
     m_User = user;
-    if (m_User->getRole() == Role::ROLE_MJ) {
-        setupMJ();
-    } else {
-        setupPlayer();
-    }
+
+    initDiceMenu();
+    initTableTurnSplitter();
+    initConnects();
+    initRole();
 
     //showFullScreen();
 }
@@ -59,6 +39,52 @@ MainWindow::~MainWindow()
     delete m_Server;
     delete m_Client;
 }
+
+
+
+
+void MainWindow::initDiceMenu(){
+    m_diceMenu = new DiceMenu();
+    ui->tableArea->addSubWindow(m_diceMenu, Qt::CustomizeWindowHint |
+                                Qt::WindowTitleHint | Qt::WindowMinMaxButtonsHint);
+    //get a nice dice menu window
+    ui->tableArea->subWindowList().last()->setGeometry(0,0,470,90);
+    ui->tableArea->subWindowList().last()->setMinimumSize(ui->tableArea->size());
+    ui->tableArea->subWindowList().last()->setWindowTitle(tr("Dés"));
+
+}
+
+void MainWindow::initTableTurnSplitter(){
+    QList<int> sizes;
+    sizes.push_back(1000);
+    sizes.push_back(100);
+    ui->tableTurnSplitter->setSizes(sizes);
+}
+
+void MainWindow::initConnects(){
+    // Connect chat & dice menus
+    connect(m_diceMenu, SIGNAL(rollDice(QString, bool)),
+            ui->m_ChatWidget, SLOT(rollDice(QString, bool)));
+    connect(ui->m_ChatWidget, SIGNAL(requestDice(QString&)), m_diceMenu, SLOT(requestRoll(QString&)));
+
+    // Top menu
+    connect(ui->tableArea, SIGNAL(subWindowActivated(QMdiSubWindow*)),
+                 this, SLOT(updateMenu()));
+}
+
+void MainWindow::initRole(){
+
+    if (m_User->getRole() == Role::ROLE_MJ) {
+        setupMJ();
+    } else {
+        setupPlayer();
+    }
+}
+
+
+
+
+
 
 void MainWindow::updateMenu() {
     QMdiSubWindow *subwindow  = ui->tableArea->activeSubWindow();
