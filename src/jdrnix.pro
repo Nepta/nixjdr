@@ -55,7 +55,6 @@ SOURCES += \
     Network/Receiver.cpp \
     token/TokenMenu.cpp \
     token/TokenList.cpp \
-    test.cpp \
     TurnMenu/TurnList.cpp \
     TurnMenu/TurnMenu.cpp
 
@@ -100,7 +99,6 @@ HEADERS  += \
     Network/Serializable.h \
     token/TokenMenu.h \
     token/TokenList.h \
-    test.h \
     TurnMenu/TurnList.h \
     TurnMenu/TurnMenu.h
 
@@ -109,5 +107,4 @@ FORMS    += mainwindow.ui \
     DiceMenu.ui \
     ChatWidget.ui \
     ConnectionHelper.ui \
-    TurnMenu.ui \
-    test.ui
+    TurnMenu.ui
