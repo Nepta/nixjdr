@@ -1,14 +1,13 @@
 #ifndef CANVASVIEW_H
 #define CANVASVIEW_H
 
+#include <QWidget>
 #include <QGraphicsView>
-#include "CanvasScene.h"
 
 class CanvasView : public QGraphicsView {
 
 public:
-    CanvasView();
-    CanvasView(CanvasScene* scene);
+    CanvasView(QWidget *parent = 0);
     ~CanvasView();
 };
 

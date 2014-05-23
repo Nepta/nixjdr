@@ -18,6 +18,14 @@ public:
 
     QRectF boundingRect() const;
     void paint(QPainter *, const QStyleOptionGraphicsItem *, QWidget *);
+
+    /**
+     * @brief setEnabled Reimplemented from QGraphicsObject. Notifies the layer that the geometry of
+     * the layer will change before calling QGraphicsObject::setEnabled(). The boundingRect() depends
+     * on the enabled attribute.
+     * @param enabled
+     */
+    void setEnabled(bool enabled);
 };
 
 #endif // LAYER_H

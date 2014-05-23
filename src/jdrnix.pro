@@ -44,7 +44,9 @@ SOURCES += \
     Canvas/CanvasView.cpp \
     Canvas/CanvasScene.cpp \
     Canvas/Sprite.cpp \
+    Canvas/GridLayer.cpp \
     Canvas/MapLayer.cpp \
+    Canvas/FoWLayer.cpp \
     Canvas/Layer.cpp \
     Canvas/Map.cpp \
     Network/Header.cpp \
@@ -91,7 +93,9 @@ HEADERS  += \
     Canvas/CanvasView.h \
     Canvas/Sprite.h \
     Canvas/Layer.h \
+    Canvas/GridLayer.h \
     Canvas/MapLayer.h \
+    Canvas/FoWLayer.h \
     Canvas/Map.h \
     Network/Switch.h \
     Network/Receiver.h \
@@ -114,4 +118,5 @@ FORMS    += \
     ChatWidget.ui \
     ConnectionHelper.ui \
     MainWindow.ui \
-    TurnMenu.ui
+    TurnMenu.ui \
+    Map.ui
