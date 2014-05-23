@@ -1,4 +1,5 @@
 #include "Commands.h"
+#include "CmdHelp.h"
 #include "CmdMessageall.h"
 #include "CmdNickname.h"
 #include "CmdWhisper.h"
@@ -12,6 +13,7 @@
 #include "CmdConnectionAck.h"
 
 const QHash<QString, ChatCodes> Commands::s_CommandCodes = {
+    {"/help", ChatCodes::USERCMD_HELP},
     {"/nickname", ChatCodes::USERCMD_NICK},
     {"/w", ChatCodes::USERCMD_WHISPER},
     {"/roll", ChatCodes::USERCMD_ROLL}
@@ -20,6 +22,7 @@ const QHash<QString, ChatCodes> Commands::s_CommandCodes = {
 Commands::Commands()
 {
     // User commands
+    m_UserCommands.insert(ChatCodes::USERCMD_HELP, new CmdHelp(&m_UserCommands));
     m_UserCommands.insert(ChatCodes::USERCMD_MESSAGE, new CmdMessageAll);
     m_UserCommands.insert(ChatCodes::USERCMD_NICK, new CmdNickname);
     m_UserCommands.insert(ChatCodes::USERCMD_WHISPER, new CmdWhisper);

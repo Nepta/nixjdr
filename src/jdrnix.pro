@@ -36,6 +36,7 @@ SOURCES += \
     Chat/Commands/CmdNicknameAck.cpp \
     Chat/Commands/CmdWhisperRep.cpp \
     Chat/Commands/CmdRoll.cpp \
+    Chat/Commands/CmdHelp.cpp \
     Chat/Commands/CmdDisconnect.cpp \
     Chat/Commands/CmdNicknamesList.cpp \
     Chat/Commands/CmdNicknamesListAck.cpp \
@@ -81,6 +82,7 @@ HEADERS  += \
     Chat/Commands/CmdNicknameAck.h \
     Chat/Commands/CmdWhisperRep.h \
     Chat/Commands/CmdRoll.h \
+    Chat/Commands/CmdHelp.h \
     Chat/Commands/CmdDisconnect.h \
     Chat/Commands/CmdNicknamesList.h \
     Chat/Commands/CmdNicknamesListAck.h \

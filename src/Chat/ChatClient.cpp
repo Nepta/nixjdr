@@ -43,8 +43,7 @@ ChatCodes ChatClient::translateCommandToCode(const QString &msg) {
         return ChatCodes::USERCMD_MESSAGE;
     }
     else {
-        // TODO remplacer par HELP
-        return Commands::s_CommandCodes.value(cmd, ChatCodes::USERCMD_MESSAGE);
+        return Commands::s_CommandCodes.value(cmd, ChatCodes::USERCMD_HELP);
     }
 }
 
