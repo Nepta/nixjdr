@@ -53,10 +53,10 @@ SOURCES += \
     Network/Client.cpp \
     Network/ClientReceiver.cpp \
     Network/Receiver.cpp \
-    token/TokenMenu.cpp \
-	 token/TokenList.cpp \
     DataBase/DataBase.cpp \
-    DataBase/DBItem.cpp
+    DataBase/DBItem.cpp \
+    Token/TokenMenu.cpp \
+    Token/TokenList.cpp
 
 HEADERS  += \
     MainWindow.h \
@@ -97,13 +97,14 @@ HEADERS  += \
     Network/Client.h \
     Network/ClientReceiver.h \
     Network/Serializable.h \
-    token/TokenMenu.h \
-    token/TokenList.h \
     DataBase/DataBase.h \
-    DataBase/DBItem.h
+    DataBase/DBItem.h \
+    Token/TokenMenu.h \
+    Token/TokenList.h
 
-FORMS    += mainwindow.ui \
+FORMS    += \
     TokenMenu.ui \
     DiceMenu.ui \
     ChatWidget.ui \
-    ConnectionHelper.ui
+    ConnectionHelper.ui \
+    MainWindow.ui

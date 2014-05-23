@@ -67,7 +67,7 @@
   <customwidget>
    <class>TokenList</class>
    <extends>QListWidget</extends>
-   <header>token/TokenList.h</header>
+   <header>Token/TokenList.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

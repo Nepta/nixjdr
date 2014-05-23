@@ -11,7 +11,7 @@
 #include "CustomMdiArea.h"
 #include "ConnectionHelper.h"
 #include "MainWindow.h"
-#include "ui_mainwindow.h"
+#include "ui_MainWindow.h"
 
 MainWindow::MainWindow(User *user, QWidget *parent) :
     QMainWindow(parent),

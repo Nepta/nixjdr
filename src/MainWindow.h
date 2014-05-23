@@ -7,7 +7,7 @@
 #include "Network/Server.h"
 #include "Network/Client.h"
 #include "ChatWidget.h"
-#include "token/TokenMenu.h"
+#include "Token/TokenMenu.h"
 #include "DiceMenu.h"
 #include "ui_TokenMenu.h"
 #include "ui_DiceMenu.h"
