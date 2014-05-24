@@ -3,8 +3,6 @@
 
 #include "TurnList.h"
 
-#define RIGHT true
-#define LEFT false
 
 TurnList::TurnList(QWidget *parent)
     : QListWidget(parent)
@@ -46,6 +44,7 @@ void TurnList::deleteCurrentItems(){
 
 void TurnList::selectNextItem(){
     this->setFocus();
+    unselectItems();
     moveToItemInDirection(RIGHT);
 }
 
@@ -113,6 +112,13 @@ int TurnList::directionToInt(bool direction){
     return intToReturn;
 }
 
+void TurnList::unselectItems(){
+    foreach (QListWidgetItem* itemToUnselect, this->selectedItems()) {
+        itemToUnselect->setSelected(false);
+    }
+    this->currentItem()->setSelected(true);
+}
+
 void TurnList::keyPressEvent(QKeyEvent *event){
     if(event->key() == Qt::Key_Delete){
         deleteCurrentItems();
@@ -142,10 +148,7 @@ void TurnList::keyPressEvent(QKeyEvent *event){
         moveToItemInDirection(RIGHT);
     }
     else if(event->key() == Qt::Key_Escape){
-        foreach (QListWidgetItem* itemToUnselect, this->selectedItems()) {
-            itemToUnselect->setSelected(false);
-        }
-        this->currentItem()->setSelected(true);
+        unselectItems();
     }
 }
 

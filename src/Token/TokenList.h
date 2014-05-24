@@ -15,7 +15,7 @@ public:
     /**
      * @brief START_DRAG_DISTANCE Distance to cover in order to start a drag event.
      */
-    static const int START_DRAG_DISTANCE = 40;
+    static const int START_DRAG_DISTANCE = 5;
 
     TokenList(QWidget * parent = 0);
     QListWidgetItem getCurrentItem();

@@ -13,6 +13,9 @@ class TurnList : public QListWidget
 public:
     explicit TurnList(QWidget *parent =0);
     ~TurnList();
+    static const bool RIGHT = true;
+    static const bool LEFT = false;
+
     void selectNextItem();
     void deleteCurrentItems();
     void addQStringAsItem(QString p_string);
@@ -26,6 +29,7 @@ private:
     void selectNearestItem(bool direction);
     void moveToItemInDirection(bool direction);
     int directionToInt(bool direction);
+    void unselectItems();
 };
 
 #endif //TURNLIST_H

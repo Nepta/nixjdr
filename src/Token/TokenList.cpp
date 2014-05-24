@@ -43,6 +43,10 @@ void TokenList::mousePressEvent(QMouseEvent *mouseEvent) {
 
 
 void TokenList::mouseMoveEvent(QMouseEvent *event){
+
+    QPoint pos = event->localPos().toPoint();
+    QListWidgetItem *clickedItem = this->itemAt(pos);
+
     if (!(event->buttons() & Qt::LeftButton)){
         return;
     }
@@ -53,8 +57,6 @@ void TokenList::mouseMoveEvent(QMouseEvent *event){
 
     QDrag *drag = new QDrag(this);
     QMimeData *mimeData = new QMimeData;
-    QPoint pos = event->localPos().toPoint();
-    QListWidgetItem *clickedItem = this->itemAt(pos);
 
     this->setCurrentItem(clickedItem);
     if(clickedItem != NULL){
