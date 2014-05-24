@@ -1,8 +1,8 @@
 #include <QMimeData>
 #include <QDrag>
 #include <QDragEnterEvent>
+#include "Canvas/Sprite.h"
 #include "MapLayer.h"
-#include "Sprite.h"
 
 MapLayer::MapLayer(QString spritePath, int step) :
     GridLayer(step)

@@ -4,7 +4,7 @@
 #include <QPixmap>
 #include <QGraphicsScene>
 #include <QList>
-#include "Layer.h"
+#include "Layers/Layer.h"
 
 class CanvasScene : public QGraphicsScene {
     Q_OBJECT

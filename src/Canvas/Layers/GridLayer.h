@@ -4,7 +4,7 @@
 #include <QPainter>
 #include <QRectF>
 #include <QString>
-#include "Sprite.h"
+#include "Canvas/Sprite.h"
 #include "Layer.h"
 
 class GridLayer : public Layer

@@ -3,12 +3,12 @@
 
 #include <QWidget>
 #include <QAbstractButton>
+#include "Layers/BackgroundLayer.h"
+#include "Layers/MapLayer.h"
+#include "Layers/FoWLayer.h"
+#include "Layers/DrawingLayer.h"
 #include "CanvasView.h"
 #include "CanvasScene.h"
-#include "BackgroundLayer.h"
-#include "MapLayer.h"
-#include "FoWLayer.h"
-#include "DrawingLayer.h"
 
 namespace Ui {
     class Map;
