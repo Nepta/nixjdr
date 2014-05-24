@@ -20,7 +20,7 @@ TokenList::TokenList(QWidget *parent) :
 }
 
 void TokenList::appendCustomItem(QIcon icon, QString name){
-    this->insertItem(this->count(), new QListWidgetItem(icon, name));
+	 this->addItem(new QListWidgetItem(icon, name));
 }
 
 
