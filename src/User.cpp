@@ -7,6 +7,7 @@ User::User(QTcpSocket *socket)
     m_Socket = socket;
     m_Header = Header();
     m_Nickname = QString("guest");
+    m_Database = NULL;
 
     connect(m_Socket, SIGNAL(readyRead()), this, SLOT(receivedData()));
     connect(m_Socket, SIGNAL(disconnected()), this, SLOT(userDisconnected()));
@@ -19,7 +20,7 @@ User::User() : User(new QTcpSocket) {}
 
 User::~User() {
     delete m_Socket;
-    delete m_DataBase;
+    delete m_Database;
 }
 
 void User::receivedData()
@@ -142,7 +143,12 @@ User* User::setPendingNickname(const QString &nickname) {
 
 User* User::setServerIpAddress(const QString &serverIpAddress) {
     m_serverIpAddress = serverIpAddress;
-	 m_DataBase = new DataBase("jdrDB", serverIpAddress);
+
+    return this;
+}
+
+User* User::setDatabase(DataBase *database) {
+    m_Database = database;
 
     return this;
 }

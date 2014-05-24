@@ -1,5 +1,6 @@
 #include <QPixmap>
 #include <QPainter>
+#include <QSqlQuery>
 
 #include "TokenMenu.h"
 #include "ui_TokenMenu.h"
@@ -9,6 +10,13 @@ TokenMenu::TokenMenu(QWidget *parent) :
     ui(new Ui::TokenMenu)
 {
     ui->setupUi(this);
+	 QSqlQuery query("select name,path from sprite");
+	 while(query.next()){
+		 QString name = query.value(0).toString();
+		 QString path = query.value(1).toString();
+		 ui->m_tokenList->appendCustomItem(QIcon(path), name);
+	 }
+	 ui->m_tokenList->setCurrentItem(ui->m_tokenList->item(0));
 }
 
 TokenMenu::~TokenMenu()

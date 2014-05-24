@@ -5,7 +5,7 @@ CmdHelp::CmdHelp(QHash<ChatCodes, AbstractCmd *> *commandsHash)
     m_CommandsHash = commandsHash;
 }
 
-void CmdHelp::execute(Header &header, QString &arg)
+void CmdHelp::execute(Header &header, QString &)
 {
     QString helpString, user;
 

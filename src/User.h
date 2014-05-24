@@ -33,6 +33,7 @@ public:
     User* setPendingNickname(const QString &nickname);
     User* setServerIpAddress(const QString &serverIpAddress);
     User* setRole(const Role &role);
+    User* setDatabase(DataBase *database);
 
 private slots:
     void receivedData();
@@ -61,7 +62,7 @@ private:
     QString m_PendingNickname;
     QString m_serverIpAddress;
     Role m_Role;
-	 DataBase *m_DataBase;
+    DataBase *m_Database;
 };
 
 #endif // USER_H

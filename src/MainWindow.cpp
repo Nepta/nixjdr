@@ -35,7 +35,6 @@ MainWindow::MainWindow(User *user, QWidget *parent) :
 MainWindow::~MainWindow()
 {
     delete ui;
-    delete m_User;
     delete m_Server;
     delete m_Client;
 }
@@ -83,12 +82,12 @@ void MainWindow::createMap(QString filename) {
     // TODO should be able to choose the step value in a message box
     Map *map = new Map(filename, tokenList->currentItem()->text(), 32);
 
-    ui->tableArea->addSubWindow(map);
-    map->show();
-    ui->tableArea->subWindowList().last()->move(0, 0);
+    QMdiSubWindow *subwindow = ui->tableArea->addSubWindow(map);
+    subwindow->show();
+    subwindow->move(0, 0);
 
     connect(tokenList, SIGNAL(currentItemChanged(QListWidgetItem*,  QListWidgetItem *)),
-            map->getMapLayer(), SLOT(setTokenPath(QListWidgetItem*)));
+            map->getMapLayer(), SLOT(setSpritePath(QListWidgetItem*)));
 }
 
 void MainWindow::on_actionCreateMap_triggered(){

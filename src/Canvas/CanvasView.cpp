@@ -1,13 +1,9 @@
 #include "CanvasView.h"
 
-CanvasView::CanvasView() {
-    setAcceptDrops(true);
-}
-
-CanvasView::CanvasView(CanvasScene* scene) :
-    CanvasView()
+CanvasView::CanvasView(QWidget *parent) :
+    QGraphicsView(parent)
 {
-    setScene(scene);
+    setAcceptDrops(true);
 }
 
 CanvasView::~CanvasView() {}

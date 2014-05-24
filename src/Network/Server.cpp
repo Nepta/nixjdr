@@ -10,8 +10,7 @@ Server::Server() {
 
 Server::~Server() {
     m_Server->deleteLater();
-    qDeleteAll(m_UsersList.begin(), m_UsersList.end());
-    m_UsersList.clear();
+    qDeleteAll(m_Nodes);
 }
 
 void Server::init() {

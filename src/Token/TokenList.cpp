@@ -3,24 +3,24 @@
 TokenList::TokenList(QWidget *parent) :
     QListWidget(parent)
 {
-    appendCustomItem(QIcon("resource/flandre.png"), "flandre");
-    appendCustomItem(QIcon("resource/cirno.png"), "cirno");
-    appendCustomItem(QIcon("resource/sakuya.png"), "sakuya");
-    appendCustomItem(QIcon("resource/marisa.png"), "marisa");
-    appendCustomItem(QIcon("resource/rumia.png"), "rumia");
-    appendCustomItem(QIcon("resource/reimu.png"), "remiu");
-    appendCustomItem(QIcon("resource/youmu.png"), "youmu");
-    appendCustomItem(QIcon("resource/remilia.png"), "remilia");
-    appendCustomItem(QIcon("resource/yuyuko.png"), "yuyuko");
-    appendCustomItem(QIcon("resource/sanae.png"), "sanae");
-    appendCustomItem(QIcon("resource/aya.png"), "aya");
-    appendCustomItem(QIcon("resource/patchouli.png"), "patchouli");
+//    appendCustomItem(QIcon("resource/flandre.png"), "flandre");
+//    appendCustomItem(QIcon("resource/cirno.png"), "cirno");
+//    appendCustomItem(QIcon("resource/sakuya.png"), "sakuya");
+//    appendCustomItem(QIcon("resource/marisa.png"), "marisa");
+//    appendCustomItem(QIcon("resource/rumia.png"), "rumia");
+//    appendCustomItem(QIcon("resource/reimu.png"), "remiu");
+//    appendCustomItem(QIcon("resource/youmu.png"), "youmu");
+//    appendCustomItem(QIcon("resource/remilia.png"), "remilia");
+//    appendCustomItem(QIcon("resource/yuyuko.png"), "yuyuko");
+//    appendCustomItem(QIcon("resource/sanae.png"), "sanae");
+//    appendCustomItem(QIcon("resource/aya.png"), "aya");
+//    appendCustomItem(QIcon("resource/patchouli.png"), "patchouli");
 
-    setCurrentItem(item(0));
+//    setCurrentItem(item(0));
 }
 
 void TokenList::appendCustomItem(QIcon icon, QString name){
-    this->insertItem(this->count(), new QListWidgetItem(icon, name));
+	 this->addItem(new QListWidgetItem(icon, name));
 }
 
 
