@@ -14,10 +14,14 @@ Map::Map(QString bgFilename, QString tokenPath, int tileStep, QWidget *parent) :
     scene->addLayer(&m_BgLayer);
     scene->addLayer(&m_MapLayer);
     scene->addLayer(&m_FoWLayer);
+    scene->addLayer(&m_DrawingLayer);
+
+    m_DrawingLayer.initDrawingZone();
 
     m_BgLayer.setEnabled(false);
     m_MapLayer.setEnabled(true);
     m_FoWLayer.setEnabled(false);
+    m_DrawingLayer.setEnabled(false);
 
     ui->m_View->setScene(scene);
     setWindowTitle(tr("Carte"));
@@ -41,6 +45,9 @@ void Map::selectedEditionLayer(QAbstractButton *button, bool checked) {
     else if (button->objectName() == QString("m_FowEdit")) {
         selectedLayer = &m_FoWLayer;
     }
+    else if (button->objectName() == QString("m_DrawingEdit")) {
+        selectedLayer = &m_DrawingLayer;
+    }
 
     selectedLayer->setEnabled(checked);
 }
@@ -56,6 +63,9 @@ void Map::selectedDisplayLayer(QAbstractButton *button, bool checked) {
     }
     else if (button->objectName() == QString("m_FowDisplay")) {
         selectedLayer = &m_FoWLayer;
+    }
+    else if (button->objectName() == QString("m_DrawingDisplay")) {
+        selectedLayer = &m_DrawingLayer;
     }
 
     selectedLayer->setVisible(checked);

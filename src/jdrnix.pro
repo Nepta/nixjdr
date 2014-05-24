@@ -48,6 +48,7 @@ SOURCES += \
     Canvas/MapLayer.cpp \
     Canvas/FoWLayer.cpp \
     Canvas/BackgroundLayer.cpp \
+    Canvas/DrawingLayer.cpp \
     Canvas/Layer.cpp \
     Canvas/Map.cpp \
     Network/Header.cpp \
@@ -98,6 +99,7 @@ HEADERS  += \
     Canvas/MapLayer.h \
     Canvas/FoWLayer.h \
     Canvas/BackgroundLayer.h \
+    Canvas/DrawingLayer.h \
     Canvas/Map.h \
     Network/Switch.h \
     Network/Receiver.h \

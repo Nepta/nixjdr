@@ -8,6 +8,7 @@
 #include "BackgroundLayer.h"
 #include "MapLayer.h"
 #include "FoWLayer.h"
+#include "DrawingLayer.h"
 
 namespace Ui {
     class Map;
@@ -34,6 +35,7 @@ private:
     BackgroundLayer m_BgLayer;
     MapLayer m_MapLayer;
     FoWLayer m_FoWLayer;
+    DrawingLayer m_DrawingLayer;
 };
 
 #endif // MAP_H
