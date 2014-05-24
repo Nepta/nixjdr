@@ -14,34 +14,31 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <layout class="QVBoxLayout" name="verticalLayout_4">
+   <layout class="QHBoxLayout" name="horizontalLayout">
     <item>
      <widget class="QSplitter" name="splitter_2">
       <property name="orientation">
        <enum>Qt::Horizontal</enum>
       </property>
-      <property name="childrenCollapsible">
-       <bool>false</bool>
-      </property>
-      <widget class="QWidget" name="verticalLayoutWidget">
-       <layout class="QVBoxLayout" name="verticalLayout" stretch="0">
-        <item>
-         <widget class="CustomMdiArea" name="tableArea">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-            <horstretch>0</horstretch>
-            <verstretch>4</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="frameShape">
-           <enum>QFrame::StyledPanel</enum>
-          </property>
-          <property name="frameShadow">
-           <enum>QFrame::Raised</enum>
-          </property>
-         </widget>
-        </item>
-       </layout>
+      <widget class="QSplitter" name="tableTurnSplitter">
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
+       </property>
+       <widget class="CustomMdiArea" name="tableArea">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+          <horstretch>0</horstretch>
+          <verstretch>4</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="frameShape">
+         <enum>QFrame::StyledPanel</enum>
+        </property>
+        <property name="frameShadow">
+         <enum>QFrame::Raised</enum>
+        </property>
+       </widget>
+       <widget class="TurnMenu" name="turnWidget" native="true"/>
       </widget>
       <widget class="QWidget" name="layoutWidget">
        <layout class="QVBoxLayout" name="verticalLayout_2" stretch="0,0,0">
@@ -67,7 +64,7 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>952</width>
+             <width>957</width>
              <height>331</height>
             </rect>
            </property>
@@ -164,13 +161,19 @@
   <customwidget>
    <class>TokenMenu</class>
    <extends>QWidget</extends>
-   <header>token/TokenMenu.h</header>
+   <header>Token/TokenMenu.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>
    <class>ChatWidget</class>
    <extends>QWidget</extends>
    <header>ChatWidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>TurnMenu</class>
+   <extends>QWidget</extends>
+   <header>TurnMenu/TurnMenu.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

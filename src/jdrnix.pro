@@ -36,6 +36,7 @@ SOURCES += \
     Chat/Commands/CmdNicknameAck.cpp \
     Chat/Commands/CmdWhisperRep.cpp \
     Chat/Commands/CmdRoll.cpp \
+    Chat/Commands/CmdHelp.cpp \
     Chat/Commands/CmdDisconnect.cpp \
     Chat/Commands/CmdNicknamesList.cpp \
     Chat/Commands/CmdNicknamesListAck.cpp \
@@ -43,7 +44,9 @@ SOURCES += \
     Canvas/CanvasView.cpp \
     Canvas/CanvasScene.cpp \
     Canvas/Sprite.cpp \
+    Canvas/GridLayer.cpp \
     Canvas/MapLayer.cpp \
+    Canvas/FoWLayer.cpp \
     Canvas/Layer.cpp \
     Canvas/Map.cpp \
     Network/Header.cpp \
@@ -53,10 +56,12 @@ SOURCES += \
     Network/Client.cpp \
     Network/ClientReceiver.cpp \
     Network/Receiver.cpp \
-    token/TokenMenu.cpp \
-	 token/TokenList.cpp \
     DataBase/DataBase.cpp \
-    DataBase/DBItem.cpp
+    DataBase/DBItem.cpp \
+    Token/TokenMenu.cpp \
+    Token/TokenList.cpp \
+    TurnMenu/TurnList.cpp \
+    TurnMenu/TurnMenu.cpp
 
 HEADERS  += \
     MainWindow.h \
@@ -79,6 +84,7 @@ HEADERS  += \
     Chat/Commands/CmdNicknameAck.h \
     Chat/Commands/CmdWhisperRep.h \
     Chat/Commands/CmdRoll.h \
+    Chat/Commands/CmdHelp.h \
     Chat/Commands/CmdDisconnect.h \
     Chat/Commands/CmdNicknamesList.h \
     Chat/Commands/CmdNicknamesListAck.h \
@@ -87,7 +93,9 @@ HEADERS  += \
     Canvas/CanvasView.h \
     Canvas/Sprite.h \
     Canvas/Layer.h \
+    Canvas/GridLayer.h \
     Canvas/MapLayer.h \
+    Canvas/FoWLayer.h \
     Canvas/Map.h \
     Network/Switch.h \
     Network/Receiver.h \
@@ -97,13 +105,18 @@ HEADERS  += \
     Network/Client.h \
     Network/ClientReceiver.h \
     Network/Serializable.h \
-    token/TokenMenu.h \
-    token/TokenList.h \
     DataBase/DataBase.h \
-    DataBase/DBItem.h
+    DataBase/DBItem.h \
+    Token/TokenMenu.h \
+    Token/TokenList.h \
+    TurnMenu/TurnList.h \
+    TurnMenu/TurnMenu.h
 
-FORMS    += mainwindow.ui \
+FORMS    += \
     TokenMenu.ui \
     DiceMenu.ui \
     ChatWidget.ui \
-    ConnectionHelper.ui
+    ConnectionHelper.ui \
+    MainWindow.ui \
+    TurnMenu.ui \
+    Map.ui

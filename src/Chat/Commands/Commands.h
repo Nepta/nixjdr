@@ -10,6 +10,7 @@
 enum class ChatCodes : quint16 {
     UNDEFINED = Receiver::UNDEFINED_CODE,
 
+    USERCMD_HELP,
     USERCMD_MESSAGE,
     USERCMD_NICK,
     USERCMD_WHISPER,

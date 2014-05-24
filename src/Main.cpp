@@ -5,6 +5,7 @@
 #include "MainWindow.h"
 #include "ConnectionHelper.h"
 #include "User.h"
+#include "DataBase/DataBase.h"
 
 int main(int argc, char *argv[])
 {
@@ -17,9 +18,12 @@ int main(int argc, char *argv[])
                     QLibraryInfo::location(QLibraryInfo::TranslationsPath));
     a.installTranslator(&translator);
 
-    User *user = new User();
+    User *user = new User;
     ConnectionHelper connectionHelper(user);
     connectionHelper.exec();
+
+    DataBase *database = new DataBase("jdrDB", user->getServerIpAddress());
+    user->setDatabase(database);
 
     MainWindow mainWindow(user);
     mainWindow.show();

@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include <QContextMenuEvent>
+
 #include "Chat/ChatServer.h"
 #include "Chat/ChatClient.h"
 #include "User.h"

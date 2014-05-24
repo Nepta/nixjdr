@@ -9,7 +9,7 @@ DiceMenu::DiceMenu(QWidget *parent) :
     ui->setupUi(this);
     DiceMenu::fillDiceButtonList();
     foreach(QPushButton* button, m_DiceButtonList) {
-        button->setMinimumSize(50,5);
+        button->setMinimumSize(40,20);
     }
     connect(this, SIGNAL(rightClickDiceButton(QPushButton*,bool)),
         this, SLOT(modifyButton(QPushButton*, bool)));

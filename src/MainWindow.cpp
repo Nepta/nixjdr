@@ -11,7 +11,7 @@
 #include "CustomMdiArea.h"
 #include "ConnectionHelper.h"
 #include "MainWindow.h"
-#include "ui_mainwindow.h"
+#include "ui_MainWindow.h"
 
 MainWindow::MainWindow(User *user, QWidget *parent) :
     QMainWindow(parent),
@@ -19,34 +19,15 @@ MainWindow::MainWindow(User *user, QWidget *parent) :
 {
     ui->setupUi(this);
 
-    // Sets Null pointer for later deletion if m_Server is not used
+    // Sets Null pointer for later deletion if m_Server and/or m_Client are not used
     m_Server = NULL;
+    m_Client = NULL;
 
-    // Dice menu
-    m_diceMenu = new DiceMenu();
-    ui->tableArea->addSubWindow(m_diceMenu, Qt::CustomizeWindowHint |
-                                Qt::WindowTitleHint | Qt::WindowMinMaxButtonsHint);
-        //get a nice dice menu window
-    ui->tableArea->subWindowList().last()->setGeometry(0,0,470,90);
-    ui->tableArea->subWindowList().last()->setMinimumSize(ui->tableArea->size());
-    ui->tableArea->subWindowList().last()->setWindowTitle(tr("Dés"));
-
-    // Connect chat & dice menus
-    connect(m_diceMenu, SIGNAL(rollDice(QString, bool)),
-            ui->m_ChatWidget, SLOT(rollDice(QString, bool)));
-    connect(ui->m_ChatWidget, SIGNAL(requestDice(QString&)), m_diceMenu, SLOT(requestRoll(QString&)));
-
-    // Top menu
-    connect(ui->tableArea, SIGNAL(subWindowActivated(QMdiSubWindow*)),
-                 this, SLOT(updateMenu()));
-
-    // Setup role
     m_User = user;
-    if (m_User->getRole() == Role::ROLE_MJ) {
-        setupMJ();
-    } else {
-        setupPlayer();
-    }
+
+    initTableTurnSplitter();
+    initConnects();
+    initRole();
 
     //showFullScreen();
 }
@@ -54,10 +35,36 @@ MainWindow::MainWindow(User *user, QWidget *parent) :
 MainWindow::~MainWindow()
 {
     delete ui;
-    delete m_diceMenu;
-    delete m_User;
     delete m_Server;
     delete m_Client;
+}
+
+void MainWindow::initTableTurnSplitter(){
+    QList<int> sizes;
+    sizes.push_back(1000);
+    sizes.push_back(100);
+    ui->tableTurnSplitter->setSizes(sizes);
+}
+
+void MainWindow::initConnects(){
+    // Connect chat & dice menus
+    connect(ui->turnWidget->getDiceWidget(), SIGNAL(rollDice(QString, bool)),
+            ui->m_ChatWidget, SLOT(rollDice(QString, bool)));
+    connect(ui->m_ChatWidget, SIGNAL(requestDice(QString&)),
+            ui->turnWidget->getDiceWidget(), SLOT(requestRoll(QString&)));
+
+    // Top menu
+    connect(ui->tableArea, SIGNAL(subWindowActivated(QMdiSubWindow*)),
+                 this, SLOT(updateMenu()));
+}
+
+void MainWindow::initRole(){
+
+    if (m_User->getRole() == Role::ROLE_MJ) {
+        setupMJ();
+    } else {
+        setupPlayer();
+    }
 }
 
 void MainWindow::updateMenu() {
@@ -75,12 +82,12 @@ void MainWindow::createMap(QString filename) {
     // TODO should be able to choose the step value in a message box
     Map *map = new Map(filename, tokenList->currentItem()->text(), 32);
 
-    ui->tableArea->addSubWindow(map);
-    map->show();
-    ui->tableArea->subWindowList().last()->move(0, 0);
+    QMdiSubWindow *subwindow = ui->tableArea->addSubWindow(map);
+    subwindow->show();
+    subwindow->move(0, 0);
 
     connect(tokenList, SIGNAL(currentItemChanged(QListWidgetItem*,  QListWidgetItem *)),
-            map->getMapLayer(), SLOT(setTokenPath(QListWidgetItem*)));
+            map->getMapLayer(), SLOT(setSpritePath(QListWidgetItem*)));
 }
 
 void MainWindow::on_actionCreateMap_triggered(){
@@ -149,7 +156,7 @@ void MainWindow::setupPlayer() {
 
     /* The dice menu is able to send system messages to the Chat in order to display error messages
      * or warnings */
-    connect(m_diceMenu, SIGNAL(sendMessageToChatUi(QString)),
+    connect(ui->turnWidget->getDiceWidget(), SIGNAL(sendMessageToChatUi(QString)),
             ui->m_ChatWidget, SLOT(receivedMessage(QString))
     );
 }

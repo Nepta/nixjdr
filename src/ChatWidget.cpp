@@ -24,6 +24,11 @@ ChatWidget::~ChatWidget()
     delete m_NicknamesListModel;
 }
 
+/**
+ * @brief ChatWidget::on_msgField_returnPressed
+ *
+ * Clean input field
+ */
 void ChatWidget::on_msgField_returnPressed()
 {
     if (!ui->msgField->text().isEmpty()) {

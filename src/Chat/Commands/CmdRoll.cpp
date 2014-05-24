@@ -164,5 +164,5 @@ int CmdRoll::rollDice(int X, int Y, bool addition, QString &totalResultString){
 
 
 QString CmdRoll::getHelp() {
-    return NULL;
+    return tr("/roll &lt;nb&gt;d&lt;n&gt; - Roule nb dés de valeur max n");
 }
