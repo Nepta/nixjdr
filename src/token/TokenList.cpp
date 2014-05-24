@@ -3,32 +3,32 @@
 TokenList::TokenList(QWidget *parent) :
     QListWidget(parent)
 {
-    this->insertItem(0, new QListWidgetItem(
-        QIcon("resource/flandre.png"), "flandre"));
-    this->insertItem(1, new QListWidgetItem(
-        QIcon("resource/cirno.png"), "cirno"));
-    this->insertItem(2, new QListWidgetItem(
-        QIcon("resource/sakuya.png"), "sakuya"));
-    this->insertItem(3, new QListWidgetItem(
-        QIcon("resource/marisa.png"), "marisa"));
-    this->insertItem(4, new QListWidgetItem(
-        QIcon("resource/rumia.png"), "rumia"));
-    this->insertItem(5, new QListWidgetItem(
-        QIcon("resource/reimu.png"), "reimu"));
-    this->insertItem(6, new QListWidgetItem(
-        QIcon("resource/patchouli.png"), "patchouli"));
-    this->insertItem(7, new QListWidgetItem(
-        QIcon("resource/youmu.png"), "youmu"));
-    this->insertItem(8, new QListWidgetItem(
-        QIcon("resource/remilia.png"), "remilia"));
-    this->insertItem(9, new QListWidgetItem(
-        QIcon("resource/yuyuko.png"), "yuyuko"));
-    this->insertItem(10, new QListWidgetItem(
-        QIcon("resource/sanae.png"), "sanae"));
-    this->insertItem(11, new QListWidgetItem(
-        QIcon("resource/aya.png"), "aya"));
+//    this->insertItem(0, new QListWidgetItem(
+//        QIcon("resource/flandre.png"), "flandre"));
+//    this->insertItem(1, new QListWidgetItem(
+//        QIcon("resource/cirno.png"), "cirno"));
+//    this->insertItem(2, new QListWidgetItem(
+//        QIcon("resource/sakuya.png"), "sakuya"));
+//    this->insertItem(3, new QListWidgetItem(
+//        QIcon("resource/marisa.png"), "marisa"));
+//    this->insertItem(4, new QListWidgetItem(
+//        QIcon("resource/rumia.png"), "rumia"));
+//    this->insertItem(5, new QListWidgetItem(
+//        QIcon("resource/reimu.png"), "reimu"));
+//    this->insertItem(6, new QListWidgetItem(
+//        QIcon("resource/patchouli.png"), "patchouli"));
+//    this->insertItem(7, new QListWidgetItem(
+//        QIcon("resource/youmu.png"), "youmu"));
+//    this->insertItem(8, new QListWidgetItem(
+//        QIcon("resource/remilia.png"), "remilia"));
+//    this->insertItem(9, new QListWidgetItem(
+//        QIcon("resource/yuyuko.png"), "yuyuko"));
+//    this->insertItem(10, new QListWidgetItem(
+//        QIcon("resource/sanae.png"), "sanae"));
+//    this->insertItem(11, new QListWidgetItem(
+//        QIcon("resource/aya.png"), "aya"));
 
-    setCurrentItem(item(0));
+//    setCurrentItem(item(0));
 }
 
 void TokenList::dragMoveEvent(QDragMoveEvent * event){
