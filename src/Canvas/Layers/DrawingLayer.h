@@ -22,16 +22,17 @@ public slots:
     void erasePixmapContent();
 
 private:
-    void paintOnPixmap(const QPointF &oldPos, const QPointF &pos);
-    void eraseOnPixmap(const QPointF pos);
+    void paintOnPixmap(const QPointF &oldPos, const QPointF &pos, Qt::GlobalColor color);
+    void paintOnPixmap(QPainter &painter, const QPointF &oldPos, const QPointF &pos);
+    void eraseOnPixmap(const QPointF &oldPos, const QPointF &pos);
 
-    void mousePressEvent(QGraphicsSceneMouseEvent *);
+    void mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent);
     void mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent);
 
     QGraphicsPixmapItem m_DrawingZone;
     QPixmap *m_Pixmap;
     int m_PenSize;
-    QSize m_EraserSize;
+    int m_EraserSize;
 };
 
 #endif // DRAWINGLAYER_H

@@ -4,7 +4,7 @@
 DrawingLayer::DrawingLayer(int penSize, int eraserSize) :
     m_DrawingZone(this),
     m_PenSize(penSize),
-    m_EraserSize(eraserSize, eraserSize)
+    m_EraserSize(eraserSize)
 {}
 
 DrawingLayer::~DrawingLayer() {
@@ -16,7 +16,7 @@ void DrawingLayer::setPenSize(int size) {
 }
 
 void DrawingLayer::setEraserSize(int size) {
-    m_EraserSize = QSize(size, size);
+    m_EraserSize = size;
 }
 
 void DrawingLayer::initDrawingZone() {
@@ -27,25 +27,27 @@ void DrawingLayer::initDrawingZone() {
 
 void DrawingLayer::drawBackground(QPainter *, const QRectF &) {}
 
-void DrawingLayer::mousePressEvent(QGraphicsSceneMouseEvent *) {}
+void DrawingLayer::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent) {}
 
 void DrawingLayer::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent) {
     if (mouseEvent->buttons() & Qt::LeftButton) {
-        paintOnPixmap(mouseEvent->lastScenePos(), mouseEvent->scenePos());
+        paintOnPixmap(mouseEvent->lastScenePos(), mouseEvent->scenePos(), Qt::black);
     }
     else if (mouseEvent->buttons() & Qt::RightButton) {
-        eraseOnPixmap(mouseEvent->scenePos());
-
+        eraseOnPixmap(mouseEvent->lastScenePos(), mouseEvent->scenePos());
     }
-
 
     m_DrawingZone.setPixmap(*m_Pixmap); // update the drawing zone
 }
 
-void DrawingLayer::paintOnPixmap(const QPointF &oldPos, const QPointF &pos) {
+void DrawingLayer::paintOnPixmap(const QPointF &oldPos, const QPointF &pos, Qt::GlobalColor color) {
     QPainter painter(m_Pixmap);
-    painter.setPen(QPen(Qt::black, m_PenSize));
+    painter.setPen(QPen(color, m_PenSize, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
 
+    paintOnPixmap(painter, oldPos, pos);
+}
+
+void DrawingLayer::paintOnPixmap(QPainter &painter, const QPointF &oldPos, const QPointF &pos) {
     if (oldPos == pos) {
         painter.drawPoint(pos);
     }
@@ -54,11 +56,12 @@ void DrawingLayer::paintOnPixmap(const QPointF &oldPos, const QPointF &pos) {
     }
 }
 
-void DrawingLayer::eraseOnPixmap(const QPointF pos) {
+void DrawingLayer::eraseOnPixmap(const QPointF &oldPos, const QPointF &pos) {
     QPainter painter(m_Pixmap);
+    painter.setPen(QPen(Qt::transparent, m_EraserSize, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
     painter.setCompositionMode(QPainter::CompositionMode_Clear);
 
-    painter.fillRect(QRect(pos.toPoint(), m_EraserSize), Qt::transparent);
+    paintOnPixmap(painter, oldPos, pos);
 }
 
 void DrawingLayer::erasePixmapContent() {
