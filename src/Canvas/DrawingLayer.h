@@ -6,13 +6,20 @@
 
 class DrawingLayer : public Layer
 {
+    Q_OBJECT
+
 public:
-    DrawingLayer();
+    DrawingLayer(int penSize, int eraserSize);
     ~DrawingLayer();
 
     void initDrawingZone();
 
     void drawBackground(QPainter *, const QRectF &);
+
+public slots:
+    void setPenSize(int size);
+    void setEraserSize(int size);
+    void erasePixmapContent();
 
 private:
     void paintOnPixmap(const QPointF &oldPos, const QPointF &pos);

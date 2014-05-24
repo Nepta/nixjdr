@@ -186,6 +186,76 @@
        </widget>
       </item>
       <item>
+       <widget class="QGroupBox" name="groupBox_3">
+        <property name="title">
+         <string>Outils de dessin</string>
+        </property>
+        <layout class="QVBoxLayout" name="verticalLayout">
+         <item>
+          <widget class="QLabel" name="label_3">
+           <property name="text">
+            <string>Tailles</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QWidget" name="sizeWidget" native="true">
+           <property name="styleSheet">
+            <string notr="true">QWidget#sizeWidget {
+	border: 1px solid rgb(221, 221, 221);
+	border-radius: 1px;
+}</string>
+           </property>
+           <layout class="QFormLayout" name="formLayout_2">
+            <item row="0" column="0">
+             <widget class="QLabel" name="label">
+              <property name="text">
+               <string>Crayon</string>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="1">
+             <widget class="QSpinBox" name="m_PenSpinBox">
+              <property name="value">
+               <number>2</number>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="0">
+             <widget class="QLabel" name="label_2">
+              <property name="text">
+               <string>Gomme</string>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="1">
+             <widget class="QSpinBox" name="m_EraserSpinBox">
+              <property name="value">
+               <number>2</number>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+         </item>
+         <item>
+          <widget class="Line" name="line">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="m_EraseButton">
+           <property name="text">
+            <string>Tout effacer</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item>
        <spacer name="verticalSpacer">
         <property name="orientation">
          <enum>Qt::Vertical</enum>

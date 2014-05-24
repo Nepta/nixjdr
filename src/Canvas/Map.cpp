@@ -6,7 +6,8 @@ Map::Map(QString bgFilename, QString tokenPath, int tileStep, QWidget *parent) :
     ui(new Ui::Map),
     m_BgLayer(bgFilename),
     m_MapLayer(tokenPath, tileStep),
-    m_FoWLayer(tileStep)
+    m_FoWLayer(tileStep),
+    m_DrawingLayer(2, 2)
 {
     ui->setupUi(this);
 
@@ -30,6 +31,12 @@ Map::Map(QString bgFilename, QString tokenPath, int tileStep, QWidget *parent) :
             this, SLOT(selectedEditionLayer(QAbstractButton*, bool)));
     connect(ui->m_DisplayGroup, SIGNAL(buttonToggled(QAbstractButton*, bool)),
             this, SLOT(selectedDisplayLayer(QAbstractButton*, bool)));
+    connect(ui->m_PenSpinBox, SIGNAL(valueChanged(int)),
+            &m_DrawingLayer, SLOT(setPenSize(int)));
+    connect(ui->m_EraserSpinBox, SIGNAL(valueChanged(int)),
+            &m_DrawingLayer, SLOT(setEraserSize(int)));
+    connect(ui->m_EraseButton, SIGNAL(clicked(bool)),
+            &m_DrawingLayer, SLOT(erasePixmapContent()));
 }
 
 Map::~Map() {

@@ -1,14 +1,22 @@
 #include <QGraphicsScene>
 #include "DrawingLayer.h"
 
-DrawingLayer::DrawingLayer() :
+DrawingLayer::DrawingLayer(int penSize, int eraserSize) :
     m_DrawingZone(this),
-    m_PenSize(2),
-    m_EraserSize(10, 10)
+    m_PenSize(penSize),
+    m_EraserSize(eraserSize, eraserSize)
 {}
 
 DrawingLayer::~DrawingLayer() {
     delete m_Pixmap;
+}
+
+void DrawingLayer::setPenSize(int size) {
+    m_PenSize = size;
+}
+
+void DrawingLayer::setEraserSize(int size) {
+    m_EraserSize = QSize(size, size);
 }
 
 void DrawingLayer::initDrawingZone() {
@@ -51,4 +59,9 @@ void DrawingLayer::eraseOnPixmap(const QPointF pos) {
     painter.setCompositionMode(QPainter::CompositionMode_Clear);
 
     painter.fillRect(QRect(pos.toPoint(), m_EraserSize), Qt::transparent);
+}
+
+void DrawingLayer::erasePixmapContent() {
+    m_Pixmap->fill(Qt::transparent);
+    m_DrawingZone.setPixmap(*m_Pixmap);
 }
