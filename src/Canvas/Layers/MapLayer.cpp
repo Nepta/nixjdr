@@ -7,15 +7,11 @@
 MapLayer::MapLayer(QString spritePath, int step) :
     GridLayer(step)
 {
-    GridLayer::setSpritePath(spritePath);
+    setSpritePixmap(spritePath);
     setAcceptDrops(true);
 }
 
 MapLayer::~MapLayer() {}
-
-void MapLayer::setSpritePath(QListWidgetItem *token) {
-    GridLayer::setSpritePath(token->text());
-}
 
 void MapLayer::initDragEvent(QGraphicsItem *watched, QGraphicsSceneMouseEvent *mouseEvent) {
     // only start the drag event when a certain distance has been traveled

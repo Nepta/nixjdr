@@ -87,7 +87,7 @@ void MainWindow::createMap(QString filename) {
     subwindow->move(0, 0);
 
     connect(tokenList, SIGNAL(currentItemChanged(QListWidgetItem*,  QListWidgetItem *)),
-            map->getMapLayer(), SLOT(setSpritePath(QListWidgetItem*)));
+            map->getMapLayer(), SLOT(setSpritePixmap(QListWidgetItem*)));
 }
 
 void MainWindow::on_actionCreateMap_triggered(){

@@ -4,11 +4,14 @@
 #include <QPainter>
 #include <QRectF>
 #include <QString>
+#include <QListWidgetItem>
 #include "Canvas/Sprite.h"
 #include "Layer.h"
 
 class GridLayer : public Layer
 {
+    Q_OBJECT
+
 public:
     /**
      * @brief DELTA_DELETE_SPRITE The event called to delete a Sprite is valid if the cursor does not
@@ -19,9 +22,9 @@ public:
     GridLayer(int step = 1);
     virtual ~GridLayer() {}
 
-    void setSpritePath(QString spritePath);
+    void setSpritePixmap(QString spritePath);
+    void setSpritePixmap(QPixmap spritePixmap);
 
-    virtual void addSprite(QPoint position);
     virtual Sprite *addSprite(QPixmap *spritePixmap, QPoint spritePos);
     virtual void removeSprite(QGraphicsItem *sprite);
 
@@ -49,9 +52,13 @@ public:
      */
     void mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent);
 
+public slots:
+    void setSpritePixmap(QListWidgetItem* token);
+
 protected:
     int m_Step;
-    QString m_SpritePath;
+    QPixmap m_SpritePixmap;
 };
+
 
 #endif // GRIDLAYER_H

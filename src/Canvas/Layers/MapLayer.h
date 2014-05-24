@@ -21,9 +21,6 @@ public:
     MapLayer(QString spritePath, int step = 1);
     ~MapLayer();
 
-public slots:
-    void setSpritePath(QListWidgetItem* token);
-
 private:
     QPoint m_dragStartPosition;
 

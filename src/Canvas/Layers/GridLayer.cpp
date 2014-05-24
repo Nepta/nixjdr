@@ -4,15 +4,21 @@ GridLayer::GridLayer(int step) {
     m_Step = step;
 }
 
-void GridLayer::setSpritePath(QString spritePath) {
+void GridLayer::setSpritePixmap(QString spritePath) {
     QString newPath = QString("resource/%1.png").arg(spritePath);
-    m_SpritePath = newPath;
+
+    setSpritePixmap(QPixmap(newPath));
 }
 
-void GridLayer::addSprite(QPoint position) {
-    QPixmap *spritePixmap = new QPixmap(m_SpritePath);
+void GridLayer::setSpritePixmap(QListWidgetItem* token) {
+    if (token != NULL) {
+        QPixmap spritePixmap = token->icon().pixmap(QSize(m_Step, m_Step));
+        setSpritePixmap(spritePixmap);
+    }
+}
 
-    addSprite(spritePixmap, position);
+void GridLayer::setSpritePixmap(QPixmap spritePixmap) {
+    m_SpritePixmap = spritePixmap;
 }
 
 Sprite *GridLayer::addSprite(QPixmap *spritePixmap, QPoint position) {
@@ -60,6 +66,6 @@ void GridLayer::drawRows(QPainter *painter, int rowLength, int limit, bool orien
 void GridLayer::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent) {
     if (mouseEvent->button() == Qt::LeftButton) {
         QPoint mouseScenePos = mouseEvent->scenePos().toPoint();
-        addSprite(mouseScenePos);
+        addSprite(&m_SpritePixmap, mouseScenePos);
     }
 }

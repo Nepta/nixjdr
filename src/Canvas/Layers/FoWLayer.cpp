@@ -7,7 +7,7 @@ FoWLayer::FoWLayer(int step, bool transparentSprites) :
     m_TransparentSprites(transparentSprites)
 {
     // TODO multiple colors for multiple players (shift the hue of the pixmap?)
-    GridLayer::setSpritePath("fow");
+    GridLayer::setSpritePixmap("fow");
 }
 
 FoWLayer::~FoWLayer() {}
@@ -15,7 +15,6 @@ FoWLayer::~FoWLayer() {}
 // reimplemented from GridLayer
 Sprite *FoWLayer::addSprite(QPixmap *spritePixmap, QPoint position) {
     Sprite* sprite = GridLayer::addSprite(spritePixmap, position);
-
     sprite->setTransparent(m_TransparentSprites);
 
     return sprite;
