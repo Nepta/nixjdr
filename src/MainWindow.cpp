@@ -4,9 +4,9 @@
 #include <QDesktopWidget>
 #include <QToolBox>
 
+#include "Canvas/Layers/MapLayer.h"
 #include "Canvas/CanvasScene.h"
 #include "Canvas/CanvasView.h"
-#include "Canvas/MapLayer.h"
 
 #include "CustomMdiArea.h"
 #include "ConnectionHelper.h"

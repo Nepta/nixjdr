@@ -5,6 +5,8 @@
 #include <QGraphicsObject>
 #include <QGraphicsItem>
 #include <QGraphicsSceneMouseEvent>
+#include <QPainter>
+#include <QRectF>
 
 class Layer : public QGraphicsObject
 {

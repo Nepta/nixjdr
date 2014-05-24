@@ -111,6 +111,16 @@
            </attribute>
           </widget>
          </item>
+         <item>
+          <widget class="QRadioButton" name="m_DrawingEdit">
+           <property name="text">
+            <string>Dessin</string>
+           </property>
+           <attribute name="buttonGroup">
+            <string notr="true">m_EditGroup</string>
+           </attribute>
+          </widget>
+         </item>
         </layout>
        </widget>
       </item>
@@ -120,6 +130,19 @@
          <string>Affichage</string>
         </property>
         <layout class="QVBoxLayout" name="verticalLayout_3">
+         <item>
+          <widget class="QCheckBox" name="m_BgDisplay">
+           <property name="text">
+            <string>Arrière-plan</string>
+           </property>
+           <property name="checked">
+            <bool>true</bool>
+           </property>
+           <attribute name="buttonGroup">
+            <string notr="true">m_DisplayGroup</string>
+           </attribute>
+          </widget>
+         </item>
          <item>
           <widget class="QCheckBox" name="m_MapDisplay">
            <property name="text">
@@ -144,6 +167,89 @@
            <attribute name="buttonGroup">
             <string notr="true">m_DisplayGroup</string>
            </attribute>
+          </widget>
+         </item>
+         <item>
+          <widget class="QCheckBox" name="m_DrawingDisplay">
+           <property name="text">
+            <string>Dessin</string>
+           </property>
+           <property name="checked">
+            <bool>true</bool>
+           </property>
+           <attribute name="buttonGroup">
+            <string notr="true">m_DisplayGroup</string>
+           </attribute>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item>
+       <widget class="QGroupBox" name="groupBox_3">
+        <property name="title">
+         <string>Outils de dessin</string>
+        </property>
+        <layout class="QVBoxLayout" name="verticalLayout">
+         <item>
+          <widget class="QLabel" name="label_3">
+           <property name="text">
+            <string>Tailles</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QWidget" name="sizeWidget" native="true">
+           <property name="styleSheet">
+            <string notr="true">QWidget#sizeWidget {
+	border: 1px solid rgb(221, 221, 221);
+	border-radius: 1px;
+}</string>
+           </property>
+           <layout class="QFormLayout" name="formLayout_2">
+            <item row="0" column="0">
+             <widget class="QLabel" name="label">
+              <property name="text">
+               <string>Crayon</string>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="1">
+             <widget class="QSpinBox" name="m_PenSpinBox">
+              <property name="value">
+               <number>2</number>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="0">
+             <widget class="QLabel" name="label_2">
+              <property name="text">
+               <string>Gomme</string>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="1">
+             <widget class="QSpinBox" name="m_EraserSpinBox">
+              <property name="value">
+               <number>2</number>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+         </item>
+         <item>
+          <widget class="Line" name="line">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="m_EraseButton">
+           <property name="text">
+            <string>Effacer dessins</string>
+           </property>
           </widget>
          </item>
         </layout>
@@ -177,11 +283,11 @@
  <resources/>
  <connections/>
  <buttongroups>
+  <buttongroup name="m_EditGroup"/>
   <buttongroup name="m_DisplayGroup">
    <property name="exclusive">
     <bool>false</bool>
    </property>
   </buttongroup>
-  <buttongroup name="m_EditGroup"/>
  </buttongroups>
 </ui>

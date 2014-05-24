@@ -3,10 +3,12 @@
 
 #include <QWidget>
 #include <QAbstractButton>
+#include "Layers/BackgroundLayer.h"
+#include "Layers/MapLayer.h"
+#include "Layers/FoWLayer.h"
+#include "Layers/DrawingLayer.h"
 #include "CanvasView.h"
 #include "CanvasScene.h"
-#include "MapLayer.h"
-#include "FoWLayer.h"
 
 namespace Ui {
     class Map;
@@ -30,8 +32,10 @@ private slots:
 
 private:
     Ui::Map *ui;
+    BackgroundLayer m_BgLayer;
     MapLayer m_MapLayer;
     FoWLayer m_FoWLayer;
+    DrawingLayer m_DrawingLayer;
 };
 
 #endif // MAP_H
