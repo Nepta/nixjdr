@@ -23,7 +23,9 @@ void TokenList::appendCustomItem(QIcon icon, QString name){
 	 this->addItem(new QListWidgetItem(icon, name));
 }
 
-
+void TokenList::appendCustomItem(TokenItem& item){
+	appendCustomItem(item.icon(), item.name());
+}
 
 void TokenList::dragMoveEvent(QDragMoveEvent * event){
     if(event->mimeData()->hasImage()){
