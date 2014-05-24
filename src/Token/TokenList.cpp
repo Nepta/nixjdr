@@ -3,7 +3,7 @@
 TokenList::TokenList(QWidget *parent) :
     QListWidget(parent)
 {
-//    appendCustomItem(QIcon("resource/flandre.png"), "flandre");
+    appendCustomItem(QIcon("resource/flandre.png"), "flandre");
 //    appendCustomItem(QIcon("resource/cirno.png"), "cirno");
 //    appendCustomItem(QIcon("resource/sakuya.png"), "sakuya");
 //    appendCustomItem(QIcon("resource/marisa.png"), "marisa");
@@ -22,8 +22,6 @@ TokenList::TokenList(QWidget *parent) :
 void TokenList::appendCustomItem(QIcon icon, QString name){
 	 this->addItem(new QListWidgetItem(icon, name));
 }
-
-
 
 void TokenList::dragMoveEvent(QDragMoveEvent * event){
     if(event->mimeData()->hasImage()){
@@ -59,12 +57,14 @@ void TokenList::mouseMoveEvent(QMouseEvent *event){
     QListWidgetItem *clickedItem = this->itemAt(pos);
 
     this->setCurrentItem(clickedItem);
-    QPixmap spriteToMove = clickedItem->icon().pixmap(QSize(32,32));
+    if(clickedItem != NULL){
+        QPixmap spriteToMove = clickedItem->icon().pixmap(QSize(32,32));
 
-    drag->setPixmap(spriteToMove);
+        drag->setPixmap(spriteToMove);
 
-    mimeData->setImageData(spriteToMove.toImage());
-    drag->setMimeData(mimeData);
+        mimeData->setImageData(spriteToMove.toImage());
+        drag->setMimeData(mimeData);
 
-    drag->exec(Qt::CopyAction | Qt::MoveAction);
+        drag->exec(Qt::CopyAction | Qt::MoveAction);
+    }
 }
