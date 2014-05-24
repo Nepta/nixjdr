@@ -11,13 +11,13 @@ DataBase::DataBase(const QString dbName, const QString& serverIpAddress){
 	dbName_ = dbName;
 	db_ = QSqlDatabase::addDatabase("QPSQL");
 	db_.setUserName("jdr");
-	db_.setDatabaseName("jdrDB");
+	db_.setDatabaseName("jdrdb");
 	db_.setPassword("password");
-	db_.setHostName(serverIpAddress);
+	db_.setHostName("10.81.3.7");
 	db_.open();
-	if(serverIpAddress == "127.0.0.1"){
-		initDB();
-	}
+//	if(serverIpAddress == "127.0.0.1"){
+//		initDB();
+//	}
 }
 
 void DataBase::initDB(){
