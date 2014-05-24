@@ -26,7 +26,7 @@ private:
     void paintOnPixmap(QPainter &painter, const QPointF &oldPos, const QPointF &pos);
     void eraseOnPixmap(const QPointF &oldPos, const QPointF &pos);
 
-    void mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent);
+    void mousePressEvent(QGraphicsSceneMouseEvent *);
     void mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent);
 
     QGraphicsPixmapItem m_DrawingZone;

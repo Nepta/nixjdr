@@ -27,7 +27,7 @@ void DrawingLayer::initDrawingZone() {
 
 void DrawingLayer::drawBackground(QPainter *, const QRectF &) {}
 
-void DrawingLayer::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent) {}
+void DrawingLayer::mousePressEvent(QGraphicsSceneMouseEvent *) {}
 
 void DrawingLayer::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent) {
     if (mouseEvent->buttons() & Qt::LeftButton) {

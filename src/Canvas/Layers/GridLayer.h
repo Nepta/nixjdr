@@ -40,7 +40,7 @@ public:
      * @param limit
      * @param orientation true vertical, false horizontal
      */
-    void drawRows(QPainter *painter, int step, int limit, bool orientation);
+    void drawRows(QPainter *painter, int rowLength, int limit, bool orientation);
 
     /**
      * @brief mouseReleaseEvent Reimplemented from GridLayer in order to create Sprites when the left

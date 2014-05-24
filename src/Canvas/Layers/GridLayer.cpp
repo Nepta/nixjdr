@@ -40,19 +40,19 @@ void GridLayer::drawBackground(QPainter *painter, const QRectF &rect) {
     }
 }
 
-void GridLayer::drawRows(QPainter *painter, int step, int limit, bool orientation){
-    for (int i = 0 ; i < limit ; i ++) {
-        if (i%2 == 0) {
+void GridLayer::drawRows(QPainter *painter, int rowLength, int limit, bool orientation){
+    for (int i = 0 ; i < limit ; i += m_Step) {
+        if (i/m_Step % 2 == 0) {
             painter->setPen(QPen(QBrush(Qt::black), 2));
         } else {
             painter->setPen(QPen(QBrush(Qt::black), 1));
         }
 
-        if(orientation){
-            painter->drawLine(i*m_Step, 0, i*m_Step, step);
+        if (orientation) {
+            painter->drawLine(i, 0, i, rowLength);
         }
-        else{
-            painter->drawLine(0, i*m_Step, step, i*m_Step);
+        else {
+            painter->drawLine(0, i, rowLength, i);
         }
     }
 }

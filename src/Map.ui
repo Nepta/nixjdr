@@ -248,7 +248,7 @@
          <item>
           <widget class="QPushButton" name="m_EraseButton">
            <property name="text">
-            <string>Tout effacer</string>
+            <string>Effacer dessins</string>
            </property>
           </widget>
          </item>
