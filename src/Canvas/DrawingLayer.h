@@ -16,15 +16,15 @@ public:
 
 private:
     void paintOnPixmap(const QPointF &oldPos, const QPointF &pos);
+    void eraseOnPixmap(const QPointF pos);
 
     void mousePressEvent(QGraphicsSceneMouseEvent *);
     void mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent);
 
     QGraphicsPixmapItem m_DrawingZone;
     QPixmap *m_Pixmap;
-    QPoint m_Start;
-    QPoint m_End;
     int m_PenSize;
+    QSize m_EraserSize;
 };
 
 #endif // DRAWINGLAYER_H
