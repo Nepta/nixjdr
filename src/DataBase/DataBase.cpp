@@ -7,18 +7,15 @@
 #include <QDebug>
 #include <QSqlError>
 
-DataBase::DataBase(const QString dbName, const QString& serverIpAddress){
+DataBase::DataBase(const QString dbName){
 	dbName_ = dbName;
 	db_ = QSqlDatabase::addDatabase("QPSQL");
 	db_.setUserName("jdr");
-	db_.setDatabaseName("jdrdb");
+    db_.setDatabaseName(dbName_);
 	db_.setPassword("password");
 	db_.setHostName("lune.hurata.fr");
 	db_.setPort(45001);
 	db_.open();
-//	if(serverIpAddress == "127.0.0.1"){
-//		initDB();
-//	}
 }
 
 void DataBase::initDB(){

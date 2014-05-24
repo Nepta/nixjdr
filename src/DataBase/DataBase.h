@@ -9,7 +9,7 @@ class DataBase{
 	QString dbName_;
 	QSqlDatabase db_;
 public:
-	DataBase(const QString dbName, const QString& serverIpAddress);
+    DataBase(const QString dbName);
 	void addItem(DBItem& item);
 	virtual ~DataBase();
 	void initDB();
