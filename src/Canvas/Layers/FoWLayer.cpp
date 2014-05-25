@@ -13,7 +13,7 @@ FoWLayer::FoWLayer(int step, bool transparentSprites) :
 FoWLayer::~FoWLayer() {}
 
 // reimplemented from GridLayer
-Sprite *FoWLayer::addSprite(QPixmap *spritePixmap, QPoint position) {
+Sprite *FoWLayer::addSprite(QPixmap *spritePixmap, QPoint position, Sprite* parentSprite) {
     Sprite* sprite = GridLayer::addSprite(spritePixmap, position);
     sprite->setTransparent(m_TransparentSprites);
 

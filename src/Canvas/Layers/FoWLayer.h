@@ -9,7 +9,7 @@ public:
     FoWLayer(int step = 1, bool transparentSprites = true);
     ~FoWLayer();
 
-    Sprite *addSprite(QPixmap *spritePixmap, QPoint position);
+    Sprite *addSprite(QPixmap *spritePixmap, QPoint position, Sprite *parentSprite = NULL);
 
 private:
     bool m_TransparentSprites;
