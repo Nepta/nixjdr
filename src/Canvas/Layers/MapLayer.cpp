@@ -1,6 +1,7 @@
 #include <QMimeData>
 #include <QDrag>
 #include <QDragEnterEvent>
+#include <QToolTip>
 #include "Canvas/Sprite.h"
 #include "MapLayer.h"
 
@@ -32,6 +33,13 @@ void MapLayer::initDragEvent(QGraphicsItem *watched, QGraphicsSceneMouseEvent *m
     drag->exec(Qt::CopyAction | Qt::MoveAction);
 }
 
+void MapLayer::showSpriteTooltip(Sprite *sprite, QPoint pos) {
+    QString toolTipText = tr("Pile de jetons : %1 jeton(s).")
+        .arg(sprite->getStackNumber());
+
+    QToolTip::showText(pos, toolTipText);
+}
+
 // Reimplemented from GridLayer
 
 void MapLayer::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent) {
@@ -57,11 +65,16 @@ void MapLayer::dragMoveEvent(QGraphicsSceneDragDropEvent *event) {
 
 void MapLayer::dropEvent(QGraphicsSceneDragDropEvent *event)
 {
+    dropEvent(event, NULL);
+}
+
+void MapLayer::dropEvent(QGraphicsSceneDragDropEvent *event, Sprite *parentSprite)
+{
     QPixmap* sprite = new QPixmap;
     QImage image = qvariant_cast<QImage>(event->mimeData()->imageData());
     sprite->convertFromImage(image);
 
-    addSprite(sprite, event->scenePos().toPoint());
+    addSprite(sprite, event->scenePos().toPoint(), parentSprite);
 
     event->acceptProposedAction();
 }
@@ -69,7 +82,9 @@ void MapLayer::dropEvent(QGraphicsSceneDragDropEvent *event)
 bool MapLayer::sceneEventFilter(QGraphicsItem *watched, QEvent *event) {
     bool eventHandled = true;
 
+    Sprite *sprite = dynamic_cast<Sprite *>(watched);
     QGraphicsSceneMouseEvent *mouseEvent = static_cast<QGraphicsSceneMouseEvent*>(event);
+    QGraphicsSceneDragDropEvent *dragDropEvent = static_cast<QGraphicsSceneDragDropEvent*>(event);
 
     switch ((int) event->type()) {
         case QEvent::GraphicsSceneMouseRelease: {
@@ -80,14 +95,28 @@ bool MapLayer::sceneEventFilter(QGraphicsItem *watched, QEvent *event) {
                 removeSprite(watched);
             }
             else if (mouseEvent->button() == Qt::LeftButton) {
-                mouseReleaseEvent(mouseEvent);
+                QPoint mouseScenePos = mouseEvent->scenePos().toPoint();
+                addSprite(&m_SpritePixmap, mouseScenePos, sprite);
             }
         } break;
 
         case QEvent::GraphicsSceneMouseMove: {
             if (mouseEvent->buttons() & Qt::LeftButton) {
+                QToolTip::hideText();
                 initDragEvent(watched, mouseEvent);
             }
+        } break;
+
+        case QEvent::GraphicsSceneDrop: {
+            dropEvent(dragDropEvent, sprite);
+        }
+
+        case QEvent::GraphicsSceneHoverMove: {
+            showSpriteTooltip(sprite, mouseEvent->screenPos());
+        } break;
+
+        case QEvent::GraphicsSceneHoverLeave: {
+            QToolTip::hideText();
         } break;
     }
 

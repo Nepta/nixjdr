@@ -1,7 +1,25 @@
+#include <QObject>
 #include "Sprite.h"
 
-Sprite::Sprite(const QPixmap &pixmap, QGraphicsItem *parent) :
-    QGraphicsPixmapItem(pixmap, parent) {}
+Sprite::Sprite(const QPixmap &pixmap, QGraphicsItem *parent, Sprite* parentSprite) :
+    QGraphicsPixmapItem(pixmap, parent)
+{
+    /* transparent pixels are part of the Sprite shape -> events can be triggered on the transparent
+     * pixels of the sprite */
+    setShapeMode(QGraphicsPixmapItem::BoundingRectShape);
+
+    setAcceptHoverEvents(true);
+    setAcceptDrops(true);
+
+    m_ParentSprite = parentSprite;
+
+    if (m_ParentSprite == NULL) {
+        m_StackNumber = 1;
+    }
+    else {
+        m_StackNumber = m_ParentSprite->getStackNumber() + 1;
+    }
+}
 
 Sprite::Sprite(QByteArray& data) {
     unserialize(data);
@@ -16,6 +34,10 @@ void Sprite::setTransparent(bool enabled) {
     } else {
         setOpacity(1.0);
     }
+}
+
+int Sprite::getStackNumber() {
+    return m_StackNumber;
 }
 
 // Reimplemented from Serializable

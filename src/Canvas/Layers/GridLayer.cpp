@@ -21,11 +21,11 @@ void GridLayer::setSpritePixmap(QPixmap spritePixmap) {
     m_SpritePixmap = spritePixmap;
 }
 
-Sprite *GridLayer::addSprite(QPixmap *spritePixmap, QPoint position) {
+Sprite *GridLayer::addSprite(QPixmap *spritePixmap, QPoint position, Sprite* parentSprite) {
     QPoint spritePos(position.x()/m_Step, position.y()/m_Step);
     spritePos *= m_Step;
 
-    Sprite *sprite = new Sprite(*spritePixmap, this);
+    Sprite *sprite = new Sprite(*spritePixmap, this, parentSprite);
     sprite->setPos(spritePos);
 
     sprite->installSceneEventFilter(this);

@@ -25,7 +25,7 @@ public:
     void setSpritePixmap(QString spritePath);
     void setSpritePixmap(QPixmap spritePixmap);
 
-    virtual Sprite *addSprite(QPixmap *spritePixmap, QPoint spritePos);
+    virtual Sprite *addSprite(QPixmap *spritePixmap, QPoint spritePos,  Sprite* parentSprite = NULL);
     virtual void removeSprite(QGraphicsItem *sprite);
 
     /**

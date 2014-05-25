@@ -25,6 +25,7 @@ private:
     QPoint m_dragStartPosition;
 
     void initDragEvent(QGraphicsItem *watched, QGraphicsSceneMouseEvent *mouseEvent);
+    void showSpriteTooltip(Sprite *sprite, QPoint pos);
 
     /**
      * @brief sceneEventFilter Handles events on Sprites.
@@ -48,6 +49,7 @@ private:
      * @param event
      */
     void dropEvent(QGraphicsSceneDragDropEvent *event);
+    void dropEvent(QGraphicsSceneDragDropEvent *event, Sprite *parentSprite);
     void dragMoveEvent(QGraphicsSceneDragDropEvent * event);
     void dragEnterEvent(QGraphicsSceneDragDropEvent *event);
 };
