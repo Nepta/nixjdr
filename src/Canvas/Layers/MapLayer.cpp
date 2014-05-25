@@ -1,7 +1,6 @@
 #include <QMimeData>
 #include <QDrag>
 #include <QDragEnterEvent>
-#include <QToolTip>
 #include "Canvas/Sprite.h"
 #include "MapLayer.h"
 
@@ -31,13 +30,6 @@ void MapLayer::initDragEvent(QGraphicsItem *watched, QGraphicsSceneMouseEvent *m
     removeSprite(watched);
 
     drag->exec(Qt::CopyAction | Qt::MoveAction);
-}
-
-void MapLayer::showSpriteTooltip(Sprite *sprite, QPoint pos) {
-    QString toolTipText = tr("Pile de jetons : %1 jeton(s).")
-        .arg(sprite->getStackNumber());
-
-    QToolTip::showText(pos, toolTipText);
 }
 
 // Reimplemented from GridLayer
@@ -98,11 +90,12 @@ bool MapLayer::sceneEventFilter(QGraphicsItem *watched, QEvent *event) {
                 QPoint mouseScenePos = mouseEvent->scenePos().toPoint();
                 addSprite(&m_SpritePixmap, mouseScenePos, sprite);
             }
+
+            emit hideSpriteInfo();
         } break;
 
         case QEvent::GraphicsSceneMouseMove: {
             if (mouseEvent->buttons() & Qt::LeftButton) {
-                QToolTip::hideText();
                 initDragEvent(watched, mouseEvent);
             }
         } break;
@@ -112,11 +105,11 @@ bool MapLayer::sceneEventFilter(QGraphicsItem *watched, QEvent *event) {
         }
 
         case QEvent::GraphicsSceneHoverMove: {
-            showSpriteTooltip(sprite, mouseEvent->screenPos());
+            emit showSpriteInfo(sprite);
         } break;
 
         case QEvent::GraphicsSceneHoverLeave: {
-            QToolTip::hideText();
+            emit hideSpriteInfo();
         } break;
     }
 

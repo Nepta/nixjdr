@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>597</width>
-    <height>504</height>
+    <height>515</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -283,11 +283,11 @@
  <resources/>
  <connections/>
  <buttongroups>
-  <buttongroup name="m_EditGroup"/>
   <buttongroup name="m_DisplayGroup">
    <property name="exclusive">
     <bool>false</bool>
    </property>
   </buttongroup>
+  <buttongroup name="m_EditGroup"/>
  </buttongroups>
 </ui>

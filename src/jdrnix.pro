@@ -63,7 +63,8 @@ SOURCES += \
     Token/TokenMenu.cpp \
     Token/TokenList.cpp \
     TurnMenu/TurnList.cpp \
-    TurnMenu/TurnMenu.cpp
+    TurnMenu/TurnMenu.cpp \
+    Canvas/MapTooltip.cpp
 
 HEADERS  += \
     MainWindow.h \
@@ -114,7 +115,8 @@ HEADERS  += \
     Token/TokenMenu.h \
     Token/TokenList.h \
     TurnMenu/TurnList.h \
-    TurnMenu/TurnMenu.h
+    TurnMenu/TurnMenu.h \
+    Canvas/MapTooltip.h
 
 FORMS    += \
     TokenMenu.ui \
@@ -123,4 +125,5 @@ FORMS    += \
     ConnectionHelper.ui \
     MainWindow.ui \
     TurnMenu.ui \
-    Map.ui
+    Map.ui \
+    MapTooltip.ui
