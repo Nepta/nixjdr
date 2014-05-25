@@ -1,7 +1,7 @@
 #include "ConnectionHelper.h"
 #include "ui_ConnectionHelper.h"
 #include <QIntValidator>
-#include <QDebug>
+#include <QRegExpValidator>
 
 ConnectionHelper::ConnectionHelper(User *user, QWidget *parent) :
     QDialog(parent), ui(new Ui::ConnectionHelper)
@@ -14,6 +14,10 @@ ConnectionHelper::ConnectionHelper(User *user, QWidget *parent) :
     ui->ipB->setValidator(ipRange);
     ui->ipC->setValidator(ipRange);
     ui->ipD->setValidator(ipRange);
+
+    // Only nicknames which do not contain whitespaces are valid
+    QValidator *nicknameValidator = new QRegExpValidator(QRegExp("[\\S]+"));
+    ui->nickname->setValidator(nicknameValidator);
 
     m_User = user;
 }
