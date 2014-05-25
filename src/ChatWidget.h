@@ -35,8 +35,8 @@ private slots:
     void ShowContextMenu(const QPoint& pos);
 
 private:
-    void sendRolledDiceToQWidgetItemList(QList<QListWidgetItem *> list);
-    void prepareWhispForListOfQWidgetItem(QList<QListWidgetItem *> list);
+    void sendRolledDiceToUsers(QList<QListWidgetItem *> list);
+    void prepareWhispUsers(QList<QListWidgetItem *> list);
     void setFocusToChat();
 
 private:

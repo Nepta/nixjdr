@@ -11,7 +11,7 @@ ChatWidget::ChatWidget(QWidget *parent) :
     ui->nicknamesListWidget->setContextMenuPolicy(Qt::CustomContextMenu);
     ui->nicknamesListWidget->setSelectionMode(QAbstractItemView::ExtendedSelection);
 
-    // for right-clicking on the user list
+    // right-clicking on the user list shows a context menu
     connect(ui->nicknamesListWidget, SIGNAL(customContextMenuRequested(const QPoint&)),
         this, SLOT(ShowContextMenu(const QPoint&)));
 }
@@ -21,11 +21,6 @@ ChatWidget::~ChatWidget()
     delete ui;
 }
 
-/**
- * @brief ChatWidget::on_msgField_returnPressed
- *
- * Clean input field
- */
 void ChatWidget::on_msgField_returnPressed()
 {
     if (!ui->msgField->text().isEmpty()) {
@@ -87,15 +82,15 @@ void ChatWidget::ShowContextMenu(const QPoint& pos){
     QAction* selectedItem = menu.exec(globalPos);
 
     if (selectedItem == throwDice){
-        sendRolledDiceToQWidgetItemList(selectedItems);
+        sendRolledDiceToUsers(selectedItems);
     }
     else if(selectedItem == sendMessage){
-        prepareWhispForListOfQWidgetItem(selectedItems);
+        prepareWhispUsers(selectedItems);
     }
 
 }
 
-void ChatWidget::sendRolledDiceToQWidgetItemList(QList<QListWidgetItem *> list){
+void ChatWidget::sendRolledDiceToUsers(QList<QListWidgetItem *> list){
     QString msg;
     emit requestDice(msg);
 
@@ -107,15 +102,16 @@ void ChatWidget::sendRolledDiceToQWidgetItemList(QList<QListWidgetItem *> list){
     setFocusToChat();
 }
 
-void ChatWidget::prepareWhispForListOfQWidgetItem(QList<QListWidgetItem *> list){
+void ChatWidget::prepareWhispUsers(QList<QListWidgetItem *> list){
     QString msg = "/w ";
 
-    foreach(QListWidgetItem * item, list){
-        msg += QString("%1 | ").arg(item->text());
+    foreach(QListWidgetItem * item, list) {
+        if (list.indexOf(item) == 0) { // first item
+            msg += QString(" %1 ").arg(item->text());
+        } else {
+            msg += QString("| %1 ").arg(item->text());
+        }
     }
-
-    msg.chop(1);
-    msg.append(" ");
 
     ui->msgField->setText(msg);
     setFocusToChat();
