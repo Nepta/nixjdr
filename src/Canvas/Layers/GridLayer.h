@@ -25,7 +25,8 @@ public:
     void setSpritePixmap(QString spritePath);
     void setSpritePixmap(QPixmap spritePixmap);
 
-    virtual Sprite *addSprite(QPixmap *spritePixmap, QPoint spritePos,  Sprite* parentSprite = NULL);
+    virtual Sprite *addSprite(QPixmap *spritePixmap, QGraphicsItem *parentItem, QPoint position, Sprite* parentSprite);
+    virtual Sprite *addSprite(QPixmap *spritePixmap, QPoint position,  Sprite* parentSprite = NULL);
     virtual void removeSprite(QGraphicsItem *sprite);
 
     /**
@@ -35,6 +36,22 @@ public:
      */
     void drawBackground(QPainter *painter, const QRectF &rect);
 
+public slots:
+    void setSpritePixmap(QListWidgetItem* token);
+
+protected:
+    int m_Step;
+    QPixmap m_SpritePixmap;
+
+    /**
+     * @brief mouseReleaseEvent Reimplemented from GridLayer in order to create Sprites when the left
+     * mouse button is released on an empty cell.
+     * @param mouseEvent
+     */
+    void mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent);
+    virtual void mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent);
+
+private:
     /**
      * @brief drawRows Draws parallel lines with the given painter with an interval equal to the
      * given step. Every two lines, draws a thicker line.
@@ -45,19 +62,6 @@ public:
      */
     void drawRows(QPainter *painter, int rowLength, int limit, bool orientation);
 
-    /**
-     * @brief mouseReleaseEvent Reimplemented from GridLayer in order to create Sprites when the left
-     * mouse button is released on an empty cell.
-     * @param mouseEvent
-     */
-    void mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent);
-
-public slots:
-    void setSpritePixmap(QListWidgetItem* token);
-
-protected:
-    int m_Step;
-    QPixmap m_SpritePixmap;
 };
 
 

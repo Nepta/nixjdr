@@ -40,9 +40,6 @@ void MapLayer::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent) {
     }
 }
 
-void MapLayer::mouseMoveEvent(QGraphicsSceneMouseEvent *) {
-}
-
 void MapLayer::dragEnterEvent(QGraphicsSceneDragDropEvent *event) {
     if (event->mimeData()->hasImage()){
         event->acceptProposedAction();

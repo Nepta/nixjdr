@@ -1,5 +1,8 @@
 #include "GridLayer.h"
 
+#include <QGraphicsScene>
+#include <QGraphicsView>
+
 GridLayer::GridLayer(int step) {
     m_Step = step;
 }
@@ -22,13 +25,19 @@ void GridLayer::setSpritePixmap(QPixmap spritePixmap) {
 }
 
 Sprite *GridLayer::addSprite(QPixmap *spritePixmap, QPoint position, Sprite* parentSprite) {
+    return addSprite(spritePixmap, this, position, parentSprite);
+}
+
+Sprite *GridLayer::addSprite(QPixmap *spritePixmap, QGraphicsItem *parentItem, QPoint position, Sprite* parentSprite) {
     QPoint spritePos(position.x()/m_Step, position.y()/m_Step);
     spritePos *= m_Step;
 
-    Sprite *sprite = new Sprite(*spritePixmap, this, parentSprite);
+    Sprite *sprite = new Sprite(*spritePixmap, parentItem, parentSprite);
     sprite->setPos(spritePos);
 
-    sprite->installSceneEventFilter(this);
+    if (parentItem != NULL) {
+        sprite->installSceneEventFilter(this);
+    }
 
     return sprite;
 }
@@ -67,5 +76,32 @@ void GridLayer::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent) {
     if (mouseEvent->button() == Qt::LeftButton) {
         QPoint mouseScenePos = mouseEvent->scenePos().toPoint();
         addSprite(&m_SpritePixmap, mouseScenePos);
+    }
+}
+
+void GridLayer::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent) {
+    QPoint mouseScenePos = mouseEvent->scenePos().toPoint();
+    Sprite *sprite = addSprite(&m_SpritePixmap, NULL, mouseScenePos, NULL);
+
+    if (mouseEvent->buttons() & Qt::LeftButton) {
+
+        foreach (QGraphicsItem *item, childItems()) {
+            if (item->collidesWithItem(sprite)) {
+                return;
+            }
+        }
+
+        sprite->setParentItem(this);
+        sprite->installSceneEventFilter(this);
+    }
+    else if (mouseEvent->buttons() & Qt::RightButton) {
+        foreach (QGraphicsItem *item, childItems()) {
+            if (item->collidesWithItem(sprite)) {
+                delete item;
+                delete sprite;
+
+                return;
+            }
+        }
     }
 }

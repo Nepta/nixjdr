@@ -41,7 +41,6 @@ private:
      * @param mouseEvent
      */
     void mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent);
-    void mouseMoveEvent(QGraphicsSceneMouseEvent *event);
 
     /**
      * @brief dropEvent Reimplemented from GridLayer in order to create a Sprite at the position of the

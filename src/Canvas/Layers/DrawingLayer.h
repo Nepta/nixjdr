@@ -32,9 +32,9 @@ private:
 
     QGraphicsPixmapItem m_DrawingZone;
     QPixmap *m_Pixmap;
-    QColor m_Color;
     int m_PenSize;
     int m_EraserSize;
+    QColor m_Color;
 };
 
 #endif // DRAWINGLAYER_H
