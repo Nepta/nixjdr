@@ -2,6 +2,7 @@
 #define DRAWINGLAYER_H
 
 #include <QGraphicsPixmapItem>
+#include <QColor>
 #include "Layer.h"
 
 class DrawingLayer : public Layer
@@ -9,7 +10,7 @@ class DrawingLayer : public Layer
     Q_OBJECT
 
 public:
-    DrawingLayer(int penSize, int eraserSize);
+    DrawingLayer(int penSize, int eraserSize, QColor color);
     ~DrawingLayer();
 
     void initDrawingZone();
@@ -22,7 +23,7 @@ public slots:
     void erasePixmapContent();
 
 private:
-    void paintOnPixmap(const QPointF &oldPos, const QPointF &pos, Qt::GlobalColor color);
+    void paintOnPixmap(const QPointF &oldPos, const QPointF &pos, QColor color);
     void paintOnPixmap(QPainter &painter, const QPointF &oldPos, const QPointF &pos);
     void eraseOnPixmap(const QPointF &oldPos, const QPointF &pos);
 
@@ -31,6 +32,7 @@ private:
 
     QGraphicsPixmapItem m_DrawingZone;
     QPixmap *m_Pixmap;
+    QColor m_Color;
     int m_PenSize;
     int m_EraserSize;
 };

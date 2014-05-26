@@ -24,7 +24,8 @@ public:
     ~Map();
 
     void initTooltip();
-    void initDrawingLayer();
+    void initFoWLayer(int tileStep);
+    void initDrawingLayer(Layer *layer);
     Ui::Map *getUi();
     MapLayer *getMapLayer();
 
@@ -41,7 +42,7 @@ private:
     MapTooltip m_MapTooltip;
     BackgroundLayer m_BgLayer;
     MapLayer m_MapLayer;
-    FoWLayer m_FoWLayer;
+    Layer *m_FoWLayer;
     DrawingLayer m_DrawingLayer;
 };
 

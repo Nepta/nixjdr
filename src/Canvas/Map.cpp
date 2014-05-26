@@ -6,8 +6,7 @@ Map::Map(QString bgFilename, QString tokenPath, int tileStep, QWidget *parent) :
     ui(new Ui::Map),
     m_BgLayer(bgFilename),
     m_MapLayer(tokenPath, tileStep),
-    m_FoWLayer(tileStep),
-    m_DrawingLayer(2, 2)
+    m_DrawingLayer(2, 2, QColor(0, 0, 0))
 {
     ui->setupUi(this);
 
@@ -19,10 +18,9 @@ Map::Map(QString bgFilename, QString tokenPath, int tileStep, QWidget *parent) :
     m_Scene->addLayer(&m_MapLayer);
     m_MapLayer.setEnabled(true);
 
-    m_Scene->addLayer(&m_FoWLayer);
-    m_FoWLayer.setEnabled(false);
+    initFoWLayer(tileStep);
 
-    initDrawingLayer();
+    initDrawingLayer(&m_DrawingLayer);
 
     ui->m_View->setScene(m_Scene);
     setWindowTitle(tr("Carte"));
@@ -38,19 +36,34 @@ Map::Map(QString bgFilename, QString tokenPath, int tileStep, QWidget *parent) :
 
 Map::~Map() {
     delete ui;
+    delete m_FoWLayer;
 }
 
-void Map::initDrawingLayer() {
-    m_Scene->addLayer(&m_DrawingLayer);
-    m_DrawingLayer.initDrawingZone();
-    m_DrawingLayer.setEnabled(false);
+void Map::initFoWLayer(int tileStep) {
+    if (tileStep > 1) {
+        m_FoWLayer = new FoWLayer(tileStep);
+    }
+    else {
+        m_FoWLayer = new DrawingLayer(2, 2, QColor(50, 50, 50));
+        initDrawingLayer(m_FoWLayer);
+    }
+    m_Scene->addLayer(m_FoWLayer);
+    m_FoWLayer->setEnabled(false);
+}
+
+void Map::initDrawingLayer(Layer *layer) {
+    DrawingLayer *drawingLayer = dynamic_cast<DrawingLayer*>(layer);
+
+    m_Scene->addLayer(drawingLayer);
+    drawingLayer->initDrawingZone();
+    drawingLayer->setEnabled(false);
 
     connect(ui->m_PenSpinBox, SIGNAL(valueChanged(int)),
-            &m_DrawingLayer, SLOT(setPenSize(int)));
+            drawingLayer, SLOT(setPenSize(int)));
     connect(ui->m_EraserSpinBox, SIGNAL(valueChanged(int)),
-            &m_DrawingLayer, SLOT(setEraserSize(int)));
+            drawingLayer, SLOT(setEraserSize(int)));
     connect(ui->m_EraseButton, SIGNAL(clicked(bool)),
-            &m_DrawingLayer, SLOT(erasePixmapContent()));
+            drawingLayer, SLOT(erasePixmapContent()));
 }
 
 void Map::initTooltip() {
@@ -70,7 +83,7 @@ void Map::selectedEditionLayer(QAbstractButton *button, bool checked) {
         selectedLayer = &m_MapLayer;
     }
     else if (button->objectName() == QString("m_FowEdit")) {
-        selectedLayer = &m_FoWLayer;
+        selectedLayer = m_FoWLayer;
     }
     else if (button->objectName() == QString("m_DrawingEdit")) {
         selectedLayer = &m_DrawingLayer;
@@ -89,7 +102,7 @@ void Map::selectedDisplayLayer(QAbstractButton *button, bool checked) {
         selectedLayer = &m_MapLayer;
     }
     else if (button->objectName() == QString("m_FowDisplay")) {
-        selectedLayer = &m_FoWLayer;
+        selectedLayer = m_FoWLayer;
     }
     else if (button->objectName() == QString("m_DrawingDisplay")) {
         selectedLayer = &m_DrawingLayer;

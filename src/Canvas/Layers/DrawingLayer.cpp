@@ -1,10 +1,11 @@
 #include <QGraphicsScene>
 #include "DrawingLayer.h"
 
-DrawingLayer::DrawingLayer(int penSize, int eraserSize) :
+DrawingLayer::DrawingLayer(int penSize, int eraserSize, QColor color) :
     m_DrawingZone(this),
     m_PenSize(penSize),
-    m_EraserSize(eraserSize)
+    m_EraserSize(eraserSize),
+    m_Color(color)
 {}
 
 DrawingLayer::~DrawingLayer() {
@@ -31,7 +32,7 @@ void DrawingLayer::mousePressEvent(QGraphicsSceneMouseEvent *) {}
 
 void DrawingLayer::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent) {
     if (mouseEvent->buttons() & Qt::LeftButton) {
-        paintOnPixmap(mouseEvent->lastScenePos(), mouseEvent->scenePos(), Qt::black);
+        paintOnPixmap(mouseEvent->lastScenePos(), mouseEvent->scenePos(), m_Color);
     }
     else if (mouseEvent->buttons() & Qt::RightButton) {
         eraseOnPixmap(mouseEvent->lastScenePos(), mouseEvent->scenePos());
@@ -40,7 +41,7 @@ void DrawingLayer::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent) {
     m_DrawingZone.setPixmap(*m_Pixmap); // update the drawing zone
 }
 
-void DrawingLayer::paintOnPixmap(const QPointF &oldPos, const QPointF &pos, Qt::GlobalColor color) {
+void DrawingLayer::paintOnPixmap(const QPointF &oldPos, const QPointF &pos, QColor color) {
     QPainter painter(m_Pixmap);
     painter.setPen(QPen(color, m_PenSize, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
 
