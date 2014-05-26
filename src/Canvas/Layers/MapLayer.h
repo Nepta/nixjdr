@@ -51,10 +51,13 @@ private:
     void dropEvent(QGraphicsSceneDragDropEvent *event, Sprite *parentSprite);
     void dragMoveEvent(QGraphicsSceneDragDropEvent * event);
     void dragEnterEvent(QGraphicsSceneDragDropEvent *event);
+    void dragLeaveEvent(QGraphicsSceneDragDropEvent * event);
 
 signals:
     void showSpriteInfo(Sprite *sprite);
-    void hideSpriteInfo();
+    void hideInfo();
+
+    void showMoveInfo(int oldPosX, int oldPosY, int CurrentPosX, int CurrentPosY);
 };
 
 #endif // MAPLAYER_H

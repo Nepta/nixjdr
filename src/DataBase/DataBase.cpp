@@ -4,7 +4,6 @@
 #include <QSqlTableModel>
 #include <QSqlField>
 #include <QSqlQuery>
-#include <QDebug>
 #include <QSqlError>
 
 DataBase::DataBase(const QString dbName){

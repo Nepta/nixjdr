@@ -33,8 +33,9 @@ private slots:
     void selectedEditionLayer(QAbstractButton *button, bool checked);
     void selectedDisplayLayer(QAbstractButton *button, bool checked);
     void on_collapseButton_clicked(bool checked);
-    void showMapTooltip(Sprite* sprite);
     void hideMapTooltip();
+    void showMapMoveTooltip(int oldPosX, int oldPosY, int CurrentPosX, int CurrentPosY);
+    void showMapSpriteTooltip(Sprite* sprite);
 
 private:
     Ui::Map *ui;
@@ -44,6 +45,8 @@ private:
     MapLayer m_MapLayer;
     Layer *m_FoWLayer;
     DrawingLayer m_DrawingLayer;
+
+    void showMapTooltip(QString tooltip);
 };
 
 #endif // MAP_H

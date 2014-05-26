@@ -1,3 +1,5 @@
+#include <algorithm>
+
 #include "Map.h"
 #include "ui_Map.h"
 
@@ -77,9 +79,14 @@ void Map::initTooltip() {
     m_MapTooltip.hide();
 
     connect(&m_MapLayer, SIGNAL(showSpriteInfo(Sprite*)),
-            this, SLOT(showMapTooltip(Sprite*)));
-    connect(&m_MapLayer, SIGNAL(hideSpriteInfo()),
+            this, SLOT(showMapSpriteTooltip(Sprite*)));
+
+    connect(&m_MapLayer, SIGNAL(showMoveInfo(int, int, int, int)),
+            this, SLOT(showMapMoveTooltip(int, int, int, int)));
+
+    connect(&m_MapLayer, SIGNAL(hideInfo()),
             this, SLOT(hideMapTooltip()));
+
 }
 
 void Map::selectedEditionLayer(QAbstractButton *button, bool checked) {
@@ -94,6 +101,7 @@ void Map::selectedEditionLayer(QAbstractButton *button, bool checked) {
     else if (button->objectName() == QString("m_DrawingEdit")) {
         selectedLayer = &m_DrawingLayer;
     }
+
     else {
         selectedLayer = NULL;
     }
@@ -128,11 +136,9 @@ void Map::selectedDisplayLayer(QAbstractButton *button, bool checked) {
     }
 }
 
-void Map::showMapTooltip(Sprite* sprite) {
-    QString spriteInfo = tr("Pile de jetons : %1 jeton(s).")
-        .arg(sprite->getStackNumber());
+void Map::showMapTooltip(QString tooltip) {
 
-    m_MapTooltip.setTooltipText(spriteInfo);
+    m_MapTooltip.setTooltipText(tooltip);
 
     // Move the tooltip at the bottom right of the map
     m_MapTooltip.move(
@@ -145,6 +151,23 @@ void Map::showMapTooltip(Sprite* sprite) {
 
 void Map::hideMapTooltip() {
     m_MapTooltip.hide();
+}
+
+void Map::showMapSpriteTooltip(Sprite* sprite){
+    QString spriteInfo = tr("Pile de jetons : %1 jeton(s).")
+        .arg(sprite->getStackNumber());
+    showMapTooltip(spriteInfo);
+}
+
+void Map::showMapMoveTooltip(int oldPosX, int oldPosY, int currentPosX, int currentPosY){
+
+    int diffX = oldPosX - currentPosX;
+    int diffY = oldPosY - currentPosY;
+    int shorterDistance = qAbs(std::max(diffX, diffY)) + qAbs(std::min(diffX,diffY)/2);
+
+    QString tooltip = QString(tr("Distance la plus courte: %1")).arg(shorterDistance);
+
+    showMapTooltip(tooltip);
 }
 
 Ui::Map *Map::getUi() {

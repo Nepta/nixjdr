@@ -2,8 +2,6 @@
 
 #include "FoWLayer.h"
 
-#include <QDebug>
-
 FoWLayer::FoWLayer(int step, bool transparentSprites) :
     GridLayer(step),
     m_TransparentSprites(transparentSprites)
@@ -35,6 +33,17 @@ bool FoWLayer::sceneEventFilter(QGraphicsItem *watched, QEvent *event) {
 
         if (mouseEvent->button() == Qt::RightButton && distanceCovered < DELTA_DELETE_SPRITE) {
             removeSprite(watched);
+        }
+    }
+
+    if(event->type() == QEvent::GraphicsSceneMouseMove){
+        if (mouseEvent->buttons() & Qt::LeftButton) {
+            qreal distanceCovered = (mouseEvent->buttonDownScenePos(Qt::LeftButton)
+                                     - mouseEvent->scenePos()).manhattanLength();
+            if(distanceCovered > m_Step){
+                addSprite(&m_SpritePixmap, mouseEvent->scenePos().toPoint());
+
+            }
         }
     }
 

@@ -1,7 +1,6 @@
 #include <QMenu>
 #include "ChatWidget.h"
 #include "ui_ChatWidget.h"
-#include <QDebug>
 
 ChatWidget::ChatWidget(QWidget *parent) :
     QWidget(parent),

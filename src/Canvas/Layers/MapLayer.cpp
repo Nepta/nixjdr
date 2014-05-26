@@ -43,9 +43,16 @@ void MapLayer::dragEnterEvent(QGraphicsSceneDragDropEvent *event) {
     }
 }
 
+void MapLayer::dragLeaveEvent(QGraphicsSceneDragDropEvent *event){
+    emit hideInfo();
+}
+
 void MapLayer::dragMoveEvent(QGraphicsSceneDragDropEvent *event) {
     if(event->mimeData()->hasImage()){
+        QPoint pos = event->scenePos().toPoint();
         event->acceptProposedAction();
+        emit showMoveInfo(m_dragStartPosition.x() / m_Step, m_dragStartPosition.y() /m_Step,
+                          pos.x() / m_Step, pos.y() / m_Step);
     }
 }
 
@@ -91,7 +98,8 @@ bool MapLayer::sceneEventFilter(QGraphicsItem *watched, QEvent *event) {
                 addSprite(&m_SpritePixmap, mouseScenePos, sprite);
             }
 
-            emit hideSpriteInfo();
+            emit hideInfo();
+
         } break;
 
         case QEvent::GraphicsSceneMouseMove: {
@@ -102,6 +110,7 @@ bool MapLayer::sceneEventFilter(QGraphicsItem *watched, QEvent *event) {
 
         case QEvent::GraphicsSceneDrop: {
             dropEvent(dragDropEvent, sprite);
+            emit hideInfo();
         }
 
         case QEvent::GraphicsSceneHoverMove: {
@@ -109,7 +118,7 @@ bool MapLayer::sceneEventFilter(QGraphicsItem *watched, QEvent *event) {
         } break;
 
         case QEvent::GraphicsSceneHoverLeave: {
-            emit hideSpriteInfo();
+            emit hideInfo();
         } break;
     }
 
