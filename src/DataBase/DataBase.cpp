@@ -30,6 +30,7 @@ void DataBase::addItem(DBItem& item){
 	QString queryString = item.queryInsert();
 	QSqlQuery query(queryString);
 	query.exec();
+	emit newItemInDB(new DBItem(item));
 }
 
 DataBase::~DataBase(){
