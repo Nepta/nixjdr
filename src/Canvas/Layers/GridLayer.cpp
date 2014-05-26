@@ -1,8 +1,5 @@
 #include "GridLayer.h"
 
-#include <QGraphicsScene>
-#include <QGraphicsView>
-
 GridLayer::GridLayer(int step) {
     m_Step = step;
 }
@@ -98,10 +95,8 @@ void GridLayer::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent) {
         foreach (QGraphicsItem *item, childItems()) {
             if (item->collidesWithItem(sprite)) {
                 delete item;
-                delete sprite;
-
-                return;
             }
         }
+        delete sprite;
     }
 }
