@@ -33,9 +33,9 @@ Map::Map(QString bgFilename, QString tokenPath, int tileStep, QWidget *parent) :
 
     // FoW tools
     connect(ui->m_FillFoW, SIGNAL(clicked(bool)),
-            &m_FoWLayer, SLOT(fillFoW()));
+            m_FoWLayer, SLOT(fillFoW()));
     connect(ui->m_RemoveFoW, SIGNAL(clicked(bool)),
-            &m_FoWLayer, SLOT(removeFoW()));
+            m_FoWLayer, SLOT(removeFoW()));
 
     initTooltip();
 }
