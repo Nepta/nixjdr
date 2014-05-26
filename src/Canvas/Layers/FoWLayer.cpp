@@ -1,3 +1,5 @@
+#include <QGraphicsScene>
+
 #include "FoWLayer.h"
 
 #include <QDebug>
@@ -37,4 +39,33 @@ bool FoWLayer::sceneEventFilter(QGraphicsItem *watched, QEvent *event) {
     }
 
     return eventHandled;
+}
+
+void FoWLayer::fillFoW() {
+
+    removeFoW();
+
+    QPoint iterator(0,0);
+
+    for(int i = 0; i < boundingRect().width(); i+=m_Step){
+        for(int j = 0; j < boundingRect().height(); j +=m_Step){
+            iterator.setX(i);
+            iterator.setY(j);
+            addSprite(&m_SpritePixmap, iterator);
+        }
+    }
+
+}
+
+void FoWLayer::removeFoW() {
+
+    //QList<QGraphicsItem *> spriteList = this->findChildren<QGraphicsItem *>();
+
+    foreach (QGraphicsItem* item, childItems()) {
+        removeSprite(item);
+    }
+
+    /*for(auto sprite : spriteList){
+        removeSprite(sprite);
+    }*/
 }

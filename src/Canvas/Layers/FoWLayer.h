@@ -5,6 +5,8 @@
 
 class FoWLayer : public GridLayer
 {
+    Q_OBJECT
+
 public:
     FoWLayer(int step = 1, bool transparentSprites = true);
     ~FoWLayer();
@@ -20,6 +22,10 @@ private:
      */
     void mousePressEvent(QGraphicsSceneMouseEvent *);
     bool sceneEventFilter(QGraphicsItem *watched, QEvent *event);
+
+private slots:
+    void fillFoW();
+    void removeFoW();
 };
 
 #endif // FOWLAYER_H

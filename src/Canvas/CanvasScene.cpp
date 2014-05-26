@@ -12,6 +12,11 @@ void CanvasScene::addLayer(Layer *layer) {
     m_Layers << layer;
 }
 
+int CanvasScene::getStep()
+{
+    return m_step;
+}
+
 void CanvasScene::drawBackground(QPainter *painter, const QRectF &rect) {
     QGraphicsScene::drawBackground(painter, rect);
 

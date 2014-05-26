@@ -13,6 +13,7 @@ public:
     CanvasScene(int width, int height);
     ~CanvasScene();
     void addLayer(Layer *layer);
+    int getStep();
 
 private:
     void drawBackground (QPainter *painter, const QRectF &rect);

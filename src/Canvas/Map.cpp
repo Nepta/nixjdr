@@ -31,6 +31,12 @@ Map::Map(QString bgFilename, QString tokenPath, int tileStep, QWidget *parent) :
     connect(ui->m_DisplayGroup, SIGNAL(buttonToggled(QAbstractButton*, bool)),
             this, SLOT(selectedDisplayLayer(QAbstractButton*, bool)));
 
+    // FoW tools
+    connect(ui->m_FillFoW, SIGNAL(clicked(bool)),
+            &m_FoWLayer, SLOT(fillFoW()));
+    connect(ui->m_RemoveFoW, SIGNAL(clicked(bool)),
+            &m_FoWLayer, SLOT(removeFoW()));
+
     initTooltip();
 }
 
@@ -140,5 +146,5 @@ MapLayer *Map::getMapLayer() {
 }
 
 void Map::on_collapseButton_clicked(bool checked) {
-    ui->collapsibleWidget->setVisible(checked);
+    ui->scrollArea->setVisible(checked);
 }
