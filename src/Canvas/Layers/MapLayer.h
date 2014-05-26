@@ -40,7 +40,7 @@ private:
      * @brief mousePressEvent Reimplemented from GridLayer in order to grab mouse events
      * @param mouseEvent
      */
-    void mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent);
+    void mousePressEvent(QGraphicsSceneMouseEvent *);
 
     /**
      * @brief dropEvent Reimplemented from GridLayer in order to create a Sprite at the position of the

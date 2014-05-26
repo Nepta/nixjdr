@@ -34,10 +34,7 @@ void MapLayer::initDragEvent(QGraphicsItem *watched, QGraphicsSceneMouseEvent *m
 
 // Reimplemented from GridLayer
 
-void MapLayer::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent) {
-    if (mouseEvent->button() == Qt::LeftButton) {
-        m_dragStartPosition = mouseEvent->scenePos().toPoint();
-    }
+void MapLayer::mousePressEvent(QGraphicsSceneMouseEvent *) {
 }
 
 void MapLayer::dragEnterEvent(QGraphicsSceneDragDropEvent *event) {
@@ -76,6 +73,12 @@ bool MapLayer::sceneEventFilter(QGraphicsItem *watched, QEvent *event) {
     QGraphicsSceneDragDropEvent *dragDropEvent = static_cast<QGraphicsSceneDragDropEvent*>(event);
 
     switch ((int) event->type()) {
+        case QEvent::GraphicsSceneMousePress: {
+            if (mouseEvent->button() == Qt::LeftButton) {
+                m_dragStartPosition = mouseEvent->scenePos().toPoint();
+            }
+        } break;
+
         case QEvent::GraphicsSceneMouseRelease: {
             qreal distanceCovered = (mouseEvent->buttonDownScenePos(Qt::RightButton)
                                             - mouseEvent->scenePos()).manhattanLength();
