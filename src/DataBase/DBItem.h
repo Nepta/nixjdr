@@ -15,6 +15,7 @@ public:
 	DBItem(QString type);
 	QString type();
 	QString value(int index);
+	QString queryInsert();
 //	virtual QString table() = 0;
 
 };

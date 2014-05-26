@@ -20,3 +20,12 @@ int DBItem::pushDB(QString newValue){
 int DBItem::pushDB(int newValue){
 	return pushDB(QString::number(newValue));
 }
+
+QString DBItem::queryInsert(){
+	QString queryString = QString("insert into %1 values(\'%2\', %3)")
+			.arg(this->type())
+			.arg(this->value(0))
+			.arg(this->value(1))
+	;
+	return queryString;
+}
