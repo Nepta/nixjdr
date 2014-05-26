@@ -3,17 +3,19 @@
 #include <QString>
 #include <QList>
 #include <QVector>
+#include "QueryType.h"
 
 class DBItem{
-	QString type_;
+	QString targetTable_;
+	QueryType type_;
 	QList<QString> listValue_;
 
 protected:
 	int pushDB(QString newValue);
 	int pushDB(int newValue);
 public:
-	DBItem(QString type);
-	QString type();
+	DBItem(QueryType::TYPE type);
+	QString tableAffected();
 	QString value(int index);
 	QString queryInsert();
 //	virtual QString table() = 0;

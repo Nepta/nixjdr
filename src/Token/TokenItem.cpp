@@ -1,6 +1,7 @@
 #include "TokenItem.h"
+#include "DataBase/QueryType.h"
 
-TokenItem::TokenItem(QString path, QString name) : DBItem("sprite"){
+TokenItem::TokenItem(QString path, QString name) : DBItem(QueryType::insert){
 	icon_.addFile(path);
 	name_ = name;
 }

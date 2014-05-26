@@ -1,11 +1,10 @@
 #include "DBItem.h"
 
-DBItem::DBItem(QString type){
-	type_	= type;
+DBItem::DBItem(QueryType::TYPE type) : type_(type){
 }
 
-QString DBItem::type(){
-	return type_;
+QString DBItem::tableAffected(){
+	return targetTable_;
 }
 
 QString DBItem::value(int index){
@@ -23,7 +22,7 @@ int DBItem::pushDB(int newValue){
 
 QString DBItem::queryInsert(){
 	QString queryString = QString("insert into %1 values(\'%2\', %3)")
-			.arg(this->type())
+			.arg(this->tableAffected())
 			.arg(this->value(0))
 			.arg(this->value(1))
 	;

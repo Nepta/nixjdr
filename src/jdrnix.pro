@@ -62,7 +62,8 @@ SOURCES += \
     Token/TokenList.cpp \
     TurnMenu/TurnList.cpp \
     TurnMenu/TurnMenu.cpp \
-    Token/TokenItem.cpp
+    Token/TokenItem.cpp \
+    DataBase/QueryType.cpp
 
 HEADERS  += \
     MainWindow.h \
@@ -112,7 +113,8 @@ HEADERS  += \
     Token/TokenList.h \
     TurnMenu/TurnList.h \
     TurnMenu/TurnMenu.h \
-    Token/TokenItem.h
+    Token/TokenItem.h \
+    DataBase/QueryType.h
 
 FORMS    += \
     TokenMenu.ui \
