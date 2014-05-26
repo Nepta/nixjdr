@@ -1,10 +1,15 @@
 #include "DBItem.h"
+#include <QDebug>
 
 DBItem::DBItem(QueryType::TYPE type) : type_(type){
 }
 
 QString DBItem::tableAffected(){
 	return targetTable_;
+}
+
+void DBItem::tableAffected(QString targetTable){
+	targetTable_ = targetTable;
 }
 
 QString DBItem::value(int index){
@@ -20,15 +25,29 @@ int DBItem::pushDB(int newValue){
 	return pushDB(QString::number(newValue));
 }
 
-QString DBItem::queryInsert(){
-	QString queryString = QString("%1 values(\'%2\', %3)")
-			.arg(this->type() + this->tableAffected())
-			.arg(this->value(0))
-			.arg(this->value(1))
-	;
-	return queryString;
+QString DBItem::buildQuery(){
+	QString queryString = type().keyword();
+	QString nextKeyword;
+	switch(type().type()){
+		case QueryType::insert:
+			queryString += " %3 %1 %2";
+			nextKeyword = "values";
+			break;
+		case QueryType::select:
+			queryString += " %1 %2 %3";
+			nextKeyword = "from";
+			break;
+		default:
+			queryString = "--";
+			break;
+	}
+	qDebug() << "queryString: " << queryString;
+	qDebug() << "nextKeyword: " << nextKeyword;
+	qDebug() << "tableAffected " << tableAffected();
+	return queryString.arg("name,path").arg(nextKeyword).arg(tableAffected());
 }
 
-QString DBItem::type(){
-	return type_.keyword();
+QueryType DBItem::type(){
+	return type_;
 }
+

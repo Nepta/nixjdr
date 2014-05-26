@@ -15,6 +15,10 @@ DataBase::DataBase(const QString dbName, const QString& serverIpAddress){
 	db_.setPassword("password");
 	db_.setHostName(serverIpAddress);
 	db_.open();
+	DBItem *test = new DBItem(QueryType::select);
+	test->tableAffected("sprite");
+	qDebug() << "test: " << test->buildQuery();
+	delete test;
 	if(serverIpAddress == "127.0.0.1"){
 		initDB();
 	}
@@ -27,7 +31,7 @@ void DataBase::initDB(){
 
 void DataBase::addItem(DBItem& item){
 	//table map(name,tileSize)
-	QString queryString = item.queryInsert();
+	QString queryString = item.buildQuery();
 	QSqlQuery query(queryString);
 	query.exec();
 	emit newItemInDB(new DBItem(item));

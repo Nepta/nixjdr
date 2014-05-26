@@ -3,15 +3,20 @@
 #include <QString>
 
 class QueryType{
-	QString keyword_;
-
 public:
 	enum TYPE{
 		insert,
 		select
 	};
+
+private:
+	TYPE type_;
+	QString keyword_;
+
+public:
 	QueryType(TYPE type);
 	QString keyword();
+	TYPE type();
 
 };
 

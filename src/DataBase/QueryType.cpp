@@ -1,6 +1,6 @@
 #include "QueryType.h"
 
-QueryType::QueryType(TYPE type){
+QueryType::QueryType(TYPE type) : type_(type){
 	switch(type){
 		case TYPE::insert:
 			keyword_ = "insert into";
@@ -16,4 +16,8 @@ QueryType::QueryType(TYPE type){
 
 QString QueryType::keyword(){
 	return keyword_;
+}
+
+QueryType::TYPE QueryType::type(){
+	return type_;
 }

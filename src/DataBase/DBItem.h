@@ -16,9 +16,10 @@ protected:
 public:
 	DBItem(QueryType::TYPE type);
 	QString tableAffected();
+	void tableAffected(QString targetTable);
 	QString value(int index);
-	QString queryInsert();
-	QString type();
+	QString buildQuery();
+	QueryType type();
 //	virtual QString table() = 0;
 
 };
