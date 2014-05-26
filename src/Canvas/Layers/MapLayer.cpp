@@ -27,9 +27,15 @@ void MapLayer::initDragEvent(QGraphicsItem *watched, QGraphicsSceneMouseEvent *m
     drag->setMimeData(mime);
     drag->setPixmap(pixmapItem->pixmap());
 
-    removeSprite(watched);
+    watched->setOpacity(0.50);
 
-    drag->exec(Qt::CopyAction | Qt::MoveAction);
+    Qt::DropAction dropAction = drag->exec(Qt::CopyAction | Qt::MoveAction);
+
+    if (dropAction == Qt::IgnoreAction) {
+        watched->setOpacity(1.0);
+    } else {
+        removeSprite(watched);
+    }
 }
 
 // Reimplemented from GridLayer
