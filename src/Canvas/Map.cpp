@@ -94,8 +94,13 @@ void Map::selectedEditionLayer(QAbstractButton *button, bool checked) {
     else if (button->objectName() == QString("m_DrawingEdit")) {
         selectedLayer = &m_DrawingLayer;
     }
+    else {
+        selectedLayer = NULL;
+    }
 
-    selectedLayer->setEnabled(checked);
+    if (selectedLayer != NULL) {
+        selectedLayer->setEnabled(checked);
+    }
 }
 
 void Map::selectedDisplayLayer(QAbstractButton *button, bool checked) {
@@ -113,9 +118,14 @@ void Map::selectedDisplayLayer(QAbstractButton *button, bool checked) {
     else if (button->objectName() == QString("m_DrawingDisplay")) {
         selectedLayer = &m_DrawingLayer;
     }
+    else {
+        selectedLayer = NULL;
+    }
 
-    selectedLayer->setVisible(checked);
-    ui->m_View->scene()->update(); // update the bakckground part of the Scene
+    if (selectedLayer != NULL) {
+        selectedLayer->setVisible(checked);
+        ui->m_View->scene()->update(); // update the background part of the Scene
+    }
 }
 
 void Map::showMapTooltip(Sprite* sprite) {
