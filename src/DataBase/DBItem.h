@@ -18,6 +18,7 @@ public:
 	QString tableAffected();
 	QString value(int index);
 	QString queryInsert();
+	QString type();
 //	virtual QString table() = 0;
 
 };

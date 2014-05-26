@@ -21,10 +21,14 @@ int DBItem::pushDB(int newValue){
 }
 
 QString DBItem::queryInsert(){
-	QString queryString = QString("insert into %1 values(\'%2\', %3)")
-			.arg(this->tableAffected())
+	QString queryString = QString("%1 values(\'%2\', %3)")
+			.arg(this->type() + this->tableAffected())
 			.arg(this->value(0))
 			.arg(this->value(1))
 	;
 	return queryString;
+}
+
+QString DBItem::type(){
+	return type_.keyword();
 }
