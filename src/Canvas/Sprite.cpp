@@ -43,10 +43,10 @@ int Sprite::getStackNumber() {
 // Reimplemented from Serializable
 
 QByteArray Sprite::serialize() {
-    // TODO pixmap, x, y, in which scene (should be identified with a unique id)
+    // TODO
     return NULL;
 }
 
 void Sprite::unserialize(QByteArray& data) {
-    // TODO retrieve pixmap, x ,y, which scene
+    // TODO
 }

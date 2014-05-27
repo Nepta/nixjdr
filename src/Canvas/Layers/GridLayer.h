@@ -50,6 +50,12 @@ protected:
      */
     QPixmap m_SpritePixmap;
 
+    /**
+     * @brief m_ActiveMouseMoveEvent true when mouseMoveEvent() is called, false when
+     * mouseReleaseEvent() occurs.
+     */
+    bool m_ActiveMouseMoveEvent;
+
     virtual void mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent);
     virtual void mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent);
     virtual void spriteMouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent, Sprite *watched);

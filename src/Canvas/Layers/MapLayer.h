@@ -22,16 +22,19 @@ public:
     ~MapLayer();
 
 private:
+    /**
+     * @brief m_dragStartPosition Origin of a drag event
+     */
     QPoint m_dragStartPosition;
 
-    void initDragEvent(QGraphicsItem *watched, QGraphicsSceneMouseEvent *mouseEvent);
+    void initDragEvent(Sprite *watched, QGraphicsSceneMouseEvent *mouseEvent);
     void showSpriteTooltip(Sprite *sprite, QPoint pos);
 
     bool sceneEventFilter(QGraphicsItem *watched, QEvent *event);
 
     void mousePressEvent(QGraphicsSceneMouseEvent *);
     void dropEvent(QGraphicsSceneDragDropEvent *event);
-    void dropEvent(QGraphicsSceneDragDropEvent *event, Sprite *parentSprite);
+    void dropEvent(QGraphicsSceneDragDropEvent *event, Sprite *watched);
     void dragMoveEvent(QGraphicsSceneDragDropEvent * event);
     void dragEnterEvent(QGraphicsSceneDragDropEvent *event);
     void dragLeaveEvent(QGraphicsSceneDragDropEvent * event);

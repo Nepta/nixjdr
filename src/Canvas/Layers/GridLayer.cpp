@@ -2,6 +2,7 @@
 
 GridLayer::GridLayer(int step) {
     m_Step = step;
+    m_ActiveMouseMoveEvent = false;
 }
 
 void GridLayer::setSpritePixmap(QString spritePath) {
@@ -106,10 +107,16 @@ void GridLayer::drawRows(QPainter *painter, int rowLength, int limit, bool orien
 
 /**
  * @brief GridLayer::mouseReleaseEvent Reimplemented from Layer. Creates Sprites when the left mouse
- * button is released on an empty cell.
+ * button is released on an empty cell. Don't create a Sprite if the previous event was a
+ * mouseMoveEvent (prevents an additional Sprite from appearing at the end of the mouseMoveEvent).
  * @param mouseEvent
  */
 void GridLayer::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent) {
+    if (m_ActiveMouseMoveEvent) {
+        m_ActiveMouseMoveEvent = false;
+        return;
+    }
+
     if (mouseEvent->button() == Qt::LeftButton) {
         QPoint mouseScenePos = mouseEvent->scenePos().toPoint();
         addSprite(&m_SpritePixmap, mouseScenePos);
@@ -124,6 +131,7 @@ void GridLayer::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent) {
 void GridLayer::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent) {
     QPoint mouseScenePos = mouseEvent->scenePos().toPoint();
     Sprite *sprite = addSprite(&m_SpritePixmap, mouseScenePos, NULL, NULL);
+    m_ActiveMouseMoveEvent = true;
 
     if (mouseEvent->buttons() & Qt::LeftButton) {
         foreach (QGraphicsItem *item, childItems()) {

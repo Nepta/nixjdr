@@ -14,7 +14,15 @@ MapLayer::MapLayer(QString spritePath, int step) :
 
 MapLayer::~MapLayer() {}
 
-void MapLayer::initDragEvent(QGraphicsItem *watched, QGraphicsSceneMouseEvent *mouseEvent) {
+/**
+ * @brief MapLayer::initDragEvent Starts a drag event if a START_DRAG_DISTANCE has been traveled.
+ * The sprite given in parameters (watched) becomes transparent at the beginning of the drag event.
+ * Then, it becomes opaque again if the drag and drop failed, or the Sprite (watched) is deleted
+ * from its original position after the drop succeeded.
+ * @param watched
+ * @param mouseEvent
+ */
+void MapLayer::initDragEvent(Sprite *watched, QGraphicsSceneMouseEvent *mouseEvent) {
     // only start the drag event when a certain distance has been traveled
     if ((mouseEvent->scenePos() - m_dragStartPosition).manhattanLength() < START_DRAG_DISTANCE) {
         return;
@@ -28,18 +36,16 @@ void MapLayer::initDragEvent(QGraphicsItem *watched, QGraphicsSceneMouseEvent *m
     drag->setMimeData(mime);
     drag->setPixmap(pixmapItem->pixmap());
 
-    watched->setOpacity(0.50);
+    watched->setTransparent(true);
 
     Qt::DropAction dropAction = drag->exec(Qt::CopyAction | Qt::MoveAction);
 
     if (dropAction == Qt::IgnoreAction) {
-        watched->setOpacity(1.0);
+        watched->setTransparent(false);
     } else {
         removeSprite(watched);
     }
 }
-
-// Reimplemented from GridLayer
 
 /**
  * @brief MapLayer::mousePressEvent Reimplemented from GridLayer in order to grab mouse events.
@@ -62,8 +68,13 @@ void MapLayer::dragMoveEvent(QGraphicsSceneDragDropEvent *event) {
     if(event->mimeData()->hasImage()){
         QPoint pos = event->scenePos().toPoint();
         event->acceptProposedAction();
-        emit showMoveInfo(m_dragStartPosition.x() / m_Step, m_dragStartPosition.y() /m_Step,
-                          pos.x() / m_Step, pos.y() / m_Step);
+
+        emit showMoveInfo(
+            m_dragStartPosition.x() / m_Step,
+            m_dragStartPosition.y() /m_Step,
+            pos.x() / m_Step,
+            pos.y() / m_Step
+        );
     }
 }
 
@@ -77,13 +88,19 @@ void MapLayer::dropEvent(QGraphicsSceneDragDropEvent *event)
     dropEvent(event, NULL);
 }
 
-void MapLayer::dropEvent(QGraphicsSceneDragDropEvent *event, Sprite *parentSprite)
+/**
+ * @brief MapLayer::dropEvent Reimplemented from GridLayer. Adds a sprite at the position of the
+ * drop event with the image given in the event MIME data.
+ * @param event
+ * @param watched
+ */
+void MapLayer::dropEvent(QGraphicsSceneDragDropEvent *event, Sprite *watched)
 {
     QPixmap* sprite = new QPixmap;
     QImage image = qvariant_cast<QImage>(event->mimeData()->imageData());
     sprite->convertFromImage(image);
 
-    addSprite(sprite, event->scenePos().toPoint(), parentSprite);
+    addSprite(sprite, event->scenePos().toPoint(), watched);
 
     event->acceptProposedAction();
 }
@@ -132,7 +149,7 @@ bool MapLayer::sceneEventFilter(QGraphicsItem *watched, QEvent *event) {
 
         case QEvent::GraphicsSceneMouseMove: {
             if (mouseEvent->buttons() & Qt::LeftButton) {
-                initDragEvent(watched, mouseEvent);
+                initDragEvent(sprite, mouseEvent);
             }
         } break;
 
