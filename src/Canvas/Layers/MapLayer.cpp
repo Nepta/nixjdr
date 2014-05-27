@@ -49,7 +49,7 @@ void MapLayer::dragEnterEvent(QGraphicsSceneDragDropEvent *event) {
     }
 }
 
-void MapLayer::dragLeaveEvent(QGraphicsSceneDragDropEvent *event){
+void MapLayer::dragLeaveEvent(QGraphicsSceneDragDropEvent *) {
     emit hideInfo();
 }
 
@@ -78,6 +78,23 @@ void MapLayer::dropEvent(QGraphicsSceneDragDropEvent *event, Sprite *parentSprit
     event->acceptProposedAction();
 }
 
+/**
+ * @brief MapLayer::spriteMouseReleaseEvent On a left mouse button release, add a sprite at the
+ * given position.
+ * @param sprite
+ * @param mouseEvent
+ */
+void MapLayer::spriteMouseReleaseEvent(Sprite *sprite, QGraphicsSceneMouseEvent *mouseEvent) {
+    GridLayer::spriteMouseReleaseEvent(sprite, mouseEvent);
+
+    if (mouseEvent->button() == Qt::LeftButton) {
+        QPoint mouseScenePos = mouseEvent->scenePos().toPoint();
+        addSprite(&m_SpritePixmap, mouseScenePos, sprite);
+    }
+
+    emit hideInfo();
+}
+
 bool MapLayer::sceneEventFilter(QGraphicsItem *watched, QEvent *event) {
     bool eventHandled = true;
 
@@ -93,19 +110,7 @@ bool MapLayer::sceneEventFilter(QGraphicsItem *watched, QEvent *event) {
         } break;
 
         case QEvent::GraphicsSceneMouseRelease: {
-            qreal distanceCovered = (mouseEvent->buttonDownScenePos(Qt::RightButton)
-                                            - mouseEvent->scenePos()).manhattanLength();
-
-            if (mouseEvent->button() == Qt::RightButton && distanceCovered < DELTA_DELETE_SPRITE) {
-                removeSprite(watched);
-            }
-            else if (mouseEvent->button() == Qt::LeftButton) {
-                QPoint mouseScenePos = mouseEvent->scenePos().toPoint();
-                addSprite(&m_SpritePixmap, mouseScenePos, sprite);
-            }
-
-            emit hideInfo();
-
+            spriteMouseReleaseEvent(sprite, mouseEvent);
         } break;
 
         case QEvent::GraphicsSceneMouseMove: {

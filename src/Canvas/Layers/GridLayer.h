@@ -43,13 +43,9 @@ protected:
     int m_Step;
     QPixmap m_SpritePixmap;
 
-    /**
-     * @brief mouseReleaseEvent Reimplemented from GridLayer in order to create Sprites when the left
-     * mouse button is released on an empty cell.
-     * @param mouseEvent
-     */
-    void mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent);
+    virtual void mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent);
     virtual void mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent);
+    virtual void spriteMouseReleaseEvent(Sprite *sprite, QGraphicsSceneMouseEvent *mouseEvent);
 
 private:
     /**

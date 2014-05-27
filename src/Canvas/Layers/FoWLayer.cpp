@@ -25,31 +25,19 @@ void FoWLayer::mousePressEvent(QGraphicsSceneMouseEvent *) {}
 bool FoWLayer::sceneEventFilter(QGraphicsItem *watched, QEvent *event) {
     bool eventHandled = true;
 
+    Sprite *sprite = dynamic_cast<Sprite *>(watched);
     QGraphicsSceneMouseEvent *mouseEvent = static_cast<QGraphicsSceneMouseEvent*>(event);
 
     if (event->type() == QEvent::GraphicsSceneMouseRelease) {
-        qreal distanceCovered = (mouseEvent->buttonDownScenePos(Qt::RightButton)
-                                        - mouseEvent->scenePos()).manhattanLength();
-
-        if (mouseEvent->button() == Qt::RightButton && distanceCovered < DELTA_DELETE_SPRITE) {
-            removeSprite(watched);
-        }
-    }
-
-    if(event->type() == QEvent::GraphicsSceneMouseMove){
-        if (mouseEvent->buttons() & Qt::LeftButton) {
-            qreal distanceCovered = (mouseEvent->buttonDownScenePos(Qt::LeftButton)
-                                     - mouseEvent->scenePos()).manhattanLength();
-            if(distanceCovered > m_Step){
-                addSprite(&m_SpritePixmap, mouseEvent->scenePos().toPoint());
-
-            }
-        }
+        spriteMouseReleaseEvent(sprite, mouseEvent);
     }
 
     return eventHandled;
 }
 
+/**
+ * @brief FoWLayer::fillFoW Fill the entire map with FoW sprites (delete all the FoW sprites before).
+ */
 void FoWLayer::fillFoW() {
 
     removeFoW();
@@ -66,15 +54,11 @@ void FoWLayer::fillFoW() {
 
 }
 
+/**
+ * @brief FoWLayer::removeFoW Remove all the FoW sprites from the map.
+ */
 void FoWLayer::removeFoW() {
-
-    //QList<QGraphicsItem *> spriteList = this->findChildren<QGraphicsItem *>();
-
     foreach (QGraphicsItem* item, childItems()) {
         removeSprite(item);
     }
-
-    /*for(auto sprite : spriteList){
-        removeSprite(sprite);
-    }*/
 }

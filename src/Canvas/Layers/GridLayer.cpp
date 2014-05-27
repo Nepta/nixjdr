@@ -69,6 +69,10 @@ void GridLayer::drawRows(QPainter *painter, int rowLength, int limit, bool orien
     }
 }
 
+/**
+ * @brief mouseReleaseEvent Creates Sprites when the left mouse button is released on an empty cell.
+ * @param mouseEvent
+ */
 void GridLayer::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent) {
     if (mouseEvent->button() == Qt::LeftButton) {
         QPoint mouseScenePos = mouseEvent->scenePos().toPoint();
@@ -98,5 +102,20 @@ void GridLayer::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent) {
             }
         }
         delete sprite;
+    }
+}
+
+/**
+ * @brief GridLayer::spriteMouseReleaseEvent On a right mouse button release, delete the sprite (only
+ * if the cursor does not move outside the DELTA_DELETE_SPRITE distance).
+ * @param sprite
+ * @param mouseEvent
+ */
+void GridLayer::spriteMouseReleaseEvent(Sprite *sprite, QGraphicsSceneMouseEvent *mouseEvent) {
+    qreal distanceCovered = (mouseEvent->buttonDownScenePos(Qt::RightButton)
+                                    - mouseEvent->scenePos()).manhattanLength();
+
+    if (mouseEvent->button() == Qt::RightButton && distanceCovered < DELTA_DELETE_SPRITE) {
+        removeSprite(sprite);
     }
 }
