@@ -45,8 +45,10 @@ private:
     MapLayer m_MapLayer;
     Layer *m_FoWLayer;
     DrawingLayer m_DrawingLayer;
+    bool m_IsGridFoWLayer;
 
     void showMapTooltip(QString tooltip);
+    void hideAllToolBoxes();
 };
 
 #endif // MAP_H

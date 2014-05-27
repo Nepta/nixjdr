@@ -27,6 +27,9 @@ Map::Map(QString bgFilename, QString tokenPath, int tileStep, QWidget *parent) :
     ui->m_View->setScene(m_Scene);
     setWindowTitle(tr("Carte"));
 
+    // Hide toolboxes
+    ui->m_StackedTools->hide();
+
     // display & edition
     connect(ui->m_EditGroup, SIGNAL(buttonToggled(QAbstractButton*, bool)),
             this, SLOT(selectedEditionLayer(QAbstractButton*, bool)));
@@ -50,9 +53,11 @@ Map::~Map() {
 void Map::initFoWLayer(int tileStep) {
     if (tileStep > 1) {
         m_FoWLayer = new FoWLayer(tileStep);
+        m_IsGridFoWLayer = true;
     }
     else {
         m_FoWLayer = new DrawingLayer(2, 2, QColor(50, 50, 50));
+        m_IsGridFoWLayer = false;
         initDrawingLayer(m_FoWLayer);
     }
     m_Scene->addLayer(m_FoWLayer);
@@ -94,16 +99,29 @@ void Map::selectedEditionLayer(QAbstractButton *button, bool checked) {
 
     if (button->objectName() == QString("m_MapEdit")) {
         selectedLayer = &m_MapLayer;
+
+        ui->m_StackedTools->hide();
     }
     else if (button->objectName() == QString("m_FowEdit")) {
         selectedLayer = m_FoWLayer;
+
+        ui->m_StackedTools->show();
+        if (m_IsGridFoWLayer) {
+            ui->m_StackedTools->setCurrentWidget(ui->m_PageFoWTools);
+        }
+        else {
+            ui->m_StackedTools->setCurrentWidget(ui->m_PageDrawingTools);
+        }
     }
     else if (button->objectName() == QString("m_DrawingEdit")) {
         selectedLayer = &m_DrawingLayer;
-    }
 
+        ui->m_StackedTools->show();
+        ui->m_StackedTools->setCurrentWidget(ui->m_PageDrawingTools);
+    }
     else {
         selectedLayer = NULL;
+        ui->m_StackedTools->hide();
     }
 
     if (selectedLayer != NULL) {

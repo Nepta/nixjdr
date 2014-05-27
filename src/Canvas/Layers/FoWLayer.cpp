@@ -12,8 +12,6 @@ FoWLayer::FoWLayer(int step, bool transparentSprites) :
 
 FoWLayer::~FoWLayer() {}
 
-// reimplemented from GridLayer
-
 /**
  * @brief FoWLayer::addSprite Reimplemented from GridLayer to add transparency to the new Sprite if
  * m_TransparentSprites is true.
@@ -38,7 +36,7 @@ Sprite *FoWLayer::addSprite(QPixmap *spritePixmap, QPoint position, Sprite* prev
 void FoWLayer::mousePressEvent(QGraphicsSceneMouseEvent *) {}
 
 /**
- * @brief FoWLayer::sceneEventFilter Handles events on Sprites.
+ * @brief FoWLayer::sceneEventFilter Reimplemented from GridLayer. Handles events on Sprites.
  * @param watched QGraphicsItem on which an event occured.
  * @param event
  * @return true if the event is handled by this class, false if the event should be handled by

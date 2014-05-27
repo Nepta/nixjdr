@@ -88,9 +88,9 @@
       <property name="geometry">
        <rect>
         <x>0</x>
-        <y>-49</y>
-        <width>191</width>
-        <height>562</height>
+        <y>0</y>
+        <width>205</width>
+        <height>513</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_4">
@@ -198,97 +198,128 @@
         </widget>
        </item>
        <item>
-        <widget class="QGroupBox" name="groupBox_3">
-         <property name="title">
-          <string>Outils de dessin</string>
+        <widget class="QStackedWidget" name="m_StackedTools">
+         <property name="currentIndex">
+          <number>1</number>
          </property>
-         <layout class="QVBoxLayout" name="verticalLayout">
-          <item>
-           <widget class="QLabel" name="label_3">
-            <property name="text">
-             <string>Tailles</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QWidget" name="sizeWidget" native="true">
-            <property name="styleSheet">
-             <string notr="true">QWidget#sizeWidget {
+         <widget class="QWidget" name="m_PageDrawingTools">
+          <layout class="QVBoxLayout" name="verticalLayout_7">
+           <item>
+            <widget class="QGroupBox" name="m_DrawingTools">
+             <property name="enabled">
+              <bool>true</bool>
+             </property>
+             <property name="title">
+              <string>Outils de dessin</string>
+             </property>
+             <layout class="QVBoxLayout" name="verticalLayout">
+              <item>
+               <widget class="QLabel" name="label_3">
+                <property name="text">
+                 <string>Tailles</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QWidget" name="sizeWidget" native="true">
+                <property name="styleSheet">
+                 <string notr="true">QWidget#sizeWidget {
 	border: 1px solid rgb(221, 221, 221);
 	border-radius: 1px;
 }</string>
-            </property>
-            <layout class="QFormLayout" name="formLayout_2">
-             <item row="0" column="0">
-              <widget class="QLabel" name="label">
-               <property name="text">
-                <string>Crayon</string>
-               </property>
-              </widget>
-             </item>
-             <item row="0" column="1">
-              <widget class="QSpinBox" name="m_PenSpinBox">
-               <property name="value">
-                <number>2</number>
-               </property>
-              </widget>
-             </item>
-             <item row="1" column="0">
-              <widget class="QLabel" name="label_2">
-               <property name="text">
-                <string>Gomme</string>
-               </property>
-              </widget>
-             </item>
-             <item row="1" column="1">
-              <widget class="QSpinBox" name="m_EraserSpinBox">
-               <property name="value">
-                <number>2</number>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </widget>
-          </item>
-          <item>
-           <widget class="Line" name="line">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="m_EraseButton">
-            <property name="text">
-             <string>Effacer dessins</string>
-            </property>
-           </widget>
-          </item>
-         </layout>
+                </property>
+                <layout class="QFormLayout" name="formLayout_2">
+                 <item row="0" column="0">
+                  <widget class="QLabel" name="label">
+                   <property name="text">
+                    <string>Crayon</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="0" column="1">
+                  <widget class="QSpinBox" name="m_PenSpinBox">
+                   <property name="value">
+                    <number>2</number>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="1" column="0">
+                  <widget class="QLabel" name="label_2">
+                   <property name="text">
+                    <string>Gomme</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="1" column="1">
+                  <widget class="QSpinBox" name="m_EraserSpinBox">
+                   <property name="value">
+                    <number>2</number>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </widget>
+              </item>
+              <item>
+               <widget class="Line" name="line">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="m_EraseButton">
+                <property name="text">
+                 <string>Effacer dessins</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+         <widget class="QWidget" name="m_PageFoWTools">
+          <layout class="QVBoxLayout" name="verticalLayout_6">
+           <item>
+            <widget class="QGroupBox" name="m_FoWTools">
+             <property name="title">
+              <string>Brouillard de guerre</string>
+             </property>
+             <layout class="QVBoxLayout" name="verticalLayout_5">
+              <item>
+               <widget class="QPushButton" name="m_FillFoW">
+                <property name="text">
+                 <string>Remplissage</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="m_RemoveFoW">
+                <property name="text">
+                 <string>Enlever le brouillard</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+          </layout>
+         </widget>
         </widget>
        </item>
        <item>
-        <widget class="QGroupBox" name="groupBox_4">
-         <property name="title">
-          <string>Brouillard de guerre</string>
+        <spacer name="verticalSpacer">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
          </property>
-         <layout class="QVBoxLayout" name="verticalLayout_5">
-          <item>
-           <widget class="QPushButton" name="m_FillFoW">
-            <property name="text">
-             <string>Remplissage</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="m_RemoveFoW">
-            <property name="text">
-             <string>Enlever le brouillard</string>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </widget>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
        </item>
       </layout>
      </widget>
@@ -306,11 +337,11 @@
  <resources/>
  <connections/>
  <buttongroups>
-  <buttongroup name="m_EditGroup"/>
   <buttongroup name="m_DisplayGroup">
    <property name="exclusive">
     <bool>false</bool>
    </property>
   </buttongroup>
+  <buttongroup name="m_EditGroup"/>
  </buttongroups>
 </ui>
