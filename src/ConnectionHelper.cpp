@@ -30,7 +30,7 @@ void ConnectionHelper::on_playerButton_clicked() {
     m_User->setRole(Role::ROLE_PLAYER);
 
     // next page
-    ui->stackedWidget->setCurrentIndex(1);
+    ui->stackedWidget->setCurrentWidget(ui->pageConnection);
 }
 
 void ConnectionHelper::on_mjButton_clicked() {
@@ -41,7 +41,7 @@ void ConnectionHelper::on_mjButton_clicked() {
     ui->ipAddressLabel->hide();
 
     // next page
-    ui->stackedWidget->setCurrentIndex(1);
+    ui->stackedWidget->setCurrentWidget(ui->pageConnection);
 }
 
 void ConnectionHelper::on_endButton_clicked() {
@@ -70,7 +70,7 @@ void ConnectionHelper::closeEvent(QCloseEvent * event) {
 
 void ConnectionHelper::keyPressEvent(QKeyEvent *event){
     if(event->key() == Qt::Key_Escape){
-        ui->stackedWidget->setCurrentIndex(0);
+        ui->stackedWidget->setCurrentWidget(ui->pageRole);
         ui->ipAddress->show();
         ui->ipAddressLabel->show();
     }
