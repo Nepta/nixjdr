@@ -20,7 +20,7 @@ private:
     /**
      * @brief m_ParentSprite Pointer to the sprite positionned below in the stack.
      */
-    Sprite *m_ParentSprite;
+    Sprite *m_PreviousSpriteStack;
 
     /**
      * @brief m_SpriteStackNumber Number this sprite holds in the stack.

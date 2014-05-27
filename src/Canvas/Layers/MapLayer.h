@@ -27,32 +27,15 @@ private:
     void initDragEvent(QGraphicsItem *watched, QGraphicsSceneMouseEvent *mouseEvent);
     void showSpriteTooltip(Sprite *sprite, QPoint pos);
 
-    /**
-     * @brief sceneEventFilter Handles events on Sprites.
-     * @param watched
-     * @param event
-     * @return true if the event is handled by this class, false if the event should be handled by
-     * the watched item.
-     */
     bool sceneEventFilter(QGraphicsItem *watched, QEvent *event);
 
-    /**
-     * @brief mousePressEvent Reimplemented from GridLayer in order to grab mouse events
-     * @param mouseEvent
-     */
     void mousePressEvent(QGraphicsSceneMouseEvent *);
-
-    /**
-     * @brief dropEvent Reimplemented from GridLayer in order to create a Sprite at the position of the
-     * drop event with the stored information in the mimeData.
-     * @param event
-     */
     void dropEvent(QGraphicsSceneDragDropEvent *event);
     void dropEvent(QGraphicsSceneDragDropEvent *event, Sprite *parentSprite);
     void dragMoveEvent(QGraphicsSceneDragDropEvent * event);
     void dragEnterEvent(QGraphicsSceneDragDropEvent *event);
     void dragLeaveEvent(QGraphicsSceneDragDropEvent * event);
-    void spriteMouseReleaseEvent(Sprite *sprite, QGraphicsSceneMouseEvent *mouseEvent);
+    void spriteMouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent, Sprite *watched);
 
 signals:
     void showSpriteInfo(Sprite *sprite);

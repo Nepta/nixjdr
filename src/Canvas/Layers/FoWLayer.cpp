@@ -13,15 +13,37 @@ FoWLayer::FoWLayer(int step, bool transparentSprites) :
 FoWLayer::~FoWLayer() {}
 
 // reimplemented from GridLayer
-Sprite *FoWLayer::addSprite(QPixmap *spritePixmap, QPoint position, Sprite*) {
-    Sprite* sprite = GridLayer::addSprite(spritePixmap, position);
+
+/**
+ * @brief FoWLayer::addSprite Reimplemented from GridLayer to add transparency to the new Sprite if
+ * m_TransparentSprites is true.
+ * @param spritePixmap
+ * @param position
+ * @param previousSpriteStack
+ * @param parentItem
+ * @return Returns the added sprite.
+ */
+Sprite *FoWLayer::addSprite(QPixmap *spritePixmap, QPoint position, Sprite* previousSpriteStack,
+    QGraphicsItem *parentItem)
+{
+    Sprite* sprite = GridLayer::addSprite(spritePixmap, position, previousSpriteStack, parentItem);
     sprite->setTransparent(m_TransparentSprites);
 
     return sprite;
 }
 
+/**
+ * @brief FoWLayer::mousePressEvent Reimplemented from GridLayer to grab mouse events.
+ */
 void FoWLayer::mousePressEvent(QGraphicsSceneMouseEvent *) {}
 
+/**
+ * @brief FoWLayer::sceneEventFilter Handles events on Sprites.
+ * @param watched QGraphicsItem on which an event occured.
+ * @param event
+ * @return true if the event is handled by this class, false if the event should be handled by
+ * the watched item.
+ */
 bool FoWLayer::sceneEventFilter(QGraphicsItem *watched, QEvent *event) {
     bool eventHandled = true;
 
@@ -29,7 +51,7 @@ bool FoWLayer::sceneEventFilter(QGraphicsItem *watched, QEvent *event) {
     QGraphicsSceneMouseEvent *mouseEvent = static_cast<QGraphicsSceneMouseEvent*>(event);
 
     if (event->type() == QEvent::GraphicsSceneMouseRelease) {
-        spriteMouseReleaseEvent(sprite, mouseEvent);
+        spriteMouseReleaseEvent(mouseEvent, sprite);
     }
 
     return eventHandled;
@@ -39,7 +61,6 @@ bool FoWLayer::sceneEventFilter(QGraphicsItem *watched, QEvent *event) {
  * @brief FoWLayer::fillFoW Fill the entire map with FoW sprites (delete all the FoW sprites before).
  */
 void FoWLayer::fillFoW() {
-
     removeFoW();
 
     QPoint iterator(0,0);
@@ -48,10 +69,9 @@ void FoWLayer::fillFoW() {
         for(int j = 0; j < boundingRect().height(); j +=m_Step){
             iterator.setX(i);
             iterator.setY(j);
-            addSprite(&m_SpritePixmap, iterator);
+            GridLayer::addSprite(&m_SpritePixmap, iterator);
         }
     }
-
 }
 
 /**

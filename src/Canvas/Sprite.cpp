@@ -1,7 +1,7 @@
 #include <QObject>
 #include "Sprite.h"
 
-Sprite::Sprite(const QPixmap &pixmap, QGraphicsItem *parent, Sprite* parentSprite) :
+Sprite::Sprite(const QPixmap &pixmap, QGraphicsItem *parent, Sprite* previousSpriteStack) :
     QGraphicsPixmapItem(pixmap, parent)
 {
     /* transparent pixels are part of the Sprite shape -> events can be triggered on the transparent
@@ -11,13 +11,13 @@ Sprite::Sprite(const QPixmap &pixmap, QGraphicsItem *parent, Sprite* parentSprit
     setAcceptHoverEvents(true);
     setAcceptDrops(true);
 
-    m_ParentSprite = parentSprite;
+    m_PreviousSpriteStack = previousSpriteStack;
 
-    if (m_ParentSprite == NULL) {
+    if (m_PreviousSpriteStack == NULL) {
         m_StackNumber = 1;
     }
     else {
-        m_StackNumber = m_ParentSprite->getStackNumber() + 1;
+        m_StackNumber = m_PreviousSpriteStack->getStackNumber() + 1;
     }
 }
 
@@ -44,6 +44,7 @@ int Sprite::getStackNumber() {
 
 QByteArray Sprite::serialize() {
     // TODO pixmap, x, y, in which scene (should be identified with a unique id)
+    return NULL;
 }
 
 void Sprite::unserialize(QByteArray& data) {

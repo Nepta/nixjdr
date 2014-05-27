@@ -21,15 +21,23 @@ void GridLayer::setSpritePixmap(QPixmap spritePixmap) {
     m_SpritePixmap = spritePixmap;
 }
 
-Sprite *GridLayer::addSprite(QPixmap *spritePixmap, QPoint position, Sprite* parentSprite) {
-    return addSprite(spritePixmap, this, position, parentSprite);
-}
-
-Sprite *GridLayer::addSprite(QPixmap *spritePixmap, QGraphicsItem *parentItem, QPoint position, Sprite* parentSprite) {
+/**
+ * @brief GridLayer::addSprite Adds a sprite to the Layer.
+ * @param spritePixmap Sprite's pixmap.
+ * @param position Sprite's position
+ * @param previousSpriteStack Indicates the Sprite on top of which the new Sprite will be created
+ * (Sprites can be stacked).
+ * @param parentItem Indicates in which QGraphicsItem the new Sprite belongs (in general the layer
+ * in which the sprite is created).
+ * @return The newly created sprite.
+ */
+Sprite *GridLayer::addSprite(QPixmap *spritePixmap, QPoint position, Sprite* previousSpriteStack,
+    QGraphicsItem *parentItem)
+{
     QPoint spritePos(position.x()/m_Step, position.y()/m_Step);
     spritePos *= m_Step;
 
-    Sprite *sprite = new Sprite(*spritePixmap, parentItem, parentSprite);
+    Sprite *sprite = new Sprite(*spritePixmap, parentItem, previousSpriteStack);
     sprite->setPos(spritePos);
 
     if (parentItem != NULL) {
@@ -39,12 +47,31 @@ Sprite *GridLayer::addSprite(QPixmap *spritePixmap, QGraphicsItem *parentItem, Q
     return sprite;
 }
 
+/**
+ * @brief GridLayer::addSprite Overloaded for convenience.
+ * @param spritePixmap
+ * @param position
+ * @param previousSpriteStack
+ * @return The newly created sprite.
+ * @sa addSprite()
+ */
+Sprite *GridLayer::addSprite(QPixmap *spritePixmap, QPoint position, Sprite *previousSpriteStack) {
+    return addSprite(spritePixmap, position, previousSpriteStack, this);
+}
+
+/**
+ * @brief GridLayer::removeSprite Remove the given Sprite.
+ * @param sprite
+ */
 void GridLayer::removeSprite(QGraphicsItem *sprite) {
     delete sprite;
 }
 
-// Reimplemented from layer
-
+/**
+ * @brief GridLayer::drawBackground Reimplemented from Layer. Draw a grid.
+ * @param painter
+ * @param rect
+ */
 void GridLayer::drawBackground(QPainter *painter, const QRectF &rect) {
     if(m_Step > 1) {
         drawRows(painter, rect.height(), rect.width(), true);
@@ -52,6 +79,14 @@ void GridLayer::drawBackground(QPainter *painter, const QRectF &rect) {
     }
 }
 
+/**
+ * @brief GridLayer::drawRows Draws parallel lines with the given painter with an interval equal to m_Step.
+ * Every two lines, draws a thicker line.
+ * @param painter
+ * @param rowLength Line length.
+ * @param limit Number of lines to draw.
+ * @param orientation true vertical, false horizontal
+ */
 void GridLayer::drawRows(QPainter *painter, int rowLength, int limit, bool orientation){
     for (int i = 0 ; i < limit ; i += m_Step) {
         if (i/m_Step % 2 == 0) {
@@ -70,7 +105,8 @@ void GridLayer::drawRows(QPainter *painter, int rowLength, int limit, bool orien
 }
 
 /**
- * @brief mouseReleaseEvent Creates Sprites when the left mouse button is released on an empty cell.
+ * @brief GridLayer::mouseReleaseEvent Reimplemented from Layer. Creates Sprites when the left mouse
+ * button is released on an empty cell.
  * @param mouseEvent
  */
 void GridLayer::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent) {
@@ -80,14 +116,19 @@ void GridLayer::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent) {
     }
 }
 
+/**
+ * @brief GridLayer::mouseMoveEvent Reimplemented from Layer. Handles the creation (left mouse
+ * button held) and deletion (right mouse button held) of Sprites continuously.
+ * @param mouseEvent
+ */
 void GridLayer::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent) {
     QPoint mouseScenePos = mouseEvent->scenePos().toPoint();
-    Sprite *sprite = addSprite(&m_SpritePixmap, NULL, mouseScenePos, NULL);
+    Sprite *sprite = addSprite(&m_SpritePixmap, mouseScenePos, NULL, NULL);
 
     if (mouseEvent->buttons() & Qt::LeftButton) {
-
         foreach (QGraphicsItem *item, childItems()) {
             if (item->collidesWithItem(sprite)) {
+                delete sprite;
                 return;
             }
         }
@@ -108,14 +149,14 @@ void GridLayer::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent) {
 /**
  * @brief GridLayer::spriteMouseReleaseEvent On a right mouse button release, delete the sprite (only
  * if the cursor does not move outside the DELTA_DELETE_SPRITE distance).
- * @param sprite
+ * @param watched
  * @param mouseEvent
  */
-void GridLayer::spriteMouseReleaseEvent(Sprite *sprite, QGraphicsSceneMouseEvent *mouseEvent) {
+void GridLayer::spriteMouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent, Sprite *watched) {
     qreal distanceCovered = (mouseEvent->buttonDownScenePos(Qt::RightButton)
                                     - mouseEvent->scenePos()).manhattanLength();
 
     if (mouseEvent->button() == Qt::RightButton && distanceCovered < DELTA_DELETE_SPRITE) {
-        removeSprite(sprite);
+        removeSprite(watched);
     }
 }

@@ -1,6 +1,7 @@
 #include <QMimeData>
 #include <QDrag>
 #include <QDragEnterEvent>
+
 #include "Canvas/Sprite.h"
 #include "MapLayer.h"
 
@@ -40,6 +41,10 @@ void MapLayer::initDragEvent(QGraphicsItem *watched, QGraphicsSceneMouseEvent *m
 
 // Reimplemented from GridLayer
 
+/**
+ * @brief MapLayer::mousePressEvent Reimplemented from GridLayer in order to grab mouse events.
+ * @param mouseEvent
+ */
 void MapLayer::mousePressEvent(QGraphicsSceneMouseEvent *) {
 }
 
@@ -62,6 +67,11 @@ void MapLayer::dragMoveEvent(QGraphicsSceneDragDropEvent *event) {
     }
 }
 
+/**
+ * @brief MapLayer::dropEvent Reimplemented from GridLayer in order to create a Sprite at the
+ * position of the drop event with the stored information in the mimeData.
+ * @param event
+ */
 void MapLayer::dropEvent(QGraphicsSceneDragDropEvent *event)
 {
     dropEvent(event, NULL);
@@ -79,22 +89,29 @@ void MapLayer::dropEvent(QGraphicsSceneDragDropEvent *event, Sprite *parentSprit
 }
 
 /**
- * @brief MapLayer::spriteMouseReleaseEvent On a left mouse button release, add a sprite at the
- * given position.
- * @param sprite
+ * @brief MapLayer::spriteMouseReleaseEvent Reimplemented from GridLayer to add the following
+ * behaviour : on a left mouse button release, add a sprite at the given position.
+ * @param watched
  * @param mouseEvent
  */
-void MapLayer::spriteMouseReleaseEvent(Sprite *sprite, QGraphicsSceneMouseEvent *mouseEvent) {
-    GridLayer::spriteMouseReleaseEvent(sprite, mouseEvent);
+void MapLayer::spriteMouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent, Sprite *watched) {
+    GridLayer::spriteMouseReleaseEvent(mouseEvent, watched);
 
     if (mouseEvent->button() == Qt::LeftButton) {
         QPoint mouseScenePos = mouseEvent->scenePos().toPoint();
-        addSprite(&m_SpritePixmap, mouseScenePos, sprite);
+        addSprite(&m_SpritePixmap, mouseScenePos, watched);
     }
 
     emit hideInfo();
 }
 
+/**
+ * @brief MapLayer::sceneEventFilter Handles events on Sprites.
+ * @param watched
+ * @param event
+ * @return true if the event is handled by this class, false if the event should be handled by
+ * the watched item.
+ */
 bool MapLayer::sceneEventFilter(QGraphicsItem *watched, QEvent *event) {
     bool eventHandled = true;
 
@@ -110,7 +127,7 @@ bool MapLayer::sceneEventFilter(QGraphicsItem *watched, QEvent *event) {
         } break;
 
         case QEvent::GraphicsSceneMouseRelease: {
-            spriteMouseReleaseEvent(sprite, mouseEvent);
+            spriteMouseReleaseEvent(mouseEvent, sprite);
         } break;
 
         case QEvent::GraphicsSceneMouseMove: {
