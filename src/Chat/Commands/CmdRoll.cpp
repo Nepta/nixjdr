@@ -11,8 +11,6 @@ void CmdRoll::execute(Header &header, QString &arg) {
     bool error;
     int separatorIndex;
 
-    arg.simplified();
-    arg = arg.remove(' ');
 
     separatorIndex = arg.indexOf("|");
 
@@ -25,6 +23,8 @@ void CmdRoll::execute(Header &header, QString &arg) {
     else{
         dice = arg;
     }
+    dice.simplified();
+    dice = dice.remove(' ');
 
     result = CmdRoll::extractDice("0"+dice, error);
 

@@ -3,7 +3,7 @@
 TokenList::TokenList(QWidget *parent) :
     QListWidget(parent)
 {
-//    appendCustomItem(QIcon("resource/flandre.png"), "flandre");
+    appendCustomItem(QIcon("resource/flandre.png"), "flandre");
 //    appendCustomItem(QIcon("resource/cirno.png"), "cirno");
 //    appendCustomItem(QIcon("resource/sakuya.png"), "sakuya");
 //    appendCustomItem(QIcon("resource/marisa.png"), "marisa");
@@ -47,26 +47,30 @@ void TokenList::mousePressEvent(QMouseEvent *mouseEvent) {
 
 
 void TokenList::mouseMoveEvent(QMouseEvent *event){
-    if (!(event->buttons() & Qt::LeftButton)){
-        return;
-    }
 
-    if ((event->pos() - m_dragStartPosition).manhattanLength() < START_DRAG_DISTANCE) {
-        return;
-    }
+	 QPoint pos = event->localPos().toPoint();
+	 QListWidgetItem *clickedItem = this->itemAt(pos);
 
-    QDrag *drag = new QDrag(this);
-    QMimeData *mimeData = new QMimeData;
-    QPoint pos = event->localPos().toPoint();
-    QListWidgetItem *clickedItem = this->itemAt(pos);
+	 if (!(event->buttons() & Qt::LeftButton)){
+		  return;
+	 }
 
-    this->setCurrentItem(clickedItem);
-    QPixmap spriteToMove = clickedItem->icon().pixmap(QSize(32,32));
+	 if ((event->pos() - m_dragStartPosition).manhattanLength() < START_DRAG_DISTANCE) {
+		  return;
+	 }
 
-    drag->setPixmap(spriteToMove);
+	 QDrag *drag = new QDrag(this);
+	 QMimeData *mimeData = new QMimeData;
 
-    mimeData->setImageData(spriteToMove.toImage());
-    drag->setMimeData(mimeData);
+	 this->setCurrentItem(clickedItem);
+	 if(clickedItem != NULL){
+		  QPixmap spriteToMove = clickedItem->icon().pixmap(QSize(32,32));
 
-    drag->exec(Qt::CopyAction | Qt::MoveAction);
+		  drag->setPixmap(spriteToMove);
+
+		  mimeData->setImageData(spriteToMove.toImage());
+		  drag->setMimeData(mimeData);
+
+		  drag->exec(Qt::CopyAction | Qt::MoveAction);
+	 }
 }

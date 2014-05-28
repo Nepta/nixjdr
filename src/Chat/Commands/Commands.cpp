@@ -70,12 +70,6 @@ AbstractCmd *Commands::getServerCommand(ChatCodes code) {
     return m_ServerCommands.value(code);
 }
 
-QString Commands::getPrintableCommandsList() {
-    // TODO
-
-    return NULL;
-}
-
 void Commands::cmdSendPacketToAll(TargetCode target, ChatCodes code, Serializable &data) {
     emit sendPacketToAll((quint16) target, (quint16) code, data);
 }

@@ -1,30 +1,28 @@
 #include "CanvasScene.h"
 
-CanvasScene::CanvasScene(QString filename)
+CanvasScene::CanvasScene(int width, int height)
 {
-    m_background = new QPixmap(filename);
-
-    const int width = m_background->width();
-    const int height = m_background->height();
-
-    this->setSceneRect(0, 0, width, height);
-    this->setBackgroundBrush(*m_background);
+    setSceneRect(0, 0, width, height);
 }
 
-CanvasScene::~CanvasScene()
-{
-    delete m_background;
-}
+CanvasScene::~CanvasScene() {}
 
 void CanvasScene::addLayer(Layer *layer) {
     addItem(layer);
     m_Layers << layer;
 }
 
+int CanvasScene::getStep()
+{
+    return m_step;
+}
+
 void CanvasScene::drawBackground(QPainter *painter, const QRectF &rect) {
     QGraphicsScene::drawBackground(painter, rect);
 
     foreach(Layer *layer, m_Layers) {
-        layer->drawBackground(painter, sceneRect());
+        if (layer->isVisible()) {
+            layer->drawBackground(painter, sceneRect());
+        }
     }
 }

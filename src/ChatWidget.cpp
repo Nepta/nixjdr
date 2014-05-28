@@ -7,28 +7,19 @@ ChatWidget::ChatWidget(QWidget *parent) :
     ui(new Ui::ChatWidget)
 {
     ui->setupUi(this);
-    ui->nicknamesListView->setContextMenuPolicy(Qt::CustomContextMenu);
+    ui->nicknamesListWidget->setContextMenuPolicy(Qt::CustomContextMenu);
+    ui->nicknamesListWidget->setSelectionMode(QAbstractItemView::ExtendedSelection);
 
-    // for right-clicking on the user list
-    connect(ui->nicknamesListView, SIGNAL(customContextMenuRequested(const QPoint&)),
+    // right-clicking on the user list shows a context menu
+    connect(ui->nicknamesListWidget, SIGNAL(customContextMenuRequested(const QPoint&)),
         this, SLOT(ShowContextMenu(const QPoint&)));
-
-    // Chat nicknames list
-    m_NicknamesListModel = new QStringListModel;
-    ui->nicknamesListView->setModel(m_NicknamesListModel);
 }
 
 ChatWidget::~ChatWidget()
 {
     delete ui;
-    delete m_NicknamesListModel;
 }
 
-/**
- * @brief ChatWidget::on_msgField_returnPressed
- *
- * Clean input field
- */
 void ChatWidget::on_msgField_returnPressed()
 {
     if (!ui->msgField->text().isEmpty()) {
@@ -59,7 +50,11 @@ void ChatWidget::receivedMessage(const QString &msg) {
 }
 
 void ChatWidget::updateNicknamesListView() {
-    m_NicknamesListModel->setStringList(AbstractCmd::getUsersListClient()->keys());
+    ui->nicknamesListWidget->clear();
+    foreach (QString user, AbstractCmd::getUsersListClient()->keys()) {
+        ui->nicknamesListWidget->addItem(user);
+    }
+
 }
 
 void ChatWidget::rollDice(QString dice, bool hidden){
@@ -74,20 +69,54 @@ void ChatWidget::rollDice(QString dice, bool hidden){
 
 
 
-
 void ChatWidget::ShowContextMenu(const QPoint& pos){
-    QPoint globalPos = this->mapToGlobal(pos);
-    QString msg;
+
     QMenu menu;
-    menu.addAction(tr("Lancer les dés"));
+    QPoint globalPos = this->mapToGlobal(pos);
+    QList<QListWidgetItem *> selectedItems = ui->nicknamesListWidget->selectedItems();
+
+    QAction* throwDice = menu.addAction(tr("Lancer les dés"));
+    QAction* sendMessage = menu.addAction(tr("Envoyer un message"));
 
     QAction* selectedItem = menu.exec(globalPos);
-    if (selectedItem)
-    {
-        emit requestDice(msg);
-        int index = ui->nicknamesListView->currentIndex().row();
-        msg += QString("| %1").arg(m_NicknamesListModel->stringList().at(index));
-        m_ChatClient->sendMessageToServer(msg);
+
+    if (selectedItem == throwDice){
+        sendRolledDiceToUsers(selectedItems);
+    }
+    else if(selectedItem == sendMessage){
+        prepareWhispUsers(selectedItems);
     }
 
+}
+
+void ChatWidget::sendRolledDiceToUsers(QList<QListWidgetItem *> list){
+    QString msg;
+    emit requestDice(msg);
+
+    foreach (QListWidgetItem *item, list) {
+        msg += QString(" |%1").arg(item->text());
+    }
+
+    m_ChatClient->sendMessageToServer(msg);
+    setFocusToChat();
+}
+
+void ChatWidget::prepareWhispUsers(QList<QListWidgetItem *> list){
+    QString msg = "/w ";
+
+    foreach(QListWidgetItem * item, list) {
+        if (list.indexOf(item) == 0) { // first item
+            msg += QString(" %1 ").arg(item->text());
+        } else {
+            msg += QString("| %1 ").arg(item->text());
+        }
+    }
+
+    ui->msgField->setText(msg);
+    setFocusToChat();
+}
+
+void ChatWidget::setFocusToChat(){
+    ui->msgField->setFocus();
+    ui->tabWidget->setCurrentIndex(0);
 }

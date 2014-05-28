@@ -44,11 +44,13 @@ SOURCES += \
     Canvas/CanvasView.cpp \
     Canvas/CanvasScene.cpp \
     Canvas/Sprite.cpp \
-    Canvas/GridLayer.cpp \
-    Canvas/MapLayer.cpp \
-    Canvas/FoWLayer.cpp \
-    Canvas/Layer.cpp \
     Canvas/Map.cpp \
+    Canvas/Layers/GridLayer.cpp \
+    Canvas/Layers/MapLayer.cpp \
+    Canvas/Layers/FoWLayer.cpp \
+    Canvas/Layers/BackgroundLayer.cpp \
+    Canvas/Layers/DrawingLayer.cpp \
+    Canvas/Layers/Layer.cpp \
     Network/Header.cpp \
     Network/Server.cpp \
     Network/Switch.cpp \
@@ -64,7 +66,8 @@ SOURCES += \
     TurnMenu/TurnMenu.cpp \
     Token/TokenItem.cpp \
     DataBase/QueryType.cpp \
-    DataBase/QueryBuilder.cpp
+	 DataBase/QueryBuilder.cpp \
+    Canvas/MapTooltip.cpp
 
 HEADERS  += \
     MainWindow.h \
@@ -95,11 +98,13 @@ HEADERS  += \
     Canvas/CanvasScene.h \
     Canvas/CanvasView.h \
     Canvas/Sprite.h \
-    Canvas/Layer.h \
-    Canvas/GridLayer.h \
-    Canvas/MapLayer.h \
-    Canvas/FoWLayer.h \
     Canvas/Map.h \
+    Canvas/Layers/Layer.h \
+    Canvas/Layers/GridLayer.h \
+    Canvas/Layers/MapLayer.h \
+    Canvas/Layers/FoWLayer.h \
+    Canvas/Layers/BackgroundLayer.h \
+    Canvas/Layers/DrawingLayer.h \
     Network/Switch.h \
     Network/Receiver.h \
     Network/Header.h \
@@ -116,7 +121,8 @@ HEADERS  += \
     TurnMenu/TurnMenu.h \
     Token/TokenItem.h \
     DataBase/QueryType.h \
-    DataBase/QueryBuilder.h
+	 DataBase/QueryBuilder.h \
+    Canvas/MapTooltip.h
 
 FORMS    += \
     TokenMenu.ui \
@@ -125,4 +131,5 @@ FORMS    += \
     ConnectionHelper.ui \
     MainWindow.ui \
     TurnMenu.ui \
-    Map.ui
+    Map.ui \
+    MapTooltip.ui

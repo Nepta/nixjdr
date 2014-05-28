@@ -5,7 +5,13 @@
 #include <QGraphicsObject>
 #include <QGraphicsItem>
 #include <QGraphicsSceneMouseEvent>
+#include <QPainter>
+#include <QRectF>
 
+/**
+ * @brief The abstract Layer class is used to stack and separate different type of elements
+ * from a scene.
+ */
 class Layer : public QGraphicsObject
 {
     Q_OBJECT
@@ -18,13 +24,6 @@ public:
 
     QRectF boundingRect() const;
     void paint(QPainter *, const QStyleOptionGraphicsItem *, QWidget *);
-
-    /**
-     * @brief setEnabled Reimplemented from QGraphicsObject. Notifies the layer that the geometry of
-     * the layer will change before calling QGraphicsObject::setEnabled(). The boundingRect() depends
-     * on the enabled attribute.
-     * @param enabled
-     */
     void setEnabled(bool enabled);
 };
 

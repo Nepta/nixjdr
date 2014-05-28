@@ -4,21 +4,21 @@
 #include <QPixmap>
 #include <QGraphicsScene>
 #include <QList>
-#include "Layer.h"
+#include "Layers/Layer.h"
 
 class CanvasScene : public QGraphicsScene {
     Q_OBJECT
 
 public:
-    CanvasScene(QString filename);
+    CanvasScene(int width, int height);
     ~CanvasScene();
     void addLayer(Layer *layer);
+    int getStep();
 
 private:
     void drawBackground (QPainter *painter, const QRectF &rect);
 
     int m_step;
-    QPixmap *m_background;
     QList<Layer*> m_Layers;
 };
 

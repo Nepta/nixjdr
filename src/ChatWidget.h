@@ -2,6 +2,7 @@
 #define CHATWIDGET_H
 
 #include <QWidget>
+#include <QListWidgetItem>
 #include <QContextMenuEvent>
 
 #include "Chat/ChatServer.h"
@@ -34,10 +35,15 @@ private slots:
     void ShowContextMenu(const QPoint& pos);
 
 private:
+    void sendRolledDiceToUsers(QList<QListWidgetItem *> list);
+    void prepareWhispUsers(QList<QListWidgetItem *> list);
+    void setFocusToChat();
+
+private:
     Ui::ChatWidget *ui;
     ChatServer *m_ChatServer;
     ChatClient *m_ChatClient;
-    QStringListModel *m_NicknamesListModel;
+
 };
 
 #endif // CHATWIDGET_H

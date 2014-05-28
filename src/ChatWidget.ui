@@ -85,7 +85,7 @@
       </attribute>
       <layout class="QVBoxLayout" name="verticalLayout_6">
        <item>
-        <widget class="QListView" name="nicknamesListView"/>
+        <widget class="QListWidget" name="nicknamesListWidget"/>
        </item>
       </layout>
      </widget>

@@ -38,7 +38,6 @@ public:
 
     AbstractCmd *getUserCommand(ChatCodes code);
     AbstractCmd *getServerCommand(ChatCodes code);
-    QString getPrintableCommandsList();
 
 private:
     QHash<ChatCodes, AbstractCmd *> m_UserCommands;

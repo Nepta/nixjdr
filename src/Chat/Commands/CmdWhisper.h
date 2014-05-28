@@ -10,6 +10,9 @@ public:
 
     void execute(Header &header, QString &arg);
     QString getHelp();
+
+private:
+    QList<QString> extractTargetList(QString &message);
 };
 
 #endif // CmdWhisper_H

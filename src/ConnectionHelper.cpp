@@ -1,7 +1,7 @@
 #include "ConnectionHelper.h"
 #include "ui_ConnectionHelper.h"
 #include <QIntValidator>
-#include <QDebug>
+#include <QRegExpValidator>
 
 ConnectionHelper::ConnectionHelper(User *user, QWidget *parent) :
     QDialog(parent), ui(new Ui::ConnectionHelper)
@@ -15,6 +15,10 @@ ConnectionHelper::ConnectionHelper(User *user, QWidget *parent) :
     ui->ipC->setValidator(ipRange);
     ui->ipD->setValidator(ipRange);
 
+    // Only nicknames which do not contain whitespaces are valid
+    QValidator *nicknameValidator = new QRegExpValidator(QRegExp("[\\S]+"));
+    ui->nickname->setValidator(nicknameValidator);
+
     m_User = user;
 }
 
@@ -26,7 +30,7 @@ void ConnectionHelper::on_playerButton_clicked() {
     m_User->setRole(Role::ROLE_PLAYER);
 
     // next page
-    ui->stackedWidget->setCurrentIndex(1);
+    ui->stackedWidget->setCurrentWidget(ui->pageConnection);
 }
 
 void ConnectionHelper::on_mjButton_clicked() {
@@ -37,7 +41,7 @@ void ConnectionHelper::on_mjButton_clicked() {
     ui->ipAddressLabel->hide();
 
     // next page
-    ui->stackedWidget->setCurrentIndex(1);
+    ui->stackedWidget->setCurrentWidget(ui->pageConnection);
 }
 
 void ConnectionHelper::on_endButton_clicked() {
@@ -66,7 +70,7 @@ void ConnectionHelper::closeEvent(QCloseEvent * event) {
 
 void ConnectionHelper::keyPressEvent(QKeyEvent *event){
     if(event->key() == Qt::Key_Escape){
-        ui->stackedWidget->setCurrentIndex(0);
+        ui->stackedWidget->setCurrentWidget(ui->pageRole);
         ui->ipAddress->show();
         ui->ipAddressLabel->show();
     }

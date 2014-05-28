@@ -87,7 +87,7 @@
             <item>
              <widget class="QLineEdit" name="ipA">
               <property name="text">
-               <string/>
+               <string>127</string>
               </property>
              </widget>
             </item>
@@ -107,7 +107,7 @@
             <item>
              <widget class="QLineEdit" name="ipB">
               <property name="text">
-               <string/>
+               <string>0</string>
               </property>
              </widget>
             </item>
@@ -121,7 +121,7 @@
             <item>
              <widget class="QLineEdit" name="ipC">
               <property name="text">
-               <string/>
+               <string>0</string>
               </property>
              </widget>
             </item>
@@ -135,7 +135,7 @@
             <item>
              <widget class="QLineEdit" name="ipD">
               <property name="text">
-               <string/>
+               <string>1</string>
               </property>
              </widget>
             </item>
@@ -150,7 +150,11 @@
           </widget>
          </item>
          <item row="1" column="1">
-          <widget class="QLineEdit" name="nickname"/>
+          <widget class="QLineEdit" name="nickname">
+           <property name="toolTip">
+            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ne doit pas être vide et ne doit pas contenir d'espaces.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+           </property>
+          </widget>
          </item>
         </layout>
        </item>
