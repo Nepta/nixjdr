@@ -14,8 +14,8 @@ class DataBase : public QObject{
 
 public:
 	DataBase(const QString dbName, const QString& serverIpAddress);
-    //void addItem(DBItem& item);
 	virtual ~DataBase();
+	void addItem(DBItem& item);
 	void initDB();
 
 signals:

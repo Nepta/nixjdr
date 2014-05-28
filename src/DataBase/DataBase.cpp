@@ -22,22 +22,31 @@ DataBase::DataBase(const QString dbName, const QString& serverIpAddress){
 	}
 }
 
+DataBase::~DataBase(){
+	db_.close();
+}
+
 void DataBase::initDB(){
 	QSqlQuery query("create table Map(path varchar(80), tileSize integer)");
 	query.exec();
 }
 
-/*void DataBase::addItem(DBItem& item){
+void DataBase::addItem(DBItem& item){
 	//table map(name,tileSize)
-	QString queryString = item.buildQuery(QueryType(QueryType::insert));
+	QueryBuilder builder;
+	QString columns;
+	QString values;
+	for(QString key : item.getHashMap().keys()){
+		columns += key + ",";
+		values += item.getHashMap().value(key) + ",";
 
-    // TODO query builder
+	}
+	columns.chop(1);
+	values.chop(1);
+	builder.insertInto(item.tableAffected(),columns)
+			->values(values);
 
-	QSqlQuery query(queryString);
+	QSqlQuery query = builder.getQuery();
 	query.exec();
 	emit newItemInDB(new DBItem(item));
-}*/
-
-DataBase::~DataBase(){
-	db_.close();
 }
