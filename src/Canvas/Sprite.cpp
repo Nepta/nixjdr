@@ -28,6 +28,32 @@ Sprite::Sprite(QByteArray& data) {
 Sprite::~Sprite() {
 }
 
+/**
+ * @brief boundingRect Reimplemented from QGraphicsPixmapItem. The bounding rectangle corresponds to
+ * QGraphicsPixmapItem::boundingRect() when the layer is enabled, otherwise it is a 0 width/height
+ * rectangle to avoid intercepting mouse events when the layer is disabled.
+ * @return bounding rectangle
+ */
+QRectF Sprite::boundingRect() const {
+    if (isEnabled()) {
+        return QGraphicsPixmapItem::boundingRect();
+    } else {
+        return QRectF(0, 0, 0, 0);
+    }
+}
+
+/**
+ * @brief Sprite::setEnabled Reimplemented from QGraphicsPixmapItem. Notifies the Sprite that the
+ * geometry of the sprite will change before calling QGraphicsPixmapItem::setEnabled(enabled). When
+ * the sprite is disabled, boundingRect() is updated to a 0 width/height bounding rectangle.
+ * @param enabled
+ * @sa boundingRect()
+ */
+void Sprite::setEnabled(bool enabled) {
+    prepareGeometryChange();
+    QGraphicsPixmapItem::setEnabled(enabled);
+}
+
 void Sprite::setTransparent(bool enabled) {
     if (enabled) {
         setOpacity(0.75);

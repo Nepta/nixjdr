@@ -13,8 +13,9 @@ public:
     ~Sprite();
     void setTransparent(bool enabled);
     int getStackNumber();
-
     QByteArray serialize();
+    QRectF boundingRect () const;
+    void setEnabled(bool enabled);
 
 private:
     /**
