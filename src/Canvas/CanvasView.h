@@ -6,9 +6,17 @@
 
 class CanvasView : public QGraphicsView {
 
+    Q_OBJECT
+
 public:
     CanvasView(QWidget *parent = 0);
     ~CanvasView();
+
+private:
+    double m_ScaleFactor;
+
+private slots:
+    void zoom(int value);
 };
 
 #endif // CANVASVIEW_H

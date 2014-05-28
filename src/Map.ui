@@ -279,6 +279,52 @@
            </item>
           </layout>
          </widget>
+         <widget class="QWidget" name="m_PageMapTools">
+          <layout class="QVBoxLayout" name="verticalLayout_9">
+           <item>
+            <widget class="QGroupBox" name="m_MapTools">
+             <property name="title">
+              <string>Outils de carte</string>
+             </property>
+             <layout class="QVBoxLayout" name="verticalLayout_8">
+              <item>
+               <layout class="QHBoxLayout" name="horizontalLayout_2">
+                <item>
+                 <widget class="QLabel" name="m_MapScaleValue">
+                  <property name="text">
+                   <string>Echelle:</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QLabel" name="labelScale">
+                  <property name="text">
+                   <string>1</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QSlider" name="m_MapScaler">
+                  <property name="minimum">
+                   <number>1</number>
+                  </property>
+                  <property name="maximum">
+                   <number>5</number>
+                  </property>
+                  <property name="orientation">
+                   <enum>Qt::Horizontal</enum>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </item>
+             </layout>
+            </widget>
+           </item>
+          </layout>
+          <zorder>m_MapTools</zorder>
+          <zorder>groupBox_2</zorder>
+         </widget>
          <widget class="QWidget" name="m_PageFoWTools">
           <layout class="QVBoxLayout" name="verticalLayout_6">
            <item>
@@ -335,13 +381,30 @@
   </customwidget>
  </customwidgets>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>m_MapScaler</sender>
+   <signal>sliderMoved(int)</signal>
+   <receiver>labelScale</receiver>
+   <slot>setNum(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>531</x>
+     <y>391</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>523</x>
+     <y>385</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
  <buttongroups>
+  <buttongroup name="m_EditGroup"/>
   <buttongroup name="m_DisplayGroup">
    <property name="exclusive">
     <bool>false</bool>
    </property>
   </buttongroup>
-  <buttongroup name="m_EditGroup"/>
  </buttongroups>
 </ui>

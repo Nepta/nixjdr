@@ -33,7 +33,7 @@ Map::Map(QString bgFilename, QString tokenPath, int tileStep, QWidget *parent) :
     setWindowTitle(tr("Carte"));
 
     // Hide toolboxes
-    ui->m_StackedTools->hide();
+    ui->m_StackedTools->show();
 
     // display & edition
     connect(ui->m_EditGroup, SIGNAL(buttonToggled(QAbstractButton*, bool)),
@@ -41,11 +41,17 @@ Map::Map(QString bgFilename, QString tokenPath, int tileStep, QWidget *parent) :
     connect(ui->m_DisplayGroup, SIGNAL(buttonToggled(QAbstractButton*, bool)),
             this, SLOT(selectedDisplayLayer(QAbstractButton*, bool)));
 
+    // Map tools
+    connect(ui->m_MapScaler, SIGNAL(valueChanged(int)),
+            ui->m_View, SLOT(zoom(int)));
+
     // FoW tools
-    connect(ui->m_FillFoW, SIGNAL(clicked(bool)),
-            m_FoWLayer, SLOT(fillFoW()));
-    connect(ui->m_RemoveFoW, SIGNAL(clicked(bool)),
-            m_FoWLayer, SLOT(removeFoW()));
+    if (m_IsGridFoWLayer) {
+        connect(ui->m_FillFoW, SIGNAL(clicked(bool)),
+                m_FoWLayer, SLOT(fillFoW()));
+        connect(ui->m_RemoveFoW, SIGNAL(clicked(bool)),
+                m_FoWLayer, SLOT(removeFoW()));
+    }
 
     initTooltip();
 }
@@ -105,7 +111,9 @@ void Map::selectedEditionLayer(QAbstractButton *button, bool checked) {
     if (button->objectName() == QString("m_MapEdit")) {
         selectedLayer = &m_MapLayer;
 
-        ui->m_StackedTools->hide();
+//        ui->m_StackedTools->hide();
+        ui->m_StackedTools->show();
+        ui->m_StackedTools->setCurrentWidget(ui->m_PageMapTools);
     }
     else if (button->objectName() == QString("m_FowEdit")) {
         selectedLayer = m_FoWLayer;
