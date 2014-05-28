@@ -1,20 +1,38 @@
 #include "QueryBuilder.h"
 
-QueryBuilder::QueryBuilder(){
+QSqlQuery QueryBuilder::getQuery() {
+    return QSqlQuery(query_);
 }
 
-QString QueryBuilder::buildQuery(QueryType type){
-	QString queryString = type.keyword();
-	switch(type.type()){
-		case QueryType::insert:
-			queryString += "insert into %2 %1 values ()";
-			break;
-		case QueryType::select:
-			queryString += "select %2 from %1";
-			break;
-		default:
-			queryString = "--";
-			break;
-	}
-	return queryString.arg(tableAffected()).arg("name,path");
+QueryBuilder *QueryBuilder::select(QString arg) {
+    query_ = QString("SELECT (%1)").arg(arg);
+
+    return this;
+}
+
+QueryBuilder *QueryBuilder::insertInto(QString table) {
+    query_ = QString("INSERT INTO %1")
+             .arg(table);
+
+    return this;
+}
+
+QueryBuilder *QueryBuilder::insertInto(QString table, QString cols) {
+    query_ = QString("INSERT INTO %1 (%2)")
+             .arg(table)
+             .arg(cols);
+
+    return this;
+}
+
+QueryBuilder *QueryBuilder::values(QString arg) {
+    query_ += QString(" VALUES (%3)").arg(arg);
+
+    return this;
+}
+
+QueryBuilder *QueryBuilder::from(QString arg) {
+    query_ += QString(" FROM %1").arg(arg);
+
+    return this;
 }

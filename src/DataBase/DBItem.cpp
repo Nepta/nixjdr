@@ -22,5 +22,5 @@ int DBItem::appendValue(QString newValue){
 }
 
 int DBItem::appendValue(int newValue){
-	return pushDB(QString::number(newValue));
+    return appendValue(QString::number(newValue));
 }

@@ -6,12 +6,13 @@
 #include <QSqlQuery>
 #include <QDebug>
 #include <QSqlError>
+#include "QueryBuilder.h"
 
 DataBase::DataBase(const QString dbName, const QString& serverIpAddress){
 	dbName_ = dbName;
 	db_ = QSqlDatabase::addDatabase("QPSQL");
 	db_.setUserName("jdr");
-	db_.setDatabaseName("jdrDB");
+    db_.setDatabaseName(dbName);
 	db_.setPassword("password");
 	db_.setHostName("lune.hurata.fr");
 	db_.setPort(45001);
@@ -26,15 +27,17 @@ void DataBase::initDB(){
 	query.exec();
 }
 
-void DataBase::addItem(DBItem& item){
+/*void DataBase::addItem(DBItem& item){
 	//table map(name,tileSize)
 	QString queryString = item.buildQuery(QueryType(QueryType::insert));
+
+    // TODO query builder
+
 	QSqlQuery query(queryString);
 	query.exec();
 	emit newItemInDB(new DBItem(item));
-}
+}*/
 
 DataBase::~DataBase(){
 	db_.close();
-//	QFile::remove(dbName_ + ".sqlite"); // maybe a bad idea ?
 }
