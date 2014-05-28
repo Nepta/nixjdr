@@ -30,8 +30,9 @@ Sprite::~Sprite() {
 
 /**
  * @brief boundingRect Reimplemented from QGraphicsPixmapItem. The bounding rectangle corresponds to
- * QGraphicsPixmapItem::boundingRect() when the layer is enabled, otherwise it is a 0 width/height
- * rectangle to avoid intercepting mouse events when the layer is disabled.
+ * QGraphicsPixmapItem::boundingRect() when the sprite is enabled, otherwise it is a 0 width/height
+ * rectangle to avoid intercepting mouse events when the sprite is disabled.
+ * @remarks When a Layer containing Sprites is disabled, the Sprites are also disabled.
  * @return bounding rectangle
  */
 QRectF Sprite::boundingRect() const {
@@ -73,6 +74,6 @@ QByteArray Sprite::serialize() {
     return NULL;
 }
 
-void Sprite::unserialize(QByteArray& data) {
+void Sprite::unserialize(QByteArray&) {
     // TODO
 }
