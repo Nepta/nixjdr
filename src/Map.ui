@@ -317,6 +317,9 @@
                   <property name="maximum">
                    <number>5</number>
                   </property>
+                  <property name="pageStep">
+                   <number>1</number>
+                  </property>
                   <property name="orientation">
                    <enum>Qt::Horizontal</enum>
                   </property>
@@ -328,8 +331,6 @@
             </widget>
            </item>
           </layout>
-          <zorder>m_MapTools</zorder>
-          <zorder>groupBox_2</zorder>
          </widget>
          <widget class="QWidget" name="m_PageFoWTools">
           <layout class="QVBoxLayout" name="verticalLayout_6">
@@ -390,7 +391,7 @@
  <connections>
   <connection>
    <sender>m_MapScaler</sender>
-   <signal>sliderMoved(int)</signal>
+   <signal>valueChanged(int)</signal>
    <receiver>labelScale</receiver>
    <slot>setNum(int)</slot>
    <hints>
@@ -406,11 +407,11 @@
   </connection>
  </connections>
  <buttongroups>
-  <buttongroup name="m_EditGroup"/>
   <buttongroup name="m_DisplayGroup">
    <property name="exclusive">
     <bool>false</bool>
    </property>
   </buttongroup>
+  <buttongroup name="m_EditGroup"/>
  </buttongroups>
 </ui>

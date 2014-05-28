@@ -122,6 +122,9 @@ void GridLayer::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent) {
         return;
     }
 
+    /* Avoid unexpected behaviours when both mouse buttons can be used (e.g. a sprite is added on the
+     * left mouse button release, and then the sprite under the new one is deleted on a right mouse
+     * button release */
     if (mouseEvent->buttons() != Qt::NoButton) {
         return;
     }

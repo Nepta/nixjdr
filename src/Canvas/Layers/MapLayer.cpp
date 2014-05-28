@@ -114,11 +114,11 @@ void MapLayer::dropEvent(QGraphicsSceneDragDropEvent *event, Sprite *watched)
 void MapLayer::spriteMouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent, Sprite *watched) {
     GridLayer::spriteMouseReleaseEvent(mouseEvent, watched);
 
+    /* Avoid unexpectd behaviours when both mouse buttons can be used (see also
+     * GridLayer::mouseReleaseEvent) */
     if (mouseEvent->buttons() != Qt::NoButton) {
         return;
     }
-
-    qDebug() << mouseEvent->buttons();
 
     if (mouseEvent->button() == Qt::LeftButton) {
         QPoint mouseScenePos = mouseEvent->scenePos().toPoint();
