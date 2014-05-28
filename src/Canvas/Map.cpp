@@ -12,9 +12,9 @@ Map::Map(QString bgFilename, QString tokenPath, int tileStep, QWidget *parent) :
     ui->setupUi(this);
 
     int sceneHeight = m_BgLayer.getBackground()->rect().height()
-            +2*4*m_MapLayer.getStep();
+            + BG_OFFSET * m_MapLayer.getStep();
     int sceneWidth = m_BgLayer.getBackground()->rect().width()
-            +2*4*m_MapLayer.getStep();
+            + BG_OFFSET * m_MapLayer.getStep();
 
     m_Scene = new CanvasScene(sceneWidth, sceneHeight); // TODO pass those value through a dialog box
 
@@ -75,6 +75,12 @@ void Map::initFoWLayer(int tileStep) {
     m_FoWLayer->setEnabled(false);
 }
 
+/**
+ * @brief Map::initDrawingLayer Initialize the specified layer as a DrawingLayer. Adds the layer to
+ * the scene, initializes its drawing zone (transparent pixmap on which drawings are made) and connect
+ * the signals and slots.
+ * @param layer
+ */
 void Map::initDrawingLayer(Layer *layer) {
     DrawingLayer *drawingLayer = dynamic_cast<DrawingLayer*>(layer);
 
@@ -94,14 +100,12 @@ void Map::initTooltip() {
     m_MapTooltip.setParent(this);
     m_MapTooltip.hide();
 
-    connect(&m_MapLayer, SIGNAL(showSpriteInfo(Sprite*)),
-            this, SLOT(showMapSpriteTooltip(Sprite*)));
-
-    connect(&m_MapLayer, SIGNAL(showMoveInfo(int, int, int, int)),
-            this, SLOT(showMapMoveTooltip(int, int, int, int)));
-
-    connect(&m_MapLayer, SIGNAL(hideInfo()),
-            this, SLOT(hideMapTooltip()));
+    connect(&m_MapLayer, SIGNAL(pushInfoTooltip(QString)),
+            &m_MapTooltip, SLOT(pushInfo(QString)));
+    connect(&m_MapLayer, SIGNAL(showMapTooltip()),
+            this, SLOT(showMapTooltip()));
+    connect(&m_MapLayer, SIGNAL(hideMapTooltip()),
+            &m_MapTooltip, SLOT(hide()));
 
 }
 
@@ -110,7 +114,6 @@ void Map::selectedEditionLayer(QAbstractButton *button, bool checked) {
     if (button->objectName() == QString("m_MapEdit")) {
         m_SelectedLayer = &m_MapLayer;
 
-//        ui->m_StackedTools->hide();
         ui->m_StackedTools->show();
         ui->m_StackedTools->setCurrentWidget(ui->m_PageMapTools);
     }
@@ -166,38 +169,16 @@ void Map::selectedDisplayLayer(QAbstractButton *button, bool checked) {
     }
 }
 
-void Map::showMapTooltip(QString tooltip) {
-
-    m_MapTooltip.setTooltipText(tooltip);
-
-    // Move the tooltip at the bottom right of the map
-    m_MapTooltip.move(
-        ui->m_View->size().width() - m_MapTooltip.size().width() - MapTooltip::MAP_TOOLTIP_OFFSET,
-        ui->m_View->size().height() - m_MapTooltip.size().height() - MapTooltip::MAP_TOOLTIP_OFFSET
+/**
+ * @brief Map::showMapTooltip Displays the tooltip at the bottom right of the map.
+ */
+void Map::showMapTooltip() {
+    QPoint position(
+        ui->m_View->size().width() - m_MapTooltip.size().width() - Tooltip::TOOLTIP_OFFSET,
+        ui->m_View->size().height() - m_MapTooltip.size().height() - Tooltip::TOOLTIP_OFFSET
     );
 
-    m_MapTooltip.show();
-}
-
-void Map::hideMapTooltip() {
-    m_MapTooltip.hide();
-}
-
-void Map::showMapSpriteTooltip(Sprite* sprite){
-    QString spriteInfo = tr("Pile de jetons : %1 jeton(s).")
-        .arg(sprite->getStackNumber());
-    showMapTooltip(spriteInfo);
-}
-
-void Map::showMapMoveTooltip(int oldPosX, int oldPosY, int currentPosX, int currentPosY){
-
-    int diffX = qAbs(oldPosX - currentPosX);
-    int diffY = qAbs(oldPosY - currentPosY);
-    int shorterDistance = std::max(diffX, diffY) + std::min(diffX,diffY)/2;
-
-    QString tooltip = QString(tr("Distance la plus courte: %1")).arg(shorterDistance);
-
-    showMapTooltip(tooltip);
+    m_MapTooltip.showTooltip(position);
 }
 
 Ui::Map *Map::getUi() {
@@ -212,11 +193,20 @@ void Map::on_collapseButton_clicked(bool checked) {
     ui->scrollArea->setVisible(checked);
 }
 
-
+/**
+ * @brief Map::keyPressEvent Reimplemented from QWidget to dispatch key press events to the selected
+ * layer.
+ * @param keyEvent
+ */
 void Map::keyPressEvent(QKeyEvent *keyEvent){
     m_Scene->sendEvent(m_SelectedLayer, keyEvent);
 }
 
+/**
+ * @brief Map::keyPressEvent Reimplemented from QWidget to dispatch key release events to the selected
+ * layer.
+ * @param keyEvent
+ */
 void Map::keyReleaseEvent(QKeyEvent *keyEvent){
     m_Scene->sendEvent(m_SelectedLayer, keyEvent);
 }

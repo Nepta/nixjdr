@@ -7,7 +7,7 @@
 #include "Layers/MapLayer.h"
 #include "Layers/FoWLayer.h"
 #include "Layers/DrawingLayer.h"
-#include "MapTooltip.h"
+#include "Tooltip.h"
 #include "CanvasView.h"
 #include "CanvasScene.h"
 
@@ -20,6 +20,8 @@ class Map : public QWidget
     Q_OBJECT
 
 public:
+    static const int BG_OFFSET = 2*4;
+
     explicit Map(QString bgFilename, QString tokenPath, int tileStep, QWidget *parent = 0);
     ~Map();
 
@@ -33,14 +35,12 @@ private slots:
     void selectedEditionLayer(QAbstractButton *button, bool checked);
     void selectedDisplayLayer(QAbstractButton *button, bool checked);
     void on_collapseButton_clicked(bool checked);
-    void hideMapTooltip();
-    void showMapMoveTooltip(int oldPosX, int oldPosY, int CurrentPosX, int CurrentPosY);
-    void showMapSpriteTooltip(Sprite* sprite);
+    void showMapTooltip();
 
 private:
     Ui::Map *ui;
     CanvasScene *m_Scene;
-    MapTooltip m_MapTooltip;
+    Tooltip m_MapTooltip;
     BackgroundLayer m_BgLayer;
     MapLayer m_MapLayer;
     Layer *m_FoWLayer;

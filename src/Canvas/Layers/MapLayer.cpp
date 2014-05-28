@@ -61,20 +61,16 @@ void MapLayer::dragEnterEvent(QGraphicsSceneDragDropEvent *event) {
 }
 
 void MapLayer::dragLeaveEvent(QGraphicsSceneDragDropEvent *) {
-    emit hideInfo();
+    emit hideMapTooltip();
 }
 
 void MapLayer::dragMoveEvent(QGraphicsSceneDragDropEvent *event) {
     if(event->mimeData()->hasImage()){
-        QPoint pos = event->scenePos().toPoint();
         event->acceptProposedAction();
 
-        emit showMoveInfo(
-            m_dragStartPosition.x() / m_Step,
-            m_dragStartPosition.y() /m_Step,
-            pos.x() / m_Step,
-            pos.y() / m_Step
-        );
+        QPoint pos = event->scenePos().toPoint();
+        addMoveInfoTooltip(pos);
+        emit showMapTooltip();
     }
 }
 
@@ -114,7 +110,7 @@ void MapLayer::dropEvent(QGraphicsSceneDragDropEvent *event, Sprite *watched)
 void MapLayer::spriteMouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent, Sprite *watched) {
     GridLayer::spriteMouseReleaseEvent(mouseEvent, watched);
 
-    /* Avoid unexpectd behaviours when both mouse buttons can be used (see also
+    /* Avoid unexpected behaviours when both mouse buttons can be used (see also
      * GridLayer::mouseReleaseEvent) */
     if (mouseEvent->buttons() != Qt::NoButton) {
         return;
@@ -125,7 +121,7 @@ void MapLayer::spriteMouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent, Spr
         addSprite(&m_SpritePixmap, mouseScenePos, watched);
     }
 
-    emit hideInfo();
+    emit hideMapTooltip();
 }
 
 /**
@@ -159,19 +155,64 @@ bool MapLayer::sceneEventFilter(QGraphicsItem *watched, QEvent *event) {
             }
         } break;
 
+        case QEvent::GraphicsSceneDragMove: {
+            QPoint pos = mouseEvent->scenePos().toPoint();
+
+            addSpriteInfoTooltip(sprite);
+            addMoveInfoTooltip(pos);
+            emit showMapTooltip();
+        } break;
+
         case QEvent::GraphicsSceneDrop: {
             dropEvent(dragDropEvent, sprite);
-            emit hideInfo();
+            emit hideMapTooltip();
         }
 
         case QEvent::GraphicsSceneHoverMove: {
-            emit showSpriteInfo(sprite);
+            addSpriteInfoTooltip(sprite);
+            emit showMapTooltip();
         } break;
 
         case QEvent::GraphicsSceneHoverLeave: {
-            emit hideInfo();
+            emit hideMapTooltip();
         } break;
     }
 
     return eventHandled;
+}
+
+/**
+ * @brief MapLayer::addSpriteInfoTooltip Adds the number of sprites contained under the specified
+ * sprite to the map tooltip.
+ * @param sprite
+ */
+void MapLayer::addSpriteInfoTooltip(Sprite *sprite) {
+    QString spriteInfo = tr("Pile de jetons : %1 jeton(s).")
+        .arg(sprite->getStackNumber());
+
+    emit pushInfoTooltip(spriteInfo);
+}
+
+/**
+ * @brief MapLayer::addMoveInfoTooltip Adds the shortest distance between the start position of a
+ * drag event and the current mouse position to the map tooltip.
+ * @param currentMousePos
+ */
+void MapLayer::addMoveInfoTooltip(QPoint currentMousePos) {
+    QPoint oldPos(
+        m_dragStartPosition.x() / m_Step,
+        m_dragStartPosition.y() /m_Step
+    );
+
+    QPoint currentPos(
+        currentMousePos.x() / m_Step,
+        currentMousePos.y() / m_Step
+    );
+
+    int diffX = qAbs(oldPos.x() - currentPos.x());
+    int diffY = qAbs(oldPos.y() - currentPos.y());
+    int shorterDistance = std::max(diffX, diffY) + std::min(diffX,diffY)/2;
+
+    QString moveInfo = QString(tr("Distance la plus courte: %1")).arg(shorterDistance);
+    emit pushInfoTooltip(moveInfo);
 }

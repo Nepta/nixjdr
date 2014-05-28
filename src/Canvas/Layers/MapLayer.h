@@ -28,7 +28,8 @@ private:
     QPoint m_dragStartPosition;
 
     void initDragEvent(Sprite *watched, QGraphicsSceneMouseEvent *mouseEvent);
-    void showSpriteTooltip(Sprite *sprite, QPoint pos);
+    void addSpriteInfoTooltip(Sprite *sprite);
+    void addMoveInfoTooltip(QPoint currentMousePoss);
 
     bool sceneEventFilter(QGraphicsItem *watched, QEvent *event);
 
@@ -41,9 +42,9 @@ private:
     void spriteMouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent, Sprite *watched);
 
 signals:
-    void showSpriteInfo(Sprite *sprite);
-    void showMoveInfo(int oldPosX, int oldPosY, int CurrentPosX, int CurrentPosY);
-    void hideInfo();
+    void pushInfoTooltip(QString info);
+    void showMapTooltip();
+    void hideMapTooltip();
 
 };
 

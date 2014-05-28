@@ -23,6 +23,7 @@ SOURCES += \
     ChatWidget.cpp \
     ConnectionHelper.cpp \
     Common.cpp \
+    Tooltip.cpp \
     Chat/Message.cpp \
     Chat/ChatServer.cpp \
     Chat/ChatClient.cpp \
@@ -63,8 +64,7 @@ SOURCES += \
     Token/TokenMenu.cpp \
     Token/TokenList.cpp \
     TurnMenu/TurnList.cpp \
-    TurnMenu/TurnMenu.cpp \
-    Canvas/MapTooltip.cpp
+    TurnMenu/TurnMenu.cpp
 
 HEADERS  += \
     MainWindow.h \
@@ -74,6 +74,7 @@ HEADERS  += \
     CustomMdiArea.h \
     ChatWidget.h \
     Common.h \
+    Tooltip.h \
     Chat/Message.h \
     Chat/ChatServer.h \
     Chat/ChatClient.h \
@@ -115,8 +116,7 @@ HEADERS  += \
     Token/TokenMenu.h \
     Token/TokenList.h \
     TurnMenu/TurnList.h \
-    TurnMenu/TurnMenu.h \
-    Canvas/MapTooltip.h
+    TurnMenu/TurnMenu.h
 
 FORMS    += \
     TokenMenu.ui \
@@ -126,4 +126,4 @@ FORMS    += \
     MainWindow.ui \
     TurnMenu.ui \
     Map.ui \
-    MapTooltip.ui
+    Tooltip.ui
