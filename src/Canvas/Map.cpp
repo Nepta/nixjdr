@@ -12,7 +12,12 @@ Map::Map(QString bgFilename, QString tokenPath, int tileStep, QWidget *parent) :
 {
     ui->setupUi(this);
 
-    m_Scene = new CanvasScene(1280, 1024); // TODO pass those value through a dialog box
+    int sceneHeight = m_BgLayer.getBackground()->rect().height()
+            +2*4*m_MapLayer.getStep();
+    int sceneWidth = m_BgLayer.getBackground()->rect().width()
+            +2*4*m_MapLayer.getStep();
+
+    m_Scene = new CanvasScene(sceneWidth, sceneHeight); // TODO pass those value through a dialog box
 
     m_Scene->addLayer(&m_BgLayer);
     m_BgLayer.setEnabled(false);

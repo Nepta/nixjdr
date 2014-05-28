@@ -26,6 +26,8 @@ public:
     GridLayer(int step = 1);
     virtual ~GridLayer() {}
 
+    int getStep();
+
     void setSpritePixmap(QString spritePath);
     void setSpritePixmap(QPixmap spritePixmap);
 

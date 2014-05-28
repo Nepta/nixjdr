@@ -5,6 +5,11 @@ GridLayer::GridLayer(int step) {
     m_ActiveMouseMoveEvent = false;
 }
 
+int GridLayer::getStep()
+{
+    return m_Step;
+}
+
 void GridLayer::setSpritePixmap(QString spritePath) {
     QString newPath = QString("resource/%1.png").arg(spritePath);
 
