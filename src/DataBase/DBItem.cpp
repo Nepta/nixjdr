@@ -1,26 +1,21 @@
 #include "DBItem.h"
 #include <QDebug>
 
-DBItem::DBItem(){
+DBItem::DBItem(QString table) : targetTable_(table){
 }
 
 QString DBItem::tableAffected(){
 	return targetTable_;
 }
 
-void DBItem::tableAffected(QString targetTable){
-	targetTable_ = targetTable;
+void DBItem::appendValue(QString columName, int newValue){
+	appendValue(columName, QString(newValue));
 }
 
-QString DBItem::value(int index){
-	return listValue_.at(index);
+void DBItem::appendValue(QString columName, QString newValue){
+	columnsValues_.insert(columName, "'" + newValue + "'");
 }
 
-int DBItem::appendValue(QString newValue){
-	listValue_.append(newValue);
-	return listValue_.size();
-}
-
-int DBItem::appendValue(int newValue){
-    return appendValue(QString::number(newValue));
+QHash<QString, QString>& DBItem::getHashMap(){
+	return columnsValues_;
 }

@@ -4,22 +4,20 @@
 #include <QList>
 #include <QVector>
 #include "QueryType.h"
+#include <QHash>
 
 class DBItem{
 	QString targetTable_;
-	QList<QString> listValue_;
+	QHash<QString, QString> columnsValues_;
 
 protected:
-	int appendValue(QString newValue);
-	int appendValue(int newValue);
+	void appendValue(QString columName,QString newValue);
+	void appendValue(QString columName, int newValue);
 
 public:
-	DBItem();
+	DBItem(QString table);
 	QString tableAffected();
-	void tableAffected(QString targetTable);
-	QString value(int index);
-//	virtual QString table() = 0;
-
+	QHash<QString, QString>& getHashMap();
 };
 
 #endif // DBITEM_H
