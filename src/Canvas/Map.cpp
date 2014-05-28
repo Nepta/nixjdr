@@ -1,5 +1,4 @@
 #include <algorithm>
-
 #include "Map.h"
 #include "ui_Map.h"
 
@@ -24,6 +23,7 @@ Map::Map(QString bgFilename, QString tokenPath, int tileStep, QWidget *parent) :
 
     m_Scene->addLayer(&m_MapLayer);
     m_MapLayer.setEnabled(true);
+    m_SelectedLayer = &m_MapLayer;
 
     initFoWLayer(tileStep);
 
@@ -106,17 +106,16 @@ void Map::initTooltip() {
 }
 
 void Map::selectedEditionLayer(QAbstractButton *button, bool checked) {
-    Layer *selectedLayer;
 
     if (button->objectName() == QString("m_MapEdit")) {
-        selectedLayer = &m_MapLayer;
+        m_SelectedLayer = &m_MapLayer;
 
 //        ui->m_StackedTools->hide();
         ui->m_StackedTools->show();
         ui->m_StackedTools->setCurrentWidget(ui->m_PageMapTools);
     }
     else if (button->objectName() == QString("m_FowEdit")) {
-        selectedLayer = m_FoWLayer;
+        m_SelectedLayer = m_FoWLayer;
 
         ui->m_StackedTools->show();
         if (m_IsGridFoWLayer) {
@@ -127,18 +126,18 @@ void Map::selectedEditionLayer(QAbstractButton *button, bool checked) {
         }
     }
     else if (button->objectName() == QString("m_DrawingEdit")) {
-        selectedLayer = &m_DrawingLayer;
+        m_SelectedLayer = &m_DrawingLayer;
 
         ui->m_StackedTools->show();
         ui->m_StackedTools->setCurrentWidget(ui->m_PageDrawingTools);
     }
     else {
-        selectedLayer = NULL;
+        m_SelectedLayer = NULL;
         ui->m_StackedTools->hide();
     }
 
-    if (selectedLayer != NULL) {
-        selectedLayer->setEnabled(checked);
+    if (m_SelectedLayer != NULL) {
+        m_SelectedLayer->setEnabled(checked);
     }
 }
 
@@ -192,9 +191,9 @@ void Map::showMapSpriteTooltip(Sprite* sprite){
 
 void Map::showMapMoveTooltip(int oldPosX, int oldPosY, int currentPosX, int currentPosY){
 
-    int diffX = oldPosX - currentPosX;
-    int diffY = oldPosY - currentPosY;
-    int shorterDistance = qAbs(std::max(diffX, diffY)) + qAbs(std::min(diffX,diffY)/2);
+    int diffX = qAbs(oldPosX - currentPosX);
+    int diffY = qAbs(oldPosY - currentPosY);
+    int shorterDistance = std::max(diffX, diffY) + std::min(diffX,diffY)/2;
 
     QString tooltip = QString(tr("Distance la plus courte: %1")).arg(shorterDistance);
 
@@ -211,4 +210,13 @@ MapLayer *Map::getMapLayer() {
 
 void Map::on_collapseButton_clicked(bool checked) {
     ui->scrollArea->setVisible(checked);
+}
+
+
+void Map::keyPressEvent(QKeyEvent *keyEvent){
+    m_Scene->sendEvent(m_SelectedLayer, keyEvent);
+}
+
+void Map::keyReleaseEvent(QKeyEvent *keyEvent){
+    m_Scene->sendEvent(m_SelectedLayer, keyEvent);
 }

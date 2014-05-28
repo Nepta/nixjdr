@@ -46,9 +46,12 @@ private:
     Layer *m_FoWLayer;
     DrawingLayer m_DrawingLayer;
     bool m_IsGridFoWLayer;
+    Layer *m_SelectedLayer;
 
     void showMapTooltip(QString tooltip);
     void hideAllToolBoxes();
+    void keyPressEvent(QKeyEvent *keyEvent);
+    void keyReleaseEvent(QKeyEvent *keyEvent);
 };
 
 #endif // MAP_H

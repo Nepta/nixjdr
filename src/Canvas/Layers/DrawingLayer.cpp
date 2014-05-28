@@ -5,7 +5,8 @@ DrawingLayer::DrawingLayer(int penSize, int eraserSize, QColor color) :
     m_DrawingZone(this),
     m_PenSize(penSize),
     m_EraserSize(eraserSize),
-    m_Color(color)
+    m_Color(color),
+    m_LineItem(this)
 {}
 
 DrawingLayer::~DrawingLayer() {
@@ -28,17 +29,54 @@ void DrawingLayer::initDrawingZone() {
 
 void DrawingLayer::drawBackground(QPainter *, const QRectF &) {}
 
-void DrawingLayer::mousePressEvent(QGraphicsSceneMouseEvent *) {}
+void DrawingLayer::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent) {
+    if(mouseEvent->button() == Qt::LeftButton){
+        m_DrawStartPosition = mouseEvent->pos();
+        paintOnPixmap(m_DrawStartPosition, m_DrawStartPosition, m_Color);
+    }
+}
 
 void DrawingLayer::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent) {
     if (mouseEvent->buttons() & Qt::LeftButton) {
-        paintOnPixmap(mouseEvent->lastScenePos(), mouseEvent->scenePos(), m_Color);
+        if(mouseEvent->modifiers() != Qt::ShiftModifier){
+            this->setCursor(Qt::BlankCursor);
+            paintOnPixmap(mouseEvent->lastScenePos(), mouseEvent->scenePos(), m_Color);
+        }
+        else if(mouseEvent->modifiers() == Qt::ShiftModifier){
+            this->setCursor(Qt::CrossCursor);
+            m_LineItem.setLine(QLineF(m_DrawStartPosition, mouseEvent->pos()));
+            m_LineItem.show();
+        }
+        m_DrawLastPosition = mouseEvent->pos();
     }
     else if (mouseEvent->buttons() & Qt::RightButton) {
         eraseOnPixmap(mouseEvent->lastScenePos(), mouseEvent->scenePos());
     }
 
     m_DrawingZone.setPixmap(*m_Pixmap); // update the drawing zone
+}
+
+void DrawingLayer::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent){
+    m_LineItem.hide();
+    if(mouseEvent->button() == Qt::LeftButton && mouseEvent->modifiers() == Qt::ShiftModifier){
+        paintOnPixmap(m_DrawStartPosition, mouseEvent->pos(), m_Color);
+    }
+    m_DrawingZone.setPixmap(*m_Pixmap);
+
+    this->setCursor(Qt::ArrowCursor);
+}
+
+void DrawingLayer::keyPressEvent(QKeyEvent *keyEvent){
+    if(keyEvent->modifiers() == Qt::ShiftModifier){
+        m_DrawStartPosition = m_DrawLastPosition;
+    }
+}
+
+void DrawingLayer::keyReleaseEvent(QKeyEvent *keyEvent){
+    if(keyEvent->key() == Qt::Key_Shift){
+        paintOnPixmap(m_LineItem.line().p1(), m_LineItem.line().p2(), m_Color);
+        m_LineItem.hide();
+    }
 }
 
 void DrawingLayer::paintOnPixmap(const QPointF &oldPos, const QPointF &pos, QColor color) {

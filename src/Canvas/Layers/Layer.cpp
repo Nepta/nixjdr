@@ -33,3 +33,9 @@ void Layer::setEnabled(bool enabled) {
     prepareGeometryChange();
     QGraphicsObject::setEnabled(enabled);
 }
+
+void Layer::keyPressEvent(QKeyEvent *)
+{}
+
+void Layer::keyReleaseEvent(QKeyEvent *)
+{}

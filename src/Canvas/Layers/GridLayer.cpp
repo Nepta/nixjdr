@@ -96,9 +96,9 @@ void GridLayer::drawBackground(QPainter *painter, const QRectF &rect) {
 void GridLayer::drawRows(QPainter *painter, int rowLength, int limit, bool orientation){
     for (int i = 0 ; i < limit ; i += m_Step) {
         if (i/m_Step % 2 == 0) {
-            painter->setPen(QPen(QBrush(Qt::black), 2));
+            painter->setPen(QPen(QBrush(Qt::lightGray), 2));
         } else {
-            painter->setPen(QPen(QBrush(Qt::black), 1));
+            painter->setPen(QPen(QBrush(Qt::lightGray), 1));
         }
 
         if (orientation) {
