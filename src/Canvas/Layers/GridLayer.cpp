@@ -122,6 +122,10 @@ void GridLayer::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent) {
         return;
     }
 
+    if (mouseEvent->buttons() != Qt::NoButton) {
+        return;
+    }
+
     if (mouseEvent->button() == Qt::LeftButton) {
         QPoint mouseScenePos = mouseEvent->scenePos().toPoint();
         addSprite(&m_SpritePixmap, mouseScenePos);
