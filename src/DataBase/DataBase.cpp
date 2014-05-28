@@ -13,12 +13,9 @@ DataBase::DataBase(const QString dbName, const QString& serverIpAddress){
 	db_.setUserName("jdr");
 	db_.setDatabaseName("jdrDB");
 	db_.setPassword("password");
-	db_.setHostName(serverIpAddress);
+	db_.setHostName("lune.hurata.fr");
+	db_.setPort(45001);
 	db_.open();
-	DBItem *test = new DBItem(QueryType::select);
-	test->tableAffected("sprite");
-	qDebug() << "test: " << test->buildQuery();
-	delete test;
 	if(serverIpAddress == "127.0.0.1"){
 		initDB();
 	}
@@ -31,7 +28,7 @@ void DataBase::initDB(){
 
 void DataBase::addItem(DBItem& item){
 	//table map(name,tileSize)
-	QString queryString = item.buildQuery();
+	QString queryString = item.buildQuery(QueryType(QueryType::insert));
 	QSqlQuery query(queryString);
 	query.exec();
 	emit newItemInDB(new DBItem(item));

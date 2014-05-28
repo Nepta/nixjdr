@@ -7,19 +7,17 @@
 
 class DBItem{
 	QString targetTable_;
-	QueryType type_;
 	QList<QString> listValue_;
 
 protected:
-	int pushDB(QString newValue);
-	int pushDB(int newValue);
+	int appendValue(QString newValue);
+	int appendValue(int newValue);
+
 public:
-	DBItem(QueryType::TYPE type);
+	DBItem();
 	QString tableAffected();
 	void tableAffected(QString targetTable);
 	QString value(int index);
-	QString buildQuery();
-	QueryType type();
 //	virtual QString table() = 0;
 
 };

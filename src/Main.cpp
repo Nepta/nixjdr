@@ -22,7 +22,7 @@ int main(int argc, char *argv[])
     ConnectionHelper connectionHelper(user);
     connectionHelper.exec();
 
-    DataBase *database = new DataBase("jdrDB", user->getServerIpAddress());
+	 DataBase *database = new DataBase("jdrdb", user->getServerIpAddress());
     user->setDatabase(database);
 
     MainWindow mainWindow(user);
