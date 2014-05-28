@@ -1,11 +1,15 @@
 #include "QueryBuilder.h"
 
+#include <QDebug>
+
 QSqlQuery QueryBuilder::getQuery() {
+    qDebug() << query_;
+
     return QSqlQuery(query_);
 }
 
 QueryBuilder *QueryBuilder::select(QString arg) {
-    query_ = QString("SELECT (%1)").arg(arg);
+    query_ = QString("SELECT %1").arg(arg);
 
     return this;
 }
