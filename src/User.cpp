@@ -129,6 +129,10 @@ Role User::getRole() {
     return m_Role;
 }
 
+DataBase* User::getDB(){
+	return m_Database;
+}
+
 User* User::setNickname(const QString &nickname) {
     m_Nickname = nickname;
 

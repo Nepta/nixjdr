@@ -28,6 +28,7 @@ public:
     QString getPendingNickname();
     QString getServerIpAddress();
     Role getRole();
+	 DataBase* getDB();
 
     User* setNickname(const QString &nickname);
     User* setPendingNickname(const QString &nickname);
@@ -62,7 +63,7 @@ private:
     QString m_PendingNickname;
     QString m_serverIpAddress;
     Role m_Role;
-    DataBase *m_Database;
+	 DataBase *m_Database;
 };
 
 #endif // USER_H
