@@ -13,7 +13,7 @@ public:
     QueryBuilder *insertInto(QString table);
     QueryBuilder *insertInto(QString table, QString cols);
     QueryBuilder *values(QString arg);
-    QueryBuilder *from(QString arg);
+    QueryBuilder *from(QString from, QString alias = "");
 
     QSqlQuery getQuery();
 

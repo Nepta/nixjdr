@@ -10,8 +10,8 @@ QueryBuilder SpriteRepository::addSprite(Sprite *sprite) {
 
 QueryBuilder SpriteRepository::getSprites() {
     QueryBuilder qb;
-    qb.select("id, name, path, size")
-     ->from(getTableName());
+    qb.select("s.id, s.name, s.path, s.size")
+     ->from(getTableName(), "s");
 
     return qb;
 }

@@ -35,8 +35,12 @@ QueryBuilder *QueryBuilder::values(QString arg) {
     return this;
 }
 
-QueryBuilder *QueryBuilder::from(QString arg) {
-    query_ += QString(" FROM %1").arg(arg);
+QueryBuilder *QueryBuilder::from(QString from, QString alias) {
+    query_ += QString(" FROM %1").arg(from);
+
+    if (!alias.isEmpty()) {
+        query_ += QString(" AS %1").arg(alias);
+    }
 
     return this;
 }
