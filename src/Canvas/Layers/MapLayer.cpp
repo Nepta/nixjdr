@@ -1,6 +1,7 @@
 #include <QMimeData>
 #include <QDrag>
 #include <QDragEnterEvent>
+#include <QMenu>
 
 #include "Canvas/Sprite.h"
 #include "MapLayer.h"
@@ -102,14 +103,11 @@ void MapLayer::dropEvent(QGraphicsSceneDragDropEvent *event, Sprite *watched)
 }
 
 /**
- * @brief MapLayer::spriteMouseReleaseEvent Reimplemented from GridLayer to add the following
- * behaviour : on a left mouse button release, add a sprite at the given position.
+ * @brief MapLayer::spriteMouseReleaseEvent overrides GridLayer's function to create a context menu
  * @param watched
  * @param mouseEvent
  */
 void MapLayer::spriteMouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent, Sprite *watched) {
-    GridLayer::spriteMouseReleaseEvent(mouseEvent, watched);
-
     /* Avoid unexpected behaviours when both mouse buttons can be used (see also
      * GridLayer::mouseReleaseEvent) */
     if (mouseEvent->buttons() != Qt::NoButton) {
@@ -121,7 +119,27 @@ void MapLayer::spriteMouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent, Spr
         addSprite(&m_SpritePixmap, mouseScenePos, watched);
     }
 
+    if(mouseEvent->button() == Qt::RightButton){
+        ShowContextMenu(mouseEvent, watched);
+    }
+
     emit hideMapTooltip();
+}
+
+
+void MapLayer::ShowContextMenu(QGraphicsSceneMouseEvent *mouseEvent, Sprite *watched){
+    QMenu menu;
+
+    QAction* deleteAction = menu.addAction(tr("Supprimer"));
+    QAction* rangeAction = menu.addAction(tr("Rechercher une portée"));
+
+    QAction* selectedItem = menu.exec(mouseEvent->screenPos());
+    if(selectedItem == deleteAction){
+        removeSprite(watched);
+    }
+    else if(selectedItem == rangeAction){
+
+    }
 }
 
 /**

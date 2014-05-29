@@ -40,6 +40,7 @@ private:
     void dragEnterEvent(QGraphicsSceneDragDropEvent *event);
     void dragLeaveEvent(QGraphicsSceneDragDropEvent * event);
     void spriteMouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent, Sprite *watched);
+    void ShowContextMenu(QGraphicsSceneMouseEvent *mouseEvent, Sprite *watched);
 
 signals:
     void pushInfoTooltip(QString info);
