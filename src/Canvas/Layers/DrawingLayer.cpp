@@ -32,7 +32,6 @@ void DrawingLayer::drawBackground(QPainter *, const QRectF &) {}
 void DrawingLayer::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent) {
     if(mouseEvent->button() == Qt::LeftButton){
         m_DrawStartPosition = mouseEvent->pos();
-        paintOnPixmap(m_DrawStartPosition, m_DrawStartPosition, m_Color);
     }
 }
 
