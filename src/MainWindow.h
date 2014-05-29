@@ -3,6 +3,8 @@
 
 #include <QMainWindow>
 #include <QMdiSubWindow>
+#include <QSplitter>
+
 #include "Canvas/Map.h"
 #include "Network/Server.h"
 #include "Network/Client.h"
@@ -31,6 +33,11 @@ private slots:
     void on_actionEditMap_triggered();
     void on_actionConnection_triggered();
 
+    void on_collapseButtonRightMenu_clicked(bool checked);
+
+
+    void on_collapseButtonTurnMenu_clicked(bool checked);
+
 signals:
     void initMainWindow();
     void sendMessageToChatUi(const QString &msg);
@@ -44,6 +51,9 @@ private:
     void initConnects();
     void initRole();
     void initTableTurnSplitter();
+
+
+    void collapseMenu(bool checked, QWidget *widget, QSplitter *splitter, int min, int max);
 
     Ui::MainWindow *ui;
     User *m_User;

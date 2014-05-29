@@ -160,3 +160,29 @@ void MainWindow::setupPlayer() {
             ui->m_ChatWidget, SLOT(receivedMessage(QString))
     );
 }
+
+void MainWindow::on_collapseButtonRightMenu_clicked(bool checked)
+{
+    int min = ui->collapseButtonRightMenu->minimumWidth();
+    int max = ui->actionMenu->minimumWidth() + ui->collapseButtonRightMenu->minimumWidth();
+    collapseMenu(checked, ui->rightMenuWidget, ui->rightMenuSplitter, min, max);
+}
+
+void MainWindow::on_collapseButtonTurnMenu_clicked(bool checked)
+{
+    int min = ui->collapseButtonTurnMenu->minimumHeight();
+    int max = ui->turnWidget->minimumHeight() + ui->collapseButtonTurnMenu->minimumHeight();
+    collapseMenu(checked, ui->turnWidget, ui->tableTurnSplitter, min, max);
+}
+
+void MainWindow::collapseMenu(bool checked, QWidget *widget, QSplitter *splitter, int min, int max){
+    QList<int> sizes = splitter->sizes();
+    widget->setVisible(checked);
+    if(checked){
+        sizes[1] = max;
+    }
+    else{
+        sizes[1] = min;
+    }
+    splitter->setSizes(sizes);
+}
