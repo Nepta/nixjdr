@@ -64,7 +64,7 @@ SOURCES += \
     DataBase/QueryBuilder.cpp \
     DataBase/DBComponent.cpp \
     DataBase/DBItemList.cpp \
-    DataBase/Repository/SpriteRepository.cpp \
+    DataBase/Repository/TokenItemRepository.cpp \
     Token/TokenMenu.cpp \
     Token/TokenList.cpp \
     Token/TokenItem.cpp \
@@ -121,7 +121,7 @@ HEADERS  += \
     DataBase/QueryBuilder.h \
     DataBase/DBComponent.h \
     DataBase/DBItemList.h \
-    DataBase/Repository/SpriteRepository.h \
+    DataBase/Repository/TokenItemRepository.h \
     Token/TokenMenu.h \
     Token/TokenList.h \
     Token/TokenItem.h \
