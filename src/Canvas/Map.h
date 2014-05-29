@@ -40,7 +40,7 @@ private slots:
 private:
     Ui::Map *ui;
     CanvasScene *m_Scene;
-    Tooltip m_MapTooltip;
+    Tooltip m_Tooltip;
     BackgroundLayer m_BgLayer;
     MapLayer m_MapLayer;
     Layer *m_FoWLayer;

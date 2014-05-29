@@ -97,15 +97,15 @@ void Map::initDrawingLayer(Layer *layer) {
 }
 
 void Map::initTooltip() {
-    m_MapTooltip.setParent(this);
-    m_MapTooltip.hide();
+    m_Tooltip.setParent(this);
+    m_Tooltip.hide();
 
     connect(&m_MapLayer, SIGNAL(pushInfoTooltip(QString)),
-            &m_MapTooltip, SLOT(pushInfo(QString)));
+            &m_Tooltip, SLOT(pushInfo(QString)));
     connect(&m_MapLayer, SIGNAL(showMapTooltip()),
             this, SLOT(showMapTooltip()));
     connect(&m_MapLayer, SIGNAL(hideMapTooltip()),
-            &m_MapTooltip, SLOT(hide()));
+            &m_Tooltip, SLOT(hide()));
 
 }
 
@@ -174,11 +174,11 @@ void Map::selectedDisplayLayer(QAbstractButton *button, bool checked) {
  */
 void Map::showMapTooltip() {
     QPoint position(
-        ui->m_View->size().width() - m_MapTooltip.size().width() - Tooltip::TOOLTIP_OFFSET,
-        ui->m_View->size().height() - m_MapTooltip.size().height() - Tooltip::TOOLTIP_OFFSET
+        ui->m_View->size().width() - m_Tooltip.size().width() - Tooltip::TOOLTIP_OFFSET,
+        ui->m_View->size().height() - m_Tooltip.size().height() - Tooltip::TOOLTIP_OFFSET
     );
 
-    m_MapTooltip.showTooltip(position);
+    m_Tooltip.showTooltip(position);
 }
 
 Ui::Map *Map::getUi() {

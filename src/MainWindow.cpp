@@ -7,6 +7,7 @@
 #include "Canvas/Layers/MapLayer.h"
 #include "Canvas/CanvasScene.h"
 #include "Canvas/CanvasView.h"
+#include "Canvas/ImageWidget.h"
 
 #include "CustomMdiArea.h"
 #include "ConnectionHelper.h"
@@ -97,6 +98,24 @@ void MainWindow::on_actionCreateMap_triggered(){
     if (filename != NULL) {
         createMap(filename);
     }
+}
+
+void MainWindow::on_actionCreateImage_triggered(){
+    QString filename = QFileDialog::getOpenFileName(this, "Ouvrir un fichier", "resource",
+                                                    "Images (*.png *.xpm *.jpg)");
+
+    if (filename != NULL) {
+        createImage(filename);
+    }
+}
+
+void MainWindow::createImage(QString filename) {
+    // TODO should be able to choose the step value in a message box
+//    Map *map = new Map(filename, tokenList->currentItem()->text(), 32);
+    ImageWidget *image = new ImageWidget(filename);
+    QMdiSubWindow *subwindow = ui->tableArea->addSubWindow(image);
+    subwindow->show();
+    subwindow->move(0, 0);
 }
 
 void MainWindow::on_actionEditMap_triggered()

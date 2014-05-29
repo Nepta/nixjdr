@@ -238,6 +238,7 @@
     </property>
     <addaction name="actionCreateMap"/>
     <addaction name="actionEditMap"/>
+    <addaction name="actionCreateImage"/>
     <addaction name="actionConnection"/>
    </widget>
    <addaction name="menuFile"/>
@@ -261,6 +262,11 @@
   <action name="actionConnection">
    <property name="text">
     <string>Connexion</string>
+   </property>
+  </action>
+  <action name="actionCreateImage">
+   <property name="text">
+    <string>Créer image</string>
    </property>
   </action>
  </widget>
