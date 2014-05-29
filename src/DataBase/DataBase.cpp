@@ -8,27 +8,18 @@
 #include <QSqlError>
 #include "QueryBuilder.h"
 
-DataBase::DataBase(const QString dbName, const QString& serverIpAddress){
-	dbName_ = dbName;
+DataBase::DataBase(const QString dbName, const QString& serverAddress, const int& serverPort) {
 	db_ = QSqlDatabase::addDatabase("QPSQL");
 	db_.setUserName("jdr");
     db_.setDatabaseName(dbName);
 	db_.setPassword("password");
-	db_.setHostName("lune.hurata.fr");
-	db_.setPort(45001);
+    db_.setHostName(serverAddress);
+    db_.setPort(serverPort);
 	db_.open();
-	if(serverIpAddress == "127.0.0.1"){
-		initDB();
-	}
 }
 
 DataBase::~DataBase(){
 	db_.close();
-}
-
-void DataBase::initDB(){
-	QSqlQuery query("create table Map(path varchar(80), tileSize integer)");
-	query.exec();
 }
 
 void DataBase::addItem(DBItem& item){

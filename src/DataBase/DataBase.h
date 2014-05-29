@@ -6,17 +6,15 @@
 #include <QObject>
 #include "DBItem.h"
 
-class DataBase : public QObject{
+class DataBase : public QObject {
 	Q_OBJECT
 
-	QString dbName_;
 	QSqlDatabase db_;
 
 public:
-	DataBase(const QString dbName, const QString& serverIpAddress);
+    DataBase(const QString dbName, const QString& serverAddress, const int &serverPort);
 	virtual ~DataBase();
 	void addItem(DBItem& item);
-	void initDB();
 
 signals:
 	void newItemInDB(DBItem *item);
