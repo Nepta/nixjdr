@@ -32,6 +32,9 @@ void DrawingLayer::drawBackground(QPainter *, const QRectF &) {}
 void DrawingLayer::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent) {
     if(mouseEvent->button() == Qt::LeftButton){
         m_DrawStartPosition = mouseEvent->pos();
+        m_DrawLastPosition = mouseEvent->pos();
+        m_LineItem.setLine(QLineF(m_DrawStartPosition, m_DrawStartPosition));
+        paintOnPixmap(m_DrawStartPosition, m_DrawStartPosition, m_Color);
     }
 }
 
@@ -60,7 +63,6 @@ void DrawingLayer::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent){
     if(mouseEvent->button() == Qt::LeftButton && mouseEvent->modifiers() == Qt::ShiftModifier){
         paintOnPixmap(m_DrawStartPosition, mouseEvent->pos(), m_Color);
     }
-    m_DrawingZone.setPixmap(*m_Pixmap);
 
     this->setCursor(Qt::ArrowCursor);
 }
@@ -73,8 +75,8 @@ void DrawingLayer::keyPressEvent(QKeyEvent *keyEvent){
 
 void DrawingLayer::keyReleaseEvent(QKeyEvent *keyEvent){
     if(keyEvent->key() == Qt::Key_Shift){
-        paintOnPixmap(m_LineItem.line().p1(), m_LineItem.line().p2(), m_Color);
         m_LineItem.hide();
+        paintOnPixmap(m_LineItem.line().p1(), m_LineItem.line().p2(), m_Color);
     }
 }
 
@@ -83,6 +85,7 @@ void DrawingLayer::paintOnPixmap(const QPointF &oldPos, const QPointF &pos, QCol
     painter.setPen(QPen(color, m_PenSize, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
 
     paintOnPixmap(painter, oldPos, pos);
+    m_DrawingZone.setPixmap(*m_Pixmap);
 }
 
 void DrawingLayer::paintOnPixmap(QPainter &painter, const QPointF &oldPos, const QPointF &pos) {
