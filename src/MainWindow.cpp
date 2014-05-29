@@ -25,6 +25,7 @@ MainWindow::MainWindow(User *user, QWidget *parent) :
 
     m_User = user;
 
+    initTokenMenu();
     initTableTurnSplitter();
     initConnects();
     initRole();
@@ -37,6 +38,10 @@ MainWindow::~MainWindow()
     delete ui;
     delete m_Server;
     delete m_Client;
+}
+
+void MainWindow::initTokenMenu() {
+    ui->tokenPage->setDatabase(m_User->getDB());
 }
 
 void MainWindow::initTableTurnSplitter(){

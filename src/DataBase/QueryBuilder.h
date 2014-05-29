@@ -2,10 +2,13 @@
 #define QUERYBUILDER_H
 
 #include <QSqlQuery>
-#include "DataBase.h"
+#include <QString>
 
 class QueryBuilder {
 public:
+    QueryBuilder();
+    ~QueryBuilder();
+
     QueryBuilder *select(QString arg);
     QueryBuilder *insertInto(QString table);
     QueryBuilder *insertInto(QString table, QString cols);

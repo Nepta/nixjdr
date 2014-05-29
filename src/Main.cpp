@@ -22,8 +22,8 @@ int main(int argc, char *argv[])
     ConnectionHelper connectionHelper(user);
     connectionHelper.exec();
 
-    //DataBase *database = new DataBase("jdrdb", "127.0.0.1", 5432);
-    DataBase *database = new DataBase("jdrdb", "lune.hurata.fr", 45001);
+    DataBase *database = new DataBase("jdrdb", "127.0.0.1", 5432);
+    //DataBase *database = new DataBase("jdrdb", "lune.hurata.fr", 45001);
     user->setDatabase(database);
 
     MainWindow mainWindow(user);

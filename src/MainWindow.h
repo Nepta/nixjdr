@@ -39,7 +39,9 @@ private:
     void setupMJ();
     void setupPlayer();
     void createMap(QString filename);
-    //init
+
+    // inits
+    void initTokenMenu();
     void initDiceMenu();
     void initConnects();
     void initRole();

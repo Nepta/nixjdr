@@ -1,10 +1,10 @@
 #include "QueryBuilder.h"
 
-#include <QDebug>
+QueryBuilder::QueryBuilder() {}
+
+QueryBuilder::~QueryBuilder() {}
 
 QSqlQuery QueryBuilder::getQuery() {
-    qDebug() << query_;
-
     return QSqlQuery(query_);
 }
 

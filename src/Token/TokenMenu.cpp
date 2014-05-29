@@ -1,8 +1,9 @@
 #include <QPixmap>
 #include <QPainter>
 #include <QSqlQuery>
+#include "DataBase/Repository/SpriteRepository.h"
 #include "DataBase/QueryBuilder.h"
-
+#include "DataBase/DBItemList.h"
 #include "TokenMenu.h"
 #include "ui_TokenMenu.h"
 
@@ -11,19 +12,16 @@ TokenMenu::TokenMenu(QWidget *parent) :
     ui(new Ui::TokenMenu)
 {
     ui->setupUi(this);
-    QueryBuilder builder;
-    builder.select("name, path")
-           ->from("sprite");
 
-    QSqlQuery query = builder.getQuery();
+    QueryBuilder qb = SpriteRepository::getSprites();
+    DBItemList<TokenItem> dbItems(db_->pull(qb));
+    QList<TokenItem> tokenItemList = dbItems.construct();
 
-	 while(query.next()){
-		 QString name = query.value(0).toString();
-		 QString path = query.value(1).toString();
-		 TokenItem item(path, name);
-		 ui->m_tokenList->appendCustomItem(item);
-	 }
-	 ui->m_tokenList->setCurrentItem(ui->m_tokenList->item(0));
+    for (TokenItem tokenItem : tokenItemList) {
+        ui->m_tokenList->appendCustomItem(tokenItem);
+    }
+
+    ui->m_tokenList->setCurrentItem(ui->m_tokenList->item(0));
 }
 
 TokenMenu::~TokenMenu()

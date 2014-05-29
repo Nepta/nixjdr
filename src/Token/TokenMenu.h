@@ -2,13 +2,14 @@
 #define TOKENMENU_H
 
 #include <QWidget>
+#include "DataBase/DBComponent.h"
 #include "TokenList.h"
 
 namespace Ui {
     class TokenMenu;
 }
 
-class TokenMenu : public QWidget
+class TokenMenu : public QWidget, public DBComponent
 {
     Q_OBJECT
 

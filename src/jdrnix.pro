@@ -45,6 +45,7 @@ SOURCES += \
     Canvas/CanvasScene.cpp \
     Canvas/Sprite.cpp \
     Canvas/Map.cpp \
+    Canvas/MapTooltip.cpp \
     Canvas/Layers/GridLayer.cpp \
     Canvas/Layers/MapLayer.cpp \
     Canvas/Layers/FoWLayer.cpp \
@@ -60,14 +61,15 @@ SOURCES += \
     Network/Receiver.cpp \
     DataBase/DataBase.cpp \
     DataBase/DBItem.cpp \
+    DataBase/QueryBuilder.cpp \
+    DataBase/DBComponent.cpp \
+    DataBase/DBItemList.cpp \
+    DataBase/Repository/SpriteRepository.cpp \
     Token/TokenMenu.cpp \
     Token/TokenList.cpp \
-    TurnMenu/TurnList.cpp \
-    TurnMenu/TurnMenu.cpp \
     Token/TokenItem.cpp \
-    DataBase/QueryType.cpp \
-	 DataBase/QueryBuilder.cpp \
-    Canvas/MapTooltip.cpp
+    TurnMenu/TurnList.cpp \
+    TurnMenu/TurnMenu.cpp
 
 HEADERS  += \
     MainWindow.h \
@@ -99,6 +101,7 @@ HEADERS  += \
     Canvas/CanvasView.h \
     Canvas/Sprite.h \
     Canvas/Map.h \
+    Canvas/MapTooltip.h \
     Canvas/Layers/Layer.h \
     Canvas/Layers/GridLayer.h \
     Canvas/Layers/MapLayer.h \
@@ -115,14 +118,16 @@ HEADERS  += \
     Network/Serializable.h \
     DataBase/DataBase.h \
     DataBase/DBItem.h \
+    DataBase/QueryBuilder.h \
+    DataBase/DBComponent.h \
+    DataBase/DBItemList.h \
+    DataBase/Repository/SpriteRepository.h \
     Token/TokenMenu.h \
     Token/TokenList.h \
-    TurnMenu/TurnList.h \
-    TurnMenu/TurnMenu.h \
     Token/TokenItem.h \
-    DataBase/QueryType.h \
-	 DataBase/QueryBuilder.h \
-    Canvas/MapTooltip.h
+    TurnMenu/TurnList.h \
+    TurnMenu/TurnMenu.h
+
 
 FORMS    += \
     TokenMenu.ui \

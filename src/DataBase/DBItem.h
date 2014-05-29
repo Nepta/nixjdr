@@ -1,23 +1,19 @@
 #ifndef DBITEM_H
 #define DBITEM_H
 #include <QString>
-#include <QList>
-#include <QVector>
-#include "QueryType.h"
 #include <QHash>
 
-class DBItem{
-	QString targetTable_;
-	QHash<QString, QString> columnsValues_;
-
-protected:
-	void appendValue(QString columName,QString newValue);
-	void appendValue(QString columName, int newValue);
+class DBItem {
+private:
+    QString tableName_;
+    QHash<QString, QString> columnsValues_;
 
 public:
-	DBItem(QString table);
-	QString tableAffected();
+    DBItem(QString tableName = "");
 	QHash<QString, QString>& getHashMap();
+
+    void appendValue(QString columName,QString newValue);
+    void appendValue(QString columName, int newValue);
 };
 
 #endif // DBITEM_H

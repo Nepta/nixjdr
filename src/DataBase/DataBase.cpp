@@ -1,12 +1,11 @@
-#include "DataBase.h"
 #include <QSqlRecord>
 #include <iostream>
 #include <QSqlTableModel>
 #include <QSqlField>
 #include <QSqlQuery>
-#include <QDebug>
 #include <QSqlError>
-#include "QueryBuilder.h"
+#include <QList>
+#include "DataBase.h"
 
 DataBase::DataBase(const QString dbName, const QString& serverAddress, const int& serverPort) {
 	db_ = QSqlDatabase::addDatabase("QPSQL");
@@ -22,22 +21,61 @@ DataBase::~DataBase(){
 	db_.close();
 }
 
-void DataBase::addItem(DBItem& item){
-	//table map(name,tileSize)
-	QueryBuilder builder;
-	QString columns;
-	QString values;
-	for(QString key : item.getHashMap().keys()){
-		columns += key + ",";
-		values += item.getHashMap().value(key) + ",";
+/**
+ * @brief DataBase::push Executes the query given by the QueryBuilder. Use this method with queries
+ * which do not return a result.
+ * @param queryBuilder
+ */
+void DataBase::push(QueryBuilder queryBuilder) {
+    queryBuilder.getQuery().exec();
+}
 
-	}
-	columns.chop(1);
-	values.chop(1);
-	builder.insertInto(item.tableAffected(),columns)
-			->values(values);
+/**
+ * @brief DataBase::pull Executes the query given by the queryBuilder and stores the resulting rows
+ * in a QList of DBItem.
+ * @param queryBuilder
+ * @return QList of DBItem containing the resulting rows of the query.
+ */
+QList<DBItem> DataBase::pull(QueryBuilder queryBuilder) {
+    QSqlQuery query = queryBuilder.getQuery(); // query to execute
+    QSqlRecord record = query.record(); // holds information about field names
+    QList<DBItem> dbItems; // list to populate
 
-	QSqlQuery query = builder.getQuery();
-	query.exec();
-	emit newItemInDB(new DBItem(item));
+    while(query.next()) {
+        DBItem item;
+
+        for (int i = 0 ; i < record.count() ; i++) {
+            QString fieldName = record.fieldName(i);
+            QString fieldValue = query.value(i).toString();
+
+            item.appendValue(fieldName, fieldValue);
+        }
+
+        dbItems.append(item);
+    }
+
+    return dbItems;
+}
+
+/**
+ * @brief DataBase::pullFirst Executes the query given by the queryBuilder and store the first row
+ * in a DBItem.
+ * @param queryBuilder
+ * @return DBitem containing the first resulting row of the query.
+ */
+DBItem DataBase::pullFirst(QueryBuilder queryBuilder) {
+    QSqlQuery query = queryBuilder.getQuery(); // query to execute
+    QSqlRecord record = query.record(); // holds information about field names
+    DBItem item; // item to create
+
+    if (query.next()) {
+        for (int i = 0 ; i < record.count() ; i++) {
+            QString fieldName = record.fieldName(i);
+            QString fieldValue = query.value(i).toString();
+
+            item.appendValue(fieldName, fieldValue);
+        }
+    }
+
+    return item;
 }

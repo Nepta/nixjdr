@@ -16,7 +16,7 @@ TokenList::TokenList(QWidget *parent) :
 //    appendCustomItem(QIcon("resource/aya.png"), "aya");
 //    appendCustomItem(QIcon("resource/patchouli.png"), "patchouli");
 
-	 setCurrentItem(item(0));
+    setCurrentItem(item(0));
 }
 
 void TokenList::appendCustomItem(QIcon icon, QString name){
