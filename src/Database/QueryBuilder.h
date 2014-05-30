@@ -2,6 +2,7 @@
 #define QUERYBUILDER_H
 
 #include <QSqlQuery>
+#include <QList>
 #include <QString>
 
 class QueryBuilder {
@@ -12,10 +13,12 @@ public:
     QueryBuilder *select(QString arg);
     QueryBuilder *insertInto(QString table);
     QueryBuilder *insertInto(QString table, QString cols);
-    QueryBuilder *values(QString arg);
+    QueryBuilder *values(QList<QString> args);
     QueryBuilder *from(QString from, QString alias = "");
+    void withAsSelect(QueryBuilder qb, QString select);
 
     QSqlQuery getQuery();
+    QString getQueryString();
 
 private:
     QString query_;

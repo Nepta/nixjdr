@@ -16,6 +16,7 @@ public:
     Database(const QString dbName, const QString& serverAddress, const int &serverPort);
     virtual ~Database();
     void push(QueryBuilder queryBuilder);
+    int pushWithId(QueryBuilder queryBuilder);
     QList<DBItem> pull(QueryBuilder queryBuilder);
     DBItem pullFirst(QueryBuilder queryBuilder);
 

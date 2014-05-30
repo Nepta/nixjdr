@@ -1,13 +1,13 @@
 #include "TokenItem.h"
 
 TokenItem::TokenItem(QString path, QString name, int size) :
-    DBItem("sprite")
+    DBItem("tokenitem")
 {
     construct(path, name, size);
 }
 
 TokenItem::TokenItem(DBItem item) :
-    DBItem("sprite")
+    DBItem("tokenitem")
 {
     QHash<QString, QString> itemHashMap = item.getHashMap();
 
@@ -21,15 +21,16 @@ TokenItem::TokenItem(DBItem item) :
 void TokenItem::construct(QString path, QString name, int size) {
     icon_.addFile(path);
     name_ = name;
+    path_ = path;
     size_ = size;
-
-    appendValue("name", name);
-    appendValue("path", path);
-    appendValue("size", size);
 }
 
 QIcon TokenItem::icon() {
 	return icon_;
+}
+
+QString TokenItem::path() {
+    return path_;
 }
 
 QString TokenItem::name() {
@@ -37,5 +38,5 @@ QString TokenItem::name() {
 }
 
 int TokenItem::size() {
-    return size();
+    return size_;
 }

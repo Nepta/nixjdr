@@ -12,6 +12,8 @@ public:
     static const QString getTableName();
     static QueryBuilder getTokenItemsQB();
     static QList<TokenItem> getTokenItems(Database *db);
+    static QueryBuilder insertTokenItemQB(TokenItem *tokenItem);
+    static int insertTokenItem(TokenItem *tokenItem, Database *db);
 };
 
 #endif // TOKENITEMREPOSITORY_H

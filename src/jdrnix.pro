@@ -63,7 +63,6 @@ SOURCES += \
     Database/DBItem.cpp \
     Database/QueryBuilder.cpp \
     Database/DBComponent.cpp \
-    Database/DBItemList.cpp \
     Database/Repository/TokenItemRepository.cpp \
     Token/TokenMenu.cpp \
     Token/TokenList.cpp \

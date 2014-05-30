@@ -28,9 +28,30 @@ QueryBuilder TokenItemRepository::getTokenItemsQB() {
  * @return QList of TokenItem
  */
 QList<TokenItem> TokenItemRepository::getTokenItems(Database *db) {
-    QueryBuilder qb = TokenItemRepository::getTokenItemsQB();
+    QueryBuilder qb = getTokenItemsQB();
     DBItemList<TokenItem> dbItems(db->pull(qb));
     QList<TokenItem> tokenItems = dbItems.construct();
 
     return tokenItems;
+}
+
+QueryBuilder TokenItemRepository::insertTokenItemQB(TokenItem *tokenItem) {
+    QList<QString> args;
+    args.append(tokenItem->name());
+    args.append(tokenItem->path());
+    args.append(QString::number(tokenItem->size()));
+
+    QueryBuilder qb;
+    qb.insertInto(getTableName(), "name, path, size")->values(args);
+
+    return qb;
+}
+
+int TokenItemRepository::insertTokenItem(TokenItem *tokenItem, Database *db) {
+    QueryBuilder qb;
+    qb.withAsSelect(insertTokenItemQB(tokenItem), "id");
+
+    int id = db->pushWithId(qb);
+
+    return id;
 }

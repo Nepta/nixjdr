@@ -45,7 +45,7 @@ MainWindow::~MainWindow()
  * with the application Database.
  */
 void MainWindow::initDBComponents() {
-    ui->tokenPage->setDatabase(m_User->getDB());
+    ui->tokenPage->initTokenMenu(m_User->getDB());
 }
 
 void MainWindow::initTableTurnSplitter(){

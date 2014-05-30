@@ -4,16 +4,20 @@
 #include <QHash>
 
 class DBItem {
-private:
+protected:
+    int id_;
     QString tableName_;
     QHash<QString, QString> columnsValues_;
 
 public:
-    DBItem(QString tableName = "");
-	QHash<QString, QString>& getHashMap();
+    DBItem(QString tableName = "", int id = 0);
 
     void appendValue(QString columName,QString newValue);
     void appendValue(QString columName, int newValue);
+    void setId(int id);
+
+    QHash<QString, QString>& getHashMap();
+    int id();
 };
 
 #endif // DBITEM_H

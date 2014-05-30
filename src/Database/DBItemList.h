@@ -14,8 +14,6 @@ template <class T>
 class DBItemList
 {
 public:
-    //DBItemList(QList<DBItem> dbItems);
-
     DBItemList(QList<DBItem> dbItems) {
         dbItems_ = dbItems;
     }

@@ -7,6 +7,7 @@
 class TokenItem : public DBItem {
 private:
 	QIcon icon_;
+    QString path_;
     QString name_;
     int size_;
 
@@ -16,6 +17,7 @@ public:
     TokenItem(QString path, QString name, int size);
     TokenItem(DBItem item);
     QIcon icon();
+    QString path();
     QString name();
     int size();
 };

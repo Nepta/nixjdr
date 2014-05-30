@@ -12,18 +12,29 @@ TokenMenu::TokenMenu(QWidget *parent) :
     ui(new Ui::TokenMenu)
 {
     ui->setupUi(this);
+}
 
+
+TokenMenu::~TokenMenu()
+{
+    delete ui;
+}
+
+void TokenMenu::initTokenMenu(Database *db) {
+    setDatabase(db);
+
+    // Example of insertion in the database (TODO remove this example)
+    TokenItem item("resource/flandre.png", "test", 32);
+    int id = TokenItemRepository::insertTokenItem(&item, db_); // retrieve the id set by the db
+    item.setId(id);
+
+    // Retrieve TokenItems from the database
     QList<TokenItem> tokenItems = TokenItemRepository::getTokenItems(db_);
     for (TokenItem tokenItem : tokenItems) {
         ui->m_tokenList->appendCustomItem(tokenItem);
     }
 
     ui->m_tokenList->setCurrentItem(ui->m_tokenList->item(0));
-}
-
-TokenMenu::~TokenMenu()
-{
-    delete ui;
 }
 
 Ui::TokenMenu *TokenMenu::getUi() {

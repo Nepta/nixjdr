@@ -31,6 +31,25 @@ void Database::push(QueryBuilder queryBuilder) {
 }
 
 /**
+ * @brief Database::pushWithId Executes the query given by the QueryBuilder. Use this method with
+ * queries which return the Id of the inserted row.
+ * @param queryBuilder
+ * @return Id of the inserted row.
+ */
+int Database::pushWithId(QueryBuilder queryBuilder) {
+    QSqlQuery query = queryBuilder.getQuery();
+    int resultId;
+
+    if (query.next()) {
+        resultId = query.value(0).toInt();
+    } else {
+        resultId = 0;
+    }
+
+    return resultId;
+}
+
+/**
  * @brief Database::pull Executes the query given by the queryBuilder and stores the resulting rows
  * in a QList of DBItem.
  * @param queryBuilder

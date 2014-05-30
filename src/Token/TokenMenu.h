@@ -17,6 +17,7 @@ public:
     explicit TokenMenu(QWidget *parent = 0);
     ~TokenMenu();
     Ui::TokenMenu *getUi();
+    void initTokenMenu(Database *db);
 
 private slots:
     void on_tokenButton_clicked();
