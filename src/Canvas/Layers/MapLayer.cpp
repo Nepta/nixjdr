@@ -194,6 +194,12 @@ bool MapLayer::sceneEventFilter(QGraphicsItem *watched, QEvent *event) {
         case QEvent::GraphicsSceneHoverLeave: {
             emit hideMapTooltip();
         } break;
+
+        case QEvent::GraphicsSceneWheel: {
+            if (!isEnabled()) {
+                event->ignore();
+            }
+        } break;
     }
 
     return eventHandled;
