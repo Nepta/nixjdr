@@ -5,7 +5,7 @@
 #include "MainWindow.h"
 #include "ConnectionHelper.h"
 #include "User.h"
-#include "DataBase/DataBase.h"
+#include "Database/Database.h"
 
 int main(int argc, char *argv[])
 {
@@ -22,7 +22,7 @@ int main(int argc, char *argv[])
     ConnectionHelper connectionHelper(user);
     connectionHelper.exec();
 
-    DataBase *database = new DataBase("jdrdb", "127.0.0.1", 5432);
+    Database *database = new Database("jdrdb", "127.0.0.1", 5432);
     //DataBase *database = new DataBase("jdrdb", "lune.hurata.fr", 45001);
     user->setDatabase(database);
 

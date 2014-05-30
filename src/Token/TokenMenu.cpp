@@ -1,9 +1,9 @@
 #include <QPixmap>
 #include <QPainter>
 #include <QSqlQuery>
-#include "DataBase/Repository/TokenItemRepository.h"
-#include "DataBase/QueryBuilder.h"
-#include "DataBase/DBItemList.h"
+#include "Database/Repository/TokenItemRepository.h"
+#include "Database/QueryBuilder.h"
+#include "Database/DBItemList.h"
 #include "TokenMenu.h"
 #include "ui_TokenMenu.h"
 
@@ -13,11 +13,8 @@ TokenMenu::TokenMenu(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    QueryBuilder qb = TokenItemRepository::getTokenItems();
-    DBItemList<TokenItem> dbItems(db_->pull(qb));
-    QList<TokenItem> tokenItemList = dbItems.construct();
-
-    for (TokenItem tokenItem : tokenItemList) {
+    QList<TokenItem> tokenItems = TokenItemRepository::getTokenItems(db_);
+    for (TokenItem tokenItem : tokenItems) {
         ui->m_tokenList->appendCustomItem(tokenItem);
     }
 

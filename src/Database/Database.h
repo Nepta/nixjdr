@@ -9,12 +9,12 @@
 #include "DBItem.h"
 #include "DBItemList.h"
 
-class DataBase : public QObject {
+class Database : public QObject {
 	Q_OBJECT
 
 public:
-    DataBase(const QString dbName, const QString& serverAddress, const int &serverPort);
-	virtual ~DataBase();
+    Database(const QString dbName, const QString& serverAddress, const int &serverPort);
+    virtual ~Database();
     void push(QueryBuilder queryBuilder);
     QList<DBItem> pull(QueryBuilder queryBuilder);
     DBItem pullFirst(QueryBuilder queryBuilder);

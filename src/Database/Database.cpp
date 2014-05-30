@@ -5,10 +5,10 @@
 #include <QSqlQuery>
 #include <QSqlError>
 #include <QList>
-#include "DataBase.h"
+#include "Database.h"
 
-DataBase::DataBase(const QString dbName, const QString& serverAddress, const int& serverPort) {
-	db_ = QSqlDatabase::addDatabase("QPSQL");
+Database::Database(const QString dbName, const QString& serverAddress, const int& serverPort) {
+    db_ = QSqlDatabase::addDatabase("QPSQL");
 	db_.setUserName("jdr");
     db_.setDatabaseName(dbName);
 	db_.setPassword("password");
@@ -17,26 +17,26 @@ DataBase::DataBase(const QString dbName, const QString& serverAddress, const int
 	db_.open();
 }
 
-DataBase::~DataBase(){
+Database::~Database(){
 	db_.close();
 }
 
 /**
- * @brief DataBase::push Executes the query given by the QueryBuilder. Use this method with queries
+ * @brief Database::push Executes the query given by the QueryBuilder. Use this method with queries
  * which do not return a result.
  * @param queryBuilder
  */
-void DataBase::push(QueryBuilder queryBuilder) {
+void Database::push(QueryBuilder queryBuilder) {
     queryBuilder.getQuery().exec();
 }
 
 /**
- * @brief DataBase::pull Executes the query given by the queryBuilder and stores the resulting rows
+ * @brief Database::pull Executes the query given by the queryBuilder and stores the resulting rows
  * in a QList of DBItem.
  * @param queryBuilder
  * @return QList of DBItem containing the resulting rows of the query.
  */
-QList<DBItem> DataBase::pull(QueryBuilder queryBuilder) {
+QList<DBItem> Database::pull(QueryBuilder queryBuilder) {
     QSqlQuery query = queryBuilder.getQuery(); // query to execute
     QSqlRecord record = query.record(); // holds information about field names
     QList<DBItem> dbItems; // list to populate
@@ -58,12 +58,12 @@ QList<DBItem> DataBase::pull(QueryBuilder queryBuilder) {
 }
 
 /**
- * @brief DataBase::pullFirst Executes the query given by the queryBuilder and store the first row
+ * @brief Database::pullFirst Executes the query given by the queryBuilder and store the first row
  * in a DBItem.
  * @param queryBuilder
  * @return DBitem containing the first resulting row of the query.
  */
-DBItem DataBase::pullFirst(QueryBuilder queryBuilder) {
+DBItem Database::pullFirst(QueryBuilder queryBuilder) {
     QSqlQuery query = queryBuilder.getQuery(); // query to execute
     QSqlRecord record = query.record(); // holds information about field names
     DBItem item; // item to create

@@ -41,7 +41,7 @@ private:
     void createMap(QString filename);
 
     // inits
-    void initTokenMenu();
+    void initDBComponents();
     void initDiceMenu();
     void initConnects();
     void initRole();

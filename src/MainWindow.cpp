@@ -25,7 +25,7 @@ MainWindow::MainWindow(User *user, QWidget *parent) :
 
     m_User = user;
 
-    initTokenMenu();
+    initDBComponents();
     initTableTurnSplitter();
     initConnects();
     initRole();
@@ -40,7 +40,11 @@ MainWindow::~MainWindow()
     delete m_Client;
 }
 
-void MainWindow::initTokenMenu() {
+/**
+ * @brief MainWindow::initDBComponents Initializes all the objects from classes inheriting DBComponent
+ * with the application Database.
+ */
+void MainWindow::initDBComponents() {
     ui->tokenPage->setDatabase(m_User->getDB());
 }
 

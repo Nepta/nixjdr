@@ -2,7 +2,7 @@
 #define TOKENMENU_H
 
 #include <QWidget>
-#include "DataBase/DBComponent.h"
+#include "Database/DBComponent.h"
 #include "TokenList.h"
 
 namespace Ui {

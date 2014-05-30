@@ -1,7 +1,7 @@
 #ifndef DBCOMPONENT_H
 #define DBCOMPONENT_H
 
-#include "DataBase.h"
+#include "Database.h"
 
 /**
  * @brief A DBComponent can manipulate the application database.
@@ -10,13 +10,13 @@ class DBComponent
 {
 public:
     DBComponent();
-    DBComponent(DataBase *db);
+    DBComponent(Database *db);
     ~DBComponent();
 
-    void setDatabase(DataBase *db);
+    void setDatabase(Database *db);
 
 protected:
-    DataBase *db_;
+    Database *db_;
 };
 
 #endif // DBCOMPONENT_H

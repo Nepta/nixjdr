@@ -129,7 +129,7 @@ Role User::getRole() {
     return m_Role;
 }
 
-DataBase* User::getDB(){
+Database* User::getDB(){
 	return m_Database;
 }
 
@@ -151,7 +151,7 @@ User* User::setServerIpAddress(const QString &serverIpAddress) {
     return this;
 }
 
-User* User::setDatabase(DataBase *database) {
+User* User::setDatabase(Database *database) {
     m_Database = database;
 
     return this;

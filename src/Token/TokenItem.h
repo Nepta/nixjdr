@@ -2,7 +2,7 @@
 #define TOKENITEM_H
 
 #include <QIcon>
-#include <DataBase/DBItem.h>
+#include <Database/DBItem.h>
 
 class TokenItem : public DBItem {
 private:

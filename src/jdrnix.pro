@@ -59,12 +59,12 @@ SOURCES += \
     Network/Client.cpp \
     Network/ClientReceiver.cpp \
     Network/Receiver.cpp \
-    DataBase/DataBase.cpp \
-    DataBase/DBItem.cpp \
-    DataBase/QueryBuilder.cpp \
-    DataBase/DBComponent.cpp \
-    DataBase/DBItemList.cpp \
-    DataBase/Repository/TokenItemRepository.cpp \
+    Database/Database.cpp \
+    Database/DBItem.cpp \
+    Database/QueryBuilder.cpp \
+    Database/DBComponent.cpp \
+    Database/DBItemList.cpp \
+    Database/Repository/TokenItemRepository.cpp \
     Token/TokenMenu.cpp \
     Token/TokenList.cpp \
     Token/TokenItem.cpp \
@@ -116,12 +116,12 @@ HEADERS  += \
     Network/Client.h \
     Network/ClientReceiver.h \
     Network/Serializable.h \
-    DataBase/DataBase.h \
-    DataBase/DBItem.h \
-    DataBase/QueryBuilder.h \
-    DataBase/DBComponent.h \
-    DataBase/DBItemList.h \
-    DataBase/Repository/TokenItemRepository.h \
+    Database/Database.h \
+    Database/DBItem.h \
+    Database/QueryBuilder.h \
+    Database/DBComponent.h \
+    Database/DBItemList.h \
+    Database/Repository/TokenItemRepository.h \
     Token/TokenMenu.h \
     Token/TokenList.h \
     Token/TokenItem.h \
