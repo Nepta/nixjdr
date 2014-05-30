@@ -15,7 +15,7 @@ const QString TokenItemRepository::getTableName() {
  */
 QueryBuilder TokenItemRepository::getTokenItemsQB() {
     QueryBuilder qb;
-    qb.select("ti.id, ti.name, ti.path, ti.size")
+    qb.select("ti.id, ti.text, ti.path, ti.size")
      ->from(getTableName(), "ti");
 
     return qb;
@@ -27,22 +27,22 @@ QueryBuilder TokenItemRepository::getTokenItemsQB() {
  * @param db The database in which the TokenItems will be retrieved.
  * @return QList of TokenItem
  */
-QList<TokenItem> TokenItemRepository::getTokenItems(Database *db) {
+QList<TokenItem*> TokenItemRepository::getTokenItems(Database *db) {
     QueryBuilder qb = getTokenItemsQB();
     DBItemList<TokenItem> dbItems(db->pull(qb));
-    QList<TokenItem> tokenItems = dbItems.construct();
+    QList<TokenItem*> tokenItems = dbItems.construct();
 
     return tokenItems;
 }
 
 QueryBuilder TokenItemRepository::insertTokenItemQB(TokenItem *tokenItem) {
     QList<QString> args;
-    args.append(tokenItem->name());
+    args.append(tokenItem->text());
     args.append(tokenItem->path());
     args.append(QString::number(tokenItem->size()));
 
     QueryBuilder qb;
-    qb.insertInto(getTableName(), "name, path, size")->values(args);
+    qb.insertInto(getTableName(), "text, path, size")->values(args);
 
     return qb;
 }

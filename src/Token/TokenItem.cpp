@@ -1,9 +1,9 @@
 #include "TokenItem.h"
 
-TokenItem::TokenItem(QString path, QString name, int size) :
+TokenItem::TokenItem(QString path, QString text, int size) :
     DBItem("tokenitem")
 {
-    construct(path, name, size);
+    construct(path, text, size);
 }
 
 TokenItem::TokenItem(DBItem item) :
@@ -12,35 +12,27 @@ TokenItem::TokenItem(DBItem item) :
     QHash<QString, QString> itemHashMap = item.getHashMap();
 
     int id = itemHashMap.value("id").toInt();
-    QString name = itemHashMap.value("name");
+    QString text = itemHashMap.value("text");
     QString path =  itemHashMap.value("path");
     int size = itemHashMap.value("size").toInt();
 
-    construct(id, path, name, size);
+    construct(id, path, text, size);
 }
 
-void TokenItem::construct(int id, QString path, QString name, int size) {
+void TokenItem::construct(int id, QString path, QString text, int size) {
     id_ = id;
-    construct(path, name, size);
+    construct(path, text, size);
 }
 
-void TokenItem::construct(QString path, QString name, int size) {
-    name_ = name;
+void TokenItem::construct(QString path, QString text, int size) {
+    setText(text);
     path_ = path;
-    icon_.addFile(path);
+    setIcon(QIcon(path));
     size_ = size;
-}
-
-QIcon TokenItem::icon() {
-	return icon_;
 }
 
 QString TokenItem::path() {
     return path_;
-}
-
-QString TokenItem::name() {
-	return name_;
 }
 
 int TokenItem::size() {

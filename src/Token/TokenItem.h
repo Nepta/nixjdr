@@ -3,23 +3,24 @@
 
 #include <QIcon>
 #include <Database/DBItem.h>
+#include <QListWidgetItem>
 
-class TokenItem : public DBItem {
+class TokenItem : public QListWidgetItem, public DBItem {
 private:
-	QIcon icon_;
+    //QIcon icon_;
     QString path_;
-    QString name_;
+    //QString name_;
     int size_;
 
-    void construct(int id, QString path, QString name, int size);
-    void construct(QString path, QString name, int size);
+    void construct(int id, QString path, QString text, int size);
+    void construct(QString path, QString text, int size);
 
 public:
-    TokenItem(QString path, QString name, int size);
+    TokenItem(QString path, QString text, int size);
     TokenItem(DBItem item);
-    QIcon icon();
+    //QIcon icon();
     QString path();
-    QString name();
+    //QString name();
     int size();
 };
 

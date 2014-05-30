@@ -9,7 +9,7 @@ DROP TABLE IF EXISTS drawinglayer;
 
 CREATE TABLE tokenitem (
 	id 		serial not NULL,
-	name 	character varying(20),
+	text 	character varying(20),
 	path 	character varying(120),
 	size 	integer,
 	CONSTRAINT tokenitem_pkey PRIMARY KEY (id)

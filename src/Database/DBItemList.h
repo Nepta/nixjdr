@@ -18,12 +18,11 @@ public:
         dbItems_ = dbItems;
     }
 
-
-    QList<T> construct() {
-        QList<T> resultItems;
+    QList<T*> construct() {
+        QList<T*> resultItems;
 
         for (DBItem dbItem : dbItems_) {
-            T item(dbItem);
+            T* item = new T(dbItem);
             resultItems.append(item);
         }
 
