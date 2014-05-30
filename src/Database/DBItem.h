@@ -5,8 +5,8 @@
 
 class DBItem {
 protected:
-    int id_;
     QString tableName_;
+    int id_;
     QHash<QString, QString> columnsValues_;
 
 public:

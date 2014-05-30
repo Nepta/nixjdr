@@ -11,6 +11,7 @@ private:
     QString name_;
     int size_;
 
+    void construct(int id, QString path, QString name, int size);
     void construct(QString path, QString name, int size);
 
 public:

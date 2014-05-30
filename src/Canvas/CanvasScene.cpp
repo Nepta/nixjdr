@@ -1,10 +1,8 @@
 #include "CanvasScene.h"
 
-CanvasScene::CanvasScene(int width, int height)
-{
-    setSceneRect(0, 0, width, height);
+CanvasScene::CanvasScene() {
+    setSceneRect(0, 0, 1, 1);
 }
-
 CanvasScene::~CanvasScene() {}
 
 void CanvasScene::addLayer(Layer *layer) {

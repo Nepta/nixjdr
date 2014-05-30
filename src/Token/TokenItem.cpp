@@ -11,17 +11,23 @@ TokenItem::TokenItem(DBItem item) :
 {
     QHash<QString, QString> itemHashMap = item.getHashMap();
 
+    int id = itemHashMap.value("id").toInt();
     QString name = itemHashMap.value("name");
     QString path =  itemHashMap.value("path");
     int size = itemHashMap.value("size").toInt();
 
+    construct(id, path, name, size);
+}
+
+void TokenItem::construct(int id, QString path, QString name, int size) {
+    id_ = id;
     construct(path, name, size);
 }
 
 void TokenItem::construct(QString path, QString name, int size) {
-    icon_.addFile(path);
     name_ = name;
     path_ = path;
+    icon_.addFile(path);
     size_ = size;
 }
 

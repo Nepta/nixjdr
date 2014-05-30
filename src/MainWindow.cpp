@@ -92,7 +92,7 @@ void MainWindow::createMap(QString filename) {
     Map *map = new Map(filename, tokenList->currentItem()->text(), 32);
 
     QMdiSubWindow *subwindow = ui->tableArea->addSubWindow(map);
-	 subwindow->show();
+    subwindow->show();
     subwindow->move(0, 0);
 
     connect(tokenList, SIGNAL(currentItemChanged(QListWidgetItem*,  QListWidgetItem *)),

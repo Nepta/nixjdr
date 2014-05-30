@@ -23,11 +23,6 @@ TokenMenu::~TokenMenu()
 void TokenMenu::initTokenMenu(Database *db) {
     setDatabase(db);
 
-    // Example of insertion in the database (TODO remove this example)
-    TokenItem item("resource/flandre.png", "test", 32);
-    int id = TokenItemRepository::insertTokenItem(&item, db_); // retrieve the id set by the db
-    item.setId(id);
-
     // Retrieve TokenItems from the database
     QList<TokenItem> tokenItems = TokenItemRepository::getTokenItems(db_);
     for (TokenItem tokenItem : tokenItems) {

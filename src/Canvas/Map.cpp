@@ -1,36 +1,30 @@
-#include <algorithm>
-
 #include "Map.h"
 #include "ui_Map.h"
 
 Map::Map(QString bgFilename, QString tokenPath, int tileStep, QWidget *parent) :
     QWidget(parent),
+    DBItem("map"),
     ui(new Ui::Map),
-    m_BgLayer(bgFilename),
-    m_MapLayer(tokenPath, tileStep),
-    m_DrawingLayer(2, 2, QColor(0, 0, 0))
+    m_Scene()
 {
     ui->setupUi(this);
 
-    int sceneHeight = m_BgLayer.getBackground()->rect().height()
-            +2*4*m_MapLayer.getStep();
-    int sceneWidth = m_BgLayer.getBackground()->rect().width()
-            +2*4*m_MapLayer.getStep();
+    construct(bgFilename, tokenPath, tileStep);
+}
 
-    m_Scene = new CanvasScene(sceneWidth, sceneHeight); // TODO pass those value through a dialog box
+void Map::construct(int id, QString bgFilename, QString tokenPath, int tileStep) {
+    id_ = id;
+    construct(bgFilename, tokenPath, tileStep);
+}
 
-    m_Scene->addLayer(&m_BgLayer);
-    m_BgLayer.setEnabled(false);
-
-    m_Scene->addLayer(&m_MapLayer);
-    m_MapLayer.setEnabled(true);
-
-    initFoWLayer(tileStep);
-
-    initDrawingLayer(&m_DrawingLayer);
-
-    ui->m_View->setScene(m_Scene);
+void Map::construct(QString bgFilename, QString tokenPath, int tileStep) {
     setWindowTitle(tr("Carte"));
+
+    initBgLayer(bgFilename);
+    initScene(tileStep);
+    initMapLayer(tokenPath, tileStep);
+    initFoWLayer(tileStep);
+    initDrawingLayer();
 
     // Hide toolboxes
     ui->m_StackedTools->hide();
@@ -41,38 +35,63 @@ Map::Map(QString bgFilename, QString tokenPath, int tileStep, QWidget *parent) :
     connect(ui->m_DisplayGroup, SIGNAL(buttonToggled(QAbstractButton*, bool)),
             this, SLOT(selectedDisplayLayer(QAbstractButton*, bool)));
 
-    // FoW tools
-    connect(ui->m_FillFoW, SIGNAL(clicked(bool)),
-            m_FoWLayer, SLOT(fillFoW()));
-    connect(ui->m_RemoveFoW, SIGNAL(clicked(bool)),
-            m_FoWLayer, SLOT(removeFoW()));
-
     initTooltip();
 }
 
 Map::~Map() {
     delete ui;
+    delete m_BgLayer;
+    delete m_MapLayer;
     delete m_FoWLayer;
+    delete m_DrawingLayer;
 }
 
+void Map::initBgLayer(QString bgFilename) {
+    m_BgLayer = new BackgroundLayer(bgFilename);
+    m_Scene.addLayer(m_BgLayer);
+    m_BgLayer->setEnabled(false);
+}
+
+void Map::initMapLayer(QString tokenPath, int tileStep) {
+    m_MapLayer = new MapLayer(tokenPath, tileStep);
+    m_Scene.addLayer(m_MapLayer);
+    m_MapLayer->setEnabled(true);
+}
+
+/**
+ * @brief Map::initFoWLayer Initializes the Fog of War Layer. If the tilestep is equal to 1, the
+ * layer will be an instance of DrawingLayer, else it will be an instance of FoWLayer.
+ * @param tileStep
+ */
 void Map::initFoWLayer(int tileStep) {
     if (tileStep > 1) {
         m_FoWLayer = new FoWLayer(tileStep);
         m_IsGridFoWLayer = true;
+        m_Scene.addLayer(m_FoWLayer);
+        m_FoWLayer->setEnabled(false);
+
+        // FoW tools
+        connect(ui->m_FillFoW, SIGNAL(clicked(bool)),
+                m_FoWLayer, SLOT(fillFoW()));
+        connect(ui->m_RemoveFoW, SIGNAL(clicked(bool)),
+                m_FoWLayer, SLOT(removeFoW()));
     }
     else {
         m_FoWLayer = new DrawingLayer(2, 2, QColor(50, 50, 50));
         m_IsGridFoWLayer = false;
         initDrawingLayer(m_FoWLayer);
     }
-    m_Scene->addLayer(m_FoWLayer);
-    m_FoWLayer->setEnabled(false);
+}
+
+void Map::initDrawingLayer() {
+    m_DrawingLayer = new DrawingLayer(2, 2, QColor(0, 0, 0));
+    initDrawingLayer(m_DrawingLayer);
 }
 
 void Map::initDrawingLayer(Layer *layer) {
     DrawingLayer *drawingLayer = dynamic_cast<DrawingLayer*>(layer);
 
-    m_Scene->addLayer(drawingLayer);
+    m_Scene.addLayer(drawingLayer);
     drawingLayer->initDrawingZone();
     drawingLayer->setEnabled(false);
 
@@ -84,17 +103,27 @@ void Map::initDrawingLayer(Layer *layer) {
             drawingLayer, SLOT(erasePixmapContent()));
 }
 
+void Map::initScene(int tileStep) {
+    int sceneHeight = m_BgLayer->getBackground()->rect().height()
+            + 2*4 * tileStep;
+    int sceneWidth = m_BgLayer->getBackground()->rect().width()
+            + 2*4 * tileStep;
+
+    m_Scene.setSceneRect(0, 0, sceneWidth, sceneHeight); // TODO pass those value through a dialog box
+    ui->m_View->setScene(&m_Scene);
+}
+
 void Map::initTooltip() {
     m_MapTooltip.setParent(this);
     m_MapTooltip.hide();
 
-    connect(&m_MapLayer, SIGNAL(showSpriteInfo(Sprite*)),
+    connect(m_MapLayer, SIGNAL(showSpriteInfo(Sprite*)),
             this, SLOT(showMapSpriteTooltip(Sprite*)));
 
-    connect(&m_MapLayer, SIGNAL(showMoveInfo(int, int, int, int)),
+    connect(m_MapLayer, SIGNAL(showMoveInfo(int, int, int, int)),
             this, SLOT(showMapMoveTooltip(int, int, int, int)));
 
-    connect(&m_MapLayer, SIGNAL(hideInfo()),
+    connect(m_MapLayer, SIGNAL(hideInfo()),
             this, SLOT(hideMapTooltip()));
 
 }
@@ -103,7 +132,7 @@ void Map::selectedEditionLayer(QAbstractButton *button, bool checked) {
     Layer *selectedLayer;
 
     if (button->objectName() == QString("m_MapEdit")) {
-        selectedLayer = &m_MapLayer;
+        selectedLayer = m_MapLayer;
 
         ui->m_StackedTools->hide();
     }
@@ -119,7 +148,7 @@ void Map::selectedEditionLayer(QAbstractButton *button, bool checked) {
         }
     }
     else if (button->objectName() == QString("m_DrawingEdit")) {
-        selectedLayer = &m_DrawingLayer;
+        selectedLayer = m_DrawingLayer;
 
         ui->m_StackedTools->show();
         ui->m_StackedTools->setCurrentWidget(ui->m_PageDrawingTools);
@@ -138,16 +167,16 @@ void Map::selectedDisplayLayer(QAbstractButton *button, bool checked) {
     Layer *selectedLayer;
 
     if (button->objectName() == QString("m_BgDisplay")) {
-        selectedLayer = &m_BgLayer;
+        selectedLayer = m_BgLayer;
     }
     else if (button->objectName() == QString("m_MapDisplay")) {
-        selectedLayer = &m_MapLayer;
+        selectedLayer = m_MapLayer;
     }
     else if (button->objectName() == QString("m_FowDisplay")) {
         selectedLayer = m_FoWLayer;
     }
     else if (button->objectName() == QString("m_DrawingDisplay")) {
-        selectedLayer = &m_DrawingLayer;
+        selectedLayer = m_DrawingLayer;
     }
     else {
         selectedLayer = NULL;
@@ -198,7 +227,7 @@ Ui::Map *Map::getUi() {
 }
 
 MapLayer *Map::getMapLayer() {
-    return &m_MapLayer;
+    return m_MapLayer;
 }
 
 void Map::on_collapseButton_clicked(bool checked) {
