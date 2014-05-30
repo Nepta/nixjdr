@@ -48,9 +48,7 @@ QueryBuilder TokenItemRepository::insertTokenItemQB(TokenItem *tokenItem) {
 }
 
 int TokenItemRepository::insertTokenItem(TokenItem *tokenItem, Database *db) {
-    QueryBuilder qb;
-    qb.withAsSelect(insertTokenItemQB(tokenItem), "id");
-
+    QueryBuilder qb = insertTokenItemQB(tokenItem);
     int id = db->pushWithId(qb);
 
     return id;
