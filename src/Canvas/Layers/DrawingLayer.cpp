@@ -39,15 +39,12 @@ void DrawingLayer::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent) {
         mouseEvent->accept();
     }
     else if(mouseEvent->button() == Qt::RightButton){
-        eraseOnPixmap(mouseEvent->pos(), mouseEvent->pos());
+        eraseOnPixmap(mouseEvent->lastScenePos(), mouseEvent->scenePos());
+        m_DrawingZone.setPixmap(*m_Pixmap); // update the drawing zone
         mouseEvent->accept();
     }
     else{
         mouseEvent->ignore();
-    }
-    else if(mouseEvent->button() == Qt::RightButton){
-        eraseOnPixmap(mouseEvent->lastScenePos(), mouseEvent->scenePos());
-        m_DrawingZone.setPixmap(*m_Pixmap); // update the drawing zone
     }
 }
 
