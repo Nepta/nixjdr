@@ -1,6 +1,7 @@
 #include <algorithm>
 #include "Map.h"
 #include "ui_Map.h"
+#include "ui_DrawingMenu.h"
 
 Map::Map(QString bgFilename, QString tokenPath, int tileStep, QWidget *parent) :
     QWidget(parent),
@@ -88,11 +89,13 @@ void Map::initDrawingLayer(Layer *layer) {
     drawingLayer->initDrawingZone();
     drawingLayer->setEnabled(false);
 
-    connect(ui->m_PenSpinBox, SIGNAL(valueChanged(int)),
+    Ui::DrawingMenu *drawingUi = ui->m_PageDrawingTools->getUi();
+
+    connect(drawingUi->m_PenSpinBox, SIGNAL(valueChanged(int)),
             drawingLayer, SLOT(setPenSize(int)));
-    connect(ui->m_EraserSpinBox, SIGNAL(valueChanged(int)),
+    connect(drawingUi->m_EraserSpinBox, SIGNAL(valueChanged(int)),
             drawingLayer, SLOT(setEraserSize(int)));
-    connect(ui->m_EraseButton, SIGNAL(clicked(bool)),
+    connect(drawingUi->m_EraseButton, SIGNAL(clicked(bool)),
             drawingLayer, SLOT(erasePixmapContent()));
 }
 

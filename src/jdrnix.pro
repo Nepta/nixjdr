@@ -52,6 +52,7 @@ SOURCES += \
     Canvas/Layers/BackgroundLayer.cpp \
     Canvas/Layers/DrawingLayer.cpp \
     Canvas/Layers/Layer.cpp \
+    Canvas/SideMenuWidgets/DrawingMenu.cpp \
     Network/Header.cpp \
     Network/Server.cpp \
     Network/Switch.cpp \
@@ -104,6 +105,8 @@ HEADERS  += \
     Canvas/Layers/FoWLayer.h \
     Canvas/Layers/BackgroundLayer.h \
     Canvas/Layers/DrawingLayer.h \
+    Canvas/ImageWidget.h \
+    Canvas/SideMenuWidgets/DrawingMenu.h \
     Network/Switch.h \
     Network/Receiver.h \
     Network/Header.h \
@@ -117,8 +120,7 @@ HEADERS  += \
     Token/TokenMenu.h \
     Token/TokenList.h \
     TurnMenu/TurnList.h \
-    TurnMenu/TurnMenu.h \
-    Canvas/ImageWidget.h
+    TurnMenu/TurnMenu.h
 
 FORMS    += \
     TokenMenu.ui \
@@ -128,4 +130,5 @@ FORMS    += \
     MainWindow.ui \
     TurnMenu.ui \
     Map.ui \
-    Tooltip.ui
+    Tooltip.ui \
+    Canvas/SideMenuWidgets/DrawingMenu.ui

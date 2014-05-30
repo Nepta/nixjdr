@@ -25,6 +25,8 @@ public slots:
 
 private:
     void initDrawingLayer(Layer *layer);
+    void keyPressEvent(QKeyEvent *keyEvent);
+    void keyReleaseEvent(QKeyEvent *keyEvent);
 
     Ui::Map *ui;
     CanvasScene *m_Scene;

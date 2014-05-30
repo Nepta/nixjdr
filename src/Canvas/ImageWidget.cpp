@@ -1,5 +1,6 @@
 #include "ImageWidget.h"
 #include "ui_Map.h"
+#include "ui_DrawingMenu.h"
 
 ImageWidget::ImageWidget(QString bgFilename, QWidget *parent):
     QWidget(parent),
@@ -37,15 +38,35 @@ void ImageWidget::initDrawingLayer(Layer *layer) {
     drawingLayer->initDrawingZone();
     drawingLayer->setEnabled(true);
 
-    connect(ui->m_PenSpinBox, SIGNAL(valueChanged(int)),
+    Ui::DrawingMenu *drawingUi = ui->m_PageDrawingTools->getUi();
+
+    connect(drawingUi->m_PenSpinBox, SIGNAL(valueChanged(int)),
             drawingLayer, SLOT(setPenSize(int)));
-    connect(ui->m_EraserSpinBox, SIGNAL(valueChanged(int)),
+    connect(drawingUi->m_EraserSpinBox, SIGNAL(valueChanged(int)),
             drawingLayer, SLOT(setEraserSize(int)));
-    connect(ui->m_EraseButton, SIGNAL(clicked(bool)),
+    connect(drawingUi->m_EraseButton, SIGNAL(clicked(bool)),
             drawingLayer, SLOT(erasePixmapContent()));
 }
 
 
 void ImageWidget::on_collapseButton_clicked(bool checked) {
     ui->scrollArea->setVisible(checked);
+}
+
+/**
+ * @brief Map::keyPressEvent Reimplemented from QWidget to dispatch key press events to the drawing
+ * layer.
+ * @param keyEvent
+ */
+void ImageWidget::keyPressEvent(QKeyEvent *keyEvent){
+    m_Scene->sendEvent(&m_DrawingLayer, keyEvent);
+}
+
+/**
+ * @brief Map::keyPressEvent Reimplemented from QWidget to dispatch key release events to the drawing
+ * layer.
+ * @param keyEvent
+ */
+void ImageWidget::keyReleaseEvent(QKeyEvent *keyEvent){
+    m_Scene->sendEvent(&m_DrawingLayer, keyEvent);
 }
