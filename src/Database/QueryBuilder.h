@@ -15,6 +15,8 @@ public:
     QueryBuilder *insertInto(QString table, QString cols);
     QueryBuilder *values(QList<QString> args);
     QueryBuilder *from(QString from, QString alias = "");
+    QueryBuilder *where(QString where);
+    QueryBuilder *andWhere(QString where);
     void withAsSelect(QueryBuilder qb, QString select);
 
     QSqlQuery getQuery();

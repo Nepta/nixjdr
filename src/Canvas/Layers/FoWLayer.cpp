@@ -7,6 +7,7 @@ FoWLayer::FoWLayer(int step, bool transparentSprites) :
     m_TransparentSprites(transparentSprites)
 {
     // TODO multiple colors for multiple players (shift the hue of the pixmap?)
+    // TODO retrieve the fow TokenItem from the db
     GridLayer::setSpritePixmap("fow");
 }
 

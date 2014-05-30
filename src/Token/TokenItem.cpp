@@ -3,10 +3,10 @@
 #include <QPainterPath>
 #include "TokenItem.h"
 
-TokenItem::TokenItem(QString path, QString text, int size, bool custom) :
+TokenItem::TokenItem(QString path, QString text, int size, bool custom, bool special) :
     DBItem("tokenitem")
 {
-    construct(path, text, size, custom);
+    construct(path, text, size, custom, special);
 }
 
 TokenItem::TokenItem(DBItem item) :
@@ -19,20 +19,22 @@ TokenItem::TokenItem(DBItem item) :
     QString path =  itemHashMap.value("path");
     int size = itemHashMap.value("size").toInt();
     bool custom = itemHashMap.value("custom").toInt();
+    bool special = itemHashMap.value("special").toInt();
 
-    construct(id, path, text, size, custom);
+    construct(id, path, text, size, custom, special);
 }
 
-void TokenItem::construct(int id, QString path, QString text, int size, bool custom) {
+void TokenItem::construct(int id, QString path, QString text, int size, bool custom, bool special) {
     id_ = id;
-    construct(path, text, size, custom);
+    construct(path, text, size, custom, special);
 }
 
-void TokenItem::construct(QString path, QString text, int size, bool custom) {
+void TokenItem::construct(QString path, QString text, int size, bool custom, bool special) {
     setText(text);
     path_ = path;
     size_ = size;
     custom_ = custom;
+    special_ = special;
 
     if (custom) {
         setCustomIcon(path, text);
@@ -72,4 +74,8 @@ int TokenItem::size() {
 
 bool TokenItem::isCustom() {
     return custom_;
+}
+
+bool TokenItem::isSpecial() {
+    return special_;
 }

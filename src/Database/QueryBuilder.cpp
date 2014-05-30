@@ -62,6 +62,18 @@ QueryBuilder *QueryBuilder::from(QString from, QString alias) {
     return this;
 }
 
+QueryBuilder *QueryBuilder::where(QString where) {
+    query_ += QString(" WHERE %1").arg(where);
+
+    return this;
+}
+
+QueryBuilder *QueryBuilder::andWhere(QString where) {
+    query_ += QString(" AND %1").arg(where);
+
+    return this;
+}
+
 void QueryBuilder::withAsSelect(QueryBuilder qb, QString select) {
     query_ = QString(
         "WITH row AS ("

@@ -12,7 +12,7 @@
  * @brief The abstract Layer class is used to stack and separate different type of elements
  * from a scene.
  */
-class Layer : public QGraphicsObject
+class Layer : public QGraphicsObject // TODO Layer inherits DBComponent
 {
     Q_OBJECT
 

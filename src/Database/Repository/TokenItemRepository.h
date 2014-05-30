@@ -11,7 +11,11 @@ class TokenItemRepository
 public:
     static const QString getTableName();
     static QueryBuilder getTokenItemsQB();
+    static QueryBuilder getNormalTokenItemsQB();
+    static QueryBuilder getSpecialTokenItemsQB();
     static QList<TokenItem *> getTokenItems(Database *db);
+    static TokenItem* getFowTokenItem(Database *db);
+
     static QueryBuilder insertTokenItemQB(TokenItem *tokenItem);
     static int insertTokenItem(TokenItem *tokenItem, Database *db);
 };

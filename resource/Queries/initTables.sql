@@ -13,6 +13,7 @@ CREATE TABLE tokenitem (
 	path 	character varying(120),
 	size 	integer,
 	custom 	integer,
+	special integer,
 	CONSTRAINT tokenitem_pkey PRIMARY KEY (id)
 );
 
@@ -58,10 +59,12 @@ CREATE TABLE map (
 );
 
 CREATE TABLE sprite (
-	id 				serial NOT NULL,
-	gridlayerid 	integer REFERENCES gridlayer(id),
-	posx			integer,
-	posy 			integer,
-	path 			character varying(120),
+	id 					serial NOT NULL,
+	posx				integer,
+	posy 				integer,
+	stacknum			integer,
+	tokenitemid			integer REFERENCES tokenitem(id),
+	previousspriteid 	integer REFERENCES sprite(id),
+	-- TODO gridlayerid 		integer REFERENCES gridlayer(id),
 	CONSTRAINT sprite_pkey PRIMARY KEY (id)
 );

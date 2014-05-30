@@ -15,8 +15,22 @@ const QString TokenItemRepository::getTableName() {
  */
 QueryBuilder TokenItemRepository::getTokenItemsQB() {
     QueryBuilder qb;
-    qb.select("ti.id, ti.text, ti.path, ti.size, ti.custom")
+    qb.select("ti.id, ti.text, ti.path, ti.size, ti.custom, ti.special")
      ->from(getTableName(), "ti");
+
+    return qb;
+}
+
+QueryBuilder TokenItemRepository::getNormalTokenItemsQB() {
+    QueryBuilder qb = getTokenItemsQB();
+    qb.where("ti.special = 0");
+
+    return qb;
+}
+
+QueryBuilder TokenItemRepository::getSpecialTokenItemsQB() {
+    QueryBuilder qb = getTokenItemsQB();
+    qb.where("ti.special = 1");
 
     return qb;
 }
@@ -28,11 +42,26 @@ QueryBuilder TokenItemRepository::getTokenItemsQB() {
  * @return QList of TokenItem
  */
 QList<TokenItem*> TokenItemRepository::getTokenItems(Database *db) {
-    QueryBuilder qb = getTokenItemsQB();
+    QueryBuilder qb = getNormalTokenItemsQB();
     DBItemList<TokenItem> dbItems(db->pull(qb));
     QList<TokenItem*> tokenItems = dbItems.construct();
 
     return tokenItems;
+}
+
+/**
+ * @brief TokenItemRepository::getFowTokenItem Retrieve the fog of war TokenItem from the database.
+ * @param db
+ * @return Fog of war TokenItem
+ */
+TokenItem* TokenItemRepository::getFowTokenItem(Database *db) {
+    QueryBuilder qb = getSpecialTokenItemsQB();
+    qb.andWhere("ti.text = 'fow'");
+
+    DBItem dbItem = db->pullFirst(qb);
+    TokenItem* tokenItem = new TokenItem(dbItem);
+
+    return tokenItem;
 }
 
 QueryBuilder TokenItemRepository::insertTokenItemQB(TokenItem *tokenItem) {
@@ -41,9 +70,10 @@ QueryBuilder TokenItemRepository::insertTokenItemQB(TokenItem *tokenItem) {
     args.append(tokenItem->path());
     args.append(QString::number(tokenItem->size()));
     args.append(QString::number(tokenItem->isCustom()));
+    args.append(QString::number(tokenItem->isSpecial()));
 
     QueryBuilder qb;
-    qb.insertInto(getTableName(), "text, path, size, custom")->values(args);
+    qb.insertInto(getTableName(), "text, path, size, custom, special")->values(args);
 
     return qb;
 }

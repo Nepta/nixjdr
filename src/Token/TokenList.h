@@ -20,8 +20,6 @@ public:
 
     TokenList(QWidget * parent = 0);
     QListWidgetItem getCurrentItem();
-    /*void appendCustomItem(QIcon icon, QString name);
-    void appendCustomItem(TokenItem& item);*/
 
 private:
     void dragMoveEvent(QDragMoveEvent * event);

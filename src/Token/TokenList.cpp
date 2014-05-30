@@ -8,15 +8,6 @@ TokenList::TokenList(QWidget *parent) :
     setCurrentItem(item(0));
 }
 
-/*void TokenList::appendCustomItem(QIcon icon, QString name){
-	 this->addItem(new QListWidgetItem(icon, name));
-    this->addItem();
-}*/
-
-/*void TokenList::appendCustomItem(TokenItem& item){
-    appendCustomItem(item);
-}*/
-
 void TokenList::dragMoveEvent(QDragMoveEvent * event){
     if(event->mimeData()->hasImage()){
         event->acceptProposedAction();
