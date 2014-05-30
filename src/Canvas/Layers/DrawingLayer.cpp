@@ -36,6 +36,14 @@ void DrawingLayer::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent) {
         m_DrawLastPosition = mouseEvent->pos();
         m_LineItem.setLine(QLineF(m_DrawStartPosition, m_DrawStartPosition));
         paintOnPixmap(m_DrawStartPosition, m_DrawStartPosition, m_Color);
+        mouseEvent->accept();
+    }
+    else if(mouseEvent->button() == Qt::RightButton){
+        eraseOnPixmap(mouseEvent->pos(), mouseEvent->pos());
+        mouseEvent->accept();
+    }
+    else{
+        mouseEvent->ignore();
     }
     else if(mouseEvent->button() == Qt::RightButton){
         eraseOnPixmap(mouseEvent->lastScenePos(), mouseEvent->scenePos());
@@ -56,9 +64,14 @@ void DrawingLayer::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent) {
             m_LineItem.show();
         }
         m_DrawLastPosition = mouseEvent->pos();
+        mouseEvent->accept();
     }
     else if (mouseEvent->buttons() & Qt::RightButton) {
         eraseOnPixmap(mouseEvent->lastScenePos(), mouseEvent->scenePos());
+        mouseEvent->accept();
+    }
+    else {
+        mouseEvent->ignore();
     }
 
     m_DrawingZone.setPixmap(*m_Pixmap); // update the drawing zone
