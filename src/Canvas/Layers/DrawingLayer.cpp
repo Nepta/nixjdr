@@ -1,4 +1,5 @@
 #include <QGraphicsScene>
+#include <QDebug>
 #include "DrawingLayer.h"
 
 DrawingLayer::DrawingLayer(int penSize, int eraserSize, QColor color) :
@@ -43,6 +44,7 @@ void DrawingLayer::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent) {
         if(mouseEvent->modifiers() != Qt::ShiftModifier){
             this->setCursor(Qt::BlankCursor);
             paintOnPixmap(mouseEvent->lastScenePos(), mouseEvent->scenePos(), m_Color);
+            m_DrawStartPosition = mouseEvent->pos();
         }
         else if(mouseEvent->modifiers() == Qt::ShiftModifier){
             this->setCursor(Qt::CrossCursor);
@@ -68,8 +70,18 @@ void DrawingLayer::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent){
 }
 
 void DrawingLayer::keyPressEvent(QKeyEvent *keyEvent){
-    if(keyEvent->modifiers() == Qt::ShiftModifier){
+    if(keyEvent->key() == Qt::Key_Shift){
         m_DrawStartPosition = m_DrawLastPosition;
+        keyEvent->accept();
+    }
+    else if(keyEvent->modifiers() & Qt::ShiftModifier ){
+        m_LineItem.hide();
+        paintOnPixmap(m_LineItem.line().p1(), m_LineItem.line().p2(), m_Color);
+        m_DrawStartPosition = m_DrawLastPosition;
+        keyEvent->accept();
+        }
+    else{
+        keyEvent->ignore();
     }
 }
 
@@ -77,6 +89,10 @@ void DrawingLayer::keyReleaseEvent(QKeyEvent *keyEvent){
     if(keyEvent->key() == Qt::Key_Shift){
         m_LineItem.hide();
         paintOnPixmap(m_LineItem.line().p1(), m_LineItem.line().p2(), m_Color);
+        keyEvent->accept();
+    }
+    else{
+        keyEvent->ignore();
     }
 }
 
