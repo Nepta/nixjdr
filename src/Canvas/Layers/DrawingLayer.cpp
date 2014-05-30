@@ -37,6 +37,10 @@ void DrawingLayer::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent) {
         m_LineItem.setLine(QLineF(m_DrawStartPosition, m_DrawStartPosition));
         paintOnPixmap(m_DrawStartPosition, m_DrawStartPosition, m_Color);
     }
+    else if(mouseEvent->button() == Qt::RightButton){
+        eraseOnPixmap(mouseEvent->lastScenePos(), mouseEvent->scenePos());
+        m_DrawingZone.setPixmap(*m_Pixmap); // update the drawing zone
+    }
 }
 
 void DrawingLayer::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent) {
