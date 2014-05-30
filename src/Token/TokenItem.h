@@ -11,17 +11,20 @@ private:
     QString path_;
     //QString name_;
     int size_;
+    bool custom_;
 
-    void construct(int id, QString path, QString text, int size);
-    void construct(QString path, QString text, int size);
+    void construct(int id, QString path, QString text, int size, bool custom);
+    void construct(QString path, QString text, int size, bool custom);
 
 public:
-    TokenItem(QString path, QString text, int size);
+    TokenItem(QString path, QString text, int size, bool custom = false);
     TokenItem(DBItem item);
-    //QIcon icon();
+
     QString path();
-    //QString name();
     int size();
+    bool isCustom();
+
+    void setCustomIcon(QString path, QString text);
 };
 
 #endif // TOKENITEM_H

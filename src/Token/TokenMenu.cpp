@@ -1,5 +1,3 @@
-#include <QPixmap>
-#include <QPainter>
 #include <QSqlQuery>
 #include "Database/Repository/TokenItemRepository.h"
 #include "Database/QueryBuilder.h"
@@ -41,25 +39,15 @@ void TokenMenu::on_tokenButton_clicked()
     QString text = ui->inputSearchField->text();
     QString filePath("resource/keroro.png");
     int size = 32;
+    bool custom = true;
 
-    /*QPixmap pix;
-    pix.load(filePath);
+    TokenItem *item = new TokenItem(filePath, text, size, custom);
 
-    QPainter painter(&pix);
-    QPainterPath painterPath;
+    // push the item to the database
+    int id = TokenItemRepository::insertTokenItem(item, db_);
+    item->setId(id);
 
-    painterPath.addText(QPointF(1, pix.height()), QFont("Arial", 15, QFont::Bold), text);
-    painter.setPen(Qt::black);
-    painter.setBrush(Qt::white);
-    painter.drawPath(painterPath);*/
-
-    // TODO set custom to true
-    // TODO in TokenItem if custom -> bouger tout ce qu'il y a plus haut dans une méthode
-    // createCustomIcon dans la classe TokenItem() + appel
-    TokenItem *item = new TokenItem(filePath, text, size);
+    // add the item to the tokenList
     ui->m_tokenList->addItem(item);
-
-    //ui->m_tokenList->appendCustomItem(QIcon(pix), text);
-    //ui->m_tokenList->setCurrentRow(ui->m_tokenList->count()-1);
     ui->m_tokenList->setCurrentItem(item);
 }

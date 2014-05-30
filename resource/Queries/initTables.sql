@@ -12,6 +12,7 @@ CREATE TABLE tokenitem (
 	text 	character varying(20),
 	path 	character varying(120),
 	size 	integer,
+	custom 	integer,
 	CONSTRAINT tokenitem_pkey PRIMARY KEY (id)
 );
 

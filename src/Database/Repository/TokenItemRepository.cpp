@@ -15,7 +15,7 @@ const QString TokenItemRepository::getTableName() {
  */
 QueryBuilder TokenItemRepository::getTokenItemsQB() {
     QueryBuilder qb;
-    qb.select("ti.id, ti.text, ti.path, ti.size")
+    qb.select("ti.id, ti.text, ti.path, ti.size, ti.custom")
      ->from(getTableName(), "ti");
 
     return qb;
@@ -40,9 +40,10 @@ QueryBuilder TokenItemRepository::insertTokenItemQB(TokenItem *tokenItem) {
     args.append(tokenItem->text());
     args.append(tokenItem->path());
     args.append(QString::number(tokenItem->size()));
+    args.append(QString::number(tokenItem->isCustom()));
 
     QueryBuilder qb;
-    qb.insertInto(getTableName(), "text, path, size")->values(args);
+    qb.insertInto(getTableName(), "text, path, size, custom")->values(args);
 
     return qb;
 }
