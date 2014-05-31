@@ -10,6 +10,7 @@ class CanvasScene : public QGraphicsScene {
     Q_OBJECT
 
 public:
+    CanvasScene(int sceneWidth, int sceneHeight);
     CanvasScene();
     ~CanvasScene();
     void addLayer(Layer *layer);

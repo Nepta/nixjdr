@@ -1,5 +1,9 @@
 #include "CanvasScene.h"
 
+CanvasScene::CanvasScene(int sceneWidth, int sceneHeight) {
+    setSceneRect(0, 0, sceneWidth, sceneHeight);
+}
+
 CanvasScene::CanvasScene() {
     setSceneRect(0, 0, 1, 1);
 }

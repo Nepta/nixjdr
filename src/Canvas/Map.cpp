@@ -1,5 +1,6 @@
 #include "Map.h"
 #include "ui_Map.h"
+#include "ui_DrawingMenu.h"
 
 Map::Map(QString bgFilename, TokenItem *tokenItem, int tileStep, QWidget *parent) :
     QWidget(parent),
@@ -27,7 +28,7 @@ void Map::construct(QString bgFilename, TokenItem *tokenItem, int tileStep) {
     initDrawingLayer();
 
     // Hide toolboxes
-    ui->m_StackedTools->hide();
+    ui->m_StackedTools->show();
 
     // display & edition
     connect(ui->m_EditGroup, SIGNAL(buttonToggled(QAbstractButton*, bool)),
@@ -88,6 +89,12 @@ void Map::initDrawingLayer() {
     initDrawingLayer(m_DrawingLayer);
 }
 
+/**
+ * @brief Map::initDrawingLayer Initialize the specified layer as a DrawingLayer. Adds the layer to
+ * the scene, initializes its drawing zone (transparent pixmap on which drawings are made) and connect
+ * the signals and slots.
+ * @param layer
+ */
 void Map::initDrawingLayer(Layer *layer) {
     DrawingLayer *drawingLayer = dynamic_cast<DrawingLayer*>(layer);
 
@@ -95,11 +102,13 @@ void Map::initDrawingLayer(Layer *layer) {
     drawingLayer->initDrawingZone();
     drawingLayer->setEnabled(false);
 
-    connect(ui->m_PenSpinBox, SIGNAL(valueChanged(int)),
+    Ui::DrawingMenu *drawingUi = ui->m_PageDrawingTools->getUi();
+
+    connect(drawingUi->m_PenSpinBox, SIGNAL(valueChanged(int)),
             drawingLayer, SLOT(setPenSize(int)));
-    connect(ui->m_EraserSpinBox, SIGNAL(valueChanged(int)),
+    connect(drawingUi->m_EraserSpinBox, SIGNAL(valueChanged(int)),
             drawingLayer, SLOT(setEraserSize(int)));
-    connect(ui->m_EraseButton, SIGNAL(clicked(bool)),
+    connect(drawingUi->m_EraseButton, SIGNAL(clicked(bool)),
             drawingLayer, SLOT(erasePixmapContent()));
 }
 
@@ -114,30 +123,26 @@ void Map::initScene(int tileStep) {
 }
 
 void Map::initTooltip() {
-    m_MapTooltip.setParent(this);
-    m_MapTooltip.hide();
+    m_Tooltip.setParent(this);
+    m_Tooltip.hide();
 
-    connect(m_MapLayer, SIGNAL(showSpriteInfo(Sprite*)),
-            this, SLOT(showMapSpriteTooltip(Sprite*)));
-
-    connect(m_MapLayer, SIGNAL(showMoveInfo(int, int, int, int)),
-            this, SLOT(showMapMoveTooltip(int, int, int, int)));
-
-    connect(m_MapLayer, SIGNAL(hideInfo()),
-            this, SLOT(hideMapTooltip()));
-
+    connect(m_MapLayer, SIGNAL(pushInfoTooltip(QString)),
+            &m_Tooltip, SLOT(pushInfo(QString)));
+    connect(m_MapLayer, SIGNAL(showMapTooltip()),
+            this, SLOT(showMapTooltip()));
+    connect(m_MapLayer, SIGNAL(hideMapTooltip()),
+            &m_Tooltip, SLOT(hide()));
 }
 
 void Map::selectedEditionLayer(QAbstractButton *button, bool checked) {
-    Layer *selectedLayer;
-
     if (button->objectName() == QString("m_MapEdit")) {
-        selectedLayer = m_MapLayer;
+        m_SelectedLayer = m_MapLayer;
 
-        ui->m_StackedTools->hide();
+        ui->m_StackedTools->show();
+        ui->m_StackedTools->setCurrentWidget(ui->m_PageMapTools);
     }
     else if (button->objectName() == QString("m_FowEdit")) {
-        selectedLayer = m_FoWLayer;
+        m_SelectedLayer = m_FoWLayer;
 
         ui->m_StackedTools->show();
         if (m_IsGridFoWLayer) {
@@ -148,18 +153,18 @@ void Map::selectedEditionLayer(QAbstractButton *button, bool checked) {
         }
     }
     else if (button->objectName() == QString("m_DrawingEdit")) {
-        selectedLayer = m_DrawingLayer;
+        m_SelectedLayer = m_DrawingLayer;
 
         ui->m_StackedTools->show();
         ui->m_StackedTools->setCurrentWidget(ui->m_PageDrawingTools);
     }
     else {
-        selectedLayer = NULL;
+        m_SelectedLayer = NULL;
         ui->m_StackedTools->hide();
     }
 
-    if (selectedLayer != NULL) {
-        selectedLayer->setEnabled(checked);
+    if (m_SelectedLayer != NULL) {
+        m_SelectedLayer->setEnabled(checked);
     }
 }
 
@@ -188,38 +193,16 @@ void Map::selectedDisplayLayer(QAbstractButton *button, bool checked) {
     }
 }
 
-void Map::showMapTooltip(QString tooltip) {
-
-    m_MapTooltip.setTooltipText(tooltip);
-
-    // Move the tooltip at the bottom right of the map
-    m_MapTooltip.move(
-        ui->m_View->size().width() - m_MapTooltip.size().width() - MapTooltip::MAP_TOOLTIP_OFFSET,
-        ui->m_View->size().height() - m_MapTooltip.size().height() - MapTooltip::MAP_TOOLTIP_OFFSET
+/**
+ * @brief Map::showMapTooltip Displays the tooltip at the bottom right of the map.
+ */
+void Map::showMapTooltip() {
+    QPoint position(
+        ui->m_View->size().width() - m_Tooltip.size().width() - Tooltip::TOOLTIP_OFFSET,
+        ui->m_View->size().height() - m_Tooltip.size().height() - Tooltip::TOOLTIP_OFFSET
     );
 
-    m_MapTooltip.show();
-}
-
-void Map::hideMapTooltip() {
-    m_MapTooltip.hide();
-}
-
-void Map::showMapSpriteTooltip(Sprite* sprite){
-    QString spriteInfo = tr("Pile de jetons : %1 jeton(s).")
-        .arg(sprite->getStackNumber());
-    showMapTooltip(spriteInfo);
-}
-
-void Map::showMapMoveTooltip(int oldPosX, int oldPosY, int currentPosX, int currentPosY){
-
-    int diffX = oldPosX - currentPosX;
-    int diffY = oldPosY - currentPosY;
-    int shorterDistance = qAbs(std::max(diffX, diffY)) + qAbs(std::min(diffX,diffY)/2);
-
-    QString tooltip = QString(tr("Distance la plus courte: %1")).arg(shorterDistance);
-
-    showMapTooltip(tooltip);
+    m_Tooltip.showTooltip(position);
 }
 
 Ui::Map *Map::getUi() {
@@ -232,4 +215,22 @@ MapLayer *Map::getMapLayer() {
 
 void Map::on_collapseButton_clicked(bool checked) {
     ui->scrollArea->setVisible(checked);
+}
+
+/**
+ * @brief Map::keyPressEvent Reimplemented from QWidget to dispatch key press events to the selected
+ * layer.
+ * @param keyEvent
+ */
+void Map::keyPressEvent(QKeyEvent *keyEvent){
+    m_Scene.sendEvent(m_SelectedLayer, keyEvent);
+}
+
+/**
+ * @brief Map::keyPressEvent Reimplemented from QWidget to dispatch key release events to the selected
+ * layer.
+ * @param keyEvent
+ */
+void Map::keyReleaseEvent(QKeyEvent *keyEvent){
+    m_Scene.sendEvent(m_SelectedLayer, keyEvent);
 }

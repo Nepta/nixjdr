@@ -30,7 +30,14 @@
     <number>0</number>
    </property>
    <item>
-    <widget class="CanvasView" name="m_View"/>
+    <widget class="CanvasView" name="m_View">
+     <property name="minimumSize">
+      <size>
+       <width>1</width>
+       <height>1</height>
+      </size>
+     </property>
+    </widget>
    </item>
    <item>
     <widget class="QPushButton" name="collapseButton">
@@ -81,6 +88,12 @@
    </item>
    <item>
     <widget class="QScrollArea" name="scrollArea">
+     <property name="maximumSize">
+      <size>
+       <width>200</width>
+       <height>16777215</height>
+      </size>
+     </property>
      <property name="widgetResizable">
       <bool>true</bool>
      </property>
@@ -89,7 +102,7 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>205</width>
+        <width>198</width>
         <height>513</height>
        </rect>
       </property>
@@ -202,77 +215,50 @@
          <property name="currentIndex">
           <number>1</number>
          </property>
-         <widget class="QWidget" name="m_PageDrawingTools">
-          <layout class="QVBoxLayout" name="verticalLayout_7">
+         <widget class="DrawingMenu" name="m_PageDrawingTools">
+          <layout class="QVBoxLayout" name="verticalLayout_7"/>
+         </widget>
+         <widget class="QWidget" name="m_PageMapTools">
+          <layout class="QVBoxLayout" name="verticalLayout_9">
            <item>
-            <widget class="QGroupBox" name="m_DrawingTools">
-             <property name="enabled">
-              <bool>true</bool>
-             </property>
+            <widget class="QGroupBox" name="m_MapTools">
              <property name="title">
-              <string>Outils de dessin</string>
+              <string>Outils de carte</string>
              </property>
-             <layout class="QVBoxLayout" name="verticalLayout">
+             <layout class="QVBoxLayout" name="verticalLayout_8">
               <item>
-               <widget class="QLabel" name="label_3">
-                <property name="text">
-                 <string>Tailles</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QWidget" name="sizeWidget" native="true">
-                <property name="styleSheet">
-                 <string notr="true">QWidget#sizeWidget {
-	border: 1px solid rgb(221, 221, 221);
-	border-radius: 1px;
-}</string>
-                </property>
-                <layout class="QFormLayout" name="formLayout_2">
-                 <item row="0" column="0">
-                  <widget class="QLabel" name="label">
-                   <property name="text">
-                    <string>Crayon</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="0" column="1">
-                  <widget class="QSpinBox" name="m_PenSpinBox">
-                   <property name="value">
-                    <number>2</number>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="1" column="0">
-                  <widget class="QLabel" name="label_2">
-                   <property name="text">
-                    <string>Gomme</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="1" column="1">
-                  <widget class="QSpinBox" name="m_EraserSpinBox">
-                   <property name="value">
-                    <number>2</number>
-                   </property>
-                  </widget>
-                 </item>
-                </layout>
-               </widget>
-              </item>
-              <item>
-               <widget class="Line" name="line">
-                <property name="orientation">
-                 <enum>Qt::Horizontal</enum>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QPushButton" name="m_EraseButton">
-                <property name="text">
-                 <string>Effacer dessins</string>
-                </property>
-               </widget>
+               <layout class="QHBoxLayout" name="horizontalLayout_2">
+                <item>
+                 <widget class="QLabel" name="m_MapScaleValue">
+                  <property name="text">
+                   <string>Echelle:</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QLabel" name="labelScale">
+                  <property name="text">
+                   <string>1</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QSlider" name="m_MapScaler">
+                  <property name="minimum">
+                   <number>1</number>
+                  </property>
+                  <property name="maximum">
+                   <number>5</number>
+                  </property>
+                  <property name="pageStep">
+                   <number>1</number>
+                  </property>
+                  <property name="orientation">
+                   <enum>Qt::Horizontal</enum>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
               </item>
              </layout>
             </widget>
@@ -333,9 +319,32 @@
    <extends>QGraphicsView</extends>
    <header>Canvas/CanvasView.h</header>
   </customwidget>
+  <customwidget>
+   <class>DrawingMenu</class>
+   <extends>QWidget</extends>
+   <header location="global">Canvas/SideMenuWidgets/DrawingMenu.h</header>
+   <container>1</container>
+  </customwidget>
  </customwidgets>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>m_MapScaler</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>labelScale</receiver>
+   <slot>setNum(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>531</x>
+     <y>391</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>523</x>
+     <y>385</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
  <buttongroups>
   <buttongroup name="m_DisplayGroup">
    <property name="exclusive">

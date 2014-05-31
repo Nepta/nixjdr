@@ -43,51 +43,57 @@ void TurnList::deleteCurrentItems(){
 }
 
 void TurnList::selectNextItem(){
-    this->setFocus();
-    unselectItems();
-    moveToItemInDirection(RIGHT);
+    if(this->count() != 0){
+        this->setFocus();
+        unselectItems();
+        moveToItemInDirection(RIGHT);
+    }
 }
 
 void TurnList::moveItemList(QList<QListWidgetItem*> itemsToMove, bool direction){
-    int move = directionToInt(direction);
-    int rowOfFirstItem = this->row(itemsToMove.first());
+    if(this->count() != 0 && itemsToMove.count() != 0){
+        int move = directionToInt(direction);
+        int rowOfFirstItem = this->row(itemsToMove.first());
 
-    if((this->currentRow() < rowOfFirstItem && direction == LEFT)
-            || (this->currentRow() > rowOfFirstItem && direction == RIGHT))
-    {
-        for(int i=0; i<itemsToMove.size()/2; i++){
-            itemsToMove.swap(i, itemsToMove.size()-(1+i));
+        if((this->currentRow() < rowOfFirstItem && direction == LEFT)
+                || (this->currentRow() > rowOfFirstItem && direction == RIGHT))
+        {
+            for(int i=0; i<itemsToMove.size()/2; i++){
+                itemsToMove.swap(i, itemsToMove.size()-(1+i));
+            }
+            rowOfFirstItem = this->row(itemsToMove.first());
         }
-        rowOfFirstItem = this->row(itemsToMove.first());
-    }
 
-    if((rowOfFirstItem != 0 && direction == LEFT)
-            || (rowOfFirstItem != this->count()-1 && direction == RIGHT)){
-        foreach (QListWidgetItem *oldItem, itemsToMove) {
-            int oldRow = this->indexFromItem(oldItem).row();
-            int newRow = oldRow + move;
+        if((rowOfFirstItem != 0 && direction == LEFT)
+                || (rowOfFirstItem != this->count()-1 && direction == RIGHT)){
+            foreach (QListWidgetItem *oldItem, itemsToMove) {
+                int oldRow = this->indexFromItem(oldItem).row();
+                int newRow = oldRow + move;
 
-            while(newRow>0 && newRow < this->count() && this->item(newRow)->isSelected()){
-                newRow += move;
+                while(newRow>0 && newRow < this->count() && this->item(newRow)->isSelected()){
+                    newRow += move;
+                }
+
+                if(newRow < 0){
+                    newRow = 0;
+                }
+                else if(newRow >= this->count()){
+                    newRow = this->count()-1;
+                }
+
+                QListWidgetItem *newItem = this->takeItem(oldRow);
+                this->insertItem(newRow, newItem);
+                this->setCurrentRow(newRow);
             }
-
-            if(newRow < 0){
-                newRow = 0;
-            }
-            else if(newRow >= this->count()){
-                newRow = this->count()-1;
-            }
-
-            QListWidgetItem *newItem = this->takeItem(oldRow);
-            this->insertItem(newRow, newItem);
-            this->setCurrentRow(newRow);
         }
     }
 }
 
 void TurnList::selectNearestItem(bool direction){
-    this->currentItem()->setSelected(true);
-    moveToItemInDirection(direction);
+    if(this->count() != 0){
+        this->currentItem()->setSelected(true);
+        moveToItemInDirection(direction);
+    }
 }
 
 void TurnList::moveToItemInDirection(bool direction){

@@ -23,6 +23,7 @@ SOURCES += \
     ChatWidget.cpp \
     ConnectionHelper.cpp \
     Common.cpp \
+    Tooltip.cpp \
     Chat/Message.cpp \
     Chat/ChatServer.cpp \
     Chat/ChatClient.cpp \
@@ -45,13 +46,14 @@ SOURCES += \
     Canvas/CanvasScene.cpp \
     Canvas/Sprite.cpp \
     Canvas/Map.cpp \
-    Canvas/MapTooltip.cpp \
+    Canvas/ImageWidget.cpp \
     Canvas/Layers/GridLayer.cpp \
     Canvas/Layers/MapLayer.cpp \
     Canvas/Layers/FoWLayer.cpp \
     Canvas/Layers/BackgroundLayer.cpp \
     Canvas/Layers/DrawingLayer.cpp \
     Canvas/Layers/Layer.cpp \
+    Canvas/SideMenuWidgets/DrawingMenu.cpp \
     Network/Header.cpp \
     Network/Server.cpp \
     Network/Switch.cpp \
@@ -78,6 +80,7 @@ HEADERS  += \
     CustomMdiArea.h \
     ChatWidget.h \
     Common.h \
+    Tooltip.h \
     Chat/Message.h \
     Chat/ChatServer.h \
     Chat/ChatClient.h \
@@ -100,13 +103,14 @@ HEADERS  += \
     Canvas/CanvasView.h \
     Canvas/Sprite.h \
     Canvas/Map.h \
-    Canvas/MapTooltip.h \
     Canvas/Layers/Layer.h \
     Canvas/Layers/GridLayer.h \
     Canvas/Layers/MapLayer.h \
     Canvas/Layers/FoWLayer.h \
     Canvas/Layers/BackgroundLayer.h \
     Canvas/Layers/DrawingLayer.h \
+    Canvas/ImageWidget.h \
+    Canvas/SideMenuWidgets/DrawingMenu.h \
     Network/Switch.h \
     Network/Receiver.h \
     Network/Header.h \
@@ -127,7 +131,6 @@ HEADERS  += \
     TurnMenu/TurnList.h \
     TurnMenu/TurnMenu.h
 
-
 FORMS    += \
     TokenMenu.ui \
     DiceMenu.ui \
@@ -136,4 +139,5 @@ FORMS    += \
     MainWindow.ui \
     TurnMenu.ui \
     Map.ui \
-    MapTooltip.ui
+    Tooltip.ui \
+    Canvas/SideMenuWidgets/DrawingMenu.ui

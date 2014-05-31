@@ -86,9 +86,9 @@ void GridLayer::drawBackground(QPainter *painter, const QRectF &rect) {
 void GridLayer::drawRows(QPainter *painter, int rowLength, int limit, bool orientation){
     for (int i = 0 ; i < limit ; i += m_Step) {
         if (i/m_Step % 2 == 0) {
-            painter->setPen(QPen(QBrush(Qt::black), 2));
+            painter->setPen(QPen(QBrush(Qt::lightGray), 2));
         } else {
-            painter->setPen(QPen(QBrush(Qt::black), 1));
+            painter->setPen(QPen(QBrush(Qt::lightGray), 1));
         }
 
         if (orientation) {
@@ -109,6 +109,13 @@ void GridLayer::drawRows(QPainter *painter, int rowLength, int limit, bool orien
 void GridLayer::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent) {
     if (m_ActiveMouseMoveEvent) {
         m_ActiveMouseMoveEvent = false;
+        return;
+    }
+
+    /* Avoid unexpected behaviours when both mouse buttons can be used (e.g. a sprite is added on the
+     * left mouse button release, and then the sprite under the new one is deleted on a right mouse
+     * button release */
+    if (mouseEvent->buttons() != Qt::NoButton) {
         return;
     }
 

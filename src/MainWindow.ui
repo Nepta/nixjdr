@@ -14,9 +14,9 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <layout class="QHBoxLayout" name="horizontalLayout">
+   <layout class="QHBoxLayout" name="horizontalLayout_2">
     <item>
-     <widget class="QSplitter" name="splitter_2">
+     <widget class="QSplitter" name="rightMenuSplitter">
       <property name="orientation">
        <enum>Qt::Horizontal</enum>
       </property>
@@ -38,69 +38,183 @@
          <enum>QFrame::Raised</enum>
         </property>
        </widget>
-       <widget class="TurnMenu" name="turnWidget" native="true"/>
-      </widget>
-      <widget class="QWidget" name="layoutWidget">
-       <layout class="QVBoxLayout" name="verticalLayout_2" stretch="0,0,0">
-        <item>
-         <widget class="QToolBox" name="actionMenu">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-            <horstretch>0</horstretch>
-            <verstretch>2</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="minimumSize">
-           <size>
-            <width>200</width>
-            <height>0</height>
-           </size>
-          </property>
-          <property name="currentIndex">
-           <number>0</number>
-          </property>
-          <widget class="TokenMenu" name="tokenPage">
-           <property name="geometry">
-            <rect>
-             <x>0</x>
-             <y>0</y>
-             <width>957</width>
-             <height>331</height>
-            </rect>
+       <widget class="QWidget" name="layoutWidget">
+        <layout class="QVBoxLayout" name="verticalLayout_2">
+         <item>
+          <widget class="QPushButton" name="collapseButtonTurnMenu">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
            </property>
            <property name="minimumSize">
             <size>
              <width>0</width>
-             <height>0</height>
+             <height>16</height>
             </size>
            </property>
-           <attribute name="label">
-            <string>Liste de jetons</string>
-           </attribute>
+           <property name="maximumSize">
+            <size>
+             <width>16777215</width>
+             <height>16</height>
+            </size>
+           </property>
+           <property name="styleSheet">
+            <string notr="true"> QPushButton {
+    border-left: 1px solid #8f8f91;
+    border-right: 1px solid #8f8f91;
+    border-top: 1px solid #8f8f91;
+    border-bottom: 1px solid #8f8f91;
+    border-radius: 0px;
+ }
+
+ QPushButton:pressed {
+     background-color: #8f8f91;
+ }</string>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="icon">
+            <iconset>
+             <normaloff>resource/CollapsibleWidget/collapseUp.png</normaloff>
+             <normalon>resource/CollapsibleWidget/collapseDown.png</normalon>resource/CollapsibleWidget/collapseUp.png</iconset>
+           </property>
+           <property name="checkable">
+            <bool>true</bool>
+           </property>
+           <property name="checked">
+            <bool>true</bool>
+           </property>
           </widget>
-         </widget>
-        </item>
+         </item>
+         <item>
+          <widget class="TurnMenu" name="turnWidget" native="true"/>
+         </item>
+        </layout>
+       </widget>
+      </widget>
+      <widget class="QWidget" name="layoutWidget">
+       <layout class="QHBoxLayout" name="horizontalLayout">
         <item>
-         <widget class="Line" name="line">
+         <widget class="QPushButton" name="collapseButtonRightMenu">
           <property name="sizePolicy">
-           <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-            <horstretch>1</horstretch>
+           <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+            <horstretch>0</horstretch>
             <verstretch>0</verstretch>
            </sizepolicy>
           </property>
-          <property name="orientation">
-           <enum>Qt::Horizontal</enum>
+          <property name="minimumSize">
+           <size>
+            <width>16</width>
+            <height>0</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>16</width>
+            <height>16777215</height>
+           </size>
+          </property>
+          <property name="styleSheet">
+           <string notr="true"> QPushButton {
+    border-left: 1px solid #8f8f91;
+    border-right: 1px solid #8f8f91;
+    border-top: 1px solid #8f8f91;
+    border-bottom: 1px solid #8f8f91;
+    border-radius: 0px;
+ }
+
+ QPushButton:pressed {
+     background-color: #8f8f91;
+ }</string>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="icon">
+           <iconset>
+            <normaloff>resource/CollapsibleWidget/uncollapse.png</normaloff>
+            <normalon>resource/CollapsibleWidget/collapse.png</normalon>resource/CollapsibleWidget/uncollapse.png</iconset>
+          </property>
+          <property name="checkable">
+           <bool>true</bool>
+          </property>
+          <property name="checked">
+           <bool>true</bool>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="ChatWidget" name="m_ChatWidget" native="true">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-            <horstretch>0</horstretch>
-            <verstretch>2</verstretch>
-           </sizepolicy>
-          </property>
+         <widget class="QWidget" name="rightMenuWidget" native="true">
+          <layout class="QVBoxLayout" name="verticalLayout">
+           <item>
+            <layout class="QVBoxLayout" name="rightMenuLayout">
+             <item>
+              <widget class="QToolBox" name="actionMenu">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                 <horstretch>0</horstretch>
+                 <verstretch>2</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="minimumSize">
+                <size>
+                 <width>200</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="currentIndex">
+                <number>0</number>
+               </property>
+               <widget class="TokenMenu" name="tokenPage">
+                <property name="geometry">
+                 <rect>
+                  <x>0</x>
+                  <y>0</y>
+                  <width>833</width>
+                  <height>321</height>
+                 </rect>
+                </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <attribute name="label">
+                 <string>Liste de jetons</string>
+                </attribute>
+               </widget>
+              </widget>
+             </item>
+             <item>
+              <widget class="Line" name="line">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                 <horstretch>1</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="ChatWidget" name="m_ChatWidget" native="true">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                 <horstretch>0</horstretch>
+                 <verstretch>2</verstretch>
+                </sizepolicy>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+          </layout>
          </widget>
         </item>
        </layout>
@@ -124,6 +238,7 @@
     </property>
     <addaction name="actionCreateMap"/>
     <addaction name="actionEditMap"/>
+    <addaction name="actionCreateImage"/>
     <addaction name="actionConnection"/>
    </widget>
    <addaction name="menuFile"/>
@@ -147,6 +262,11 @@
   <action name="actionConnection">
    <property name="text">
     <string>Connexion</string>
+   </property>
+  </action>
+  <action name="actionCreateImage">
+   <property name="text">
+    <string>Créer image</string>
    </property>
   </action>
  </widget>
