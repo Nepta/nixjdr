@@ -3,17 +3,16 @@ nixjdr
 
 Creation of a graphical and interactive interface for tabletop role-playing game (like Dungeons and Dragons, Pathfinder etc.)
 
-dependencies
-------------
-Need postgresql for QPSQL driver to work
+Dependencies
+======
+PostgreSQl is needed by the QPSQL driver.
 
 HOW TO
 ======
-for now, you need to have a postgresql database installed with this configuration:
+PostgreSQL configuration :
 role (user): "jdr"
 password: "password"
-database name: "jdrDB"
+database name: "jdrdb"
 
-and for the token list you must have a table named "sprite"
-create table sprite (id serial primary key, name varchar(20), path varchar(120), size integer);
-you can use resource/spriteInsert.sql to help populate the table
+Database initialisation :
+Execute the queries contained in resource/Queries/initTables.sql and resource/Queries/initRows.sql

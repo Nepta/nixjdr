@@ -1,5 +1,5 @@
-DROP TABLE IF EXISTS tokenitem;
 DROP TABLE IF EXISTS sprite;
+DROP TABLE IF EXISTS tokenitem;
 DROP TABLE IF EXISTS map;
 DROP TABLE IF EXISTS backgroundlayer;
 DROP TABLE IF EXISTS maplayer;
@@ -8,36 +8,36 @@ DROP TABLE IF EXISTS gridlayer;
 DROP TABLE IF EXISTS drawinglayer;
 
 CREATE TABLE tokenitem (
-	id 		serial not NULL,
-	text 	character varying(20) UNIQUE,
-	path 	character varying(120),
-	size 	integer,
-	custom 	integer,
+	id      serial not NULL,
+	text    character varying(20) UNIQUE,
+	path    character varying(120),
+	size    integer,
+	custom  integer,
 	special integer,
 	CONSTRAINT tokenitem_pkey PRIMARY KEY (id)
 );
 
 CREATE TABLE backgroundlayer (
-	id 		serial NOT NULL,
-	path 	character varying(120),
+	id   serial NOT NULL,
+	path character varying(120),
 	CONSTRAINT backgroundlayer_pkey PRIMARY KEY (id)
 );
 
 CREATE TABLE gridlayer (
-	id 			serial NOT NULL,
-	tilesize 	integer,
+	id       serial NOT NULL,
+	tilesize integer,
 	CONSTRAINT gridlayer_pkey PRIMARY KEY (id)
 );
 
 CREATE TABLE maplayer (
-	id 				serial NOT NULL,
-	gridlayerid 	integer REFERENCES gridlayer(id),
+	id          serial NOT NULL,
+	gridlayerid integer REFERENCES gridlayer(id),
 	CONSTRAINT maplayer_pkey PRIMARY KEY (id)
 );
 
 CREATE TABLE fowlayer (
-	id 				serial NOT NULL,
-	gridlayerid 	integer REFERENCES gridlayer(id),
+	id          serial NOT NULL,
+	gridlayerid integer REFERENCES gridlayer(id),
 	CONSTRAINT fowlayer_pkey PRIMARY KEY (id)
 );
 
@@ -48,23 +48,23 @@ CREATE TABLE drawinglayer (
 );
 
 CREATE TABLE map (
-	id serial NOT NULL,
-	backgroundlayerid	integer	REFERENCES backgroundlayer(id),
-	maplayerid 			integer	REFERENCES maplayer(id),
-	foWlayerid 			integer	REFERENCES fowlayer(id),
-	drawingLayerid 		integer	REFERENCES drawinglayer(id),
-	sceneheight 		integer,
-	scenewidth			integer,
+	id                serial NOT NULL,
+	backgroundlayerid integer REFERENCES backgroundlayer(id),
+	maplayerid        integer REFERENCES maplayer(id),
+	foWlayerid        integer REFERENCES fowlayer(id),
+	drawingLayerid    integer REFERENCES drawinglayer(id),
+	sceneheight       integer,
+	scenewidth        integer,
 	CONSTRAINT map_pkey PRIMARY KEY (id)
 );
 
 CREATE TABLE sprite (
-	id 					serial NOT NULL,
-	posx				integer,
-	posy 				integer,
-	stacknum			integer,
-	tokenitemid			integer REFERENCES tokenitem(id),
-	previousspriteid 	integer REFERENCES sprite(id),
-	-- TODO gridlayerid 		integer REFERENCES gridlayer(id),
+	id                  serial NOT NULL,
+	posx                integer,
+	posy                integer,
+	stacknum            integer,
+	tokenitemid         integer REFERENCES tokenitem(id),
+	previousspriteid    integer REFERENCES sprite(id),
+	-- TODO gridlayerid         integer REFERENCES gridlayer(id),
 	CONSTRAINT sprite_pkey PRIMARY KEY (id)
 );
