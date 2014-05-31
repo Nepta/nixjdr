@@ -21,14 +21,13 @@ FoWLayer::~FoWLayer() {}
  * m_TransparentSprites is true.
  * @param tokenItem
  * @param position
- * @param previousSpriteStack
+ * @param zValue
  * @param parentItem
  * @return Returns the added sprite.
  */
-Sprite *FoWLayer::addSprite(TokenItem *tokenItem, QPoint position, Sprite* previousSpriteStack,
-    QGraphicsItem *parentItem)
+Sprite *FoWLayer::addSprite(TokenItem *tokenItem, QPoint position, int zValue, QGraphicsItem *parentItem)
 {
-    Sprite* sprite = GridLayer::addSprite(tokenItem, position, previousSpriteStack, parentItem);
+    Sprite* sprite = GridLayer::addSprite(tokenItem, position, zValue, parentItem);
     sprite->setTransparent(m_TransparentSprites);
 
     return sprite;

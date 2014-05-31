@@ -28,9 +28,9 @@ public:
 
     int getStep();
 
-    virtual Sprite *addSprite(TokenItem *tokenItem, QPoint position, Sprite* previousSpriteStack,
+    virtual Sprite *addSprite(TokenItem *tokenItem, QPoint position, int zValue,
                               QGraphicsItem *parentItem);
-    Sprite *addSprite(TokenItem *tokenItem, QPoint position, Sprite *previousSpriteStack = NULL);
+    Sprite *addSprite(TokenItem *tokenItem, QPoint position, int zValue = 1);
     virtual void removeSprite(QGraphicsItem *sprite);
 
     void drawBackground(QPainter *painter, const QRectF &rect);

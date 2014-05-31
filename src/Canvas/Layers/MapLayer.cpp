@@ -94,7 +94,8 @@ void MapLayer::dropEvent(QGraphicsSceneDragDropEvent *event, Sprite *watched)
     QByteArray data = event->mimeData()->data("application/tokenitem");
     if(!data.isEmpty()) {
         TokenItem *tokenItem = new TokenItem(data);
-        addSprite(tokenItem, event->scenePos().toPoint(), watched);
+        int zValue = (watched ? watched->zValue() + 1 : 1);
+        addSprite(tokenItem, event->scenePos().toPoint(), zValue);
 
         event->acceptProposedAction();
     }
@@ -114,7 +115,7 @@ void MapLayer::spriteMouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent, Spr
 
     if (mouseEvent->button() == Qt::LeftButton) {
         QPoint mouseScenePos = mouseEvent->scenePos().toPoint();
-        addSprite(m_TokenItem, mouseScenePos, watched);
+        addSprite(m_TokenItem, mouseScenePos, watched->zValue() + 1);
     }
 
     if(mouseEvent->button() == Qt::RightButton){
@@ -210,7 +211,7 @@ bool MapLayer::sceneEventFilter(QGraphicsItem *watched, QEvent *event) {
  */
 void MapLayer::addSpriteInfoTooltip(Sprite *sprite) {
     QString spriteInfo = tr("Pile de jetons : %1 jeton(s).")
-        .arg(sprite->getStackNumber());
+        .arg(sprite->zValue());
 
     emit pushInfoTooltip(spriteInfo);
 }

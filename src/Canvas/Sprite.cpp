@@ -1,7 +1,7 @@
 #include <QObject>
 #include "Sprite.h"
 
-Sprite::Sprite(TokenItem *tokenItem, QGraphicsItem *parent, Sprite *previousSpriteStack) :
+Sprite::Sprite(TokenItem *tokenItem, QGraphicsItem *parent, int zValue) :
     QGraphicsPixmapItem(parent)
 {
     m_TokenItem = tokenItem;
@@ -17,14 +17,7 @@ Sprite::Sprite(TokenItem *tokenItem, QGraphicsItem *parent, Sprite *previousSpri
     setAcceptHoverEvents(true);
     setAcceptDrops(true);
 
-    m_PreviousSpriteStack = previousSpriteStack;
-
-    if (m_PreviousSpriteStack == NULL) {
-        m_StackNumber = 1;
-    }
-    else {
-        m_StackNumber = m_PreviousSpriteStack->getStackNumber() + 1;
-    }
+    setZValue(zValue);
 }
 
 Sprite::~Sprite() {
@@ -36,10 +29,6 @@ void Sprite::setTransparent(bool enabled) {
     } else {
         setOpacity(1.0);
     }
-}
-
-int Sprite::getStackNumber() {
-    return m_StackNumber;
 }
 
 TokenItem *Sprite::getTokenItem() {

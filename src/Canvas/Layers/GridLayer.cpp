@@ -1,3 +1,4 @@
+#include <QGraphicsScene>
 #include "GridLayer.h"
 
 GridLayer::GridLayer(Database *db, int step) :
@@ -21,19 +22,18 @@ void GridLayer::setTokenItem(QListWidgetItem* token) {
  * @brief GridLayer::addSprite Adds a sprite to the Layer.
  * @param tokenItem Sprite's associated TokenItem.
  * @param position Sprite's position
- * @param previousSpriteStack Indicates the Sprite on top of which the new Sprite will be created
- * (Sprites can be stacked).
+ * @param zValue Indicates the position of the sprite in the stack.
  * @param parentItem Indicates in which QGraphicsItem the new Sprite belongs (in general the layer
  * in which the sprite is created).
  * @return The newly created sprite.
  */
-Sprite *GridLayer::addSprite(TokenItem *tokenItem, QPoint position, Sprite* previousSpriteStack,
+Sprite *GridLayer::addSprite(TokenItem *tokenItem, QPoint position, int zValue,
     QGraphicsItem *parentItem)
 {
     QPoint spritePos(position.x()/m_Step, position.y()/m_Step);
     spritePos *= m_Step;
 
-    Sprite *sprite = new Sprite(tokenItem, parentItem, previousSpriteStack);
+    Sprite *sprite = new Sprite(tokenItem, parentItem, zValue);
     sprite->setPos(spritePos);
 
     if (parentItem != NULL) {
@@ -47,12 +47,12 @@ Sprite *GridLayer::addSprite(TokenItem *tokenItem, QPoint position, Sprite* prev
  * @brief GridLayer::addSprite Overloaded for convenience.
  * @param tokenItem
  * @param position
- * @param previousSpriteStack
+ * @param zValue
  * @return The newly created sprite.
  * @sa addSprite()
  */
-Sprite *GridLayer::addSprite(TokenItem *tokenItem, QPoint position, Sprite *previousSpriteStack) {
-    return addSprite(tokenItem, position, previousSpriteStack, this);
+Sprite *GridLayer::addSprite(TokenItem *tokenItem, QPoint position, int zValue) {
+    return addSprite(tokenItem, position, zValue, this);
 }
 
 /**
@@ -132,27 +132,25 @@ void GridLayer::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent) {
  */
 void GridLayer::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent) {
     QPoint mouseScenePos = mouseEvent->scenePos().toPoint();
-    Sprite *sprite = addSprite(m_TokenItem, mouseScenePos, NULL, NULL);
     m_ActiveMouseMoveEvent = true;
 
-    if (mouseEvent->buttons() & Qt::LeftButton) {
-        foreach (QGraphicsItem *item, childItems()) {
-            if (item->collidesWithItem(sprite)) {
-                delete sprite;
-                return;
-            }
-        }
+    QGraphicsItem *item = scene()->itemAt(mouseEvent->pos(), QTransform());
+    Sprite *sprite = dynamic_cast<Sprite*>(item);
 
-        sprite->setParentItem(this);
-        sprite->installSceneEventFilter(this);
+    if (mouseEvent->buttons() & Qt::LeftButton) {
+        if (!sprite) {
+            addSprite(m_TokenItem, mouseScenePos, 1);
+        }
     }
     else if (mouseEvent->buttons() & Qt::RightButton) {
-        foreach (QGraphicsItem *item, childItems()) {
-            if (item->collidesWithItem(sprite)) {
-                delete item;
-            }
+        // avoid deletion of items from another layer
+        if (!childItems().contains(item)) {
+            return;
         }
-        delete sprite;
+
+        if (sprite) { // TODO timer or boolean to slow down the deletion
+            removeSprite(sprite);
+        }
     }
 }
 
