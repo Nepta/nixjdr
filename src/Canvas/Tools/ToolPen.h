@@ -5,12 +5,12 @@
 
 class ToolPen : public AbstractTool
 {
-    Q_OBJECT
-
 public:
     ToolPen(QGraphicsItem *drawingItem, int penSize, QColor color);
     ~ToolPen();
-    bool sceneEventFilter(QGraphicsItem *watched, QEvent *event);
+
+    bool sceneEventFilter(QGraphicsItem *, QEvent *event);
+    void setSize(int size);
 
 private:
     int m_PenSize;

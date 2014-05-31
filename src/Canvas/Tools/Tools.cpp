@@ -20,6 +20,6 @@ Tools::~Tools(){
     qDeleteAll(m_Tools);
 }
 
-AbstractTool *Tools::getCurrentTool(ToolCodes code){
+AbstractTool *Tools::getTool(ToolCodes code){
     return m_Tools.value(code);
 }

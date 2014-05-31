@@ -8,9 +8,8 @@ class ToolEraser : public AbstractTool
 public:
     ToolEraser(int eraserSize);
 
-
-public:
     bool sceneEventFilter(QGraphicsItem *, QEvent *event);
+    void setSize(int size);
 
 private:
     int m_EraserSize;

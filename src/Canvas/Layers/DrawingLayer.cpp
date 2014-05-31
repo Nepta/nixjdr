@@ -4,10 +4,6 @@
 #include "Canvas/Tools/AbstractTool.h"
 
 DrawingLayer::DrawingLayer(int penSize, int eraserSize, QColor color) :
-    m_PenSize(penSize),
-    m_EraserSize(eraserSize),
-    m_Color(color),
-    m_LineItem(this),
     m_Tools(this, penSize, color, eraserSize, this)
 {}
 
@@ -17,12 +13,11 @@ DrawingLayer::~DrawingLayer() {
 }
 
 void DrawingLayer::setPenSize(int size) {
-    m_PenSize = size;
-    m_DrawingZone->setPixmap(*m_Pixmap);
+    m_Tools.getTool(ToolCodes::TOOL_PEN)->setSize(size);
 }
 
 void DrawingLayer::setEraserSize(int size) {
-    m_EraserSize = size;
+    m_Tools.getTool(ToolCodes::TOOL_ERASER)->setSize(size);
 }
 
 void DrawingLayer::initDrawingZone() {
@@ -34,8 +29,8 @@ void DrawingLayer::initDrawingZone() {
     AbstractTool::setPixmap(m_Pixmap);
     AbstractTool::setDrawingZone(m_DrawingZone);
 
-    this->scene()->addItem(m_Tools.getCurrentTool(ToolCodes::TOOL_PEN));
-    this->installSceneEventFilter(m_Tools.getCurrentTool(ToolCodes::TOOL_PEN));
+    this->scene()->addItem(m_Tools.getTool(ToolCodes::TOOL_PEN));
+    this->installSceneEventFilter(m_Tools.getTool(ToolCodes::TOOL_PEN));
 }
 
 void DrawingLayer::drawBackground(QPainter *, const QRectF &) {}

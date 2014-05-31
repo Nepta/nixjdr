@@ -10,8 +10,11 @@ ToolPen::ToolPen(QGraphicsItem *drawingItem, int penSize, QColor color):
     m_LineItem(drawingItem)
 {}
 
-ToolPen::~ToolPen(){
+ToolPen::~ToolPen()
+{}
 
+void ToolPen::setSize(int size){
+    m_PenSize = size;
 }
 
 void ToolPen::paintOnPixmap(const QPointF &oldPos, const QPointF &pos, QColor color) {
@@ -31,7 +34,7 @@ void ToolPen::paintOnPixmap(QPainter &painter, const QPointF &oldPos, const QPoi
 }
 
 
-bool ToolPen::sceneEventFilter(QGraphicsItem *watched, QEvent *event){
+bool ToolPen::sceneEventFilter(QGraphicsItem *, QEvent *event){
     switch (event->type()) {
     case QEvent::GraphicsSceneMousePress:{
         pressMouse(static_cast<QGraphicsSceneMouseEvent*>(event));

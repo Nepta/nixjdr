@@ -15,6 +15,10 @@ void ToolEraser::eraseOnPixmap(const QPointF &oldPos, const QPointF &pos) {
     paintOnPixmap(painter, oldPos, pos);
 }
 
+void ToolEraser::setSize(int size){
+    m_EraserSize = size;
+}
+
 
 void ToolEraser::paintOnPixmap(const QPointF &oldPos, const QPointF &pos, QColor color) {
     QPainter painter(AbstractTool::getPixmap());

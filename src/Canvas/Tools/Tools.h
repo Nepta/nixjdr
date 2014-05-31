@@ -25,7 +25,7 @@ public:
                    int eraserSize = 0, QGraphicsItem *drawingItem =0);
     ~Tools();
 
-    AbstractTool *getCurrentTool(ToolCodes code);
+    AbstractTool *getTool(ToolCodes code);
 
 private:
     QHash<ToolCodes, AbstractTool *> m_Tools;

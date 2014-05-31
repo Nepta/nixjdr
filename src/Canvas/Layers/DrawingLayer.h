@@ -31,13 +31,6 @@ public slots:
 private:
     QGraphicsPixmapItem *m_DrawingZone;
     QPixmap *m_Pixmap;
-    int m_PenSize;
-    int m_EraserSize;
-    QColor m_Color;
-    QPointF m_DrawStartPosition;
-    QPointF m_DrawLastPosition;
-    QGraphicsLineItem m_LineItem;
-
     Tools m_Tools;
 };
 

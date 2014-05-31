@@ -24,9 +24,12 @@ public:
     QRectF boundingRect() const;
     void paint(QPainter *, const QStyleOptionGraphicsItem *, QWidget *);
 
+    virtual void setSize(int size) = 0;
+
 protected:
-    virtual bool sceneEventFilter(QGraphicsItem *watched, QEvent *event) =0;
     virtual void updateDisplay();
+
+    virtual bool sceneEventFilter(QGraphicsItem *watched, QEvent *event) =0;
 
 private:
     static QPixmap *s_Pixmap;
