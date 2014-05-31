@@ -8,10 +8,11 @@ const QHash<QString, ToolCodes> Tools::s_ToolCodes = {
 };
 
 
-Tools::Tools(QObject *parent, int penSize, QColor color, int eraserSize) :
+Tools::Tools(QObject *parent, int penSize, QColor color, int eraserSize,
+             QGraphicsItem *drawingItem) :
     QObject(parent)
 {
-    m_Tools.insert(ToolCodes::TOOL_PEN, new ToolPen(penSize, color));
+    m_Tools.insert(ToolCodes::TOOL_PEN, new ToolPen(drawingItem, penSize, color));
     m_Tools.insert(ToolCodes::TOOL_ERASER, new ToolEraser(eraserSize));
 }
 

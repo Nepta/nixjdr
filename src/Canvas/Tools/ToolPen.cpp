@@ -4,9 +4,10 @@
 
 #include "ToolPen.h"
 
-ToolPen::ToolPen(int penSize, QColor color):
+ToolPen::ToolPen(QGraphicsItem *drawingItem, int penSize, QColor color):
     m_PenSize(penSize),
-    m_Color(color)
+    m_Color(color),
+    m_LineItem(drawingItem)
 {}
 
 ToolPen::~ToolPen(){

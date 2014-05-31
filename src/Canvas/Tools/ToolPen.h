@@ -8,7 +8,7 @@ class ToolPen : public AbstractTool
     Q_OBJECT
 
 public:
-    ToolPen(int penSize, QColor color);
+    ToolPen(QGraphicsItem *drawingItem, int penSize, QColor color);
     ~ToolPen();
     bool sceneEventFilter(QGraphicsItem *watched, QEvent *event);
 

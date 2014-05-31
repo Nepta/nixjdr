@@ -22,7 +22,7 @@ public:
     const static QHash<QString, ToolCodes> s_ToolCodes;
 
     explicit Tools(QObject *parent = 0, int penSize = 0, QColor color = Qt::black,
-                   int eraserSize = 0);
+                   int eraserSize = 0, QGraphicsItem *drawingItem =0);
     ~Tools();
 
     AbstractTool *getCurrentTool(ToolCodes code);

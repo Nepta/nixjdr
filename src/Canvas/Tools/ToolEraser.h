@@ -10,7 +10,7 @@ public:
 
 
 public:
-    bool sceneEventFilter(QGraphicsItem *watched, QEvent *event);
+    bool sceneEventFilter(QGraphicsItem *, QEvent *event);
 
 private:
     int m_EraserSize;

@@ -8,7 +8,7 @@ DrawingLayer::DrawingLayer(int penSize, int eraserSize, QColor color) :
     m_EraserSize(eraserSize),
     m_Color(color),
     m_LineItem(this),
-    m_Tools(this, penSize, color, eraserSize)
+    m_Tools(this, penSize, color, eraserSize, this)
 {}
 
 DrawingLayer::~DrawingLayer() {
