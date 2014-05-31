@@ -216,7 +216,6 @@
           <number>1</number>
          </property>
          <widget class="DrawingMenu" name="m_PageDrawingTools">
-          <layout class="QVBoxLayout" name="verticalLayout_7"/>
          </widget>
          <widget class="QWidget" name="m_PageMapTools">
           <layout class="QVBoxLayout" name="verticalLayout_9">
