@@ -39,18 +39,21 @@ void ToolEraser::paintOnPixmap(QPainter &painter, const QPointF &oldPos, const Q
 
 bool ToolEraser::sceneEventFilter(QGraphicsItem *, QEvent *event){
     switch (event->type()) {
-    case QEvent::MouseMove:
+    case QEvent::GraphicsSceneMouseMove :{
         moveMouse(static_cast<QGraphicsSceneMouseEvent*>(event));
+        event->accept();
+    }
         break;
     default:
         break;
     }
+    AbstractTool::updateDisplay();
     return true;
 }
 
 
 void ToolEraser::moveMouse(QGraphicsSceneMouseEvent *mouseEvent){
-    if (mouseEvent->buttons() & Qt::RightButton) {
+    if (mouseEvent->buttons() & Qt::LeftButton) {
         eraseOnPixmap(mouseEvent->lastScenePos(), mouseEvent->scenePos());
     }
 }
