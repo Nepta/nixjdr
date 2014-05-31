@@ -52,6 +52,11 @@ SOURCES += \
     Canvas/Layers/BackgroundLayer.cpp \
     Canvas/Layers/DrawingLayer.cpp \
     Canvas/Layers/Layer.cpp \
+    Canvas/ImageWidget.cpp \
+    Canvas/Tools/AbstractTool.cpp \
+    Canvas/Tools/ToolPen.cpp \
+    Canvas/Tools/ToolEraser.cpp \
+    Canvas/Tools/Tools.cpp \
     Canvas/SideMenuWidgets/DrawingMenu.cpp \
     Network/Header.cpp \
     Network/Server.cpp \
@@ -65,8 +70,7 @@ SOURCES += \
     Token/TokenMenu.cpp \
     Token/TokenList.cpp \
     TurnMenu/TurnList.cpp \
-    TurnMenu/TurnMenu.cpp \
-    Canvas/ImageWidget.cpp
+    TurnMenu/TurnMenu.cpp
 
 HEADERS  += \
     MainWindow.h \
@@ -105,6 +109,10 @@ HEADERS  += \
     Canvas/Layers/FoWLayer.h \
     Canvas/Layers/BackgroundLayer.h \
     Canvas/Layers/DrawingLayer.h \
+    Canvas/Tools/AbstractTool.h \
+    Canvas/Tools/ToolPen.h \
+    Canvas/Tools/ToolEraser.h \
+    Canvas/Tools/Tools.h \
     Canvas/ImageWidget.h \
     Canvas/SideMenuWidgets/DrawingMenu.h \
     Network/Switch.h \
