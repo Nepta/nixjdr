@@ -57,6 +57,10 @@ void Map::initMapLayer(TokenItem *tokenItem, int tileStep) {
     m_MapLayer = new MapLayer(db_, tokenItem, tileStep);
     m_Scene.addLayer(m_MapLayer);
     m_MapLayer->setEnabled(true);
+
+    // Map tools
+    connect(ui->m_MapScaler, SIGNAL(valueChanged(int)),
+            ui->m_View, SLOT(zoom(int)));
 }
 
 /**
