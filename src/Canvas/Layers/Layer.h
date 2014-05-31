@@ -3,21 +3,23 @@
 
 #include <QObject>
 #include <QGraphicsObject>
-#include <QGraphicsItem>
-#include <QGraphicsSceneMouseEvent>
+#include <QStyleOptionGraphicsItem>
 #include <QPainter>
 #include <QRectF>
+#include "Database/Database.h"
+#include "Database/DBComponent.h"
 
 /**
  * @brief The abstract Layer class is used to stack and separate different type of elements
  * from a scene.
  */
-class Layer : public QGraphicsObject // TODO Layer inherits DBComponent
+class Layer : public QGraphicsObject, public DBComponent
 {
     Q_OBJECT
 
 public:
-    Layer() {}
+    Layer();
+    Layer(Database *db);
     virtual ~Layer() {}
 
     virtual void drawBackground(QPainter *painter, const QRectF &rect) = 0;

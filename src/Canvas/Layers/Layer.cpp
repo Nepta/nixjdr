@@ -1,6 +1,9 @@
 #include <QGraphicsScene>
-
 #include "Layer.h"
+
+Layer::Layer() {}
+
+Layer::Layer(Database *db) : DBComponent(db) {}
 
 /**
  * @brief Layer::boundingRect Reimplemented from QGraphicsObject. The bounding rectangle corresponds

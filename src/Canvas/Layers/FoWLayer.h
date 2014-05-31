@@ -12,10 +12,10 @@ class FoWLayer : public GridLayer
     Q_OBJECT
 
 public:
-    FoWLayer(int step = 1, bool transparentSprites = true);
+    FoWLayer(Database *db, int step = 1, bool transparentSprites = true);
     ~FoWLayer();
 
-    Sprite *addSprite(QPixmap *spritePixmap, QPoint position, Sprite* previousSpriteStack,
+    Sprite *addSprite(TokenItem *tokenItem, QPoint position, Sprite* previousSpriteStack,
                       QGraphicsItem *parentItem);
 
 private:

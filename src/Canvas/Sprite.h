@@ -4,19 +4,20 @@
 #include <QGraphicsPixmapItem>
 #include <QGraphicsSceneDragDropEvent>
 #include "Network/Serializable.h"
+#include "Token/TokenItem.h"
 
-class Sprite : public QGraphicsPixmapItem, public Serializable
+class Sprite : public QGraphicsPixmapItem
 {
 public:
-    Sprite(const QPixmap &pixmap, QGraphicsItem *parent = 0, Sprite *parentSprite = NULL);
-    Sprite(QByteArray& data);
+    Sprite(TokenItem *tokenItem, QGraphicsItem *parent = 0, Sprite *parentSprite = NULL);
     ~Sprite();
     void setTransparent(bool enabled);
     int getStackNumber();
-
-    QByteArray serialize();
+    TokenItem *getTokenItem();
 
 private:
+    TokenItem *m_TokenItem;
+
     /**
      * @brief m_ParentSprite Pointer to the sprite positionned below in the stack.
      */
@@ -27,8 +28,6 @@ private:
      */
     int m_StackNumber;
     bool m_Transparent;
-
-    void unserialize(QByteArray& data);
 };
 
 #endif // SPRITE_H

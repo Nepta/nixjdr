@@ -18,7 +18,7 @@ public:
      */
     static const int START_DRAG_DISTANCE = 5;
 
-    MapLayer(QString spritePath, int step = 1);
+    MapLayer(Database *db, TokenItem *tokenItem, int step = 1);
     ~MapLayer();
 
 private:

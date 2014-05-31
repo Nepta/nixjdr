@@ -22,7 +22,10 @@ private:
 
 public:
     TokenItem(QString path, QString text, int size, bool custom = false, bool special = false);
+    TokenItem(const QByteArray& data);
     TokenItem(DBItem item);
+
+    QByteArray toQByteArray();
 
     QString path();
     int size();

@@ -1,9 +1,15 @@
 #include <QObject>
 #include "Sprite.h"
 
-Sprite::Sprite(const QPixmap &pixmap, QGraphicsItem *parent, Sprite* previousSpriteStack) :
-    QGraphicsPixmapItem(pixmap, parent)
+Sprite::Sprite(TokenItem *tokenItem, QGraphicsItem *parent, Sprite *previousSpriteStack) :
+    QGraphicsPixmapItem(parent)
 {
+    m_TokenItem = tokenItem;
+
+    int tokenSize = tokenItem->size();
+    QPixmap spritePixmap = tokenItem->icon().pixmap(QSize(tokenSize, tokenSize));
+    setPixmap(spritePixmap);
+
     /* transparent pixels are part of the Sprite shape -> events can be triggered on the transparent
      * pixels of the sprite */
     setShapeMode(QGraphicsPixmapItem::BoundingRectShape);
@@ -21,10 +27,6 @@ Sprite::Sprite(const QPixmap &pixmap, QGraphicsItem *parent, Sprite* previousSpr
     }
 }
 
-Sprite::Sprite(QByteArray& data) {
-    unserialize(data);
-}
-
 Sprite::~Sprite() {
 }
 
@@ -40,13 +42,6 @@ int Sprite::getStackNumber() {
     return m_StackNumber;
 }
 
-// Reimplemented from Serializable
-
-QByteArray Sprite::serialize() {
-    // TODO
-    return NULL;
-}
-
-void Sprite::unserialize(QByteArray& data) {
-    // TODO
+TokenItem *Sprite::getTokenItem() {
+    return m_TokenItem;
 }

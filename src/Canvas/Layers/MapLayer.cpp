@@ -5,10 +5,10 @@
 #include "Canvas/Sprite.h"
 #include "MapLayer.h"
 
-MapLayer::MapLayer(QString spritePath, int step) :
-    GridLayer(step)
+MapLayer::MapLayer(Database *db, TokenItem *tokenItem, int step) :
+    GridLayer(db, step)
 {
-    setSpritePixmap(spritePath);
+    setTokenItem(tokenItem);
     setAcceptDrops(true);
 }
 
@@ -30,10 +30,12 @@ void MapLayer::initDragEvent(Sprite *watched, QGraphicsSceneMouseEvent *mouseEve
 
     QDrag *drag = new QDrag(mouseEvent->widget());
     QMimeData *mime = new QMimeData;
+    QByteArray data = watched->getTokenItem()->toQByteArray();
+
+    mime->setData("application/tokenitem", data);
+    drag->setMimeData(mime);
 
     QGraphicsPixmapItem *pixmapItem = dynamic_cast<QGraphicsPixmapItem*>(watched);
-    mime->setImageData(pixmapItem->pixmap().toImage());
-    drag->setMimeData(mime);
     drag->setPixmap(pixmapItem->pixmap());
 
     watched->setTransparent(true);
@@ -55,9 +57,7 @@ void MapLayer::mousePressEvent(QGraphicsSceneMouseEvent *) {
 }
 
 void MapLayer::dragEnterEvent(QGraphicsSceneDragDropEvent *event) {
-    if (event->mimeData()->hasImage()){
-        event->acceptProposedAction();
-    }
+    event->acceptProposedAction();
 }
 
 void MapLayer::dragLeaveEvent(QGraphicsSceneDragDropEvent *) {
@@ -65,17 +65,15 @@ void MapLayer::dragLeaveEvent(QGraphicsSceneDragDropEvent *) {
 }
 
 void MapLayer::dragMoveEvent(QGraphicsSceneDragDropEvent *event) {
-    if(event->mimeData()->hasImage()){
-        QPoint pos = event->scenePos().toPoint();
-        event->acceptProposedAction();
+    QPoint pos = event->scenePos().toPoint();
+    event->acceptProposedAction();
 
-        emit showMoveInfo(
-            m_dragStartPosition.x() / m_Step,
-            m_dragStartPosition.y() /m_Step,
-            pos.x() / m_Step,
-            pos.y() / m_Step
-        );
-    }
+    emit showMoveInfo(
+        m_dragStartPosition.x() / m_Step,
+        m_dragStartPosition.y() /m_Step,
+        pos.x() / m_Step,
+        pos.y() / m_Step
+    );
 }
 
 /**
@@ -90,19 +88,19 @@ void MapLayer::dropEvent(QGraphicsSceneDragDropEvent *event)
 
 /**
  * @brief MapLayer::dropEvent Reimplemented from GridLayer. Adds a sprite at the position of the
- * drop event with the image given in the event MIME data.
+ * drop event with the given MIME data through the event.
  * @param event
  * @param watched
  */
 void MapLayer::dropEvent(QGraphicsSceneDragDropEvent *event, Sprite *watched)
 {
-    QPixmap* sprite = new QPixmap;
-    QImage image = qvariant_cast<QImage>(event->mimeData()->imageData());
-    sprite->convertFromImage(image);
+    QByteArray data = event->mimeData()->data("application/tokenitem");
+    if(!data.isEmpty()) {
+        TokenItem *tokenItem = new TokenItem(data);
+        addSprite(tokenItem, event->scenePos().toPoint(), watched);
 
-    addSprite(sprite, event->scenePos().toPoint(), watched);
-
-    event->acceptProposedAction();
+        event->acceptProposedAction();
+    }
 }
 
 /**
@@ -116,7 +114,7 @@ void MapLayer::spriteMouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent, Spr
 
     if (mouseEvent->button() == Qt::LeftButton) {
         QPoint mouseScenePos = mouseEvent->scenePos().toPoint();
-        addSprite(&m_SpritePixmap, mouseScenePos, watched);
+        addSprite(m_TokenItem, mouseScenePos, watched);
     }
 
     emit hideInfo();

@@ -1,9 +1,11 @@
-#include <QSqlQuery>
+#include <QList>
 #include "Database/Repository/TokenItemRepository.h"
 #include "Database/QueryBuilder.h"
 #include "Database/DBItemList.h"
 #include "TokenMenu.h"
 #include "ui_TokenMenu.h"
+
+#include <QDebug>
 
 TokenMenu::TokenMenu(QWidget *parent) :
     QWidget(parent),
@@ -41,13 +43,21 @@ void TokenMenu::on_tokenButton_clicked()
     int size = 32;
     bool custom = true;
 
-    TokenItem *item = new TokenItem(filePath, text, size, custom);
+    // Check if the list already contains a token with the same text before insertion.
+    QList<QListWidgetItem*> items = ui->m_tokenList->findItems(text, Qt::MatchExactly);
+    if (items.empty()) {
+        TokenItem *item = new TokenItem(filePath, text, size, custom);
 
-    // push the item to the database
-    int id = TokenItemRepository::insertTokenItem(item, db_);
-    item->setId(id);
+        // push the item to the database
+        int id = TokenItemRepository::insertTokenItem(item, db_);
+        item->setId(id);
 
-    // add the item to the tokenList
-    ui->m_tokenList->addItem(item);
-    ui->m_tokenList->setCurrentItem(item);
+        // add the item to the tokenList
+        ui->m_tokenList->addItem(item);
+        ui->m_tokenList->setCurrentItem(item);
+    }
+    else {
+        // TODO display a notification that an item with the given text already exists.
+        qDebug() << tr("Un jeton portant ce nom existe déjà.");
+    }
 }

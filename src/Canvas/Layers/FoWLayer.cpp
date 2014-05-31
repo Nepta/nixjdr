@@ -1,14 +1,17 @@
 #include <QGraphicsScene>
 
 #include "FoWLayer.h"
+#include "Database/Repository/TokenItemRepository.h"
 
-FoWLayer::FoWLayer(int step, bool transparentSprites) :
-    GridLayer(step),
+FoWLayer::FoWLayer(Database *db, int step, bool transparentSprites) :
+    GridLayer(db, step),
     m_TransparentSprites(transparentSprites)
 {
     // TODO multiple colors for multiple players (shift the hue of the pixmap?)
-    // TODO retrieve the fow TokenItem from the db
-    GridLayer::setSpritePixmap("fow");
+
+    // Retrieve the fow TokenItem from the database
+    TokenItem *fowItem = TokenItemRepository::getFowTokenItem(db_);
+    setTokenItem(fowItem);
 }
 
 FoWLayer::~FoWLayer() {}
@@ -16,16 +19,16 @@ FoWLayer::~FoWLayer() {}
 /**
  * @brief FoWLayer::addSprite Reimplemented from GridLayer to add transparency to the new Sprite if
  * m_TransparentSprites is true.
- * @param spritePixmap
+ * @param tokenItem
  * @param position
  * @param previousSpriteStack
  * @param parentItem
  * @return Returns the added sprite.
  */
-Sprite *FoWLayer::addSprite(QPixmap *spritePixmap, QPoint position, Sprite* previousSpriteStack,
+Sprite *FoWLayer::addSprite(TokenItem *tokenItem, QPoint position, Sprite* previousSpriteStack,
     QGraphicsItem *parentItem)
 {
-    Sprite* sprite = GridLayer::addSprite(spritePixmap, position, previousSpriteStack, parentItem);
+    Sprite* sprite = GridLayer::addSprite(tokenItem, position, previousSpriteStack, parentItem);
     sprite->setTransparent(m_TransparentSprites);
 
     return sprite;
@@ -68,7 +71,7 @@ void FoWLayer::fillFoW() {
         for(int j = 0; j < boundingRect().height(); j +=m_Step){
             iterator.setX(i);
             iterator.setY(j);
-            GridLayer::addSprite(&m_SpritePixmap, iterator);
+            GridLayer::addSprite(m_TokenItem, iterator);
         }
     }
 }

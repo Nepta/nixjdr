@@ -7,6 +7,7 @@
 #include "Layers/MapLayer.h"
 #include "Layers/FoWLayer.h"
 #include "Layers/DrawingLayer.h"
+#include "Database/DBComponent.h"
 #include "Database/DBItem.h"
 #include "MapTooltip.h"
 #include "CanvasView.h"
@@ -16,21 +17,21 @@ namespace Ui {
     class Map;
 }
 
-class Map : public QWidget, public DBItem
+class Map : public QWidget, public DBItem, public DBComponent
 {
     Q_OBJECT
 
 public:
-    explicit Map(QString bgFilename, QString tokenPath, int tileStep, QWidget *parent = 0);
+    explicit Map(QString bgFilename, TokenItem *tokenItem, int tileStep, QWidget *parent = 0);
     // TODO Map(DBItem item);
     ~Map();
 
-    void construct(int id, QString bgFilename, QString tokenPath, int tileStep);
-    void construct(QString bgFilename, QString tokenPath, int tileStep);
+    void construct(int id, QString bgFilename, TokenItem *tokenItem, int tileStep);
+    void construct(QString bgFilename, TokenItem *tokenItem, int tileStep);
 
     void initTooltip();
     void initBgLayer(QString bgFilename);
-    void initMapLayer(QString tokenPath, int tileStep);
+    void initMapLayer(TokenItem *tokenItem, int tileStep);
     void initFoWLayer(int tileStep);
     void initDrawingLayer();
     void initDrawingLayer(Layer *layer);

@@ -5,7 +5,7 @@
 #include <QRectF>
 #include <QString>
 #include <QListWidgetItem>
-
+#include "Token/TokenItem.h"
 #include "Canvas/Sprite.h"
 #include "Layer.h"
 
@@ -23,23 +23,20 @@ public:
      */
     static const int DELTA_DELETE_SPRITE = 40;
 
-    GridLayer(int step = 1);
+    GridLayer(Database *db, int step = 1);
     virtual ~GridLayer() {}
 
     int getStep();
 
-    void setSpritePixmap(QString spritePath);
-    void setSpritePixmap(QPixmap spritePixmap);
-
-    virtual Sprite *addSprite(QPixmap *spritePixmap, QPoint position, Sprite* previousSpriteStack,
+    virtual Sprite *addSprite(TokenItem *tokenItem, QPoint position, Sprite* previousSpriteStack,
                               QGraphicsItem *parentItem);
-    Sprite *addSprite(QPixmap *spritePixmap, QPoint position, Sprite *previousSpriteStack = NULL);
+    Sprite *addSprite(TokenItem *tokenItem, QPoint position, Sprite *previousSpriteStack = NULL);
     virtual void removeSprite(QGraphicsItem *sprite);
 
     void drawBackground(QPainter *painter, const QRectF &rect);
 
 public slots:
-    void setSpritePixmap(QListWidgetItem* token);
+    void setTokenItem(QListWidgetItem* token);
 
 protected:
     /**
@@ -48,9 +45,9 @@ protected:
     int m_Step;
 
     /**
-     * @brief m_SpritePixmap Currently selected pixmap, used to add new sprites.
+     * @brief m_TokenItem Currently selected tokenItem, used to add new sprites.
      */
-    QPixmap m_SpritePixmap;
+    TokenItem *m_TokenItem;
 
     /**
      * @brief m_ActiveMouseMoveEvent true when mouseMoveEvent() is called, false when

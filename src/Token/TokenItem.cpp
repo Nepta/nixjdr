@@ -1,12 +1,33 @@
 #include <QPixmap>
 #include <QPainter>
 #include <QPainterPath>
+#include <QByteArray>
 #include "TokenItem.h"
 
 TokenItem::TokenItem(QString path, QString text, int size, bool custom, bool special) :
     DBItem("tokenitem")
 {
     construct(path, text, size, custom, special);
+}
+
+/**
+ * @brief TokenItem::TokenItem Constructs a TokenItem with information stored in a QByteArray.
+ * @remarks Used in a drag&drop event to restore data previously stored in a QByteArray through the
+ * toQByteArray() method.
+ * @param data
+ * @sa toQByteArray()
+ */
+TokenItem::TokenItem(const QByteArray& data) :
+    DBItem("tokenitem")
+{
+    QDataStream stream(data);
+
+    int id, size;
+    QString text, path;
+    bool custom, special;
+
+    stream >> id >> text >> path >> size >> custom >> special;
+    construct(id, path, text, size, custom, special);
 }
 
 TokenItem::TokenItem(DBItem item) :
@@ -78,4 +99,18 @@ bool TokenItem::isCustom() {
 
 bool TokenItem::isSpecial() {
     return special_;
+}
+
+/**
+ * @brief TokenItem::toQByteArray Stores the current instance of TokenItem in a QByteArray.
+ * @remarks Used in drag&drop events to pass a TokenItem through the MimeData.
+ * @return QByteArray containing sufficient information about the TokenItem to reconstruct it.
+ */
+QByteArray TokenItem::toQByteArray() {
+    QByteArray out;
+    QDataStream stream(&out, QIODevice::WriteOnly);
+
+    stream << id_ << text() << path_ << size_ << custom_ << special_;
+
+    return out;
 }

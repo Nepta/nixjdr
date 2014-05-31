@@ -1,6 +1,8 @@
 #include "GridLayer.h"
 
-GridLayer::GridLayer(int step) {
+GridLayer::GridLayer(Database *db, int step) :
+    Layer(db)
+{
     m_Step = step;
     m_ActiveMouseMoveEvent = false;
 }
@@ -10,26 +12,14 @@ int GridLayer::getStep()
     return m_Step;
 }
 
-void GridLayer::setSpritePixmap(QString spritePath) {
-    QString newPath = QString("resource/%1.png").arg(spritePath);
-
-    setSpritePixmap(QPixmap(newPath));
-}
-
-void GridLayer::setSpritePixmap(QListWidgetItem* token) {
-    if (token != NULL) {
-        QPixmap spritePixmap = token->icon().pixmap(QSize(m_Step, m_Step));
-        setSpritePixmap(spritePixmap);
-    }
-}
-
-void GridLayer::setSpritePixmap(QPixmap spritePixmap) {
-    m_SpritePixmap = spritePixmap;
+void GridLayer::setTokenItem(QListWidgetItem* token) {
+    TokenItem *tokenItem = dynamic_cast<TokenItem*>(token);
+    m_TokenItem = tokenItem;
 }
 
 /**
  * @brief GridLayer::addSprite Adds a sprite to the Layer.
- * @param spritePixmap Sprite's pixmap.
+ * @param tokenItem Sprite's associated TokenItem.
  * @param position Sprite's position
  * @param previousSpriteStack Indicates the Sprite on top of which the new Sprite will be created
  * (Sprites can be stacked).
@@ -37,13 +27,13 @@ void GridLayer::setSpritePixmap(QPixmap spritePixmap) {
  * in which the sprite is created).
  * @return The newly created sprite.
  */
-Sprite *GridLayer::addSprite(QPixmap *spritePixmap, QPoint position, Sprite* previousSpriteStack,
+Sprite *GridLayer::addSprite(TokenItem *tokenItem, QPoint position, Sprite* previousSpriteStack,
     QGraphicsItem *parentItem)
 {
     QPoint spritePos(position.x()/m_Step, position.y()/m_Step);
     spritePos *= m_Step;
 
-    Sprite *sprite = new Sprite(*spritePixmap, parentItem, previousSpriteStack);
+    Sprite *sprite = new Sprite(tokenItem, parentItem, previousSpriteStack);
     sprite->setPos(spritePos);
 
     if (parentItem != NULL) {
@@ -55,14 +45,14 @@ Sprite *GridLayer::addSprite(QPixmap *spritePixmap, QPoint position, Sprite* pre
 
 /**
  * @brief GridLayer::addSprite Overloaded for convenience.
- * @param spritePixmap
+ * @param tokenItem
  * @param position
  * @param previousSpriteStack
  * @return The newly created sprite.
  * @sa addSprite()
  */
-Sprite *GridLayer::addSprite(QPixmap *spritePixmap, QPoint position, Sprite *previousSpriteStack) {
-    return addSprite(spritePixmap, position, previousSpriteStack, this);
+Sprite *GridLayer::addSprite(TokenItem *tokenItem, QPoint position, Sprite *previousSpriteStack) {
+    return addSprite(tokenItem, position, previousSpriteStack, this);
 }
 
 /**
@@ -124,7 +114,7 @@ void GridLayer::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent) {
 
     if (mouseEvent->button() == Qt::LeftButton) {
         QPoint mouseScenePos = mouseEvent->scenePos().toPoint();
-        addSprite(&m_SpritePixmap, mouseScenePos);
+        addSprite(m_TokenItem, mouseScenePos);
     }
 }
 
@@ -135,7 +125,7 @@ void GridLayer::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent) {
  */
 void GridLayer::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent) {
     QPoint mouseScenePos = mouseEvent->scenePos().toPoint();
-    Sprite *sprite = addSprite(&m_SpritePixmap, mouseScenePos, NULL, NULL);
+    Sprite *sprite = addSprite(m_TokenItem, mouseScenePos, NULL, NULL);
     m_ActiveMouseMoveEvent = true;
 
     if (mouseEvent->buttons() & Qt::LeftButton) {

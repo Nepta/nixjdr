@@ -11,6 +11,8 @@
 
 class TokenList: public QListWidget
 {
+    Q_OBJECT
+
 public:
 
     /**

@@ -1,7 +1,7 @@
 #include "Map.h"
 #include "ui_Map.h"
 
-Map::Map(QString bgFilename, QString tokenPath, int tileStep, QWidget *parent) :
+Map::Map(QString bgFilename, TokenItem *tokenItem, int tileStep, QWidget *parent) :
     QWidget(parent),
     DBItem("map"),
     ui(new Ui::Map),
@@ -9,20 +9,20 @@ Map::Map(QString bgFilename, QString tokenPath, int tileStep, QWidget *parent) :
 {
     ui->setupUi(this);
 
-    construct(bgFilename, tokenPath, tileStep);
+    construct(bgFilename, tokenItem, tileStep);
 }
 
-void Map::construct(int id, QString bgFilename, QString tokenPath, int tileStep) {
+void Map::construct(int id, QString bgFilename, TokenItem *tokenItem, int tileStep) {
     id_ = id;
-    construct(bgFilename, tokenPath, tileStep);
+    construct(bgFilename, tokenItem, tileStep);
 }
 
-void Map::construct(QString bgFilename, QString tokenPath, int tileStep) {
+void Map::construct(QString bgFilename, TokenItem *tokenItem, int tileStep) {
     setWindowTitle(tr("Carte"));
 
     initBgLayer(bgFilename);
     initScene(tileStep);
-    initMapLayer(tokenPath, tileStep);
+    initMapLayer(tokenItem, tileStep);
     initFoWLayer(tileStep);
     initDrawingLayer();
 
@@ -52,8 +52,8 @@ void Map::initBgLayer(QString bgFilename) {
     m_BgLayer->setEnabled(false);
 }
 
-void Map::initMapLayer(QString tokenPath, int tileStep) {
-    m_MapLayer = new MapLayer(tokenPath, tileStep);
+void Map::initMapLayer(TokenItem *tokenItem, int tileStep) {
+    m_MapLayer = new MapLayer(db_, tokenItem, tileStep);
     m_Scene.addLayer(m_MapLayer);
     m_MapLayer->setEnabled(true);
 }
@@ -65,7 +65,7 @@ void Map::initMapLayer(QString tokenPath, int tileStep) {
  */
 void Map::initFoWLayer(int tileStep) {
     if (tileStep > 1) {
-        m_FoWLayer = new FoWLayer(tileStep);
+        m_FoWLayer = new FoWLayer(db_, tileStep);
         m_IsGridFoWLayer = true;
         m_Scene.addLayer(m_FoWLayer);
         m_FoWLayer->setEnabled(false);

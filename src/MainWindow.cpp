@@ -88,15 +88,17 @@ void MainWindow::updateMenu() {
 void MainWindow::createMap(QString filename) {
     QListWidget *tokenList = ui->tokenPage->getUi()->m_tokenList;
 
+    TokenItem *currentTokenItem = dynamic_cast<TokenItem*>(tokenList->currentItem());
     // TODO should be able to choose the step value in a message box
-    Map *map = new Map(filename, tokenList->currentItem()->text(), 32);
+    Map *map = new Map(filename, currentTokenItem, 32);
+    map->setDatabase(m_User->getDB());
 
     QMdiSubWindow *subwindow = ui->tableArea->addSubWindow(map);
     subwindow->show();
     subwindow->move(0, 0);
 
     connect(tokenList, SIGNAL(currentItemChanged(QListWidgetItem*,  QListWidgetItem *)),
-            map->getMapLayer(), SLOT(setSpritePixmap(QListWidgetItem*)));
+            map->getMapLayer(), SLOT(setTokenItem(QListWidgetItem*)));
 }
 
 void MainWindow::on_actionCreateMap_triggered(){
