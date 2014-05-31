@@ -78,9 +78,17 @@ QueryBuilder TokenItemRepository::insertTokenItemQB(TokenItem *tokenItem) {
     return qb;
 }
 
+/**
+ * @brief TokenItemRepository::insertTokenItem Inserts the given TokenItem in the database, retrieve
+ * the id given by the db to the new row and sets it on the TokenItem.
+ * @param tokenItem TokenItem which will be inserted in the db.
+ * @param db
+ * @return Id given by the database to the newly inserted row.
+ */
 int TokenItemRepository::insertTokenItem(TokenItem *tokenItem, Database *db) {
     QueryBuilder qb = insertTokenItemQB(tokenItem);
     int id = db->pushWithId(qb);
+    tokenItem->setId(id);
 
     return id;
 }

@@ -23,7 +23,7 @@ public:
      */
     static const int DELTA_DELETE_SPRITE = 40;
 
-    GridLayer(Database *db, int step = 1);
+    GridLayer(int step = 1);
     virtual ~GridLayer() {}
 
     int getStep();

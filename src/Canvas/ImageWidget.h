@@ -12,7 +12,7 @@ namespace Ui {
     class Map;
 }
 
-class ImageWidget : public QWidget
+class ImageWidget : public QWidget, public DBComponent
 {
     Q_OBJECT
 

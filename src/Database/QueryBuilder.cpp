@@ -44,7 +44,11 @@ QueryBuilder *QueryBuilder::values(QList<QString> args) {
             firstArg = false;
         }
 
-        concatenatedArgs += QString("'%1'").arg(arg);
+        if (arg == "NULL") {
+            concatenatedArgs += QString("%1").arg(arg);
+        } else {
+            concatenatedArgs += QString("'%1'").arg(arg);
+        }
     }
 
     query_ += QString(" VALUES (%1)").arg(concatenatedArgs);

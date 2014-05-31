@@ -6,8 +6,8 @@
 #include "Canvas/Sprite.h"
 #include "MapLayer.h"
 
-MapLayer::MapLayer(Database *db, TokenItem *tokenItem, int step) :
-    GridLayer(db, step)
+MapLayer::MapLayer(TokenItem *tokenItem, int step) :
+    GridLayer(step)
 {
     setTokenItem(tokenItem);
     setAcceptDrops(true);

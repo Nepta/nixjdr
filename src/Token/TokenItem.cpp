@@ -5,7 +5,7 @@
 #include "TokenItem.h"
 
 TokenItem::TokenItem(QString path, QString text, int size, bool custom, bool special) :
-    DBItem("tokenitem")
+    DBItem()
 {
     construct(path, text, size, custom, special);
 }
@@ -18,7 +18,7 @@ TokenItem::TokenItem(QString path, QString text, int size, bool custom, bool spe
  * @sa toQByteArray()
  */
 TokenItem::TokenItem(const QByteArray& data) :
-    DBItem("tokenitem")
+    DBItem()
 {
     QDataStream stream(data);
 
@@ -31,7 +31,7 @@ TokenItem::TokenItem(const QByteArray& data) :
 }
 
 TokenItem::TokenItem(DBItem item) :
-    DBItem("tokenitem")
+    DBItem()
 {
     QHash<QString, QString> itemHashMap = item.getHashMap();
 

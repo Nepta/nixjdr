@@ -3,7 +3,7 @@
 TokenList::TokenList(QWidget *parent) :
     QListWidget(parent)
 {
-    addItem(new TokenItem("resource/flandre.png", "flandre", 32));
+    //addItem(new TokenItem("resource/flandre.png", "flandre", 32));
 
     setCurrentItem(item(0));
 }

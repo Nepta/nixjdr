@@ -4,15 +4,15 @@
 #include <QGraphicsPixmapItem>
 #include <QGraphicsSceneDragDropEvent>
 #include "Network/Serializable.h"
+#include "Database/DBItem.h"
 #include "Token/TokenItem.h"
 
-class Sprite : public QGraphicsPixmapItem
+class Sprite : public QGraphicsPixmapItem, public DBItem
 {
 public:
     Sprite(TokenItem *tokenItem, QGraphicsItem *parent = 0, int zValue = 1);
     ~Sprite();
     void setTransparent(bool enabled);
-    int getStackNumber();
     TokenItem *getTokenItem();
 
 private:

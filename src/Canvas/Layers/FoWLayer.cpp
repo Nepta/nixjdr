@@ -3,8 +3,8 @@
 #include "FoWLayer.h"
 #include "Database/Repository/TokenItemRepository.h"
 
-FoWLayer::FoWLayer(Database *db, int step, bool transparentSprites) :
-    GridLayer(db, step),
+FoWLayer::FoWLayer(int step, bool transparentSprites) :
+    GridLayer(step),
     m_TransparentSprites(transparentSprites)
 {
     // TODO multiple colors for multiple players (shift the hue of the pixmap?)

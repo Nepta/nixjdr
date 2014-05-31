@@ -1,10 +1,6 @@
 #include <QGraphicsScene>
 #include "Layer.h"
 
-Layer::Layer() {}
-
-Layer::Layer(Database *db) : DBComponent(db) {}
-
 /**
  * @brief Layer::boundingRect Reimplemented from QGraphicsObject. The bounding rectangle corresponds
  * to the scene rectangle when the layer is enabled. Otherwise the bounding rect is a 0 width/height

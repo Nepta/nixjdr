@@ -8,18 +8,18 @@
 #include <QRectF>
 #include "Database/Database.h"
 #include "Database/DBComponent.h"
+#include "Database/DBItem.h"
 
 /**
  * @brief The abstract Layer class is used to stack and separate different type of elements
  * from a scene.
  */
-class Layer : public QGraphicsObject, public DBComponent
+class Layer : public QGraphicsObject, public DBComponent, public DBItem
 {
     Q_OBJECT
 
 public:
-    Layer();
-    Layer(Database *db);
+    Layer() {}
     virtual ~Layer() {}
 
     virtual void drawBackground(QPainter *painter, const QRectF &rect) = 0;

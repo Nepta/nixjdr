@@ -49,8 +49,7 @@ void TokenMenu::on_tokenButton_clicked()
         TokenItem *item = new TokenItem(filePath, text, size, custom);
 
         // push the item to the database
-        int id = TokenItemRepository::insertTokenItem(item, db_);
-        item->setId(id);
+        TokenItemRepository::insertTokenItem(item, db_);
 
         // add the item to the tokenList
         ui->m_tokenList->addItem(item);

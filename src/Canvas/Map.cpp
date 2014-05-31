@@ -4,7 +4,7 @@
 
 Map::Map(QString bgFilename, TokenItem *tokenItem, int tileStep, QWidget *parent) :
     QWidget(parent),
-    DBItem("map"),
+    DBItem(),
     ui(new Ui::Map),
     m_Scene()
 {
@@ -54,7 +54,8 @@ void Map::initBgLayer(QString bgFilename) {
 }
 
 void Map::initMapLayer(TokenItem *tokenItem, int tileStep) {
-    m_MapLayer = new MapLayer(db_, tokenItem, tileStep);
+    m_MapLayer = new MapLayer(tokenItem, tileStep);
+    m_MapLayer->setDatabase(db_);
     m_Scene.addLayer(m_MapLayer);
     m_MapLayer->setEnabled(true);
     m_SelectedLayer = m_MapLayer;
@@ -71,7 +72,8 @@ void Map::initMapLayer(TokenItem *tokenItem, int tileStep) {
  */
 void Map::initFoWLayer(int tileStep) {
     if (tileStep > 1) {
-        m_FoWLayer = new FoWLayer(db_, tileStep);
+        m_FoWLayer = new FoWLayer(tileStep);
+        m_FoWLayer->setDatabase(db_);
         m_IsGridFoWLayer = true;
         m_Scene.addLayer(m_FoWLayer);
         m_FoWLayer->setEnabled(false);
@@ -84,6 +86,7 @@ void Map::initFoWLayer(int tileStep) {
     }
     else {
         m_FoWLayer = new DrawingLayer(2, 2, QColor(50, 50, 50));
+        m_FoWLayer->setDatabase(db_);
         m_IsGridFoWLayer = false;
         initDrawingLayer(m_FoWLayer);
     }
@@ -91,6 +94,7 @@ void Map::initFoWLayer(int tileStep) {
 
 void Map::initDrawingLayer() {
     m_DrawingLayer = new DrawingLayer(2, 2, QColor(0, 0, 0));
+    m_DrawingLayer->setDatabase(db_);
     initDrawingLayer(m_DrawingLayer);
 }
 

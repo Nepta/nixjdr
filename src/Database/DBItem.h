@@ -5,12 +5,11 @@
 
 class DBItem {
 protected:
-    QString tableName_;
     int id_;
     QHash<QString, QString> columnsValues_;
 
 public:
-    DBItem(QString tableName = "", int id = 0);
+    DBItem(int id = 0);
 
     void appendValue(QString columName,QString newValue);
     void appendValue(QString columName, int newValue);

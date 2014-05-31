@@ -1,8 +1,8 @@
 #include <QGraphicsScene>
+#include "Database/Repository/SpriteRepository.h"
 #include "GridLayer.h"
 
-GridLayer::GridLayer(Database *db, int step) :
-    Layer(db)
+GridLayer::GridLayer(int step)
 {
     m_Step = step;
     m_ActiveMouseMoveEvent = false;
@@ -35,6 +35,9 @@ Sprite *GridLayer::addSprite(TokenItem *tokenItem, QPoint position, int zValue,
 
     Sprite *sprite = new Sprite(tokenItem, parentItem, zValue);
     sprite->setPos(spritePos);
+
+    // Insert the sprite in the database
+    SpriteRepository::insertSprite(sprite, db_);
 
     if (parentItem != NULL) {
         sprite->installSceneEventFilter(this);

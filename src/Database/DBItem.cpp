@@ -1,7 +1,6 @@
 #include "DBItem.h"
 
-DBItem::DBItem(QString table, int id) :
-    tableName_(table),
+DBItem::DBItem(int id) :
     id_(id)
 {}
 

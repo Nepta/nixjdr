@@ -1,6 +1,8 @@
 #include "BackgroundLayer.h"
 
-BackgroundLayer::BackgroundLayer(QString filename) : m_Background(filename) {}
+BackgroundLayer::BackgroundLayer(QString filename) :
+    m_Background(filename)
+{}
 
 BackgroundLayer::~BackgroundLayer() {}
 
