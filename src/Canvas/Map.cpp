@@ -97,6 +97,13 @@ void Map::initDrawingLayer(Layer *layer) {
             drawingLayer, SLOT(setEraserSize(int)));
     connect(drawingUi->m_EraseButton, SIGNAL(clicked(bool)),
             drawingLayer, SLOT(erasePixmapContent()));
+
+
+    for(int i=0; i < drawingUi->m_ToolLayout->count(); i++){
+        QPushButton *currentButton = dynamic_cast<QPushButton*>(drawingUi->m_ToolLayout->itemAt(i)
+                                                                ->widget());
+        connect(currentButton, SIGNAL(clicked()), m_DrawingLayer.getTools(), SLOT(setCurrentToolCode()));
+    }
 }
 
 void Map::initTooltip() {

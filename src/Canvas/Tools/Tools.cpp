@@ -3,10 +3,9 @@
 #include "Canvas/Tools/ToolEraser.h"
 
 const QHash<QString, ToolCodes> Tools::s_ToolCodes = {
-    {"bla" , ToolCodes::TOOL_PEN},
-    {"blabla", ToolCodes::TOOL_ERASER}
+    {"m_PenButton", ToolCodes::TOOL_PEN},
+    {"m_EraserButton", ToolCodes::TOOL_ERASER}
 };
-
 
 Tools::Tools(QObject *parent, int penSize, QColor color, int eraserSize,
              QGraphicsItem *drawingItem) :
@@ -14,6 +13,9 @@ Tools::Tools(QObject *parent, int penSize, QColor color, int eraserSize,
 {
     m_Tools.insert(ToolCodes::TOOL_PEN, new ToolPen(drawingItem, penSize, color));
     m_Tools.insert(ToolCodes::TOOL_ERASER, new ToolEraser(eraserSize));
+
+
+    m_CurrentToolCode = ToolCodes::TOOL_PEN;
 }
 
 Tools::~Tools(){
@@ -22,4 +24,15 @@ Tools::~Tools(){
 
 AbstractTool *Tools::getTool(ToolCodes code){
     return m_Tools.value(code);
+}
+
+void Tools::setCurrentToolCode(){
+    if(qobject_cast<QPushButton*>(sender()) != NULL){
+        m_CurrentToolCode = s_ToolCodes.value(sender()->objectName());
+        emit changeTool();
+    }
+}
+
+AbstractTool *Tools::getCurrentTool(){
+    return getTool(m_CurrentToolCode);
 }

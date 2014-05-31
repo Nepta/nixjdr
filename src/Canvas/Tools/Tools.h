@@ -5,6 +5,7 @@
 #include <QHash>
 #include <QPushButton>
 
+#include "ui_DrawingMenu.h"
 #include "Canvas/Tools/AbstractTool.h"
 
 enum class ToolCodes : quint16 {
@@ -26,13 +27,18 @@ public:
     ~Tools();
 
     AbstractTool *getTool(ToolCodes code);
+    AbstractTool *getCurrentTool();
+
+signals:
+    void changeTool();
 
 private:
     QHash<ToolCodes, AbstractTool *> m_Tools;
-
-signals:
+    ToolCodes m_CurrentToolCode;
+    Ui_DrawingMenu *ui;
 
 public slots:
+    void setCurrentToolCode();
 
 };
 

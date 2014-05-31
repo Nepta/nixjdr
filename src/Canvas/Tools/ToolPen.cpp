@@ -1,6 +1,5 @@
 #include <QPainter>
 #include <QKeyEvent>
-#include <QDebug>
 
 #include "ToolPen.h"
 

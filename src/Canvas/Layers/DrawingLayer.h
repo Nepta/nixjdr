@@ -17,21 +17,21 @@ class DrawingLayer : public Layer
 public:
     DrawingLayer(int penSize, int eraserSize, QColor color);
     ~DrawingLayer();
-
-    void initDrawingZone();
-
     void drawBackground(QPainter *, const QRectF &);
 
+    void initDrawingZone();
+    Tools *getTools();
 
 public slots:
     void setPenSize(int size);
     void setEraserSize(int size);
     void erasePixmapContent();
+    void changeTool();
 
 private:
     QGraphicsPixmapItem *m_DrawingZone;
     QPixmap *m_Pixmap;
-    Tools m_Tools;
+    Tools *m_Tools;
 };
 
 #endif // DRAWINGLAYER_H
