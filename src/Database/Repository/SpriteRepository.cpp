@@ -7,14 +7,6 @@ const QString SpriteRepository::getTableName() {
     return "sprite";
 }
 
-QueryBuilder SpriteRepository::getSpritesQB() {
-    QueryBuilder qb;
-    qb.select("s.id, s.posx, s.posy, s.zvalue, s.tokenitemid, s.maplayerid, s.fowlayerid")
-     ->from(getTableName(), "s");
-
-    return qb;
-}
-
 QueryBuilder SpriteRepository::insertSpriteQB(Sprite *sprite) {
     QList<QString> args;
     args.append(QString::number(sprite->pos().x()));

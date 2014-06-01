@@ -3,6 +3,8 @@
 
 #include <QString>
 
+#include "Database/QueryBuilder.h"
+
 class Repository
 {
 public:
@@ -10,6 +12,8 @@ public:
     virtual ~Repository() {}
 
     virtual const QString getTableName() = 0;
+
+    QueryBuilder findAllQB();
 };
 
 #endif // REPOSITORY_H

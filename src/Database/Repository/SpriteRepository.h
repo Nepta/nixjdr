@@ -4,7 +4,6 @@
 #include <QString>
 
 #include "Database/Repository/Repository.h"
-#include "Database/QueryBuilder.h"
 #include "Database/Database.h"
 
 #include "Canvas/Sprite.h"
@@ -12,9 +11,11 @@
 class SpriteRepository : public Repository
 {
 public:
+    SpriteRepository() {}
+    ~SpriteRepository() {}
+
     const QString getTableName();
 
-    QueryBuilder getSpritesQB();
     QueryBuilder insertSpriteQB(Sprite *sprite);
 
     int insertSprite(Sprite *sprite, Database *db);

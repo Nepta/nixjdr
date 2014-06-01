@@ -4,7 +4,6 @@
 #include <QString>
 
 #include "Database/Repository/Repository.h"
-#include "Database/QueryBuilder.h"
 #include "Database/Database.h"
 
 #include "Token/TokenItem.h"
@@ -12,9 +11,11 @@
 class TokenItemRepository : public Repository
 {
 public:
+    TokenItemRepository() {}
+    ~TokenItemRepository() {}
+
     const QString getTableName();
 
-    QueryBuilder getTokenItemsQB();
     QueryBuilder getNormalTokenItemsQB();
     QueryBuilder getSpecialTokenItemsQB();
     QueryBuilder insertTokenItemQB(TokenItem *tokenItem);

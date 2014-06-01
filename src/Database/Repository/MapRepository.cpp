@@ -4,16 +4,6 @@ const QString MapRepository::getTableName() {
     return "map";
 }
 
-QueryBuilder MapRepository::getMapQB() {
-    QueryBuilder qb;
-    qb.select(
-        "m.id, m.sceneheight, m.scenewidth, m.backgroundlayerid, m.maplayerid, m.fowlayerid"
-        ", m.drawinglayerid"
-    )->from(getTableName(), "m");
-
-    return qb;
-}
-
 QueryBuilder MapRepository::insertMapQB(Map *map) {
     QList<QString> args;
     args.append(QString::number(map->getSceneHeight()));

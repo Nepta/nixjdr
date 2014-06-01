@@ -8,29 +8,16 @@ const QString TokenItemRepository::getTableName() {
     return "tokenitem";
 }
 
-/**
- * @brief TokenItemRepository::getTokenItemsQB Constructs a query with the QueryBuilder to retrieve
- * the TokenItems from the database.
- * @return QueryBuilder
- */
-QueryBuilder TokenItemRepository::getTokenItemsQB() {
-    QueryBuilder qb;
-    qb.select("ti.id, ti.text, ti.path, ti.size, ti.custom, ti.special")
-     ->from(getTableName(), "ti");
-
-    return qb;
-}
-
 QueryBuilder TokenItemRepository::getNormalTokenItemsQB() {
-    QueryBuilder qb = getTokenItemsQB();
-    qb.where("ti.special = 0");
+    QueryBuilder qb = findAllQB();
+    qb.where("special = 0");
 
     return qb;
 }
 
 QueryBuilder TokenItemRepository::getSpecialTokenItemsQB() {
-    QueryBuilder qb = getTokenItemsQB();
-    qb.where("ti.special = 1");
+    QueryBuilder qb = findAllQB();
+    qb.where("special = 1");
 
     return qb;
 }
@@ -56,7 +43,7 @@ QList<TokenItem*> TokenItemRepository::getTokenItems(Database *db) {
  */
 TokenItem* TokenItemRepository::getFowTokenItem(Database *db) {
     QueryBuilder qb = getSpecialTokenItemsQB();
-    qb.andWhere("ti.text = 'fow'");
+    qb.andWhere("text = 'fow'");
 
     DBItem dbItem = db->pullFirst(qb);
     TokenItem* tokenItem = new TokenItem(dbItem);
