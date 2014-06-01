@@ -11,3 +11,10 @@ QueryBuilder Repository::findAllQB() {
 
     return qb;
 }
+
+int Repository::insert(DBItem *item, QueryBuilder qb, Database *db) {
+    int id = db->pushWithId(qb);
+    item->setId(id);
+
+    return id;
+}

@@ -4,7 +4,6 @@
 #include <QString>
 
 #include "Database/Repository/Repository.h"
-#include "Database/Database.h"
 
 #include "Canvas/Sprite.h"
 

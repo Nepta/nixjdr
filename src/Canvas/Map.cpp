@@ -1,3 +1,5 @@
+#include "Database/Repository/RepositoryManager.h"
+
 #include "Map.h"
 #include "ui_Map.h"
 #include "ui_DrawingMenu.h"
@@ -56,6 +58,10 @@ void Map::initBgLayer(QString bgFilename) {
 void Map::initMapLayer(TokenItem *tokenItem, int tileStep) {
     m_MapLayer = new MapLayer(tokenItem, tileStep);
     m_MapLayer->setDatabase(db_);
+
+    // Add MapLayer to the database
+    RepositoryManager::s_MapLayerRepository.insertMapLayer(m_MapLayer, db_);
+
     m_Scene.addLayer(m_MapLayer);
     m_MapLayer->setEnabled(true);
     m_SelectedLayer = m_MapLayer;
@@ -127,7 +133,7 @@ void Map::initScene(int tileStep) {
     int sceneWidth = m_BgLayer->getBackground()->rect().width()
             + 2*4 * tileStep;
 
-    m_Scene.setSceneRect(0, 0, sceneWidth, sceneHeight); // TODO pass those value through a dialog box
+    m_Scene.setSceneRect(0, 0, sceneWidth, sceneHeight);
     ui->m_View->setScene(&m_Scene);
 }
 

@@ -65,16 +65,17 @@ SOURCES += \
     Database/DBItem.cpp \
     Database/QueryBuilder.cpp \
     Database/DBComponent.cpp \
+    Database/Repository/Repository.cpp \
+    Database/Repository/RepositoryManager.cpp \
     Database/Repository/TokenItemRepository.cpp \
     Database/Repository/SpriteRepository.cpp \
     Database/Repository/MapRepository.cpp \
+    Database/Repository/MapLayerRepository.cpp \
     Token/TokenMenu.cpp \
     Token/TokenList.cpp \
     Token/TokenItem.cpp \
     TurnMenu/TurnList.cpp \
-    TurnMenu/TurnMenu.cpp \
-    Database/Repository/Repository.cpp \
-    Database/Repository/RepositoryManager.cpp
+    TurnMenu/TurnMenu.cpp
 
 HEADERS  += \
     MainWindow.h \
@@ -128,16 +129,17 @@ HEADERS  += \
     Database/QueryBuilder.h \
     Database/DBComponent.h \
     Database/DBItemList.h \
+    Database/Repository/Repository.h \
+    Database/Repository/RepositoryManager.h \
     Database/Repository/TokenItemRepository.h \
     Database/Repository/SpriteRepository.h \
     Database/Repository/MapRepository.h \
+    Database/Repository/MapLayerRepository.h \
     Token/TokenMenu.h \
     Token/TokenList.h \
     Token/TokenItem.h \
     TurnMenu/TurnList.h \
-    TurnMenu/TurnMenu.h \
-    Database/Repository/Repository.h \
-    Database/Repository/RepositoryManager.h
+    TurnMenu/TurnMenu.h
 
 FORMS    += \
     TokenMenu.ui \

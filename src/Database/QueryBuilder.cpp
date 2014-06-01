@@ -33,6 +33,18 @@ QueryBuilder *QueryBuilder::insertInto(QString table, QString cols) {
     return this;
 }
 
+/**
+ * @brief QueryBuilder::insertIntoDefault Insert default values into the specified table.
+ * @param table table in which the values will be inserted.
+ * @return QueryBuilder
+ */
+QueryBuilder *QueryBuilder::insertIntoDefault(QString table) {
+    query_ = QString("INSERT INTO %1 DEFAULT VALUES")
+             .arg(table);
+
+    return this;
+}
+
 QueryBuilder *QueryBuilder::values(QList<QString> args) {
     QString concatenatedArgs("");
     bool firstArg = true;

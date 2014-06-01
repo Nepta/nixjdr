@@ -74,8 +74,7 @@ QueryBuilder TokenItemRepository::insertTokenItemQB(TokenItem *tokenItem) {
  */
 int TokenItemRepository::insertTokenItem(TokenItem *tokenItem, Database *db) {
     QueryBuilder qb = insertTokenItemQB(tokenItem);
-    int id = db->pushWithId(qb);
-    tokenItem->setId(id);
+    int id = insert(tokenItem, qb, db);
 
     return id;
 }

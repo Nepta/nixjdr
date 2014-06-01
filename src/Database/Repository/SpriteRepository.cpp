@@ -42,8 +42,7 @@ QueryBuilder SpriteRepository::insertSpriteQB(Sprite *sprite) {
  */
 int SpriteRepository::insertSprite(Sprite *sprite, Database *db) {
     QueryBuilder qb = insertSpriteQB(sprite);
-    int id = db->pushWithId(qb);
-    sprite->setId(id);
+    int id = insert(sprite, qb, db);
 
     return id;
 }

@@ -4,6 +4,8 @@
 #include <QString>
 
 #include "Database/QueryBuilder.h"
+#include "Database/Database.h"
+#include "Database/DBItem.h"
 
 class Repository
 {
@@ -14,6 +16,8 @@ public:
     virtual const QString getTableName() = 0;
 
     QueryBuilder findAllQB();
+
+    int insert(DBItem *item, QueryBuilder qb, Database *db);
 };
 
 #endif // REPOSITORY_H

@@ -24,8 +24,7 @@ QueryBuilder MapRepository::insertMapQB(Map *map) {
 
 int MapRepository::insertMap(Map *map, Database *db) {
     QueryBuilder qb = insertMapQB(map);
-    int id = db->pushWithId(qb);
-    map->setId(id);
+    int id = insert(map, qb, db);
 
     return id;
 }
