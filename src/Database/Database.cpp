@@ -56,10 +56,9 @@ int Database::pushWithId(QueryBuilder queryBuilder) {
  * @brief Database::pull Executes the query given by the queryBuilder and stores the resulting rows
  * in a QList of DBItem.
  * @param queryBuilder
- * @param prefix will be added to the fieldName in the DBItems QHash's key
  * @return QList of DBItem containing the resulting rows of the query.
  */
-QList<DBItem> Database::pull(QueryBuilder queryBuilder, QString prefix) {
+QList<DBItem> Database::pull(QueryBuilder queryBuilder) {
     QSqlQuery query = queryBuilder.getQuery(); // query to execute
     QSqlRecord record = query.record(); // holds information about field names
     QList<DBItem> dbItems; // list to populate
@@ -68,7 +67,7 @@ QList<DBItem> Database::pull(QueryBuilder queryBuilder, QString prefix) {
         DBItem item;
 
         for (int i = 0 ; i < record.count() ; i++) {
-            QString fieldName = prefix + record.fieldName(i);
+            QString fieldName = record.fieldName(i);
             QString fieldValue = query.value(i).toString();
 
             item.appendValue(fieldName, fieldValue);
@@ -84,17 +83,16 @@ QList<DBItem> Database::pull(QueryBuilder queryBuilder, QString prefix) {
  * @brief Database::pullFirst Executes the query given by the queryBuilder and store the first row
  * in a DBItem.
  * @param queryBuilder
- * @param prefix will be added to the fieldName in the DBItem QHash's key
  * @return DBitem containing the first resulting row of the query.
  */
-DBItem Database::pullFirst(QueryBuilder queryBuilder, QString prefix) {
+DBItem Database::pullFirst(QueryBuilder queryBuilder) {
     QSqlQuery query = queryBuilder.getQuery(); // query to execute
     QSqlRecord record = query.record(); // holds information about field names
     DBItem item; // item to create
 
     if (query.next()) {
         for (int i = 0 ; i < record.count() ; i++) {
-            QString fieldName = prefix + record.fieldName(i);
+            QString fieldName = record.fieldName(i);
             QString fieldValue = query.value(i).toString();
 
             item.appendValue(fieldName, fieldValue);

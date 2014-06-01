@@ -4,6 +4,8 @@
 #include <QDesktopWidget>
 #include <QToolBox>
 
+#include "Database/Repository/MapRepository.h"
+
 #include "Canvas/Layers/MapLayer.h"
 #include "Canvas/CanvasScene.h"
 #include "Canvas/CanvasView.h"
@@ -94,6 +96,9 @@ void MainWindow::createMap(QString filename) {
     Map *map = new Map(filename, currentTokenItem, 32);
     map->setDatabase(m_User->getDB());
 
+    // Add Map to the database
+    MapRepository::insertMap(map, m_User->getDB());
+
     QMdiSubWindow *subwindow = ui->tableArea->addSubWindow(map);
     subwindow->show();
     subwindow->move(0, 0);
@@ -122,7 +127,6 @@ void MainWindow::on_actionCreateImage_triggered(){
 
 void MainWindow::createImage(QString filename) {
     // TODO should be able to choose the step value in a message box
-//    Map *map = new Map(filename, tokenList->currentItem()->text(), 32);
     ImageWidget *image = new ImageWidget(filename);
     QMdiSubWindow *subwindow = ui->tableArea->addSubWindow(image);
     subwindow->show();

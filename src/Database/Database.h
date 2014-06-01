@@ -17,8 +17,8 @@ public:
     virtual ~Database();
     void push(QueryBuilder queryBuilder);
     int pushWithId(QueryBuilder queryBuilder);
-    QList<DBItem> pull(QueryBuilder queryBuilder, QString prefix = "");
-    DBItem pullFirst(QueryBuilder queryBuilder, QString prefix = "");
+    QList<DBItem> pull(QueryBuilder queryBuilder);
+    DBItem pullFirst(QueryBuilder queryBuilder);
 
 private:
     QSqlDatabase db_;

@@ -40,7 +40,13 @@ public:
     void initScene(int tileStep);
 
     Ui::Map *getUi();
+    int getSceneHeight();
+    int getSceneWidth();
+    BackgroundLayer *getBgLayer();
     MapLayer *getMapLayer();
+    Layer *getFoWLayer();
+    DrawingLayer *getDrawingLayer();
+
 
 private slots:
     void selectedEditionLayer(QAbstractButton *button, bool checked);

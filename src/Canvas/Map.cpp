@@ -214,13 +214,6 @@ void Map::showMapTooltip() {
     m_Tooltip.showTooltip(position);
 }
 
-Ui::Map *Map::getUi() {
-    return ui;
-}
-
-MapLayer *Map::getMapLayer() {
-    return m_MapLayer;
-}
 
 void Map::on_collapseButton_clicked(bool checked) {
     ui->scrollArea->setVisible(checked);
@@ -242,4 +235,32 @@ void Map::keyPressEvent(QKeyEvent *keyEvent){
  */
 void Map::keyReleaseEvent(QKeyEvent *keyEvent){
     m_Scene.sendEvent(m_SelectedLayer, keyEvent);
+}
+
+Ui::Map *Map::getUi() {
+    return ui;
+}
+
+int Map::getSceneHeight() {
+    return m_Scene.height();
+}
+
+int Map::getSceneWidth() {
+    return m_Scene.width();
+}
+
+BackgroundLayer *Map::getBgLayer() {
+    return m_BgLayer;
+}
+
+MapLayer *Map::getMapLayer() {
+    return m_MapLayer;
+}
+
+Layer *Map::getFoWLayer() {
+    return m_FoWLayer;
+}
+
+DrawingLayer *Map::getDrawingLayer() {
+    return m_DrawingLayer;
 }
