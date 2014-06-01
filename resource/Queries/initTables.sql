@@ -42,11 +42,10 @@ CREATE TABLE map (
 	id                serial NOT NULL,
 	sceneheight       integer,
 	scenewidth        integer,
--- TODO	drawingLayerid    integer REFERENCES drawinglayer(id) NOT NULL,
 	backgroundlayerid integer REFERENCES backgroundlayer(id) NOT NULL,
 	maplayerid        integer REFERENCES maplayer(id) NOT NULL,
 	foWlayerid        integer REFERENCES fowlayer(id) NOT NULL,
-	drawingLayerid    integer NOT NULL,
+	drawingLayerid    integer REFERENCES drawinglayer(id) NOT NULL,
 	CONSTRAINT map_pkey PRIMARY KEY (id)
 );
 

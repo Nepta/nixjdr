@@ -6,3 +6,4 @@ TokenItemRepository RepositoryManager::s_TokenItemRepository;
 BackgroundLayerRepository RepositoryManager::s_BgLayerRepository;
 MapLayerRepository RepositoryManager::s_MapLayerRepository;
 FoWLayerRepository RepositoryManager::s_FoWLayerRepository;
+DrawingLayerRepository RepositoryManager::s_DrawingLayerRepository;

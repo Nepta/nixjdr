@@ -52,23 +52,23 @@ Map::~Map() {
 void Map::initBgLayer(QString bgFilename) {
     m_BgLayer = new BackgroundLayer(bgFilename);
 
-    // Add BackgroundLayer to the database
-    RepositoryManager::s_BgLayerRepository.insertBgLayer(m_BgLayer, db_);
-
     m_Scene.addLayer(m_BgLayer);
     m_BgLayer->setEnabled(false);
+
+    // Add BackgroundLayer to the database
+    RepositoryManager::s_BgLayerRepository.insertBgLayer(m_BgLayer, db_);
 }
 
 void Map::initMapLayer(TokenItem *tokenItem, int tileStep) {
     m_MapLayer = new MapLayer(tokenItem, tileStep);
     m_MapLayer->setDatabase(db_);
 
-    // Add MapLayer to the database
-    RepositoryManager::s_MapLayerRepository.insertMapLayer(m_MapLayer, db_);
-
     m_Scene.addLayer(m_MapLayer);
     m_MapLayer->setEnabled(true);
     m_SelectedLayer = m_MapLayer;
+
+    // Add MapLayer to the database
+    RepositoryManager::s_MapLayerRepository.insertMapLayer(m_MapLayer, db_);
 
     // Map tools
     connect(ui->m_MapScaler, SIGNAL(valueChanged(int)),
@@ -86,12 +86,12 @@ void Map::initFoWLayer(int tileStep) {
         m_FoWLayer = fowLayer;
         m_FoWLayer->setDatabase(db_);
 
-        // Add FoWLayer to the database
-        RepositoryManager::s_FoWLayerRepository.insertFoWLayer(fowLayer, db_);
-
         m_IsGridFoWLayer = true;
         m_Scene.addLayer(m_FoWLayer);
         m_FoWLayer->setEnabled(false);
+
+        // Add FoWLayer to the database
+        RepositoryManager::s_FoWLayerRepository.insertFoWLayer(fowLayer, db_);
 
         // FoW tools
         connect(ui->m_FillFoW, SIGNAL(clicked(bool)),
@@ -111,6 +111,9 @@ void Map::initDrawingLayer() {
     m_DrawingLayer = new DrawingLayer(2, 2, QColor(0, 0, 0));
     m_DrawingLayer->setDatabase(db_);
     initDrawingLayer(m_DrawingLayer);
+
+    // Add DrawingLayer to the database
+    RepositoryManager::s_DrawingLayerRepository.insertDrawingLayer(m_DrawingLayer, db_);
 }
 
 /**

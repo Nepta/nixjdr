@@ -21,10 +21,10 @@ QPixmap *BackgroundLayer::getBackground() {
 }
 
 QByteArray BackgroundLayer::getBackgroundData() {
-    QByteArray bg;
-    QBuffer buffer(&bg);
+    QByteArray data;
+    QBuffer buffer(&data);
     buffer.open(QIODevice::WriteOnly);
     m_Background.save(&buffer, "PNG");
 
-    return bg;
+    return data;
 }

@@ -18,6 +18,7 @@ public:
     ~DrawingLayer();
 
     void initDrawingZone();
+    QByteArray getPixmapData();
 
     void drawBackground(QPainter *, const QRectF &);
 

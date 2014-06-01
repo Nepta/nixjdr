@@ -73,6 +73,7 @@ SOURCES += \
     Database/Repository/MapLayerRepository.cpp \
     Database/Repository/FoWLayerRepository.cpp \
     Database/Repository/BackgroundLayerRepository.cpp \
+    Database/Repository/DrawingLayerRepository.cpp \
     Token/TokenMenu.cpp \
     Token/TokenList.cpp \
     Token/TokenItem.cpp \
@@ -139,6 +140,7 @@ HEADERS  += \
     Database/Repository/MapLayerRepository.h \
     Database/Repository/FoWLayerRepository.h \
     Database/Repository/BackgroundLayerRepository.h \
+    Database/Repository/DrawingLayerRepository.h \
     Token/TokenMenu.h \
     Token/TokenList.h \
     Token/TokenItem.h \

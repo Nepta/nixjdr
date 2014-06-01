@@ -7,6 +7,7 @@
 #include "Database/Repository/BackgroundLayerRepository.h"
 #include "Database/Repository/MapLayerRepository.h"
 #include "Database/Repository/FoWLayerRepository.h"
+#include "Database/Repository/DrawingLayerRepository.h"
 
 class RepositoryManager
 {
@@ -17,6 +18,7 @@ public:
     static BackgroundLayerRepository s_BgLayerRepository;
     static MapLayerRepository s_MapLayerRepository;
     static FoWLayerRepository s_FoWLayerRepository;
+    static DrawingLayerRepository s_DrawingLayerRepository;
 };
 
 #endif // REPOSITORYMANAGER_H

@@ -1,4 +1,6 @@
 #include <QGraphicsScene>
+#include <QByteArray>
+#include <QBuffer>
 
 #include "DrawingLayer.h"
 
@@ -138,4 +140,13 @@ void DrawingLayer::eraseOnPixmap(const QPointF &oldPos, const QPointF &pos) {
 void DrawingLayer::erasePixmapContent() {
     m_Pixmap->fill(Qt::transparent);
     m_DrawingZone.setPixmap(*m_Pixmap);
+}
+
+QByteArray DrawingLayer::getPixmapData() {
+    QByteArray data;
+    QBuffer buffer(&data);
+    buffer.open(QIODevice::WriteOnly);
+    m_Pixmap->save(&buffer, "PNG");
+
+    return data;
 }
