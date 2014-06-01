@@ -18,6 +18,7 @@ public:
     void drawBackground(QPainter *painter, const QRectF &rect);
 
     QPixmap* getBackground();
+    QByteArray getBackgroundData();
 
 private:
     QPixmap m_Background;

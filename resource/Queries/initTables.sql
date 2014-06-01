@@ -18,8 +18,7 @@ CREATE TABLE tokenitem (
 
 CREATE TABLE backgroundlayer (
 	id   serial NOT NULL,
---	path character varying(120),
--- TODO pixmap BLOB,
+	pixmap bytea,
 	CONSTRAINT backgroundlayer_pkey PRIMARY KEY (id)
 );
 
@@ -35,7 +34,7 @@ CREATE TABLE fowlayer (
 
 CREATE TABLE drawinglayer (
 	id serial NOT NULL,
-	-- TODO pixmap BLOB,
+	pixmap bytea,
 	CONSTRAINT drawinglayer_pkey PRIMARY KEY (id)
 );
 
@@ -43,9 +42,8 @@ CREATE TABLE map (
 	id                serial NOT NULL,
 	sceneheight       integer,
 	scenewidth        integer,
--- TODO	backgroundlayerid integer REFERENCES backgroundlayer(id) NOT NULL,
 -- TODO	drawingLayerid    integer REFERENCES drawinglayer(id) NOT NULL,
-	backgroundlayerid integer NOT NULL,
+	backgroundlayerid integer REFERENCES backgroundlayer(id) NOT NULL,
 	maplayerid        integer REFERENCES maplayer(id) NOT NULL,
 	foWlayerid        integer REFERENCES fowlayer(id) NOT NULL,
 	drawingLayerid    integer NOT NULL,

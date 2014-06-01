@@ -1,5 +1,8 @@
 #include "BackgroundLayer.h"
 
+#include <QByteArray>
+#include <QBuffer>
+
 BackgroundLayer::BackgroundLayer(QString filename) :
     m_Background(filename)
 {}
@@ -15,4 +18,13 @@ void BackgroundLayer::drawBackground(QPainter *painter, const QRectF &rect) {
 
 QPixmap *BackgroundLayer::getBackground() {
     return &m_Background;
+}
+
+QByteArray BackgroundLayer::getBackgroundData() {
+    QByteArray bg;
+    QBuffer buffer(&bg);
+    buffer.open(QIODevice::WriteOnly);
+    m_Background.save(&buffer, "PNG");
+
+    return bg;
 }

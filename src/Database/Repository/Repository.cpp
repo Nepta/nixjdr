@@ -27,10 +27,10 @@ QueryBuilder Repository::insertQB(QList<QString> cols) {
 
 /**
  * @brief Repository::insert Inserts a row in the database with the query given by the QueryBuilder
- * (qb) and the given bind values (bindValues). Retrieves the id of the inserted row and sets it on
+ * (qb) and the given bind values (pBindValues). Retrieves the id of the inserted row and sets it on
  * the DBItem.
- * @param item Item  associated with inserted row in the database which will be given an id once the
- * insertion is successful.
+ * @param item Item associated with the inserted row in the database which will be given an id once
+ * the insertion is successful.
  * @param qb QueryBuilder holding the query which will be executed.
  * @param pBindValues Holds the values to be bound with the request.
  * @param db Database

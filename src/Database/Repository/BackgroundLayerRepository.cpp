@@ -5,17 +5,12 @@ const QString BackgroundLayerRepository::getTableName() {
 }
 
 int BackgroundLayerRepository::insertBgLayer(BackgroundLayer *bgLayer, Database *db) {
-    /* TODO
     QHash<QString, QVariant> args {
-        {"pixmap", *bgLayer->getBackground()}
+        {"pixmap", bgLayer->getBackgroundData()}
     };
-
 
     QueryBuilder qb = insertQB(args.keys());
     int id = insert(bgLayer, qb, args, db);
-    */
-
-    int id = insertIntoDefault(bgLayer, db);
 
     return id;
 }
