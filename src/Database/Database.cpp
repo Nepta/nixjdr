@@ -7,9 +7,7 @@
 #include <QList>
 #include "Database.h"
 
-Database::Database(const QString dbName, const QString& serverAddress, const int& serverPort) :
-    repositoryManager_()
-{
+Database::Database(const QString dbName, const QString& serverAddress, const int& serverPort) {
     db_ = QSqlDatabase::addDatabase("QPSQL");
 	db_.setUserName("jdr");
     db_.setDatabaseName(dbName);
@@ -102,8 +100,4 @@ DBItem Database::pullFirst(QueryBuilder queryBuilder) {
     }
 
     return item;
-}
-
-RepositoryManager *Database::getRepositoryManager() {
-    return &repositoryManager_;
 }

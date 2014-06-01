@@ -6,7 +6,6 @@
 #include <QFile>
 #include <QObject>
 
-#include "Repository/RepositoryManager.h"
 #include "QueryBuilder.h"
 #include "DBItem.h"
 #include "DBItemList.h"
@@ -23,11 +22,8 @@ public:
     QList<DBItem> pull(QueryBuilder queryBuilder);
     DBItem pullFirst(QueryBuilder queryBuilder);
 
-    RepositoryManager *getRepositoryManager();
-
 private:
     QSqlDatabase db_;
-    RepositoryManager repositoryManager_;
 };
 
 #endif // DATABASE_H

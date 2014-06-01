@@ -1,6 +1,6 @@
 #include <QGraphicsScene>
 
-#include "Database/Repository/TokenItemRepository.h"
+#include "Database/Repository/RepositoryManager.h"
 
 #include "FoWLayer.h"
 
@@ -11,10 +11,8 @@ FoWLayer::FoWLayer(int step, bool transparentSprites) :
     // TODO multiple colors for multiple players (shift the hue of the pixmap?)
 
     // Retrieve the fow TokenItem from the database
-    TokenItemRepository* repository = dynamic_cast<TokenItemRepository*>(
-        rm_->getRepositoryByTableName("tokenitem")
-    );
-    TokenItem *fowItem = repository->getFowTokenItem(db_);
+    TokenItem *fowItem = RepositoryManager::s_TokenItemRepository.getFowTokenItem(db_);
+
 
     setTokenItem(fowItem);
 }

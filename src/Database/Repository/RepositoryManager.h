@@ -1,23 +1,16 @@
 #ifndef REPOSITORYMANAGER_H
 #define REPOSITORYMANAGER_H
 
-#include <QHash>
-#include <QString>
-
-#include "Database/Repository/Repository.h"
+#include "Database/Repository/MapRepository.h"
+#include "Database/Repository/SpriteRepository.h"
+#include "Database/Repository/TokenItemRepository.h"
 
 class RepositoryManager
 {
 public:
-    RepositoryManager();
-    ~RepositoryManager();
-
-    Repository *getRepositoryByTableName(QString tableName);
-
-private:
-    QHash<QString, Repository*> m_Repositories;
-
-    void insertRepository(Repository *repository);
+    static MapRepository s_MapRepository;
+    static SpriteRepository s_SpriteRepository;
+    static TokenItemRepository s_TokenItemRepository;
 };
 
 #endif // REPOSITORYMANAGER_H

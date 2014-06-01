@@ -4,7 +4,7 @@
 #include <QDesktopWidget>
 #include <QToolBox>
 
-#include "Database/Repository/MapRepository.h"
+#include "Database/Repository/RepositoryManager.h"
 
 #include "Canvas/Layers/MapLayer.h"
 #include "Canvas/CanvasScene.h"
@@ -97,10 +97,7 @@ void MainWindow::createMap(QString filename) {
     map->setDatabase(m_User->getDB());
 
     // Add Map to the database
-    MapRepository* repository = dynamic_cast<MapRepository*>(
-        m_User->getDB()->getRepositoryManager()->getRepositoryByTableName("map")
-    );
-    repository->insertMap(map, m_User->getDB());
+    RepositoryManager::s_MapRepository.insertMap(map, m_User->getDB());
 
     QMdiSubWindow *subwindow = ui->tableArea->addSubWindow(map);
     subwindow->show();

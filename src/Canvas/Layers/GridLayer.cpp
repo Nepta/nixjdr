@@ -1,6 +1,6 @@
 #include <QGraphicsScene>
 
-#include "Database/Repository/SpriteRepository.h"
+#include "Database/Repository/RepositoryManager.h"
 
 #include "GridLayer.h"
 
@@ -39,10 +39,7 @@ Sprite *GridLayer::addSprite(TokenItem *tokenItem, QPoint position, int zValue,
     sprite->setPos(spritePos);
 
     // Insert the sprite in the database
-    SpriteRepository *repository = dynamic_cast<SpriteRepository*>(
-        rm_->getRepositoryByTableName("sprite")
-    );
-    repository->insertSprite(sprite, db_);
+    RepositoryManager::s_SpriteRepository.insertSprite(sprite, db_);
 
     if (parentItem != NULL) {
         sprite->installSceneEventFilter(this);

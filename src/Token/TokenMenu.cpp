@@ -1,7 +1,7 @@
 #include <QList>
 #include <QDebug>
 
-#include "Database/Repository/TokenItemRepository.h"
+#include "Database/Repository/RepositoryManager.h"
 #include "Database/QueryBuilder.h"
 #include "Database/DBItemList.h"
 
@@ -25,11 +25,7 @@ void TokenMenu::initTokenMenu(Database *db) {
     setDatabase(db);
 
     // Retrieve TokenItems from the database
-    TokenItemRepository* repository = dynamic_cast<TokenItemRepository*>(
-        rm_->getRepositoryByTableName("tokenitem")
-    );
-
-    QList<TokenItem*> tokenItems = repository->getTokenItems(db_);
+    QList<TokenItem*> tokenItems = RepositoryManager::s_TokenItemRepository.getTokenItems(db_);
     for (TokenItem *tokenItem : tokenItems) {
         ui->m_tokenList->addItem(tokenItem);
     }
@@ -55,10 +51,7 @@ void TokenMenu::on_tokenButton_clicked()
         TokenItem *item = new TokenItem(filePath, text, size, custom);
 
         // push the item into the database
-        TokenItemRepository* repository = dynamic_cast<TokenItemRepository*>(
-            rm_->getRepositoryByTableName("tokenitem")
-        );
-        repository->insertTokenItem(item, db_);
+        RepositoryManager::s_TokenItemRepository.insertTokenItem(item, db_);
 
         // add the item to the tokenList
         ui->m_tokenList->addItem(item);
