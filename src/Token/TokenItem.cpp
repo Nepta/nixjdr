@@ -2,6 +2,7 @@
 #include <QPainter>
 #include <QPainterPath>
 #include <QByteArray>
+#include <QVariant>
 #include "TokenItem.h"
 
 TokenItem::TokenItem(QString path, QString text, int size, bool custom, bool special) :
@@ -33,14 +34,14 @@ TokenItem::TokenItem(const QByteArray& data) :
 TokenItem::TokenItem(DBItem item) :
     DBItem()
 {
-    QHash<QString, QString> itemHashMap = item.getHashMap();
+    QHash<QString, QVariant> itemHashMap = item.getHashMap();
 
     int id = itemHashMap.value("id").toInt();
-    QString text = itemHashMap.value("text");
-    QString path =  itemHashMap.value("path");
+    QString text = itemHashMap.value("text").toString();
+    QString path =  itemHashMap.value("path").toString();
     int size = itemHashMap.value("size").toInt();
-    bool custom = itemHashMap.value("custom").toInt();
-    bool special = itemHashMap.value("special").toInt();
+    bool custom = itemHashMap.value("custom").toBool();
+    bool special = itemHashMap.value("special").toBool();
 
     construct(id, path, text, size, custom, special);
 }

@@ -1,5 +1,5 @@
 #include <QGraphicsScene>
-#include <QDebug>
+
 #include "DrawingLayer.h"
 
 DrawingLayer::DrawingLayer(int penSize, int eraserSize, QColor color) :

@@ -8,6 +8,13 @@ QSqlQuery QueryBuilder::getQuery() {
     return QSqlQuery(query_);
 }
 
+QSqlQuery QueryBuilder::getPreparedQuery() {
+    QSqlQuery query;
+    query.prepare(query_);
+
+    return query;
+}
+
 QString QueryBuilder::getQueryString() {
     return query_;
 }
@@ -18,20 +25,23 @@ QueryBuilder *QueryBuilder::select(QString arg) {
     return this;
 }
 
-QueryBuilder *QueryBuilder::insertInto(QString table) {
-    query_ = QString("INSERT INTO %1")
-             .arg(table);
+QueryBuilder *QueryBuilder::insertInto(QString table, QStringList cols) {
+    QString colsString = cols.join(",");
 
-    return this;
-}
+    QStringList colsVals;
+    for (QString col : cols) {
+        colsVals.append(":" + col);
+    }
+    QString colsValsString = colsVals.join(",");
 
-QueryBuilder *QueryBuilder::insertInto(QString table, QString cols) {
-    query_ = QString("INSERT INTO %1 (%2)")
+    query_ = QString("INSERT INTO %1 (%2) VALUES (%3)")
              .arg(table)
-             .arg(cols);
+             .arg(colsString)
+             .arg(colsValsString);
 
     return this;
 }
+
 
 /**
  * @brief QueryBuilder::insertIntoDefault Insert default values into the specified table.
@@ -41,29 +51,6 @@ QueryBuilder *QueryBuilder::insertInto(QString table, QString cols) {
 QueryBuilder *QueryBuilder::insertIntoDefault(QString table) {
     query_ = QString("INSERT INTO %1 DEFAULT VALUES")
              .arg(table);
-
-    return this;
-}
-
-QueryBuilder *QueryBuilder::values(QList<QString> args) {
-    QString concatenatedArgs("");
-    bool firstArg = true;
-
-    for (QString arg : args) {
-        if (!firstArg) {
-            concatenatedArgs += ", ";
-        } else {
-            firstArg = false;
-        }
-
-        if (arg == "NULL") {
-            concatenatedArgs += QString("%1").arg(arg);
-        } else {
-            concatenatedArgs += QString("'%1'").arg(arg);
-        }
-    }
-
-    query_ += QString(" VALUES (%1)").arg(concatenatedArgs);
 
     return this;
 }

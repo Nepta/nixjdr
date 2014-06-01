@@ -13,8 +13,6 @@ public:
 
     const QString getTableName();
 
-    QueryBuilder insertMapLayerQB(MapLayer *mapLayer);
-
     int insertMapLayer(MapLayer *mapLayer, Database *db);
 };
 

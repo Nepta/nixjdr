@@ -17,10 +17,11 @@ public:
     Database(const QString dbName, const QString& serverAddress, const int &serverPort);
     virtual ~Database();
 
-    void push(QueryBuilder queryBuilder);
-    int pushWithId(QueryBuilder queryBuilder);
-    QList<DBItem> pull(QueryBuilder queryBuilder);
-    DBItem pullFirst(QueryBuilder queryBuilder);
+    void push(QSqlQuery query);
+    int pushWithId(QSqlQuery query);
+    int pushPreparedWithId(QSqlQuery query);
+    QList<DBItem> pull(QSqlQuery query);
+    DBItem pullFirst(QSqlQuery query);
 
 private:
     QSqlDatabase db_;

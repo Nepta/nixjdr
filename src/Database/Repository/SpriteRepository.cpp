@@ -7,32 +7,6 @@ const QString SpriteRepository::getTableName() {
     return "sprite";
 }
 
-QueryBuilder SpriteRepository::insertSpriteQB(Sprite *sprite) {
-    QList<QString> args;
-    args.append(QString::number(sprite->pos().x()));
-    args.append(QString::number(sprite->pos().y()));
-    args.append(QString::number(sprite->zValue()));
-    args.append(QString::number(sprite->getTokenItem()->id()));
-
-    QGraphicsItem* item = sprite->parentItem();
-    MapLayer *mapLayer = dynamic_cast<MapLayer*>(item);
-    FoWLayer *fowLayer = dynamic_cast<FoWLayer*>(item);
-    if (mapLayer) {
-        args.append(QString::number(mapLayer->id()));
-        args.append("NULL");
-    }
-    else if (fowLayer) {
-        args.append("NULL");
-        args.append(QString::number(fowLayer->id()));
-    }
-
-    QueryBuilder qb;
-    qb.insertInto(getTableName(), "posx, posy, zvalue, tokenitemid, maplayerid, fowlayerid")
-     ->values(args);
-
-    return qb;
-}
-
 /**
  * @brief SpriteRepository::insertSprite Inserts the given Sprite in the database, retrieve the id
  * given by the db to the new row and sets it on the Sprite.
@@ -41,8 +15,25 @@ QueryBuilder SpriteRepository::insertSpriteQB(Sprite *sprite) {
  * @return Id given by the database to the newly inserted row.
  */
 int SpriteRepository::insertSprite(Sprite *sprite, Database *db) {
-    QueryBuilder qb = insertSpriteQB(sprite);
-    int id = insert(sprite, qb, db);
+    QHash<QString, QVariant> args {
+        {"posx", sprite->pos().x()},
+        {"posy", sprite->pos().y()},
+        {"zvalue", sprite->zValue()},
+        {"tokenitemid", sprite->getTokenItem()->id()},
+    };
+
+    QGraphicsItem* item = sprite->parentItem();
+    MapLayer *mapLayer = dynamic_cast<MapLayer*>(item);
+    FoWLayer *fowLayer = dynamic_cast<FoWLayer*>(item);
+    if (mapLayer) {
+        args.insert("maplayerid", mapLayer->id());
+    }
+    else if (fowLayer) {
+        args.insert("fowlayerid", fowLayer->id());
+    }
+
+    QueryBuilder qb = insertQB(args.keys());
+    int id = insert(sprite, qb, args, db);
 
     return id;
 }

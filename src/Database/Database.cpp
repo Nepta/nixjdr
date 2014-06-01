@@ -1,10 +1,11 @@
 #include <QSqlRecord>
-#include <iostream>
 #include <QSqlTableModel>
 #include <QSqlField>
 #include <QSqlQuery>
 #include <QSqlError>
 #include <QList>
+#include <QVariant>
+
 #include "Database.h"
 
 Database::Database(const QString dbName, const QString& serverAddress, const int& serverPort) {
@@ -22,25 +23,21 @@ Database::~Database(){
 }
 
 /**
- * @brief Database::push Executes the query given by the QueryBuilder. Use this method with queries
- * which do not return a result.
- * @param queryBuilder
+ * @brief Database::push Executes the given query. Use this method with queries which do not
+ * return a result.
+ * @param query Query to execute.
  */
-void Database::push(QueryBuilder queryBuilder) {
-    queryBuilder.getQuery().exec();
+void Database::push(QSqlQuery query) {
+    query.exec();
 }
 
 /**
- * @brief Database::pushWithId Executes the query given by the QueryBuilder. Use this method with an
- * INSERT INTO query to retrieve the inserted row id.
- * @param queryBuilder
+ * @brief Database::pushWithId Executes the given query and retrieve the id of the inserted row.
+ * Only use this method with queries which are not prepared.
+ * @param query Query to execute.
  * @return Id of the inserted row.
  */
-int Database::pushWithId(QueryBuilder queryBuilder) {
-    QueryBuilder qb;
-    qb.withAsSelect(queryBuilder, "id");
-
-    QSqlQuery query = qb.getQuery();
+int Database::pushWithId(QSqlQuery query) {
     int resultId;
 
     if (query.next()) {
@@ -53,13 +50,23 @@ int Database::pushWithId(QueryBuilder queryBuilder) {
 }
 
 /**
- * @brief Database::pull Executes the query given by the queryBuilder and stores the resulting rows
- * in a QList of DBItem.
- * @param queryBuilder
+ * @brief Database::pushPreparedWithId Executes the given query and retrieve the id of the
+ * inserted row. Only use this method with prepared queries.
+ * @param query Query to execute.
+ * @return
+ */
+int Database::pushPreparedWithId(QSqlQuery query) {
+    push(query);
+
+    return pushWithId(query);
+}
+
+/**
+ * @brief Database::pull Executes the given query and stores the resulting rows in a QList of DBItem.
+ * @param query Query to execute
  * @return QList of DBItem containing the resulting rows of the query.
  */
-QList<DBItem> Database::pull(QueryBuilder queryBuilder) {
-    QSqlQuery query = queryBuilder.getQuery(); // query to execute
+QList<DBItem> Database::pull(QSqlQuery query) {
     QSqlRecord record = query.record(); // holds information about field names
     QList<DBItem> dbItems; // list to populate
 
@@ -68,7 +75,7 @@ QList<DBItem> Database::pull(QueryBuilder queryBuilder) {
 
         for (int i = 0 ; i < record.count() ; i++) {
             QString fieldName = record.fieldName(i);
-            QString fieldValue = query.value(i).toString();
+            QVariant fieldValue = query.value(i);
 
             item.appendValue(fieldName, fieldValue);
         }
@@ -80,20 +87,18 @@ QList<DBItem> Database::pull(QueryBuilder queryBuilder) {
 }
 
 /**
- * @brief Database::pullFirst Executes the query given by the queryBuilder and store the first row
- * in a DBItem.
- * @param queryBuilder
+ * @brief Database::pullFirst Executes the given query and store the first row in a DBItem.
+ * @param query Query to execute.
  * @return DBitem containing the first resulting row of the query.
  */
-DBItem Database::pullFirst(QueryBuilder queryBuilder) {
-    QSqlQuery query = queryBuilder.getQuery(); // query to execute
+DBItem Database::pullFirst(QSqlQuery query) {
     QSqlRecord record = query.record(); // holds information about field names
     DBItem item; // item to create
 
     if (query.next()) {
         for (int i = 0 ; i < record.count() ; i++) {
             QString fieldName = record.fieldName(i);
-            QString fieldValue = query.value(i).toString();
+            QVariant fieldValue = query.value(i);
 
             item.appendValue(fieldName, fieldValue);
         }

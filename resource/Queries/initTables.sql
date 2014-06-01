@@ -11,14 +11,15 @@ CREATE TABLE tokenitem (
 	text    character varying(20) UNIQUE,
 	path    character varying(120),
 	size    integer,
-	custom  integer,
-	special integer,
+	custom  bool,
+	special bool,
 	CONSTRAINT tokenitem_pkey PRIMARY KEY (id)
 );
 
 CREATE TABLE backgroundlayer (
 	id   serial NOT NULL,
-	path character varying(120),
+--	path character varying(120),
+-- TODO pixmap BLOB,
 	CONSTRAINT backgroundlayer_pkey PRIMARY KEY (id)
 );
 

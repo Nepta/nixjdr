@@ -13,7 +13,6 @@ void BackgroundLayer::drawBackground(QPainter *painter, const QRectF &rect) {
     painter->drawPixmap(targetRect, m_Background, m_Background.rect());
 }
 
-QPixmap *BackgroundLayer::getBackground()
-{
+QPixmap *BackgroundLayer::getBackground() {
     return &m_Background;
 }

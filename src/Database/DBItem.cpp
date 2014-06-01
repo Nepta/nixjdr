@@ -1,18 +1,12 @@
 #include "DBItem.h"
 
-DBItem::DBItem(int id) :
-    id_(id)
-{}
+DBItem::DBItem(int id) : id_(id) {}
 
-void DBItem::appendValue(QString columName, int newValue){
-	appendValue(columName, QString(newValue));
-}
-
-void DBItem::appendValue(QString columName, QString newValue){
+void DBItem::appendValue(QString columName, QVariant newValue) {
     columnsValues_.insert(columName, newValue);
 }
 
-QHash<QString, QString>& DBItem::getHashMap(){
+QHash<QString, QVariant>& DBItem::getHashMap(){
 	return columnsValues_;
 }
 

@@ -13,8 +13,6 @@ public:
 
     const QString getTableName();
 
-    QueryBuilder insertFoWLayerQB(FoWLayer *fowLayer);
-
     int insertFoWLayer(FoWLayer *fowLayer, Database *db);
 };
 

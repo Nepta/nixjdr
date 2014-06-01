@@ -1,8 +1,6 @@
 #ifndef SPRITEREPOSITORY_H
 #define SPRITEREPOSITORY_H
 
-#include <QString>
-
 #include "Database/Repository/Repository.h"
 
 #include "Canvas/Sprite.h"
@@ -14,8 +12,6 @@ public:
     ~SpriteRepository() {}
 
     const QString getTableName();
-
-    QueryBuilder insertSpriteQB(Sprite *sprite);
 
     int insertSprite(Sprite *sprite, Database *db);
 };

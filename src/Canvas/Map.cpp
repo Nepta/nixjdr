@@ -51,6 +51,10 @@ Map::~Map() {
 
 void Map::initBgLayer(QString bgFilename) {
     m_BgLayer = new BackgroundLayer(bgFilename);
+
+    // Add BackgroundLayer to the database
+    RepositoryManager::s_BgLayerRepository.insertBgLayer(m_BgLayer, db_);
+
     m_Scene.addLayer(m_BgLayer);
     m_BgLayer->setEnabled(false);
 }

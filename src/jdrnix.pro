@@ -71,12 +71,13 @@ SOURCES += \
     Database/Repository/SpriteRepository.cpp \
     Database/Repository/MapRepository.cpp \
     Database/Repository/MapLayerRepository.cpp \
+    Database/Repository/FoWLayerRepository.cpp \
+    Database/Repository/BackgroundLayerRepository.cpp \
     Token/TokenMenu.cpp \
     Token/TokenList.cpp \
     Token/TokenItem.cpp \
     TurnMenu/TurnList.cpp \
-    TurnMenu/TurnMenu.cpp \
-    Database/Repository/FoWLayerRepository.cpp
+    TurnMenu/TurnMenu.cpp
 
 HEADERS  += \
     MainWindow.h \
@@ -136,12 +137,13 @@ HEADERS  += \
     Database/Repository/SpriteRepository.h \
     Database/Repository/MapRepository.h \
     Database/Repository/MapLayerRepository.h \
+    Database/Repository/FoWLayerRepository.h \
+    Database/Repository/BackgroundLayerRepository.h \
     Token/TokenMenu.h \
     Token/TokenList.h \
     Token/TokenItem.h \
     TurnMenu/TurnList.h \
-    TurnMenu/TurnMenu.h \
-    Database/Repository/FoWLayerRepository.h
+    TurnMenu/TurnMenu.h
 
 FORMS    += \
     TokenMenu.ui \

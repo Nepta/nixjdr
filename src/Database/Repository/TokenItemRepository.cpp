@@ -1,3 +1,5 @@
+#include <QStringList>
+
 #include "TokenItemRepository.h"
 
 /**
@@ -10,14 +12,14 @@ const QString TokenItemRepository::getTableName() {
 
 QueryBuilder TokenItemRepository::getNormalTokenItemsQB() {
     QueryBuilder qb = findAllQB();
-    qb.where("special = 0");
+    qb.where("special = false");
 
     return qb;
 }
 
 QueryBuilder TokenItemRepository::getSpecialTokenItemsQB() {
     QueryBuilder qb = findAllQB();
-    qb.where("special = 1");
+    qb.where("special = true");
 
     return qb;
 }
@@ -30,7 +32,7 @@ QueryBuilder TokenItemRepository::getSpecialTokenItemsQB() {
  */
 QList<TokenItem*> TokenItemRepository::getTokenItems(Database *db) {
     QueryBuilder qb = getNormalTokenItemsQB();
-    DBItemList<TokenItem> dbItems(db->pull(qb));
+    DBItemList<TokenItem> dbItems(db->pull(qb.getQuery()));
     QList<TokenItem*> tokenItems = dbItems.construct();
 
     return tokenItems;
@@ -45,24 +47,10 @@ TokenItem* TokenItemRepository::getFowTokenItem(Database *db) {
     QueryBuilder qb = getSpecialTokenItemsQB();
     qb.andWhere("text = 'fow'");
 
-    DBItem dbItem = db->pullFirst(qb);
+    DBItem dbItem = db->pullFirst(qb.getQuery());
     TokenItem* tokenItem = new TokenItem(dbItem);
 
     return tokenItem;
-}
-
-QueryBuilder TokenItemRepository::insertTokenItemQB(TokenItem *tokenItem) {
-    QList<QString> args;
-    args.append(tokenItem->text());
-    args.append(tokenItem->path());
-    args.append(QString::number(tokenItem->size()));
-    args.append(QString::number(tokenItem->isCustom()));
-    args.append(QString::number(tokenItem->isSpecial()));
-
-    QueryBuilder qb;
-    qb.insertInto(getTableName(), "text, path, size, custom, special")->values(args);
-
-    return qb;
 }
 
 /**
@@ -73,8 +61,16 @@ QueryBuilder TokenItemRepository::insertTokenItemQB(TokenItem *tokenItem) {
  * @return Id given by the database to the newly inserted row.
  */
 int TokenItemRepository::insertTokenItem(TokenItem *tokenItem, Database *db) {
-    QueryBuilder qb = insertTokenItemQB(tokenItem);
-    int id = insert(tokenItem, qb, db);
+    QHash<QString, QVariant> args {
+        {"text", tokenItem->text()},
+        {"path", tokenItem->path()},
+        {"size", tokenItem->size()},
+        {"custom", tokenItem->isCustom()},
+        {"special", tokenItem->isSpecial()}
+    };
+
+    QueryBuilder qb = insertQB(args.keys());
+    int id = insert(tokenItem, qb, args, db);
 
     return id;
 }

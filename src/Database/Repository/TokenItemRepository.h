@@ -1,8 +1,6 @@
 #ifndef TOKENITEMREPOSITORY_H
 #define TOKENITEMREPOSITORY_H
 
-#include <QString>
-
 #include "Database/Repository/Repository.h"
 
 #include "Token/TokenItem.h"
@@ -17,7 +15,6 @@ public:
 
     QueryBuilder getNormalTokenItemsQB();
     QueryBuilder getSpecialTokenItemsQB();
-    QueryBuilder insertTokenItemQB(TokenItem *tokenItem);
 
     QList<TokenItem *> getTokenItems(Database *db);
     TokenItem* getFowTokenItem(Database *db);

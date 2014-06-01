@@ -1,8 +1,6 @@
 #ifndef MAPREPOSITORY_H
 #define MAPREPOSITORY_H
 
-#include <QString>
-
 #include "Database/Repository/Repository.h"
 
 #include "Canvas/Map.h"
@@ -14,8 +12,6 @@ public:
     ~MapRepository() {}
 
     const QString getTableName();
-
-    QueryBuilder insertMapQB(Map *map);
 
     int insertMap(Map *map, Database *db);
 };
