@@ -4,3 +4,4 @@ MapRepository RepositoryManager::s_MapRepository;
 SpriteRepository RepositoryManager::s_SpriteRepository;
 TokenItemRepository RepositoryManager::s_TokenItemRepository;
 MapLayerRepository RepositoryManager::s_MapLayerRepository;
+FoWLayerRepository RepositoryManager::s_FoWLayerRepository;

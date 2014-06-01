@@ -43,11 +43,10 @@ CREATE TABLE map (
 	sceneheight       integer,
 	scenewidth        integer,
 -- TODO	backgroundlayerid integer REFERENCES backgroundlayer(id) NOT NULL,
--- TODO	foWlayerid        integer REFERENCES fowlayer(id) NOT NULL,
 -- TODO	drawingLayerid    integer REFERENCES drawinglayer(id) NOT NULL,
 	backgroundlayerid integer NOT NULL,
 	maplayerid        integer REFERENCES maplayer(id) NOT NULL,
-	foWlayerid        integer NOT NULL,
+	foWlayerid        integer REFERENCES fowlayer(id) NOT NULL,
 	drawingLayerid    integer NOT NULL,
 	CONSTRAINT map_pkey PRIMARY KEY (id)
 );
@@ -58,9 +57,7 @@ CREATE TABLE sprite (
 	posy                integer,
 	zvalue              integer,
 	tokenitemid         integer REFERENCES tokenitem(id) NOT NULL,
--- TODO	maplayerid          integer REFERENCES maplayer(id),
--- TODO	fowlayerid          integer REFERENCES fowlayer(id),
-	maplayerid          integer,
-	fowlayerid          integer,
+	maplayerid          integer REFERENCES maplayer(id),
+	fowlayerid          integer REFERENCES fowlayer(id),
 	CONSTRAINT sprite_pkey PRIMARY KEY (id)
 );

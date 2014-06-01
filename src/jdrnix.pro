@@ -75,7 +75,8 @@ SOURCES += \
     Token/TokenList.cpp \
     Token/TokenItem.cpp \
     TurnMenu/TurnList.cpp \
-    TurnMenu/TurnMenu.cpp
+    TurnMenu/TurnMenu.cpp \
+    Database/Repository/FoWLayerRepository.cpp
 
 HEADERS  += \
     MainWindow.h \
@@ -139,7 +140,8 @@ HEADERS  += \
     Token/TokenList.h \
     Token/TokenItem.h \
     TurnMenu/TurnList.h \
-    TurnMenu/TurnMenu.h
+    TurnMenu/TurnMenu.h \
+    Database/Repository/FoWLayerRepository.h
 
 FORMS    += \
     TokenMenu.ui \

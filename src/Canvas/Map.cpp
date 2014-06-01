@@ -78,8 +78,13 @@ void Map::initMapLayer(TokenItem *tokenItem, int tileStep) {
  */
 void Map::initFoWLayer(int tileStep) {
     if (tileStep > 1) {
-        m_FoWLayer = new FoWLayer(tileStep);
+        FoWLayer *fowLayer = new FoWLayer(tileStep);
+        m_FoWLayer = fowLayer;
         m_FoWLayer->setDatabase(db_);
+
+        // Add FoWLayer to the database
+        RepositoryManager::s_FoWLayerRepository.insertFoWLayer(fowLayer, db_);
+
         m_IsGridFoWLayer = true;
         m_Scene.addLayer(m_FoWLayer);
         m_FoWLayer->setEnabled(false);
