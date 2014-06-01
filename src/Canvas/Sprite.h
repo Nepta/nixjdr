@@ -3,9 +3,12 @@
 
 #include <QGraphicsPixmapItem>
 #include <QGraphicsSceneDragDropEvent>
-#include "Network/Serializable.h"
+
 #include "Database/DBItem.h"
+
 #include "Token/TokenItem.h"
+
+class SpriteRepository;
 
 class Sprite : public QGraphicsPixmapItem, public DBItem
 {

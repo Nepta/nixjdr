@@ -1,6 +1,7 @@
 #ifndef DBCOMPONENT_H
 #define DBCOMPONENT_H
 
+#include "Database/Repository/RepositoryManager.h"
 #include "Database.h"
 
 /**
@@ -13,10 +14,12 @@ public:
     DBComponent(Database *db);
     ~DBComponent();
 
-    void setDatabase(Database *db);
+    DBComponent *setDatabase(Database *db);
+    DBComponent *setRepositoryManager(RepositoryManager *rm);
 
 protected:
     Database *db_;
+    RepositoryManager *rm_;
 };
 
 #endif // DBCOMPONENT_H

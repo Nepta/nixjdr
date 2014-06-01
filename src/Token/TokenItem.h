@@ -2,8 +2,9 @@
 #define TOKENITEM_H
 
 #include <QIcon>
-#include <Database/DBItem.h>
 #include <QListWidgetItem>
+
+#include "Database/DBItem.h"
 
 class TokenItem : public QListWidgetItem, public DBItem {
 private:

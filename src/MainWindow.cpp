@@ -97,7 +97,10 @@ void MainWindow::createMap(QString filename) {
     map->setDatabase(m_User->getDB());
 
     // Add Map to the database
-    MapRepository::insertMap(map, m_User->getDB());
+    MapRepository* repository = dynamic_cast<MapRepository*>(
+        m_User->getDB()->getRepositoryManager()->getRepositoryByTableName("map")
+    );
+    repository->insertMap(map, m_User->getDB());
 
     QMdiSubWindow *subwindow = ui->tableArea->addSubWindow(map);
     subwindow->show();

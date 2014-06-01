@@ -3,12 +3,15 @@
 
 #include <QWidget>
 #include <QAbstractButton>
+
 #include "Layers/BackgroundLayer.h"
 #include "Layers/MapLayer.h"
 #include "Layers/FoWLayer.h"
 #include "Layers/DrawingLayer.h"
+
 #include "Database/DBComponent.h"
 #include "Database/DBItem.h"
+
 #include "Tooltip.h"
 #include "CanvasView.h"
 #include "CanvasScene.h"

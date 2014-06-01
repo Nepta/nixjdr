@@ -2,19 +2,22 @@
 #define MAPREPOSITORY_H
 
 #include <QString>
+
+#include "Database/Repository/Repository.h"
 #include "Database/QueryBuilder.h"
 #include "Database/Database.h"
+
 #include "Canvas/Map.h"
 
-class MapRepository
+class MapRepository : public Repository
 {
 public:
-    static const QString getTableName();
+    const QString getTableName();
 
-    static QueryBuilder getMapQB();
-    static QueryBuilder insertMapQB(Map *map);
+    QueryBuilder getMapQB();
+    QueryBuilder insertMapQB(Map *map);
 
-    static int insertMap(Map *map, Database *db);
+    int insertMap(Map *map, Database *db);
 };
 
 #endif // MAPREPOSITORY_H

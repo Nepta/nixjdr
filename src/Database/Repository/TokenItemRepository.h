@@ -2,22 +2,26 @@
 #define TOKENITEMREPOSITORY_H
 
 #include <QString>
+
+#include "Database/Repository/Repository.h"
 #include "Database/QueryBuilder.h"
 #include "Database/Database.h"
+
 #include "Token/TokenItem.h"
 
-class TokenItemRepository
+class TokenItemRepository : public Repository
 {
 public:
-    static const QString getTableName();
-    static QueryBuilder getTokenItemsQB();
-    static QueryBuilder getNormalTokenItemsQB();
-    static QueryBuilder getSpecialTokenItemsQB();
-    static QList<TokenItem *> getTokenItems(Database *db);
-    static TokenItem* getFowTokenItem(Database *db);
+    const QString getTableName();
 
-    static QueryBuilder insertTokenItemQB(TokenItem *tokenItem);
-    static int insertTokenItem(TokenItem *tokenItem, Database *db);
+    QueryBuilder getTokenItemsQB();
+    QueryBuilder getNormalTokenItemsQB();
+    QueryBuilder getSpecialTokenItemsQB();
+    QueryBuilder insertTokenItemQB(TokenItem *tokenItem);
+
+    QList<TokenItem *> getTokenItems(Database *db);
+    TokenItem* getFowTokenItem(Database *db);
+    int insertTokenItem(TokenItem *tokenItem, Database *db);
 };
 
 #endif // TOKENITEMREPOSITORY_H
