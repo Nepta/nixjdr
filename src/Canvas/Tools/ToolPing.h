@@ -4,6 +4,7 @@
 #include <QLabel>
 #include <QMovie>
 #include <QGraphicsScene>
+#include <QGraphicsProxyWidget>
 
 #include "AbstractTool.h"
 
@@ -19,12 +20,16 @@ public:
     void ping(QPointF);
 
 private:
-    QGraphicsScene *m_Scene;
-    QLabel *m_Gif;
     QString m_GifPath;
+    bool m_Pinging;
+    QGraphicsScene *m_Scene;
+    QGraphicsProxyWidget *m_Proxy;
+
+    QLabel *m_Gif;
     QMovie *m_Movie;
 
     void pressMouse(QGraphicsSceneMouseEvent *mouseEvent);
+    void timerEvent(QTimerEvent *timerEvent);
 
 };
 

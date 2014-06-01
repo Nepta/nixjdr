@@ -1,5 +1,4 @@
 #include "ToolPing.h"
-#include <QGraphicsProxyWidget>
 #include <QTimeLine>
 
 ToolPing::ToolPing(QGraphicsScene *scene, QString gifPath):
@@ -8,6 +7,9 @@ ToolPing::ToolPing(QGraphicsScene *scene, QString gifPath):
 {
     m_Gif = new QLabel();
     m_Movie = new QMovie("resource/gifs/ping/pingSuwako.gif");
+    m_Gif->setMovie(m_Movie);
+    m_Proxy = m_Scene->addWidget(m_Gif);
+    m_Proxy->hide();
 }
 
 ToolPing::~ToolPing(){
@@ -18,10 +20,20 @@ ToolPing::~ToolPing(){
 void ToolPing::setSize(int size){}
 
 void ToolPing::ping(QPointF pos){
-    m_Gif->setMovie(m_Movie);
-    m_Movie->start();
-    QGraphicsProxyWidget *proxy = m_Scene->addWidget(m_Gif);
-    proxy->setGeometry(QRectF(pos, QSizeF(32, 32)));
+    if(!m_Pinging){
+        m_Proxy->setGeometry(QRectF(pos, QSizeF(32, 32)));
+        m_Movie->start();
+        m_Proxy->show();
+        m_Pinging = true;
+        startTimer(1000);
+    }
+}
+
+void ToolPing::timerEvent(QTimerEvent *timerEvent){
+    m_Proxy->hide();
+    killTimer(timerEvent->timerId());
+    m_Movie->stop();
+    m_Pinging = false;
 }
 
 bool ToolPing::sceneEventFilter(QGraphicsItem *, QEvent *event){

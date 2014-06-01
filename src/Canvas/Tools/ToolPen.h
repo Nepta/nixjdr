@@ -9,7 +9,7 @@ public:
     ToolPen(QGraphicsItem *drawingItem, int penSize, QColor color);
     ~ToolPen();
 
-    bool sceneEventFilter(QGraphicsItem *, QEvent *event);
+    bool sceneEventFilter(QGraphicsItem *obj, QEvent *event);
     void setSize(int size);
 
 private:
