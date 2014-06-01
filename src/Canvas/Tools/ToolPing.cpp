@@ -17,7 +17,7 @@ ToolPing::~ToolPing(){
     delete m_Movie;
 }
 
-void ToolPing::setSize(int size){}
+void ToolPing::setSize(int){}
 
 void ToolPing::ping(QPointF pos){
     if(!m_Pinging){

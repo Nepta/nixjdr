@@ -14,7 +14,7 @@ public:
     ToolPing(QGraphicsScene *scene, QString gifPath);
     ~ToolPing();
 
-    void setSize(int size);
+    void setSize(int);
     bool sceneEventFilter(QGraphicsItem *, QEvent *event);
 
     void ping(QPointF);

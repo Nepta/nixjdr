@@ -119,6 +119,7 @@ void ToolPen::releaseKey(QKeyEvent *keyEvent){
     if(keyEvent->key() == Qt::Key_Shift){
         m_LineItem.hide();
         paintOnPixmap(m_LineItem.line().p1(), m_LineItem.line().p2(), m_Color);
+        m_LineItem.setEnabled(false);
         keyEvent->accept();
     }
     else{
