@@ -1,4 +1,6 @@
 #include "ToolPing.h"
+#include <QGraphicsProxyWidget>
+#include <QTimeLine>
 
 ToolPing::ToolPing(QGraphicsScene *scene, QString gifPath):
     m_Scene(scene),
@@ -18,7 +20,8 @@ void ToolPing::setSize(int size){}
 void ToolPing::ping(QPointF pos){
     m_Gif->setMovie(m_Movie);
     m_Movie->start();
-//    QGraphicsProxyWidget *proxy = m_Scene->addWidget(m_Gif);
+    QGraphicsProxyWidget *proxy = m_Scene->addWidget(m_Gif);
+    proxy->setGeometry(QRectF(pos, QSizeF(32, 32)));
 }
 
 bool ToolPing::sceneEventFilter(QGraphicsItem *, QEvent *event){

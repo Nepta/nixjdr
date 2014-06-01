@@ -29,9 +29,14 @@ public slots:
     void changeTool();
 
 private:
+    int m_PenSize;
+    int m_EraserSize;
+    QColor m_Color;
+
     QGraphicsPixmapItem *m_DrawingZone;
     QPixmap *m_Pixmap;
     Tools *m_Tools;
+    AbstractTool *m_OldTool;
 };
 
 #endif // DRAWINGLAYER_H
