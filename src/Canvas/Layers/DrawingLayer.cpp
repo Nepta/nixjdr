@@ -3,7 +3,7 @@
 #include "Canvas/Tools/AbstractTool.h"
 
 DrawingLayer::DrawingLayer(int penSize, int eraserSize, QColor color){
-    m_Tools = new Tools(this, penSize, color, eraserSize, this);
+    m_Tools = new Tools(this, penSize, color, eraserSize, this, this->scene());
 }
 
 DrawingLayer::~DrawingLayer() {

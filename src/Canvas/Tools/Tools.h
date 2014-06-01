@@ -10,7 +10,8 @@
 
 enum class ToolCodes : quint16 {
     TOOL_PEN,
-    TOOL_ERASER
+    TOOL_ERASER,
+    TOOL_PING
 };
 
 inline uint qHash(const ToolCodes &key) { return qHash((quint16) key); }
@@ -23,7 +24,7 @@ public:
     const static QHash<QString, ToolCodes> s_ToolCodes;
 
     explicit Tools(QObject *parent = 0, int penSize = 0, QColor color = Qt::black,
-                   int eraserSize = 0, QGraphicsItem *drawingItem =0);
+                   int eraserSize = 0, QGraphicsItem *drawingItem =0, QGraphicsScene *scene =0);
     ~Tools();
 
     AbstractTool *getTool(ToolCodes code);

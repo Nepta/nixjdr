@@ -34,32 +34,41 @@ void ToolPen::paintOnPixmap(QPainter &painter, const QPointF &oldPos, const QPoi
 
 
 bool ToolPen::sceneEventFilter(QGraphicsItem *, QEvent *event){
+    bool eventFiltered = false;
     switch (event->type()) {
-    case QEvent::GraphicsSceneMousePress:{
-        pressMouse(static_cast<QGraphicsSceneMouseEvent*>(event));
-    }
-        break;
-    case QEvent::GraphicsSceneMouseMove	:{
-        moveMouse(static_cast<QGraphicsSceneMouseEvent*>(event));
-    }
-        break;
-    case QEvent::GraphicsSceneMouseRelease: {
-        releaseMouse(static_cast<QGraphicsSceneMouseEvent*>(event));
-    }
-        break;
-    case QEvent::KeyPress: {
-        pressKey((QKeyEvent*)(event));
-    }
-        break;
-    case QEvent::KeyRelease: {
-        releaseKey((QKeyEvent*)(event));
-    }
-        break;
-    default:
-        break;
-    }
+        case QEvent::GraphicsSceneMousePress:{
+            pressMouse(static_cast<QGraphicsSceneMouseEvent*>(event));
+            eventFiltered = true;
+        }
+            break;
+        case QEvent::GraphicsSceneMouseMove	:{
+            moveMouse(static_cast<QGraphicsSceneMouseEvent*>(event));
+            eventFiltered = true;
+        }
+            break;
+        case QEvent::GraphicsSceneMouseRelease: {
+            releaseMouse(static_cast<QGraphicsSceneMouseEvent*>(event));
+            eventFiltered = true;
+        }
+            break;
+        case QEvent::KeyPress: {
+            pressKey((QKeyEvent*)(event));
+            eventFiltered = true;
+        }
+            break;
+        case QEvent::KeyRelease: {
+            releaseKey((QKeyEvent*)(event));
+            eventFiltered = true;
+        }
+            break;
+        default:
+            break;
+        }
     AbstractTool::updateDisplay();
-    return true;
+    if(eventFiltered){
+        event->accept();
+    }
+    return eventFiltered;
 }
 
 void ToolPen::pressMouse(QGraphicsSceneMouseEvent *mouseEvent){
