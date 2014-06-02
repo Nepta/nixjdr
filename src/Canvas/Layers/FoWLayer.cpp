@@ -20,17 +20,17 @@ FoWLayer::FoWLayer(int step, bool transparentSprites) :
 FoWLayer::~FoWLayer() {}
 
 /**
- * @brief FoWLayer::addSprite Reimplemented from GridLayer to add transparency to the new Sprite if
- * m_TransparentSprites is true.
+ * @brief FoWLayer::addSpriteFromDb Reimplemented from GridLayer to add transparency to the new
+ * Sprite if m_TransparentSprites is true.
  * @param tokenItem
  * @param position
  * @param zValue
  * @param parentItem
  * @return Returns the added sprite.
  */
-Sprite *FoWLayer::addSprite(TokenItem *tokenItem, QPoint position, int zValue, QGraphicsItem *parentItem)
+Sprite *FoWLayer::addSpriteFromDb(Sprite* sprite)
 {
-    Sprite* sprite = GridLayer::addSprite(tokenItem, position, zValue, parentItem);
+    GridLayer::addSpriteFromDb(sprite);
     sprite->setTransparent(m_TransparentSprites);
 
     return sprite;
@@ -73,7 +73,7 @@ void FoWLayer::fillFoW() {
         for(int j = 0; j < boundingRect().height(); j +=m_Step){
             iterator.setX(i);
             iterator.setY(j);
-            GridLayer::addSprite(m_TokenItem, iterator);
+            GridLayer::addSpriteToDb(m_TokenItem, iterator);
         }
     }
 }

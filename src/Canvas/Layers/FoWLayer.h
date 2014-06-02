@@ -15,7 +15,7 @@ public:
     FoWLayer(int step = 1, bool transparentSprites = true);
     ~FoWLayer();
 
-    Sprite *addSprite(TokenItem *tokenItem, QPoint position, int zValue, QGraphicsItem *parentItem);
+    Sprite *addSpriteFromDb(Sprite* sprite);
 
 private:
     /**

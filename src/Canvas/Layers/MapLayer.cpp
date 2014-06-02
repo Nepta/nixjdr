@@ -95,7 +95,7 @@ void MapLayer::dropEvent(QGraphicsSceneDragDropEvent *event, Sprite *watched)
     if(!data.isEmpty()) {
         TokenItem *tokenItem = new TokenItem(data);
         int zValue = (watched ? watched->zValue() + 1 : 1);
-        addSprite(tokenItem, event->scenePos().toPoint(), zValue);
+        addSpriteToDb(tokenItem, event->scenePos().toPoint(), zValue);
 
         event->acceptProposedAction();
     }
@@ -115,7 +115,7 @@ void MapLayer::spriteMouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent, Spr
 
     if (mouseEvent->button() == Qt::LeftButton) {
         QPoint mouseScenePos = mouseEvent->scenePos().toPoint();
-        addSprite(m_TokenItem, mouseScenePos, watched->zValue() + 1);
+        addSpriteToDb(m_TokenItem, mouseScenePos, watched->zValue() + 1);
     }
 
     if(mouseEvent->button() == Qt::RightButton){

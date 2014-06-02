@@ -28,10 +28,10 @@ public:
 
     int getStep();
 
-    virtual Sprite *addSprite(TokenItem *tokenItem, QPoint position, int zValue,
+    virtual void addSpriteToDb(TokenItem *tokenItem, QPoint position, int zValue,
                               QGraphicsItem *parentItem);
-    Sprite *addSprite(TokenItem *tokenItem, QPoint position, int zValue = 1);
-    Sprite *addSpriteFromDb(Sprite* sprite);
+    void addSpriteToDb(TokenItem *tokenItem, QPoint position, int zValue = 1);
+    virtual Sprite *addSpriteFromDb(Sprite* sprite);
     virtual void removeSprite(QGraphicsItem *sprite);
 
     void drawBackground(QPainter *painter, const QRectF &rect);

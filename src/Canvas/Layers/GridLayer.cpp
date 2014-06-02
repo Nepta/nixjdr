@@ -21,15 +21,14 @@ void GridLayer::setTokenItem(QListWidgetItem* token) {
 }
 
 /**
- * @brief GridLayer::addSprite Adds a sprite to the Layer.
+ * @brief GridLayer::addSpriteToDb Adds a sprite to the db and sends a notification to all the clients.
  * @param tokenItem Sprite's associated TokenItem.
  * @param position Sprite's position
  * @param zValue Indicates the position of the sprite in the stack.
  * @param parentItem Indicates in which QGraphicsItem the new Sprite belongs (in general the layer
  * in which the sprite is created).
- * @return The newly created sprite.
  */
-Sprite *GridLayer::addSprite(TokenItem *tokenItem, QPoint position, int zValue,
+void GridLayer::addSpriteToDb(TokenItem *tokenItem, QPoint position, int zValue,
     QGraphicsItem *parentItem)
 {
     QPoint spritePos(position.x()/m_Step, position.y()/m_Step);
@@ -49,19 +48,19 @@ Sprite *GridLayer::addSprite(TokenItem *tokenItem, QPoint position, int zValue,
     QString msg = QString("addSprite %1").arg(sprite->id());
     m_ClientReceiver->sendMessageToServer(msg);
 
-    return sprite;
+    delete sprite; // delete the sprite to avoid duplicate
 }
 
 /**
- * @brief GridLayer::addSprite Overloaded for convenience.
+ * @brief GridLayer::addSpriteToDb Overloaded for convenience.
  * @param tokenItem
  * @param position
  * @param zValue
  * @return The newly created sprite.
  * @sa addSprite()
  */
-Sprite *GridLayer::addSprite(TokenItem *tokenItem, QPoint position, int zValue) {
-    return addSprite(tokenItem, position, zValue, this);
+void GridLayer::addSpriteToDb(TokenItem *tokenItem, QPoint position, int zValue) {
+    addSpriteToDb(tokenItem, position, zValue, this);
 }
 
 Sprite *GridLayer::addSpriteFromDb(Sprite* sprite) {
@@ -136,7 +135,7 @@ void GridLayer::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent) {
 
     if (mouseEvent->button() == Qt::LeftButton) {
         QPoint mouseScenePos = mouseEvent->scenePos().toPoint();
-        addSprite(m_TokenItem, mouseScenePos);
+        addSpriteToDb(m_TokenItem, mouseScenePos);
     }
 }
 
@@ -154,7 +153,7 @@ void GridLayer::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent) {
 
     if (mouseEvent->buttons() & Qt::LeftButton) {
         if (!sprite) {
-            addSprite(m_TokenItem, mouseScenePos, 1);
+            addSpriteToDb(m_TokenItem, mouseScenePos, 1);
         }
     }
     else if (mouseEvent->buttons() & Qt::RightButton) {
