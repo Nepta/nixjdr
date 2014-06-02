@@ -1,13 +1,14 @@
 #include <QGraphicsScene>
-#include "Layer.h"
+
+#include "AbstractLayer.h"
 
 /**
- * @brief Layer::boundingRect Reimplemented from QGraphicsObject. The bounding rectangle corresponds
+ * @brief AbstractLayer::boundingRect Reimplemented from QGraphicsObject. The bounding rectangle corresponds
  * to the scene rectangle when the layer is enabled. Otherwise the bounding rect is a 0 width/height
  * rectangle to avoid intercepting mouse events when the layer is disabled.
  * @return bounding rectangle
  */
-QRectF Layer::boundingRect() const {
+QRectF AbstractLayer::boundingRect() const {
     if (isEnabled()) {
         return scene()->sceneRect();
     }
@@ -17,10 +18,10 @@ QRectF Layer::boundingRect() const {
 }
 
 /**
- * @brief Layer::paint Reimplemented from QGraphicsObject. Does not paint anything, a Layer does not
+ * @brief AbstractLayer::paint Reimplemented from QGraphicsObject. Does not paint anything, a layer does not
  * possess a content.
  */
-void Layer::paint(QPainter *, const QStyleOptionGraphicsItem *, QWidget *) {}
+void AbstractLayer::paint(QPainter *, const QStyleOptionGraphicsItem *, QWidget *) {}
 
 /**
  * @brief setEnabled Reimplemented from QGraphicsObject. Notifies the layer that the geometry of
@@ -28,13 +29,13 @@ void Layer::paint(QPainter *, const QStyleOptionGraphicsItem *, QWidget *) {}
  * on the enabled attribute.
  * @param enabled
  */
-void Layer::setEnabled(bool enabled) {
+void AbstractLayer::setEnabled(bool enabled) {
     prepareGeometryChange();
     QGraphicsObject::setEnabled(enabled);
 }
 
-void Layer::keyPressEvent(QKeyEvent *)
+void AbstractLayer::keyPressEvent(QKeyEvent *)
 {}
 
-void Layer::keyReleaseEvent(QKeyEvent *)
+void AbstractLayer::keyReleaseEvent(QKeyEvent *)
 {}

@@ -9,7 +9,7 @@ CanvasScene::CanvasScene() {
 }
 CanvasScene::~CanvasScene() {}
 
-void CanvasScene::addLayer(Layer *layer) {
+void CanvasScene::addLayer(AbstractLayer *layer) {
     addItem(layer);
     m_Layers << layer;
 }
@@ -22,7 +22,7 @@ int CanvasScene::getStep()
 void CanvasScene::drawBackground(QPainter *painter, const QRectF &rect) {
     QGraphicsScene::drawBackground(painter, rect);
 
-    foreach(Layer *layer, m_Layers) {
+    foreach(AbstractLayer *layer, m_Layers) {
         if (layer->isVisible()) {
             layer->drawBackground(painter, sceneRect());
         }

@@ -3,11 +3,12 @@
 
 #include <QWidget>
 #include <QAbstractButton>
-
 #include "Layers/BackgroundLayer.h"
 #include "Layers/MapLayer.h"
 #include "Layers/FoWLayer.h"
 #include "Layers/DrawingLayer.h"
+#include "Layers/Layers.h"
+#include "Layers/AbstractLayer.h"
 
 #include "Database/DBComponent.h"
 #include "Database/DBItem.h"
@@ -31,23 +32,12 @@ public:
     // TODO Map(DBItem item);
     ~Map();
 
-    void construct(int id, QString bgFilename, TokenItem *tokenItem, int tileStep);
-    void construct(QString bgFilename, TokenItem *tokenItem, int tileStep);
-
-    void initTooltip();
-    void initBgLayer(QString bgFilename);
-    void initMapLayer(TokenItem *tokenItem, int tileStep);
-    void initFoWLayer(int tileStep);
-    void initDrawingLayer();
-    void initDrawingLayer(Layer *layer);
-    void initScene(int tileStep);
-
     Ui::Map *getUi();
     int getSceneHeight();
     int getSceneWidth();
     BackgroundLayer *getBgLayer();
     MapLayer *getMapLayer();
-    Layer *getFoWLayer();
+    FoWLayer *getFoWLayer();
     DrawingLayer *getDrawingLayer();
 
 
@@ -59,15 +49,19 @@ private slots:
 
 private:
     Ui::Map *ui;
-
-    CanvasScene m_Scene;
+    CanvasScene *m_Scene;
     Tooltip m_Tooltip;
-    BackgroundLayer *m_BgLayer;
-    MapLayer *m_MapLayer;
-    Layer *m_FoWLayer;
-    DrawingLayer *m_DrawingLayer;
-    bool m_IsGridFoWLayer;
-    Layer *m_SelectedLayer;
+    AbstractLayer *m_SelectedLayer;
+    Layers *m_Layers;
+    QHash<LayerCodes, QWidget *> m_EditionMap;
+
+    void initScene();
+    void initLayers();
+    void initDisplay();
+    void initMapTools();
+    void initFoWTools();
+    void initTooltip();
+    void initDrawingLayer(LayerCodes code);
 
     void showMapTooltip(QString tooltip);
     void hideAllToolBoxes();

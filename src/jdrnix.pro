@@ -52,7 +52,13 @@ SOURCES += \
     Canvas/Layers/FoWLayer.cpp \
     Canvas/Layers/BackgroundLayer.cpp \
     Canvas/Layers/DrawingLayer.cpp \
-    Canvas/Layers/Layer.cpp \
+    Canvas/Layers/AbstractLayer.cpp \
+    Canvas/Layers/Layers.cpp \
+    Canvas/Tools/AbstractTool.cpp \
+    Canvas/Tools/ToolPen.cpp \
+    Canvas/Tools/ToolEraser.cpp \
+    Canvas/Tools/ToolPing.cpp \
+    Canvas/Tools/Tools.cpp \
     Canvas/SideMenuWidgets/DrawingMenu.cpp \
     Network/Header.cpp \
     Network/Server.cpp \
@@ -111,12 +117,17 @@ HEADERS  += \
     Canvas/CanvasView.h \
     Canvas/Sprite.h \
     Canvas/Map.h \
-    Canvas/Layers/Layer.h \
     Canvas/Layers/GridLayer.h \
     Canvas/Layers/MapLayer.h \
     Canvas/Layers/FoWLayer.h \
     Canvas/Layers/BackgroundLayer.h \
     Canvas/Layers/DrawingLayer.h \
+    Canvas/Layers/AbstractLayer.h \
+    Canvas/Layers/Layers.h \
+    Canvas/Tools/AbstractTool.h \
+    Canvas/Tools/ToolPen.h \
+    Canvas/Tools/ToolEraser.h \
+    Canvas/Tools/Tools.h \
     Canvas/ImageWidget.h \
     Canvas/SideMenuWidgets/DrawingMenu.h \
     Network/Switch.h \
@@ -145,7 +156,8 @@ HEADERS  += \
     Token/TokenList.h \
     Token/TokenItem.h \
     TurnMenu/TurnList.h \
-    TurnMenu/TurnMenu.h
+    TurnMenu/TurnMenu.h \
+    Canvas/Tools/ToolPing.h
 
 FORMS    += \
     TokenMenu.ui \
