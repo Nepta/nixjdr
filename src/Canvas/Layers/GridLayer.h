@@ -7,12 +7,12 @@
 #include <QListWidgetItem>
 
 #include "Canvas/Sprite.h"
-#include "Layer.h"
+#include "AbstractLayer.h"
 
 /**
  * @brief The GridLayer class represents a Grid on which sprites can be positionned and removed.
  */
-class GridLayer : public Layer
+class GridLayer : public AbstractLayer
 {
     Q_OBJECT
 

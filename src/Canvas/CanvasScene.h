@@ -4,7 +4,7 @@
 #include <QPixmap>
 #include <QGraphicsScene>
 #include <QList>
-#include "Layers/Layer.h"
+#include "Layers/AbstractLayer.h"
 
 class CanvasScene : public QGraphicsScene {
     Q_OBJECT
@@ -12,14 +12,14 @@ class CanvasScene : public QGraphicsScene {
 public:
     CanvasScene(int width, int height);
     ~CanvasScene();
-    void addLayer(Layer *layer);
+    void addLayer(AbstractLayer *layer);
     int getStep();
 
 private:
     void drawBackground (QPainter *painter, const QRectF &rect);
 
     int m_step;
-    QList<Layer*> m_Layers;
+    QList<AbstractLayer*> m_Layers;
 };
 
 #endif // CANVASSCENE_H

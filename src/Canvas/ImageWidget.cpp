@@ -31,7 +31,7 @@ ImageWidget::ImageWidget(QString bgFilename, QWidget *parent):
 }
 
 
-void ImageWidget::initDrawingLayer(Layer *layer) {
+void ImageWidget::initDrawingLayer(AbstractLayer *layer) {
     DrawingLayer *drawingLayer = dynamic_cast<DrawingLayer*>(layer);
 
     m_Scene->addLayer(drawingLayer);

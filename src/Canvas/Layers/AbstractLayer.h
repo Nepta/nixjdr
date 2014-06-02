@@ -1,5 +1,5 @@
-#ifndef LAYER_H
-#define LAYER_H
+#ifndef ABSTRACTLAYER_H
+#define ABSTRACTLAYER_H
 
 #include <QObject>
 #include <QGraphicsObject>
@@ -7,18 +7,21 @@
 #include <QGraphicsSceneMouseEvent>
 #include <QPainter>
 #include <QRectF>
+#include <QHash>
+
+enum class LayerCodes : quint16;
 
 /**
  * @brief The abstract Layer class is used to stack and separate different type of elements
  * from a scene.
  */
-class Layer : public QGraphicsObject
+class AbstractLayer : public QGraphicsObject
 {
     Q_OBJECT
 
 public:
-    Layer() {}
-    virtual ~Layer() {}
+    AbstractLayer() {}
+    virtual ~AbstractLayer() {}
 
     virtual void drawBackground(QPainter *painter, const QRectF &rect) = 0;
 
@@ -31,4 +34,4 @@ protected:
     virtual void keyReleaseEvent(QKeyEvent *);
 };
 
-#endif // LAYER_H
+#endif // ABSTRACTLAYER_H

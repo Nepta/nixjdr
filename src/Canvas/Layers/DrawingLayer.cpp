@@ -41,7 +41,7 @@ void DrawingLayer::initDrawingZone() {
     AbstractTool::setPixmap(m_Pixmap);
     AbstractTool::setDrawingZone(m_DrawingZone);
 
-    foreach (ToolCodes code, m_Tools->s_ToolCodes.values()) {
+    foreach (ToolCodes code, m_Tools->s_ToolCodesMap.values()) {
         this->scene()->addItem(m_Tools->getTool(code));
     }
     this->installSceneEventFilter(m_Tools->getCurrentTool());

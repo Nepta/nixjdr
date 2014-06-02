@@ -3,9 +3,7 @@
 
 #include <QObject>
 #include <QHash>
-#include <QPushButton>
 
-#include "ui_DrawingMenu.h"
 #include "Canvas/Tools/AbstractTool.h"
 
 enum class ToolCodes : quint16 {
@@ -21,7 +19,7 @@ class Tools : public QObject
     Q_OBJECT
 
 public:
-    const static QHash<QString, ToolCodes> s_ToolCodes;
+    const static QHash<QString, ToolCodes> s_ToolCodesMap;
 
     explicit Tools(QObject *parent = 0, int penSize = 0, QColor color = Qt::black,
                    int eraserSize = 0, QGraphicsItem *drawingItem =0, QGraphicsScene *scene =0);
@@ -34,9 +32,8 @@ signals:
     void changeTool();
 
 private:
-    QHash<ToolCodes, AbstractTool *> m_Tools;
+    QHash<ToolCodes, AbstractTool *> m_ToolsMap;
     ToolCodes m_CurrentToolCode;
-    Ui_DrawingMenu *ui;
 
 public slots:
     void setCurrentToolCode();

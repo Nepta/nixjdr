@@ -7,14 +7,15 @@
 #include <QKeyEvent>
 #include <QCursor>
 
-#include "Layer.h"
+#include "AbstractLayer.h"
 #include "Canvas/Tools/Tools.h"
 
-class DrawingLayer : public Layer
+class DrawingLayer : public AbstractLayer
 {
     Q_OBJECT
 
 public:
+
     DrawingLayer(int penSize, int eraserSize, QColor color);
     ~DrawingLayer();
     void drawBackground(QPainter *, const QRectF &);

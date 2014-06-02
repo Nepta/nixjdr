@@ -1,9 +1,9 @@
 #ifndef BACKGROUNDLAYER_H
 #define BACKGROUNDLAYER_H
 
-#include "Layer.h"
+#include "AbstractLayer.h"
 
-class BackgroundLayer : public Layer
+class BackgroundLayer : public AbstractLayer
 {
 public:
     BackgroundLayer(QString filename);

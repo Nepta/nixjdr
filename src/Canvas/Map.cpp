@@ -5,75 +5,82 @@
 
 Map::Map(QString bgFilename, QString tokenPath, int tileStep, QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::Map),
-    m_BgLayer(bgFilename),
-    m_MapLayer(tokenPath, tileStep),
-    m_DrawingLayer(2, 2, QColor(0, 0, 0))
+    ui(new Ui::Map)
 {
     ui->setupUi(this);
-
-    int sceneHeight = m_BgLayer.getBackground()->rect().height()
-            + BG_OFFSET * m_MapLayer.getStep();
-    int sceneWidth = m_BgLayer.getBackground()->rect().width()
-            + BG_OFFSET * m_MapLayer.getStep();
-
-    m_Scene = new CanvasScene(sceneWidth, sceneHeight); // TODO pass those value through a dialog box
-
-    m_Scene->addLayer(&m_BgLayer);
-    m_BgLayer.setEnabled(false);
-
-    m_Scene->addLayer(&m_MapLayer);
-    m_MapLayer.setEnabled(true);
-    m_SelectedLayer = &m_MapLayer;
-
-    initFoWLayer(tileStep);
-
-    initDrawingLayer(&m_DrawingLayer);
-
-    ui->m_View->setScene(m_Scene);
+    m_Layers = new Layers(bgFilename, 2, 2, Qt::black, tileStep, tokenPath);
+    initScene();
+    initLayers();
     setWindowTitle(tr("Carte"));
-
-    // Hide toolboxes
-    ui->m_StackedTools->show();
-
-    // display & edition
-    connect(ui->m_EditGroup, SIGNAL(buttonToggled(QAbstractButton*, bool)),
-            this, SLOT(selectedEditionLayer(QAbstractButton*, bool)));
-    connect(ui->m_DisplayGroup, SIGNAL(buttonToggled(QAbstractButton*, bool)),
-            this, SLOT(selectedDisplayLayer(QAbstractButton*, bool)));
-
-    // Map tools
-    connect(ui->m_MapScaler, SIGNAL(valueChanged(int)),
-            ui->m_View, SLOT(zoom(int)));
-
-    // FoW tools
-    if (m_IsGridFoWLayer) {
-        connect(ui->m_FillFoW, SIGNAL(clicked(bool)),
-                m_FoWLayer, SLOT(fillFoW()));
-        connect(ui->m_RemoveFoW, SIGNAL(clicked(bool)),
-                m_FoWLayer, SLOT(removeFoW()));
-    }
-
+    ui->m_StackedTools->show(); // Hide toolboxes
+    initDisplay();
+    initMapTools();
+    initFoWTools();
+    initDrawingLayer(LayerCodes::LAYER_DRAW);
     initTooltip();
 }
 
 Map::~Map() {
     delete ui;
-    delete m_FoWLayer;
 }
 
-void Map::initFoWLayer(int tileStep) {
-    if (tileStep > 1) {
-        m_FoWLayer = new FoWLayer(tileStep);
-        m_IsGridFoWLayer = true;
+void Map::initScene(){
+    BackgroundLayer *bgLayer = static_cast<BackgroundLayer *>(m_Layers->getLayer(LayerCodes::LAYER_BACKGROUND));
+    MapLayer *mapLayer = static_cast<MapLayer *>(m_Layers->getLayer(LayerCodes::LAYER_MAP));
+
+    int sceneHeight = bgLayer->getBackground()->rect().height()
+            + BG_OFFSET * mapLayer->getStep();
+    int sceneWidth = bgLayer->getBackground()->rect().width()
+            + BG_OFFSET * mapLayer->getStep();
+
+    m_Scene = new CanvasScene(sceneWidth, sceneHeight); // TODO pass those value through a dialog box
+    ui->m_View->setScene(m_Scene);
+}
+
+void Map::initLayers(){
+    BackgroundLayer *bgLayer = static_cast<BackgroundLayer *>(m_Layers->getLayer(LayerCodes::LAYER_BACKGROUND));
+    MapLayer *mapLayer =static_cast<MapLayer *>(m_Layers->getLayer(LayerCodes::LAYER_MAP));
+    FoWLayer *fowLayer =static_cast<FoWLayer *>(m_Layers->getLayer(LayerCodes::LAYER_FOW));
+    DrawingLayer *drawingLayer =static_cast<DrawingLayer *>(m_Layers->getLayer(LayerCodes::LAYER_DRAW));
+
+    m_Scene->addLayer(bgLayer);
+    m_Scene->addLayer(mapLayer);
+    m_Scene->addLayer(fowLayer);
+    m_Scene->addLayer(drawingLayer);
+
+    bgLayer->setEnabled(false);
+    mapLayer->setEnabled(true);
+    fowLayer->setEnabled(false);
+    drawingLayer->setEnabled(false);
+}
+
+void Map::initDisplay(){
+    connect(ui->m_EditGroup, SIGNAL(buttonToggled(QAbstractButton*, bool)),
+            this, SLOT(selectedEditionLayer(QAbstractButton*, bool)));
+    connect(ui->m_DisplayGroup, SIGNAL(buttonToggled(QAbstractButton*, bool)),
+            this, SLOT(selectedDisplayLayer(QAbstractButton*, bool)));
+
+    m_EditionMap.insert(LayerCodes::LAYER_MAP, ui->m_PageMapTools);
+    m_EditionMap.insert(LayerCodes::LAYER_FOW, ui->m_PageFoWTools);
+    m_EditionMap.insert(LayerCodes::LAYER_DRAW, ui->m_PageDrawingTools);
+}
+
+void Map::initMapTools(){
+    connect(ui->m_MapScaler, SIGNAL(valueChanged(int)),
+            ui->m_View, SLOT(zoom(int)));
+}
+
+void Map::initFoWTools(){
+    if(dynamic_cast<FoWLayer *>(m_Layers->getLayer(LayerCodes::LAYER_FOW)) != NULL){
+        FoWLayer *fowLayer = static_cast<FoWLayer *>(m_Layers->getLayer(LayerCodes::LAYER_FOW));
+        connect(ui->m_FillFoW, SIGNAL(clicked(bool)),
+                fowLayer, SLOT(fillFoW()));
+        connect(ui->m_RemoveFoW, SIGNAL(clicked(bool)),
+                fowLayer, SLOT(removeFoW()));
     }
-    else {
-        m_FoWLayer = new DrawingLayer(2, 2, QColor(50, 50, 50));
-        m_IsGridFoWLayer = false;
-        initDrawingLayer(m_FoWLayer);
+    else if(dynamic_cast<DrawingLayer *>(m_Layers->getLayer(LayerCodes::LAYER_FOW)) != NULL){
+        initDrawingLayer(LayerCodes::LAYER_FOW);
     }
-    m_Scene->addLayer(m_FoWLayer);
-    m_FoWLayer->setEnabled(false);
 }
 
 /**
@@ -82,14 +89,9 @@ void Map::initFoWLayer(int tileStep) {
  * the signals and slots.
  * @param layer
  */
-void Map::initDrawingLayer(Layer *layer) {
-    DrawingLayer *drawingLayer = dynamic_cast<DrawingLayer*>(layer);
-
-    m_Scene->addLayer(drawingLayer);
-    drawingLayer->initDrawingZone();
-    drawingLayer->setEnabled(false);
-
+void Map::initDrawingLayer(LayerCodes code) {
     Ui::DrawingMenu *drawingUi = ui->m_PageDrawingTools->getUi();
+    DrawingLayer *drawingLayer = static_cast<DrawingLayer *>(m_Layers->getLayer(code));
 
     connect(drawingUi->m_PenSpinBox, SIGNAL(valueChanged(int)),
             drawingLayer, SLOT(setPenSize(int)));
@@ -99,82 +101,47 @@ void Map::initDrawingLayer(Layer *layer) {
             drawingLayer, SLOT(erasePixmapContent()));
 
 
-    for(int i=0; i < drawingUi->m_ToolLayout->count(); i++){
-        QPushButton *currentButton = dynamic_cast<QPushButton*>(drawingUi->m_ToolLayout->itemAt(i)
-                                                                ->widget());
-        connect(currentButton, SIGNAL(clicked()), m_DrawingLayer.getTools(), SLOT(setCurrentToolCode()));
-    }
+//    for(int i=0; i < drawingUi->m_ToolLayout->count(); i++){
+//        QPushButton *currentButton = dynamic_cast<QPushButton*>(
+//                    drawingUi->m_ToolLayout->itemAt(i)->widget());
+//        connect(currentButton, SIGNAL(clicked()),
+//                drawingLayer->getTools(), SLOT(setCurrentToolCode()));
+//    }
+
+    drawingLayer->initDrawingZone();
 }
 
 void Map::initTooltip() {
     m_Tooltip.setParent(this);
     m_Tooltip.hide();
+    MapLayer *mapLayer = static_cast<MapLayer *>(m_Layers->getLayer(LayerCodes::LAYER_MAP));
 
-    connect(&m_MapLayer, SIGNAL(pushInfoTooltip(QString)),
+    connect(mapLayer, SIGNAL(pushInfoTooltip(QString)),
             &m_Tooltip, SLOT(pushInfo(QString)));
-    connect(&m_MapLayer, SIGNAL(showMapTooltip()),
+    connect(mapLayer, SIGNAL(showMapTooltip()),
             this, SLOT(showMapTooltip()));
-    connect(&m_MapLayer, SIGNAL(hideMapTooltip()),
+    connect(mapLayer, SIGNAL(hideMapTooltip()),
             &m_Tooltip, SLOT(hide()));
 
 }
 
 void Map::selectedEditionLayer(QAbstractButton *button, bool checked) {
+    m_Layers->setCurrentLayerCode(button->objectName());
 
-    if (button->objectName() == QString("m_MapEdit")) {
-        m_SelectedLayer = &m_MapLayer;
-
-        ui->m_StackedTools->show();
-        ui->m_StackedTools->setCurrentWidget(ui->m_PageMapTools);
-    }
-    else if (button->objectName() == QString("m_FowEdit")) {
-        m_SelectedLayer = m_FoWLayer;
-
-        ui->m_StackedTools->show();
-        if (m_IsGridFoWLayer) {
-            ui->m_StackedTools->setCurrentWidget(ui->m_PageFoWTools);
-        }
-        else {
-            ui->m_StackedTools->setCurrentWidget(ui->m_PageDrawingTools);
-        }
-    }
-    else if (button->objectName() == QString("m_DrawingEdit")) {
-        m_SelectedLayer = &m_DrawingLayer;
-
-        ui->m_StackedTools->show();
-        ui->m_StackedTools->setCurrentWidget(ui->m_PageDrawingTools);
-    }
-    else {
-        m_SelectedLayer = NULL;
-        ui->m_StackedTools->hide();
-    }
-
-    if (m_SelectedLayer != NULL) {
-        m_SelectedLayer->setEnabled(checked);
-    }
+    LayerCodes buttonCode = m_Layers->s_ButtonCodesMap.value(button->objectName());
+    m_SelectedLayer = m_Layers->getLayer(buttonCode);
+    ui->m_StackedTools->show();
+    m_SelectedLayer->setEnabled(checked);
+    ui->m_StackedTools->setCurrentWidget(m_EditionMap.value(buttonCode));
 }
 
 void Map::selectedDisplayLayer(QAbstractButton *button, bool checked) {
-    Layer *selectedLayer;
-
-    if (button->objectName() == QString("m_BgDisplay")) {
-        selectedLayer = &m_BgLayer;
-    }
-    else if (button->objectName() == QString("m_MapDisplay")) {
-        selectedLayer = &m_MapLayer;
-    }
-    else if (button->objectName() == QString("m_FowDisplay")) {
-        selectedLayer = m_FoWLayer;
-    }
-    else if (button->objectName() == QString("m_DrawingDisplay")) {
-        selectedLayer = &m_DrawingLayer;
-    }
-    else {
-        selectedLayer = NULL;
-    }
+    AbstractLayer *selectedLayer;
+    selectedLayer = m_Layers->getLayer(m_Layers->s_ButtonCodesMap.value(button->objectName()));
 
     if (selectedLayer != NULL) {
         selectedLayer->setVisible(checked);
+        selectedLayer->setEnabled(true);
         ui->m_View->scene()->update(); // update the background part of the Scene
     }
 }
@@ -196,7 +163,7 @@ Ui::Map *Map::getUi() {
 }
 
 MapLayer *Map::getMapLayer() {
-    return &m_MapLayer;
+    return static_cast<MapLayer *>(m_Layers->getLayer(LayerCodes::LAYER_MAP));
 }
 
 void Map::on_collapseButton_clicked(bool checked) {
