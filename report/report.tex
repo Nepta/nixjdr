@@ -1,0 +1,120 @@
+\documentclass[11pt]{article}
+\usepackage{multicol}
+\setlength{\columnseprule}{1pt} % separation line between columns
+\setlength{\parindent}{0pt} % paragraph indentation
+
+\usepackage[top=2cm, bottom=2cm, left=2cm, right=2cm]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[francais]{babel}
+\usepackage{textcomp}
+
+\usepackage{hyperref}
+\hypersetup{
+	colorlinks=true,       	% false: boxed links; true: colored links
+	linkcolor=black,          	% color of internal links
+	urlcolor=blue,           	% color of external links
+	citecolor=blue
+}
+
+\usepackage{dashrule}
+\usepackage{wrapfig}
+\usepackage{graphicx}
+\usepackage{enumitem}
+\usepackage{wrapfig}
+\usepackage{cancel} % diagonal strikeout
+\usepackage[margin=1cm]{caption}
+\setdescription{leftmargin=1cm,labelindent=0.5cm}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+
+\newcommand\mathd[0]{\mathrm{d}} 
+
+\usepackage{blindtext}
+
+% Colors
+\usepackage[usenames,dvipsnames]{xcolor}
+\definecolor{session_bg}{RGB}{25,25,25}
+\definecolor{grey2}{rgb}{0.3,0.3,0.3}
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+\definecolor{blue}{rgb}{0,0,0.7}
+
+% Colored frame
+\usepackage{framed}
+\definecolor{shadecolor}{rgb}{0.96,0.96,0.96}
+\definecolor{TFFrameColor}{rgb}{0.96,0.96,0.96}
+\definecolor{TFTitleColor}{rgb}{0.00,0.00,0.00}
+
+% Redefine leftbar environment
+\newlength{\leftbarwidth}
+\setlength{\leftbarwidth}{1pt}
+\newlength{\leftbarsep}
+\setlength{\leftbarsep}{10pt}
+
+\newcommand*{\leftbarcolorcmd}{\color{leftbarcolor}} % as a command to be more flexible
+\colorlet{leftbarcolor}{gray}
+
+\renewenvironment{leftbar}{%
+    \def\FrameCommand{{\leftbarcolorcmd{\vrule width \leftbarwidth\relax\hspace {\leftbarsep}}}}%
+    \MakeFramed {\advance \hsize -\width \FrameRestore }%
+}{%
+    \endMakeFramed
+}
+
+\usepackage{listings}
+\lstloadlanguages{C,sh}
+\lstdefinestyle{session}{
+	numbers=left,	
+	tabsize=4,
+	frame=single, % cadre autour du code
+	basicstyle=\small\ttfamily\color{white},
+	numberstyle=\scriptsize\ttfamily,
+	backgroundcolor=\color{session_bg},
+	showstringspaces=false,
+	keywordstyle=\color{OliveGreen},
+	stringstyle=\color{BrickRed},
+	commentstyle=\color{grey2}\it,
+	stepnumber=1
+}
+\lstdefinestyle{C}{
+    language=[ANSI]C,
+	basicstyle=\scriptsize,
+	numbers=left,                   % where to put the line-numbers
+  	numberstyle=\tiny\color{gray},
+	commentstyle=\color{dkgreen},
+	frame=single,                   % adds a frame around the code
+ 	rulecolor=\color{black},
+	emph={},
+	emphstyle=\color{mauve},
+	morekeywords={},
+	keywordstyle={\color{blue}},
+	showstringspaces=false
+}
+
+% Title page
+\title{Création d'une interface graphique et interactive \\ pour jeux de rôles papier}
+\author{
+	Damien Martel \\ \href{mailto:damien.martel@edue.esiee.fr}{damien.martel@edu.esiee.fr} \and
+	Bertrand Le Mée \\ \href{mailto:bertrand.lemee@edu.esiee.fr}{bertrand.lemee@edu.esiee.fr} \and
+	Vincent Lindivat \\ \href{mailto:vincent.lindivat@edu.esiee.fr}{vincent.lindivat@edu.esiee.fr} \and
+	Frédéric Nguyen \\ \href{mailto:frederic.nguyen@edu.esiee.fr}{frederic.nguyen@edu.esiee.fr}
+}
+\date{\today}
+
+\begin{document}
+\maketitle
+\newpage
+\hfill
+\newpage
+\tableofcontents
+\newpage
+
+\section{Introduction}
+
+\section{Méthode agile SCRUM}
+
+\end{document}
