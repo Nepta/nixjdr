@@ -36,3 +36,11 @@ html/
 
 # Database
 *.sqlite
+
+#Latex
+*.aux
+*.log
+*.pdf
+*.gz
+*.toc
+*.swp
