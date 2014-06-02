@@ -7,7 +7,6 @@ User::User(QTcpSocket *socket)
     m_Socket = socket;
     m_Header = Header();
     m_Nickname = QString("guest");
-    m_Database = NULL;
 
     connect(m_Socket, SIGNAL(readyRead()), this, SLOT(receivedData()));
     connect(m_Socket, SIGNAL(disconnected()), this, SLOT(userDisconnected()));
@@ -20,7 +19,6 @@ User::User() : User(new QTcpSocket) {}
 
 User::~User() {
     delete m_Socket;
-    delete m_Database;
 }
 
 void User::receivedData()
@@ -33,10 +31,10 @@ void User::receivedData()
         m_Header.reset();
     }
 
-    // receivedData() is called by the signal readyRead() when new data is available.
-    // However readyRead() cannot be emitted again while the receivedData slot
-    // is executed. The following lines fix the problem by calling received Data
-    // once again while m_Socket contains available bytes.
+    /* receivedData() is called by the signal readyRead() when new data is available.
+     * However readyRead() cannot be emitted again while the receivedData slot
+     * is executed. The following lines fix the problem by calling received Data
+     * once again while m_Socket contains available bytes. */
     if (m_Socket->bytesAvailable() > 0) {
         receivedData();
     }
@@ -129,10 +127,6 @@ Role User::getRole() {
     return m_Role;
 }
 
-Database* User::getDB(){
-	return m_Database;
-}
-
 User* User::setNickname(const QString &nickname) {
     m_Nickname = nickname;
 
@@ -147,12 +141,6 @@ User* User::setPendingNickname(const QString &nickname) {
 
 User* User::setServerIpAddress(const QString &serverIpAddress) {
     m_serverIpAddress = serverIpAddress;
-
-    return this;
-}
-
-User* User::setDatabase(Database *database) {
-    m_Database = database;
 
     return this;
 }

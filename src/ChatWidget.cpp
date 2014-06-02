@@ -28,13 +28,6 @@ void ChatWidget::on_msgField_returnPressed()
     }
 }
 
-void ChatWidget::setupChatServer(ChatServer *chatServer) {
-    m_ChatServer = chatServer;
-
-    connect(m_ChatServer, SIGNAL(sendMessageToChatUi(QString)),
-                        this, SLOT(receivedMessage(QString)));
-}
-
 void ChatWidget::setupChatClient(ChatClient *chatClient) {
     m_ChatClient = chatClient;
 
@@ -43,6 +36,14 @@ void ChatWidget::setupChatClient(ChatClient *chatClient) {
     connect(m_ChatClient->getCommands(), SIGNAL(cmdUpdateUserListView()),
                         this, SLOT(updateNicknamesListView()));
 }
+
+void ChatWidget::setupChatServer(ChatServer *chatServer) {
+    m_ChatServer = chatServer;
+
+    connect(m_ChatServer, SIGNAL(sendMessageToChatUi(QString)),
+                        this, SLOT(receivedMessage(QString)));
+}
+
 
 void ChatWidget::receivedMessage(const QString &msg) {
     QString htmlMsg = QString("<div style=\" white-space: pre-wrap;\">%1</div>").arg(msg);

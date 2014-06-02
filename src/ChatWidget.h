@@ -7,6 +7,7 @@
 
 #include "Chat/ChatServer.h"
 #include "Chat/ChatClient.h"
+
 #include "User.h"
 
 namespace Ui {
@@ -20,8 +21,8 @@ class ChatWidget : public QWidget
 public:
     explicit ChatWidget(QWidget *parent = 0);
     ~ChatWidget();
-    void setupChatServer(ChatServer *chatServer);
     void setupChatClient(ChatClient *chatClient);
+    void setupChatServer(ChatServer *chatServer);
     void sendMessageFromClientToServer(QString message);
 
 signals:

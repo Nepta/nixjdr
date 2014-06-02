@@ -1,11 +1,14 @@
+#include "Canvas/Network/MapServer.h"
+
 #include "Chat/ChatServer.h"
+
 #include "Server.h"
 
 Server::Server() {
     m_Server = new QTcpServer(this);
 
     m_Nodes.insert(TargetCode::CHAT_SERVER, new ChatServer(&m_UsersList));
-    // TODO m_Nodes.insert(TargetCode::MAP_SERVER, new MapServer(m_UsersList));
+    m_Nodes.insert(TargetCode::MAP_SERVER, new MapServer(&m_UsersList));
 }
 
 Server::~Server() {

@@ -6,6 +6,8 @@
 
 #include "Database/Repository/RepositoryManager.h"
 
+#include "Canvas/Network/MapClient.h"
+#include "Canvas/Network/MapServer.h"
 #include "Canvas/Layers/MapLayer.h"
 #include "Canvas/CanvasScene.h"
 #include "Canvas/CanvasView.h"
@@ -48,7 +50,7 @@ MainWindow::~MainWindow()
  * with the application Database.
  */
 void MainWindow::initDBComponents() {
-    ui->tokenPage->initTokenMenu(m_User->getDB());
+    ui->tokenPage->initTokenMenu(db_);
 }
 
 void MainWindow::initTableTurnSplitter(){
@@ -94,10 +96,22 @@ void MainWindow::createMap(QString filename) {
     TokenItem *currentTokenItem = dynamic_cast<TokenItem*>(tokenList->currentItem());
     // TODO should be able to choose the step value in a message box
     Map *map = new Map(filename, currentTokenItem, 32);
-    map->setDatabase(m_User->getDB());
+    map->setDatabase(db_);
 
     // Add Map to the database
-    RepositoryManager::s_MapRepository.insertMap(map, m_User->getDB());
+    RepositoryManager::s_MapRepository.insertMap(map, db_);
+
+    // Initialize Map with the MapServer
+    if (m_Server != NULL) {
+        MapServer* mapServer = dynamic_cast<MapServer*>(
+                    m_Server->getReceiver(TargetCode::MAP_SERVER));
+        map->setupMapServer(mapServer);
+    }
+
+    // Initialize Map with the MapClient
+    MapClient* mapClient = dynamic_cast<MapClient*>(
+                m_Client->getReceiver(TargetCode::MAP_CLIENT));
+    map->setupMapClient(mapClient);
 
     QMdiSubWindow *subwindow = ui->tableArea->addSubWindow(map);
     subwindow->show();

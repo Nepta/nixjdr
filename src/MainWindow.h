@@ -8,6 +8,7 @@
 #include "Canvas/Map.h"
 #include "Network/Server.h"
 #include "Network/Client.h"
+#include "Database/DBComponent.h"
 #include "ChatWidget.h"
 #include "Token/TokenMenu.h"
 #include "TurnMenu/TurnMenu.h"
@@ -19,7 +20,7 @@ namespace Ui {
     class MainWindow;
 }
 
-class MainWindow : public QMainWindow
+class MainWindow : public QMainWindow, public DBComponent
 {
     Q_OBJECT
 

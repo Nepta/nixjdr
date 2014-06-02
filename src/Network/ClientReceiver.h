@@ -26,6 +26,8 @@ public slots:
      */
     void sendPacketToServer(quint16 code, quint16 target, Serializable &data);
 
+    virtual void sendMessageToServer(const QString& msg) = 0;
+
 protected:
     User *m_User;
 

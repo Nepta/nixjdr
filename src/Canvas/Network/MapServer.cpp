@@ -6,3 +6,7 @@ MapServer::MapServer(QHash<QString, User *> *usersList) :
 }
 
 MapServer::~MapServer() {}
+
+void MapServer::processNewMessage(Header header, QByteArray& data) {
+    // TODO
+}

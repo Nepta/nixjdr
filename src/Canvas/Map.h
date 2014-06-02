@@ -4,6 +4,8 @@
 #include <QWidget>
 #include <QAbstractButton>
 
+#include "Network/MapClient.h"
+#include "Network/MapServer.h"
 #include "Layers/BackgroundLayer.h"
 #include "Layers/MapLayer.h"
 #include "Layers/FoWLayer.h"
@@ -34,6 +36,9 @@ public:
     void construct(int id, QString bgFilename, TokenItem *tokenItem, int tileStep);
     void construct(QString bgFilename, TokenItem *tokenItem, int tileStep);
 
+    void setupMapClient(MapClient *mapClient);
+    void setupMapServer(MapServer *mapServer);
+
     void initTooltip();
     void initBgLayer(QString bgFilename);
     void initMapLayer(TokenItem *tokenItem, int tileStep);
@@ -60,14 +65,18 @@ private slots:
 private:
     Ui::Map *ui;
 
+    MapClient *m_MapClient;
+    MapServer *m_MapServer;
+
     CanvasScene m_Scene;
     Tooltip m_Tooltip;
+    bool m_IsGridFoWLayer;
+    Layer *m_SelectedLayer;
+
     BackgroundLayer *m_BgLayer;
     MapLayer *m_MapLayer;
     Layer *m_FoWLayer;
     DrawingLayer *m_DrawingLayer;
-    bool m_IsGridFoWLayer;
-    Layer *m_SelectedLayer;
 
     void showMapTooltip(QString tooltip);
     void hideAllToolBoxes();

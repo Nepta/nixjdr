@@ -49,6 +49,16 @@ Map::~Map() {
     delete m_DrawingLayer;
 }
 
+
+void Map::setupMapClient(MapClient *mapClient) {
+    m_MapClient = mapClient;
+    m_MapClient->addMapToList(this);
+}
+
+void Map::setupMapServer(MapServer *mapServer) {
+    m_MapServer = mapServer;
+}
+
 void Map::initBgLayer(QString bgFilename) {
     m_BgLayer = new BackgroundLayer(bgFilename);
 
