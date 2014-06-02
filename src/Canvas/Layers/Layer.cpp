@@ -33,6 +33,10 @@ void Layer::setEnabled(bool enabled) {
     QGraphicsObject::setEnabled(enabled);
 }
 
+void Layer::setClientReceiver(ClientReceiver *clientReceiver) {
+    m_ClientReceiver = clientReceiver;
+}
+
 void Layer::keyPressEvent(QKeyEvent *)
 {}
 

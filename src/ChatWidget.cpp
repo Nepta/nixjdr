@@ -61,7 +61,6 @@ void ChatWidget::updateNicknamesListView() {
     foreach (QString user, AbstractCmd::getUsersListClient()->keys()) {
         ui->nicknamesListWidget->addItem(user);
     }
-
 }
 
 void ChatWidget::rollDice(QString dice, bool hidden){

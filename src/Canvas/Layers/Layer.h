@@ -6,6 +6,9 @@
 #include <QStyleOptionGraphicsItem>
 #include <QPainter>
 #include <QRectF>
+
+#include "Network/ClientReceiver.h"
+
 #include "Database/Database.h"
 #include "Database/DBComponent.h"
 #include "Database/DBItem.h"
@@ -27,8 +30,11 @@ public:
     QRectF boundingRect() const;
     void paint(QPainter *, const QStyleOptionGraphicsItem *, QWidget *);
     void setEnabled(bool enabled);
+    void setClientReceiver(ClientReceiver *clientReceiver);
 
 protected:
+    ClientReceiver *m_ClientReceiver;
+
     virtual void keyPressEvent(QKeyEvent *);
     virtual void keyReleaseEvent(QKeyEvent *);
 };

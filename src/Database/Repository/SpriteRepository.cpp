@@ -37,4 +37,3 @@ int SpriteRepository::insertSprite(Sprite *sprite, Database *db) {
 
     return id;
 }
-

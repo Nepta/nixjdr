@@ -2,7 +2,9 @@
 #define MAPCLIENT_H
 
 #include "Network/ClientReceiver.h"
-//TODO #include "Canvas/Map.h"
+#include "Database/DBComponent.h"
+#include "Token/TokenList.h"
+#include "Canvas/Map.h"
 
 class Map;
 
@@ -13,21 +15,24 @@ enum class MapCodes : quint16 {
     ADD_SPRITE
 };
 
-class MapClient : public ClientReceiver
+class MapClient : public ClientReceiver, public DBComponent
 {
     Q_OBJECT
 
-private:
-    QList<Map*> m_MapsList;
-
 public:
-    MapClient(User *user, QHash<QString, User *> *usersList);
+    MapClient(User *user, QHash<QString, User *> *usersList, Database *db, TokenList *tokenList);
     ~MapClient();
 
     void addMapToList(Map* map);
 
 public slots:
     void sendMessageToServer(const QString& msg);
+
+private:
+    TokenList *m_TokenList;
+    QList<Map*> m_MapsList;
+
+    void addSpriteAction(const QString& msg);
 
 private slots:
     void processNewMessage(Header header, QByteArray &data);

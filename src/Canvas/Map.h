@@ -33,11 +33,10 @@ public:
     // TODO Map(DBItem item);
     ~Map();
 
+    void setupClientReceiver(ClientReceiver *clientReceiver);
+
     void construct(int id, QString bgFilename, TokenItem *tokenItem, int tileStep);
     void construct(QString bgFilename, TokenItem *tokenItem, int tileStep);
-
-    void setupClientReceiver(ClientReceiver *clientReceiver);
-    void setupServerReceiver(ServerReceiver *serverReceiver);
 
     void initTooltip();
     void initBgLayer(QString bgFilename);
@@ -54,7 +53,6 @@ public:
     MapLayer *getMapLayer();
     Layer *getFoWLayer();
     DrawingLayer *getDrawingLayer();
-
 
 private slots:
     void selectedEditionLayer(QAbstractButton *button, bool checked);

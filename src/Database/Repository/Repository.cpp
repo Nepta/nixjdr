@@ -1,5 +1,15 @@
 #include "Repository.h"
 
+QueryBuilder Repository::findByIdQB(int id) {
+    QueryBuilder qb;
+
+    qb.select("*")
+    ->from(getTableName())
+    ->where("id = " + QString::number(id));
+
+    return qb;
+}
+
 /**
  * @brief Repository::findAllQB Constructs a query to retrieve all the rows from the child's
  * Repository associated table.
@@ -23,6 +33,13 @@ QueryBuilder Repository::insertQB(QList<QString> cols) {
     qb.insertInto(getTableName(), QStringList(cols));
 
     return qb;
+}
+
+DBItem Repository::findById(int id, Database *db) {
+    QueryBuilder qb = findByIdQB(id);
+
+    DBItem dbItem = db->pullFirst(qb.getQuery());
+    return dbItem;
 }
 
 /**

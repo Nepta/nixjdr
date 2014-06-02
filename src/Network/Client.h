@@ -1,6 +1,8 @@
 #ifndef CLIENT_H
 #define CLIENT_H
 
+#include "Database/Database.h"
+#include "Token/TokenList.h"
 #include "Switch.h"
 #include "User.h"
 
@@ -9,7 +11,7 @@ class Client : public Switch
     Q_OBJECT
 
 public:
-    Client(User *user);
+    Client(User *user, Database *db, TokenList *tokenList);
     ~Client();
 
    /**

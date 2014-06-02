@@ -45,6 +45,10 @@ Sprite *GridLayer::addSprite(TokenItem *tokenItem, QPoint position, int zValue,
         sprite->installSceneEventFilter(this);
     }
 
+    // Notifies every client that a new sprite has been added
+    QString msg = QString("addSprite %1").arg(sprite->id());
+    m_ClientReceiver->sendMessageToServer(msg);
+
     return sprite;
 }
 
@@ -58,6 +62,12 @@ Sprite *GridLayer::addSprite(TokenItem *tokenItem, QPoint position, int zValue,
  */
 Sprite *GridLayer::addSprite(TokenItem *tokenItem, QPoint position, int zValue) {
     return addSprite(tokenItem, position, zValue, this);
+}
+
+Sprite *GridLayer::addSpriteFromDb(Sprite* sprite) {
+    sprite->installSceneEventFilter(this);
+
+    return sprite;
 }
 
 /**

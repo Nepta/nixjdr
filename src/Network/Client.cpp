@@ -4,13 +4,13 @@
 
 #include "Client.h"
 
-Client::Client(User *user)
-{    
+Client::Client(User *user, Database *db, TokenList *tokenList)
+{
     m_User = user;
     m_UsersList.insert(m_User->getNickname(), m_User);
 
     m_Nodes.insert(TargetCode::CHAT_CLIENT, new ChatClient(m_User, &m_UsersList));
-    m_Nodes.insert(TargetCode::MAP_CLIENT, new MapClient(m_User, &m_UsersList));
+    m_Nodes.insert(TargetCode::MAP_CLIENT, new MapClient(m_User, &m_UsersList, db, tokenList));
 
     connect(m_User, SIGNAL(receivedFullData(Header, QByteArray)),
             this, SLOT(switchNewMessage(Header, QByteArray)));

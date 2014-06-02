@@ -192,7 +192,8 @@ void MainWindow::setupMJ() {
 }
 
 void MainWindow::setupPlayer() {
-    m_Client = new Client(m_User);
+    TokenList *tokenList = ui->tokenPage->getUi()->m_tokenList;
+    m_Client = new Client(m_User, db_, tokenList);
 
     connect(m_Client, SIGNAL(sendMessageToChatUi(QString)),
             ui->m_ChatWidget, SLOT(receivedMessage(QString))

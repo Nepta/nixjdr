@@ -14,6 +14,7 @@ class Sprite : public QGraphicsPixmapItem, public DBItem
 {
 public:
     Sprite(TokenItem *tokenItem, QGraphicsItem *parent = 0, int zValue = 1);
+    Sprite(DBItem item, TokenItem *tokenItem, QGraphicsItem *parent);
     ~Sprite();
     void setTransparent(bool enabled);
     TokenItem *getTokenItem();

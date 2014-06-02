@@ -20,9 +20,11 @@ public:
 
     virtual const QString getTableName() = 0;
 
+    QueryBuilder findByIdQB(int id);
     QueryBuilder findAllQB();
     QueryBuilder insertQB(QList<QString> cols);
 
+    DBItem findById(int id, Database *db);
     int insert(DBItem *item, QueryBuilder qb, QHash<QString, QVariant> pBindValues, Database *db);
     int insertIntoDefault(DBItem *item, Database *db);
 
