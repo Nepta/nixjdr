@@ -49,14 +49,14 @@ Map::~Map() {
     delete m_DrawingLayer;
 }
 
-
-void Map::setupMapClient(MapClient *mapClient) {
-    m_MapClient = mapClient;
-    m_MapClient->addMapToList(this);
+// TODO ne pas redéfinir
+void Map::setupClientReceiver(ClientReceiver *clientReceiver) {
+    ReceiverHandler::setupClientReceiver(clientReceiver);
 }
 
-void Map::setupMapServer(MapServer *mapServer) {
-    m_MapServer = mapServer;
+// TODO ne pas redéfinir
+void Map::setupServerReceiver(ServerReceiver *serverReceiver) {
+    ReceiverHandler::setupServerReceiver(serverReceiver);
 }
 
 void Map::initBgLayer(QString bgFilename) {

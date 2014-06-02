@@ -63,6 +63,7 @@ SOURCES += \
     Network/Client.cpp \
     Network/ClientReceiver.cpp \
     Network/Receiver.cpp \
+    Network/ReceiverHandler.cpp \
     Database/Database.cpp \
     Database/DBItem.cpp \
     Database/QueryBuilder.cpp \
@@ -131,6 +132,7 @@ HEADERS  += \
     Network/Client.h \
     Network/ClientReceiver.h \
     Network/Serializable.h \
+    Network/ReceiverHandler.h \
     Database/Database.h \
     Database/DBItem.h \
     Database/QueryBuilder.h \

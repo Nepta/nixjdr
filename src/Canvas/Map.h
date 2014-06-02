@@ -4,8 +4,8 @@
 #include <QWidget>
 #include <QAbstractButton>
 
-#include "Network/MapClient.h"
-#include "Network/MapServer.h"
+#include "Network/ReceiverHandler.h"
+
 #include "Layers/BackgroundLayer.h"
 #include "Layers/MapLayer.h"
 #include "Layers/FoWLayer.h"
@@ -22,7 +22,7 @@ namespace Ui {
     class Map;
 }
 
-class Map : public QWidget, public DBItem, public DBComponent
+class Map : public QWidget, public DBItem, public DBComponent, public ReceiverHandler
 {
     Q_OBJECT
 
@@ -36,8 +36,8 @@ public:
     void construct(int id, QString bgFilename, TokenItem *tokenItem, int tileStep);
     void construct(QString bgFilename, TokenItem *tokenItem, int tileStep);
 
-    void setupMapClient(MapClient *mapClient);
-    void setupMapServer(MapServer *mapServer);
+    void setupClientReceiver(ClientReceiver *clientReceiver);
+    void setupServerReceiver(ServerReceiver *serverReceiver);
 
     void initTooltip();
     void initBgLayer(QString bgFilename);
@@ -64,9 +64,6 @@ private slots:
 
 private:
     Ui::Map *ui;
-
-    MapClient *m_MapClient;
-    MapServer *m_MapServer;
 
     CanvasScene m_Scene;
     Tooltip m_Tooltip;

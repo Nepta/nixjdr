@@ -105,13 +105,14 @@ void MainWindow::createMap(QString filename) {
     if (m_Server != NULL) {
         MapServer* mapServer = dynamic_cast<MapServer*>(
                     m_Server->getReceiver(TargetCode::MAP_SERVER));
-        map->setupMapServer(mapServer);
+        map->setupServerReceiver(mapServer);
     }
 
     // Initialize Map with the MapClient
     MapClient* mapClient = dynamic_cast<MapClient*>(
                 m_Client->getReceiver(TargetCode::MAP_CLIENT));
-    map->setupMapClient(mapClient);
+    mapClient->addMapToList(map);
+    map->setupClientReceiver(mapClient);
 
     QMdiSubWindow *subwindow = ui->tableArea->addSubWindow(map);
     subwindow->show();
@@ -185,7 +186,7 @@ void MainWindow::setupMJ() {
     // Initialize ChatWidget with the ChatServer
     ChatServer* chatServer = dynamic_cast<ChatServer*>(
                 m_Server->getReceiver(TargetCode::CHAT_SERVER));
-    ui->m_ChatWidget->setupChatServer(chatServer);
+    ui->m_ChatWidget->setupServerReceiver(chatServer);
 
     setupPlayer();
 }
@@ -200,7 +201,7 @@ void MainWindow::setupPlayer() {
     // Initialize ChatWidget with the ChatClient
     ChatClient* chatClient = dynamic_cast<ChatClient*>(
                 m_Client->getReceiver(TargetCode::CHAT_CLIENT));
-    ui->m_ChatWidget->setupChatClient(chatClient);
+    ui->m_ChatWidget->setupClientReceiver(chatClient);
 
     /* The dice menu is able to send system messages to the Chat in order to display error messages
      * or warnings */
