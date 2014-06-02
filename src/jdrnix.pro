@@ -53,6 +53,8 @@ SOURCES += \
     Canvas/Layers/BackgroundLayer.cpp \
     Canvas/Layers/DrawingLayer.cpp \
     Canvas/Layers/Layer.cpp \
+    Canvas/Network/MapClient.cpp \
+    Canvas/Network/MapServer.cpp \
     Canvas/SideMenuWidgets/DrawingMenu.cpp \
     Network/Header.cpp \
     Network/Server.cpp \
@@ -119,6 +121,8 @@ HEADERS  += \
     Canvas/Layers/DrawingLayer.h \
     Canvas/ImageWidget.h \
     Canvas/SideMenuWidgets/DrawingMenu.h \
+    Canvas/Network/MapClient.h \
+    Canvas/Network/MapServer.h \
     Network/Switch.h \
     Network/Receiver.h \
     Network/Header.h \

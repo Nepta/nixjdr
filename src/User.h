@@ -4,8 +4,8 @@
 #include <QObject>
 #include <QString>
 #include <QtNetwork>
+
 #include "Network/Header.h"
-#include "User.h"
 #include "Database/Database.h"
 
 enum class Role {

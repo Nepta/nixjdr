@@ -6,9 +6,6 @@
 ChatClient::ChatClient(User *user, QHash<QString, User *> *usersList) :
     ClientReceiver(user, usersList)
 {
-    m_User = user;
-    m_UsersList = usersList;
-
     AbstractCmd::setUsersListClient(m_UsersList);
 
     // init commands
