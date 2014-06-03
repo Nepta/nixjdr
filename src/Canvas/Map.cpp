@@ -11,61 +11,36 @@ Map::Map(QString bgFilename, TokenItem *tokenItem, int tileStep, QWidget *parent
 {
     ui->setupUi(this);
     m_Layers = new Layers(bgFilename, 2, 2, Qt::black, tileStep, tokenItem);
-    initScene();
-    initLayers();
     setWindowTitle(tr("Carte"));
-    ui->m_StackedTools->show(); // Hide toolboxes
+
+    initScene(tileStep);
+    initLayers();
     initDisplay();
-    initMapTools();
-    initFoWTools();
-    initDrawingLayer(LayerCodes::LAYER_DRAW);
     initTooltip();
 }
 
 Map::~Map() {
     delete ui;
+    delete m_Scene;
 }
 
-void Map::initScene(){
-    BackgroundLayer *bgLayer = static_cast<BackgroundLayer *>(m_Layers->getLayer(LayerCodes::LAYER_BACKGROUND));
-    MapLayer *mapLayer = static_cast<MapLayer *>(m_Layers->getLayer(LayerCodes::LAYER_MAP));
+void Map::initScene(int tileStep) {
+    BackgroundLayer *bgLayer = dynamic_cast<BackgroundLayer *>(m_Layers->getLayer(LayerCodes::LAYER_BACKGROUND));
 
     int sceneHeight = bgLayer->getBackground()->rect().height()
-            + BG_OFFSET * mapLayer->getStep();
+            + BG_OFFSET * tileStep;
     int sceneWidth = bgLayer->getBackground()->rect().width()
-            + BG_OFFSET * mapLayer->getStep();
+            + BG_OFFSET * tileStep;
 
-    m_Scene = new CanvasScene(sceneWidth, sceneHeight); // TODO pass those value through a dialog box
+    m_Scene = new CanvasScene(sceneWidth, sceneHeight);
     ui->m_View->setScene(m_Scene);
 }
 
-void Map::initLayers(){
-    BackgroundLayer *bgLayer = static_cast<BackgroundLayer *>(m_Layers->getLayer(LayerCodes::LAYER_BACKGROUND));
-    MapLayer *mapLayer =static_cast<MapLayer *>(m_Layers->getLayer(LayerCodes::LAYER_MAP));
-    FoWLayer *fowLayer =static_cast<FoWLayer *>(m_Layers->getLayer(LayerCodes::LAYER_FOW));
-    DrawingLayer *drawingLayer =static_cast<DrawingLayer *>(m_Layers->getLayer(LayerCodes::LAYER_DRAW));
-
-    m_Scene->addLayer(bgLayer);
-    m_Scene->addLayer(mapLayer);
-    m_Scene->addLayer(fowLayer);
-    m_Scene->addLayer(drawingLayer);
-
-    drawingLayer->initDrawingZone();
-
-    bgLayer->setEnabled(false);
-    mapLayer->setEnabled(true);
-    fowLayer->setEnabled(false);
-    drawingLayer->setEnabled(false);
-    m_SelectedLayer = mapLayer;
-
-    // Add BackgroundLayer to the database
-    RepositoryManager::s_BgLayerRepository.insertBgLayer(bgLayer, db_);
-    // Add MapLayer to the database
-    RepositoryManager::s_MapLayerRepository.insertMapLayer(mapLayer, db_);
-    // Add FoWLayer to the database
-    RepositoryManager::s_FoWLayerRepository.insertFoWLayer(fowLayer, db_);
-    // Add DrawingLayer to the database
-    RepositoryManager::s_DrawingLayerRepository.insertDrawingLayer(drawingLayer, db_);
+void Map::initLayers() {
+    initBgLayer();
+    initMapLayer();
+    initFoWLayer();
+    initDrawingLayer();
 }
 
 void Map::initDisplay(){
@@ -79,22 +54,70 @@ void Map::initDisplay(){
     m_EditionMap.insert(LayerCodes::LAYER_DRAW, ui->m_PageDrawingTools);
 }
 
-void Map::initMapTools(){
+void Map::initMapTools() {
     connect(ui->m_MapScaler, SIGNAL(valueChanged(int)),
             ui->m_View, SLOT(zoom(int)));
 }
 
 void Map::initFoWTools(){
-    if(dynamic_cast<FoWLayer *>(m_Layers->getLayer(LayerCodes::LAYER_FOW)) != NULL){
-        FoWLayer *fowLayer = static_cast<FoWLayer *>(m_Layers->getLayer(LayerCodes::LAYER_FOW));
-        connect(ui->m_FillFoW, SIGNAL(clicked(bool)),
-                fowLayer, SLOT(fillFoW()));
-        connect(ui->m_RemoveFoW, SIGNAL(clicked(bool)),
-                fowLayer, SLOT(removeFoW()));
-    }
-    else if(dynamic_cast<DrawingLayer *>(m_Layers->getLayer(LayerCodes::LAYER_FOW)) != NULL){
-        initDrawingLayer(LayerCodes::LAYER_FOW);
-    }
+    FoWLayer *fowLayer = dynamic_cast<FoWLayer *>(
+        m_Layers->getLayer(LayerCodes::LAYER_FOW)
+    );
+
+    connect(ui->m_FillFoW, SIGNAL(clicked(bool)),
+            fowLayer, SLOT(fillFoW()));
+    connect(ui->m_RemoveFoW, SIGNAL(clicked(bool)),
+            fowLayer, SLOT(removeFoW()));
+}
+
+void Map::initBgLayer() {
+    BackgroundLayer *bgLayer = dynamic_cast<BackgroundLayer *>(
+        m_Layers->getLayer(LayerCodes::LAYER_BACKGROUND)
+    );
+
+    m_Scene->addLayer(bgLayer);
+    bgLayer->setEnabled(false);
+
+    // Add BackgroundLayer to the database
+    RepositoryManager::s_BgLayerRepository.insertBgLayer(bgLayer, db_);
+}
+
+void Map::initMapLayer() {
+    MapLayer *mapLayer = dynamic_cast<MapLayer *>(
+        m_Layers->getLayer(LayerCodes::LAYER_MAP)
+    );
+
+    m_Scene->addLayer(mapLayer);
+    mapLayer->setEnabled(true);
+    mapLayer->setDatabase(db_);
+    m_SelectedLayer = mapLayer;
+
+    // Add MapLayer to the database
+    RepositoryManager::s_MapLayerRepository.insertMapLayer(mapLayer, db_);
+
+    // Map tools
+    initMapTools();
+}
+
+/**
+ * @brief Map::initFoWLayer Initializes the Fog of War Layer. If the tilestep is equal to 1, the
+ * layer will be an instance of DrawingLayer, else it will be an instance of FoWLayer.
+ * @param tileStep
+ */
+void Map::initFoWLayer() {
+    FoWLayer *fowLayer = dynamic_cast<FoWLayer *>(
+        m_Layers->getLayer(LayerCodes::LAYER_FOW)
+    );
+
+    m_Scene->addLayer(fowLayer);
+    fowLayer->setEnabled(false);
+    fowLayer->setDatabase(db_);
+
+    // Add FoWLayer to the database
+    RepositoryManager::s_FoWLayerRepository.insertFoWLayer(fowLayer, db_);
+
+    // FoW tools
+    initFoWTools();
 }
 
 /**
@@ -103,9 +126,15 @@ void Map::initFoWTools(){
  * the signals and slots.
  * @param layer
  */
-void Map::initDrawingLayer(LayerCodes code) {
+void Map::initDrawingLayer() {
     Ui::DrawingMenu *drawingUi = ui->m_PageDrawingTools->getUi();
-    DrawingLayer *drawingLayer = static_cast<DrawingLayer *>(m_Layers->getLayer(code));
+    DrawingLayer *drawingLayer = static_cast<DrawingLayer *>(
+        m_Layers->getLayer(LayerCodes::LAYER_DRAW)
+    );
+
+    m_Scene->addLayer(drawingLayer);
+    drawingLayer->initDrawingZone();
+    drawingLayer->setEnabled(false);
 
     connect(drawingUi->m_PenSpinBox, SIGNAL(valueChanged(int)),
             drawingLayer, SLOT(setPenSize(int)));
@@ -113,8 +142,6 @@ void Map::initDrawingLayer(LayerCodes code) {
             drawingLayer, SLOT(setEraserSize(int)));
     connect(drawingUi->m_EraseButton, SIGNAL(clicked(bool)),
             drawingLayer, SLOT(erasePixmapContent()));
-
-    drawingLayer->initDrawingZone();
 
     for(int i=0; i < drawingUi->m_ToolLayout->count(); i++){
         QPushButton *currentButton = dynamic_cast<QPushButton*>(
@@ -136,7 +163,6 @@ void Map::initTooltip() {
             this, SLOT(showMapTooltip()));
     connect(mapLayer, SIGNAL(hideMapTooltip()),
             &m_Tooltip, SLOT(hide()));
-
 }
 
 void Map::selectedEditionLayer(QAbstractButton *button, bool checked) {

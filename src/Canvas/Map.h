@@ -55,13 +55,17 @@ private:
     Layers *m_Layers;
     QHash<LayerCodes, QWidget *> m_EditionMap;
 
-    void initScene();
-    void initLayers();
+    void initScene(int tileStep);
     void initDisplay();
+    void initTooltip();
+
+    void initLayers();
     void initMapTools();
     void initFoWTools();
-    void initTooltip();
-    void initDrawingLayer(LayerCodes code);
+    void initBgLayer();
+    void initMapLayer();
+    void initFoWLayer();
+    void initDrawingLayer();
 
     void showMapTooltip(QString tooltip);
     void hideAllToolBoxes();

@@ -22,15 +22,9 @@ Layers::Layers(QString filename, int penSize, int eraserSize, QColor color, int 
 
     m_LayersMap.insert(LayerCodes::LAYER_BACKGROUND, new BackgroundLayer(filename));
     m_LayersMap.insert(LayerCodes::LAYER_DRAW, new DrawingLayer(penSize, eraserSize, color));
-
-    if(step>1){
-        m_LayersMap.insert(LayerCodes::LAYER_FOW, new FoWLayer(step));
-    }
-    else{
-        m_LayersMap.insert(LayerCodes::LAYER_FOW, new DrawingLayer(2, 2, QColor(50, 50, 50)));
-    }
-
+    m_LayersMap.insert(LayerCodes::LAYER_FOW, new FoWLayer(step));
     m_LayersMap.insert(LayerCodes::LAYER_MAP, new MapLayer(spritePath, step));
+
     m_CurrentLayerCode = LayerCodes::LAYER_MAP;
 }
 
