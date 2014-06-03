@@ -28,12 +28,13 @@ public:
 
     int getStep();
 
-    virtual void addSpriteToDb(TokenItem *tokenItem, QPoint position, int zValue,
-                              QGraphicsItem *parentItem);
-    void addSpriteToDb(TokenItem *tokenItem, QPoint position, int zValue = 1);
-    virtual Sprite *addSpriteFromDb(Sprite* sprite);
+    virtual Sprite *addSpriteToLayer(Sprite* sprite);
+    Sprite *addSpriteToLayer(TokenItem *tokenItem, QPoint position, int zValue);
+    virtual void addSpriteToDb(TokenItem *tokenItem, QPoint position, int zValue = 1);
+
     virtual void removeSpriteToDb(Sprite *sprite);
     void removeSpriteById(int id);
+    void removeAllSprites();
 
     void drawBackground(QPainter *painter, const QRectF &rect);
 

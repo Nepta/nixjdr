@@ -15,7 +15,7 @@ public:
     FoWLayer(int step = 1, bool transparentSprites = true);
     ~FoWLayer();
 
-    Sprite *addSpriteFromDb(Sprite* sprite);
+    Sprite *addSpriteToLayer(Sprite* sprite);
 
 private:
     /**
@@ -29,7 +29,7 @@ private:
 
 private slots:
     void fillFoW();
-    void removeFoW();
+    void removeFoWFromDb();
 };
 
 #endif // FOWLAYER_H

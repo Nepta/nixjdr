@@ -69,7 +69,7 @@ void Map::initFoWTools(){
     connect(ui->m_FillFoW, SIGNAL(clicked(bool)),
             fowLayer, SLOT(fillFoW()));
     connect(ui->m_RemoveFoW, SIGNAL(clicked(bool)),
-            fowLayer, SLOT(removeFoW()));
+            fowLayer, SLOT(removeFoWFromDb()));
 }
 
 void Map::setupClientReceiver(ClientReceiver *clientReceiver) {

@@ -13,7 +13,6 @@ FoWLayer::FoWLayer(int step, bool transparentSprites) :
     // Retrieve the fow TokenItem from the database
     TokenItem *fowItem = RepositoryManager::s_TokenItemRepository.getFowTokenItem(db_);
 
-
     setTokenItem(fowItem);
 }
 
@@ -22,15 +21,11 @@ FoWLayer::~FoWLayer() {}
 /**
  * @brief FoWLayer::addSpriteFromDb Reimplemented from GridLayer to add transparency to the new
  * Sprite if m_TransparentSprites is true.
- * @param tokenItem
- * @param position
- * @param zValue
- * @param parentItem
- * @return Returns the added sprite.
+ * @param sprite
  */
-Sprite *FoWLayer::addSpriteFromDb(Sprite* sprite)
+Sprite *FoWLayer::addSpriteToLayer(Sprite* sprite)
 {
-    GridLayer::addSpriteFromDb(sprite);
+    GridLayer::addSpriteToLayer(sprite);
     sprite->setTransparent(m_TransparentSprites);
 
     return sprite;
@@ -65,26 +60,24 @@ bool FoWLayer::sceneEventFilter(QGraphicsItem *watched, QEvent *event) {
  * @brief FoWLayer::fillFoW Fill the entire map with FoW sprites (delete all the FoW sprites before).
  */
 void FoWLayer::fillFoW() {
-    removeFoW();
+    removeFoWFromDb();
 
-    QPoint iterator(0,0);
-
-    for(int i = 0; i < boundingRect().width(); i+=m_Step){
-        for(int j = 0; j < boundingRect().height(); j +=m_Step){
-            iterator.setX(i);
-            iterator.setY(j);
-            GridLayer::addSpriteToDb(m_TokenItem, iterator);
+    for(int i = 0 ; i < boundingRect().width() ; i += m_Step) {
+        for(int j = 0 ; j < boundingRect().height() ; j += m_Step) {
+            GridLayer::addSpriteToDb(m_TokenItem, QPoint(i, j));
         }
     }
 }
 
 /**
- * @brief FoWLayer::removeFoW Remove all the FoW sprites from the map.
+ * @brief FoWLayer::removeFoWFromDb Remove all the FoW sprites from the db and notifies all the clients
+ * that they need to remove those sprites from their layers.
  */
-void FoWLayer::removeFoW() {
-    foreach (QGraphicsItem* item, childItems()) {
-        Sprite *sprite = dynamic_cast<Sprite*>(item);
+void FoWLayer::removeFoWFromDb() {
+    // Remove all the FoW Sprites for this layer from the db
+    RepositoryManager::s_SpriteRepository.removeAllSpritesFromFoWLayer(this->id(), db_);
 
-        removeSpriteToDb(sprite);
-    }
+    // Notifies all the clients that all the FoW sprites for this layer need to be removed
+    QString msg = QString("removeAllFoW");
+    m_ClientReceiver->sendMessageToServer(msg);
 }

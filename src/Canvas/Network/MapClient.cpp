@@ -23,6 +23,9 @@ void MapClient::processNewMessage(Header header, QByteArray& data) {
     else if (code == MapCodes::REMOVE_SPRITE) {
         removeSpriteAction(msg.getString());
     }
+    else if (code == MapCodes::REMOVE_ALL_FOW) {
+        removeAllFoWAction(msg.getString());
+    }
 }
 
 void MapClient::sendMessageToServer(const QString& msg) {
@@ -37,6 +40,9 @@ void MapClient::sendMessageToServer(const QString& msg) {
     }
     else if (action == "removeSprite") {
         mapCode = (quint16) MapCodes::REMOVE_SPRITE;
+    }
+    else if (action == "removeAllFoW") {
+        mapCode = (quint16) MapCodes::REMOVE_ALL_FOW;
     }
 
     sendPacketToServer(mapCode, (quint16) target, message);
@@ -74,7 +80,7 @@ void MapClient::addSpriteAction(const QString& msg) {
             return;
         }
         sprite =  new Sprite(dbItem, tokenItem, layer);
-        layer->addSpriteFromDb(sprite);
+        layer->addSpriteToLayer(sprite);
 
     }
 }
@@ -106,4 +112,24 @@ void MapClient::removeSpriteAction(const QString& msg) {
         // Delete the sprite from the correct layer
         layer->removeSpriteById(id);
     }
+}
+
+void MapClient::removeAllFoWAction(const QString&) {
+    if (!m_MapsList.isEmpty()) {
+        Map *map = m_MapsList.at(0); // TODO select the correct map
+
+        map->getFoWLayer()->removeAllSprites();
+    }
+}
+
+Map *MapClient::GetMapById(int id) {
+    Map *result = NULL;
+
+    for (Map *map : m_MapsList) {
+        if (map->id() == id) {
+            result = map;
+        }
+    }
+
+    return result;
 }

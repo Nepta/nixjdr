@@ -21,52 +21,53 @@ void GridLayer::setTokenItem(QListWidgetItem* token) {
 }
 
 /**
+ * @brief GridLayer::addSpriteToLayer Creates a new Sprite with the given parameters and adds it to
+ * the layer.
+ * @param tokenItem
+ * @param position
+ * @param zValue
+ * @return The newly created and added Sprite.
+ */
+Sprite *GridLayer::addSpriteToLayer(TokenItem *tokenItem, QPoint position, int zValue) {
+    QPoint spritePos(position.x()/m_Step, position.y()/m_Step);
+    spritePos *= m_Step;
+
+    Sprite *sprite = new Sprite(tokenItem, this, zValue);
+    sprite->setPos(spritePos);
+
+    addSpriteToLayer(sprite);
+
+    return sprite;
+}
+
+/**
+ * @brief GridLayer::addSprite Adds the given sprite to this layer.
+ * @param sprite Sprite to add to this layer.
+ * @return The added Sprite.
+ */
+Sprite *GridLayer::addSpriteToLayer(Sprite* sprite) {
+    sprite->installSceneEventFilter(this);
+
+    return sprite;
+}
+
+/**
  * @brief GridLayer::addSpriteToDb Adds a sprite to the db and sends a notification to all the clients.
  * @param tokenItem Sprite's associated TokenItem.
  * @param position Sprite's position
  * @param zValue Indicates the position of the sprite in the stack.
- * @param parentItem Indicates in which QGraphicsItem the new Sprite belongs (in general the layer
- * in which the sprite is created).
  */
-void GridLayer::addSpriteToDb(TokenItem *tokenItem, QPoint position, int zValue,
-    QGraphicsItem *parentItem)
-{
-    QPoint spritePos(position.x()/m_Step, position.y()/m_Step);
-    spritePos *= m_Step;
-
-    Sprite *sprite = new Sprite(tokenItem, parentItem, zValue);
-    sprite->setPos(spritePos);
+void GridLayer::addSpriteToDb(TokenItem *tokenItem, QPoint position, int zValue) {
+    Sprite *sprite = addSpriteToLayer(tokenItem, position, zValue);
 
     // Insert the sprite in the database
     RepositoryManager::s_SpriteRepository.insertSprite(sprite, db_);
-
-    if (parentItem != NULL) {
-        sprite->installSceneEventFilter(this);
-    }
 
     // Notifies every client that a new sprite has been added
     QString msg = QString("addSprite %1").arg(sprite->id());
     m_ClientReceiver->sendMessageToServer(msg);
 
     delete sprite; // delete the sprite to avoid duplicate
-}
-
-/**
- * @brief GridLayer::addSpriteToDb Overloaded for convenience.
- * @param tokenItem
- * @param position
- * @param zValue
- * @return The newly created sprite.
- * @sa addSprite()
- */
-void GridLayer::addSpriteToDb(TokenItem *tokenItem, QPoint position, int zValue) {
-    addSpriteToDb(tokenItem, position, zValue, this);
-}
-
-Sprite *GridLayer::addSpriteFromDb(Sprite* sprite) {
-    sprite->installSceneEventFilter(this);
-
-    return sprite;
 }
 
 /**
@@ -93,6 +94,13 @@ void GridLayer::removeSpriteById(int id) {
             break;
         }
     }
+}
+
+/**
+ * @brief GridLayer::removeAllSprites Remove all the sprites from the layer.
+ */
+void GridLayer::removeAllSprites() {
+    qDeleteAll(childItems());
 }
 
 /**
