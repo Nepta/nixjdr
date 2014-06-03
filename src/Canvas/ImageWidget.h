@@ -24,7 +24,7 @@ public slots:
     void on_collapseButton_clicked(bool checked);
 
 private:
-    void initDrawingLayer(Layer *layer);
+    void initDrawingLayer(AbstractLayer *layer);
     void keyPressEvent(QKeyEvent *keyEvent);
     void keyReleaseEvent(QKeyEvent *keyEvent);
 

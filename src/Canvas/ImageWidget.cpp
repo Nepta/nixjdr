@@ -31,7 +31,7 @@ ImageWidget::ImageWidget(QString bgFilename, QWidget *parent):
 }
 
 
-void ImageWidget::initDrawingLayer(Layer *layer) {
+void ImageWidget::initDrawingLayer(AbstractLayer *layer) {
     DrawingLayer *drawingLayer = dynamic_cast<DrawingLayer*>(layer);
 
     m_Scene->addLayer(drawingLayer);
@@ -46,6 +46,14 @@ void ImageWidget::initDrawingLayer(Layer *layer) {
             drawingLayer, SLOT(setEraserSize(int)));
     connect(drawingUi->m_EraseButton, SIGNAL(clicked(bool)),
             drawingLayer, SLOT(erasePixmapContent()));
+
+
+    for(int i=0; i < drawingUi->m_ToolLayout->count(); i++){
+        QPushButton *currentButton = dynamic_cast<QPushButton*>(
+                    drawingUi->m_ToolLayout->itemAt(i)->widget());
+        connect(currentButton, SIGNAL(clicked()),
+                m_DrawingLayer.getTools(), SLOT(setCurrentToolCode()));
+    }
 }
 
 

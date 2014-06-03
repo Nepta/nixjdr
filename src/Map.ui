@@ -88,9 +88,15 @@
    </item>
    <item>
     <widget class="QScrollArea" name="scrollArea">
+     <property name="minimumSize">
+      <size>
+       <width>350</width>
+       <height>0</height>
+      </size>
+     </property>
      <property name="maximumSize">
       <size>
-       <width>200</width>
+       <width>400</width>
        <height>16777215</height>
       </size>
      </property>
@@ -102,7 +108,7 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>198</width>
+        <width>348</width>
         <height>513</height>
        </rect>
       </property>
@@ -215,8 +221,7 @@
          <property name="currentIndex">
           <number>1</number>
          </property>
-         <widget class="DrawingMenu" name="m_PageDrawingTools">
-         </widget>
+         <widget class="DrawingMenu" name="m_PageDrawingTools"/>
          <widget class="QWidget" name="m_PageMapTools">
           <layout class="QVBoxLayout" name="verticalLayout_9">
            <item>
@@ -345,11 +350,11 @@
   </connection>
  </connections>
  <buttongroups>
+  <buttongroup name="m_EditGroup"/>
   <buttongroup name="m_DisplayGroup">
    <property name="exclusive">
     <bool>false</bool>
    </property>
   </buttongroup>
-  <buttongroup name="m_EditGroup"/>
  </buttongroups>
 </ui>
