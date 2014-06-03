@@ -20,9 +20,9 @@ public:
     void ping(QPointF);
 
 private:
+    QGraphicsScene *m_Scene;
     QString m_GifPath;
     bool m_Pinging;
-    QGraphicsScene *m_Scene;
     QGraphicsProxyWidget *m_Proxy;
 
     QLabel *m_Gif;

@@ -4,7 +4,6 @@
 #include <QSqlQuery>
 #include <QSqlError>
 #include <QList>
-#include <QDebug>
 #include <QVariant>
 
 #include "Database.h"
@@ -17,7 +16,6 @@ Database::Database(const QString dbName, const QString& serverAddress, const int
     db_.setHostName(serverAddress);
     db_.setPort(serverPort);
 	db_.open();
-    qDebug()<<db_.lastError();
 }
 
 Database::~Database(){
