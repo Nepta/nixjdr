@@ -1,5 +1,5 @@
+#include "Network/Serializable/Message.h"
 #include "Commands/AbstractCmd.h"
-#include "Message.h"
 #include "ChatClient.h"
 #include "Common.h"
 

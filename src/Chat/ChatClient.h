@@ -3,6 +3,7 @@
 
 #include <QtNetwork>
 #include <QString>
+
 #include "Network/ClientReceiver.h"
 #include "ChatProcessor.h"
 #include "User.h"

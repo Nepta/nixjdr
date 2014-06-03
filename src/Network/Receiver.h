@@ -3,7 +3,8 @@
 
 #include <QObject>
 #include <QString>
-#include "Serializable.h"
+
+#include "Serializable/Serializable.h"
 #include "Header.h"
 #include "User.h"
 

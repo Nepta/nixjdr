@@ -24,7 +24,6 @@ SOURCES += \
     ConnectionHelper.cpp \
     Common.cpp \
     Tooltip.cpp \
-    Chat/Message.cpp \
     Chat/ChatServer.cpp \
     Chat/ChatClient.cpp \
     Chat/ChatProcessor.cpp \
@@ -67,6 +66,7 @@ SOURCES += \
     Network/Client.cpp \
     Network/ClientReceiver.cpp \
     Network/Receiver.cpp \
+    Network/Serializable/Message.cpp \
     Database/Database.cpp \
     Database/DBItem.cpp \
     Database/QueryBuilder.cpp \
@@ -95,7 +95,6 @@ HEADERS  += \
     ChatWidget.h \
     Common.h \
     Tooltip.h \
-    Chat/Message.h \
     Chat/ChatServer.h \
     Chat/ChatClient.h \
     Chat/ChatProcessor.h \
@@ -137,7 +136,8 @@ HEADERS  += \
     Network/ServerReceiver.h \
     Network/Client.h \
     Network/ClientReceiver.h \
-    Network/Serializable.h \
+    Network/Serializable/Message.h \
+    Network/Serializable/Serializable.h \
     Database/Database.h \
     Database/DBItem.h \
     Database/QueryBuilder.h \

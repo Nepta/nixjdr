@@ -1,8 +1,8 @@
 #ifndef SERVER_RECEIVER_H
 #define SERVER_RECEIVER_H
 
+#include "Serializable/Serializable.h"
 #include "Receiver.h"
-#include "Serializable.h"
 
 class ServerReceiver : public Receiver
 {

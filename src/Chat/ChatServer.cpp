@@ -1,8 +1,9 @@
 #include <QTranslator>
+
+#include "Network/Serializable/Message.h"
 #include "Commands/AbstractCmd.h"
 #include "Commands/CmdNickname.h"
 #include "Commands/CmdNicknamesList.h"
-#include "Message.h"
 #include "ChatServer.h"
 
 ChatServer::ChatServer(QHash<QString, User *> *usersList) :

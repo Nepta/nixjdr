@@ -2,7 +2,9 @@
 #define CHATPROCESSOR_H
 
 #include <QString>
+
 #include "Commands/Commands.h"
+
 class ChatProcessor
 {
     public:

@@ -4,9 +4,10 @@
 #include <QObject>
 #include <QString>
 #include <QHash>
+
+#include "Network/Serializable/Message.h"
 #include "Network/Header.h"
 #include "Network/Switch.h"
-#include "Chat/Message.h"
 #include "User.h"
 
 enum class ChatCodes : quint16;
