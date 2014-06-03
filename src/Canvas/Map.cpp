@@ -56,6 +56,7 @@ void Map::initLayers(){
     mapLayer->setEnabled(true);
     fowLayer->setEnabled(false);
     drawingLayer->setEnabled(false);
+    m_SelectedLayer = mapLayer;
 
     // Add BackgroundLayer to the database
     RepositoryManager::s_BgLayerRepository.insertBgLayer(bgLayer, db_);
@@ -113,15 +114,15 @@ void Map::initDrawingLayer(LayerCodes code) {
     connect(drawingUi->m_EraseButton, SIGNAL(clicked(bool)),
             drawingLayer, SLOT(erasePixmapContent()));
 
-
-//    for(int i=0; i < drawingUi->m_ToolLayout->count(); i++){
-//        QPushButton *currentButton = dynamic_cast<QPushButton*>(
-//                    drawingUi->m_ToolLayout->itemAt(i)->widget());
-//        connect(currentButton, SIGNAL(clicked()),
-//                drawingLayer->getTools(), SLOT(setCurrentToolCode()));
-//    }
-
     drawingLayer->initDrawingZone();
+
+    for(int i=0; i < drawingUi->m_ToolLayout->count(); i++){
+        QPushButton *currentButton = dynamic_cast<QPushButton*>(
+                    drawingUi->m_ToolLayout->itemAt(i)->widget());
+        connect(currentButton, SIGNAL(clicked()),
+                drawingLayer->getTools(), SLOT(setCurrentToolCode()));
+    }
+
 }
 
 void Map::initTooltip() {

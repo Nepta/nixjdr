@@ -1,5 +1,7 @@
 #include <QGraphicsScene>
 #include <QBuffer>
+#include <QDebug>
+
 #include "DrawingLayer.h"
 #include "Canvas/Tools/AbstractTool.h"
 
@@ -55,13 +57,11 @@ void DrawingLayer::initDrawingZone() {
         this->scene()->addItem(m_Tools->getTool(code));
     }
     this->installSceneEventFilter(m_Tools->getCurrentTool());
-    m_OldTool = m_Tools->getCurrentTool();
 
     connect(m_Tools, SIGNAL(changeTool()), this, SLOT(changeTool()));
 }
 
 void DrawingLayer::changeTool(){
-    this->removeEventFilter(m_OldTool);
     this->installSceneEventFilter(m_Tools->getCurrentTool());
 }
 
