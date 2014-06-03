@@ -12,7 +12,8 @@ class Map;
 enum class MapCodes : quint16 {
     UNDEFINED = Receiver::UNDEFINED_CODE,
 
-    ADD_SPRITE
+    ADD_SPRITE,
+    REMOVE_SPRITE
 };
 
 class MapClient : public ClientReceiver, public DBComponent
@@ -33,6 +34,7 @@ private:
     QList<Map*> m_MapsList;
 
     void addSpriteAction(const QString& msg);
+    void removeSpriteAction(const QString& msg);
 
 private slots:
     void processNewMessage(Header header, QByteArray &data);

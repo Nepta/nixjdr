@@ -1,11 +1,25 @@
 #include "Repository.h"
 
+/**
+ * @brief Repository::findByIdQB Constructs a query to find one row by its id from the child's
+ * repository associated table.
+ * @param id Id of the row to find.
+ * @return QueryBuilder
+ */
 QueryBuilder Repository::findByIdQB(int id) {
     QueryBuilder qb;
 
     qb.select("*")
     ->from(getTableName())
     ->where("id = " + QString::number(id));
+
+    return qb;
+}
+
+QueryBuilder Repository::deleteByIdQb(int id) {
+    QueryBuilder qb;
+    qb.deleteFrom(getTableName())
+     ->where("id = " + QString::number(id));
 
     return qb;
 }
@@ -76,6 +90,12 @@ int Repository::insertIntoDefault(DBItem *item, Database *db) {
     item->setId(id);
 
     return id;
+}
+
+void Repository::deleteById(int id, Database *db) {
+    QueryBuilder qb = deleteByIdQb(id);
+
+    db->push(qb.getQuery());
 }
 
 /**

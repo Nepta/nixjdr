@@ -70,11 +70,29 @@ Sprite *GridLayer::addSpriteFromDb(Sprite* sprite) {
 }
 
 /**
- * @brief GridLayer::removeSprite Remove the given Sprite.
+ * @brief GridLayer::removeSpriteToDb Notifies it to all the clients that a sprite need to be
+ * removed.
  * @param sprite
  */
-void GridLayer::removeSprite(QGraphicsItem *sprite) {
-    delete sprite;
+void GridLayer::removeSpriteToDb(Sprite *sprite) {
+    // Notifies all the clients that a Sprite has been removed
+    QString msg = QString("removeSprite %1").arg(sprite->id());
+    m_ClientReceiver->sendMessageToServer(msg);
+}
+
+/**
+ * @brief GridLayer::removeSpriteById Remove a sprite on the grid which posses the given id
+ * @param id
+ */
+void GridLayer::removeSpriteById(int id) {
+    for (QGraphicsItem *item : childItems()) {
+        Sprite *sprite = dynamic_cast<Sprite*>(item);
+
+        if (sprite->id() == id) {
+            delete sprite;
+            break;
+        }
+    }
 }
 
 /**
@@ -163,7 +181,7 @@ void GridLayer::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent) {
         }
 
         if (sprite) { // TODO timer or boolean to slow down the deletion
-            removeSprite(sprite);
+            removeSpriteToDb(sprite);
         }
     }
 }
@@ -179,6 +197,6 @@ void GridLayer::spriteMouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent, Sp
                                     - mouseEvent->scenePos()).manhattanLength();
 
     if (mouseEvent->button() == Qt::RightButton && distanceCovered < DELTA_DELETE_SPRITE) {
-        removeSprite(watched);
+        removeSpriteToDb(watched);
     }
 }

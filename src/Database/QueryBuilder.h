@@ -17,6 +17,7 @@ public:
     QueryBuilder *from(QString from, QString alias = "");
     QueryBuilder *where(QString where);
     QueryBuilder *andWhere(QString where);
+    QueryBuilder *deleteFrom(QString from);
     void withAsSelect(QueryBuilder qb, QString select);
 
     QSqlQuery getQuery();

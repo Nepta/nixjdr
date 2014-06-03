@@ -83,6 +83,8 @@ void FoWLayer::fillFoW() {
  */
 void FoWLayer::removeFoW() {
     foreach (QGraphicsItem* item, childItems()) {
-        removeSprite(item);
+        Sprite *sprite = dynamic_cast<Sprite*>(item);
+
+        removeSpriteToDb(sprite);
     }
 }

@@ -32,7 +32,8 @@ public:
                               QGraphicsItem *parentItem);
     void addSpriteToDb(TokenItem *tokenItem, QPoint position, int zValue = 1);
     virtual Sprite *addSpriteFromDb(Sprite* sprite);
-    virtual void removeSprite(QGraphicsItem *sprite);
+    virtual void removeSpriteToDb(Sprite *sprite);
+    void removeSpriteById(int id);
 
     void drawBackground(QPainter *painter, const QRectF &rect);
 

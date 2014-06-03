@@ -15,9 +15,13 @@ MapClient::~MapClient() {}
 
 void MapClient::processNewMessage(Header header, QByteArray& data) {
     Message msg(data);
+    MapCodes code = (MapCodes) header.getCode();
 
-    if ((MapCodes) header.getCode() == MapCodes::ADD_SPRITE) {
+    if (code == MapCodes::ADD_SPRITE) {
         addSpriteAction(msg.getString());
+    }
+    else if (code == MapCodes::REMOVE_SPRITE) {
+        removeSpriteAction(msg.getString());
     }
 }
 
@@ -26,12 +30,16 @@ void MapClient::sendMessageToServer(const QString& msg) {
     QString action = Common::extractFirstWord(strippedMsg);
     Message message(strippedMsg);
 
+    TargetCode target = TargetCode::MAP_SERVER;
+    quint16 mapCode;
     if (action == "addSprite") {
-        TargetCode target = TargetCode::MAP_SERVER;
-        quint16 mapCode = (quint16) MapCodes::ADD_SPRITE;
-
-        sendPacketToServer(mapCode, (quint16) target, message);
+        mapCode = (quint16) MapCodes::ADD_SPRITE;
     }
+    else if (action == "removeSprite") {
+        mapCode = (quint16) MapCodes::REMOVE_SPRITE;
+    }
+
+    sendPacketToServer(mapCode, (quint16) target, message);
 }
 
 void MapClient::addMapToList(Map* map) {
@@ -48,14 +56,54 @@ void MapClient::addSpriteAction(const QString& msg) {
 
     // Creates the Sprite and adds it to the intended map and layer
     Sprite *sprite;
-    GridLayer *layer;
-    Map *map = m_MapsList.at(0); // TODO select the correct map
-    if (dbItem.getHashMap().contains("maplayerid")) {
-        layer = dynamic_cast<GridLayer*>(map->getMapLayer());
-        sprite = new Sprite(dbItem, tokenItem,layer);
-    } else {
-        layer = dynamic_cast<GridLayer*>(map->getFoWLayer());
+
+    if (!m_MapsList.isEmpty()) {
+        Map *map = m_MapsList.at(0); // TODO select the correct map
+
+        int mapLayerId = dbItem.getHashMap().value("maplayerid").toInt();
+        int fowLayerId = dbItem.getHashMap().value("fowlayerid").toInt();
+
+        GridLayer *layer;
+        if (mapLayerId != 0) {
+            layer = dynamic_cast<MapLayer*>(map->getMapLayer());
+        }
+        else if (fowLayerId != 0) {
+            layer = dynamic_cast<FoWLayer*>(map->getFoWLayer());
+        }
+        else {
+            return;
+        }
         sprite =  new Sprite(dbItem, tokenItem, layer);
+        layer->addSpriteFromDb(sprite);
+
     }
-    layer->addSpriteFromDb(sprite);
+}
+
+void MapClient::removeSpriteAction(const QString& msg) {
+    int id = msg.toInt();
+    DBItem dbItem = RepositoryManager::s_SpriteRepository.findById(id, db_);
+
+    if (!m_MapsList.isEmpty()) {
+        Map *map = m_MapsList.at(0); // TODO select the correct map
+
+        int mapLayerId = dbItem.getHashMap().value("maplayerid").toInt();
+        int fowLayerId = dbItem.getHashMap().value("fowlayerid").toInt();
+
+        GridLayer *layer;
+        if (mapLayerId != 0) {
+            layer = dynamic_cast<GridLayer*>(map->getMapLayer());
+        }
+        else if (fowLayerId != 0) {
+            layer = dynamic_cast<GridLayer*>(map->getFoWLayer());
+        }
+        else {
+            return;
+        }
+
+        // Delete the sprite from the database
+        RepositoryManager::s_SpriteRepository.deleteById(id, db_);
+
+        // Delete the sprite from the correct layer
+        layer->removeSpriteById(id);
+    }
 }
