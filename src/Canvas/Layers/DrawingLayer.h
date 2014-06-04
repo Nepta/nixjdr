@@ -38,6 +38,7 @@ private:
     QGraphicsPixmapItem *m_DrawingZone;
     QPixmap *m_Pixmap;
     Tools *m_Tools;
+    AbstractTool *m_OldTool;
 };
 
 #endif // DRAWINGLAYER_H

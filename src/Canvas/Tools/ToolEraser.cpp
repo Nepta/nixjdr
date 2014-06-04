@@ -40,6 +40,11 @@ void ToolEraser::paintOnPixmap(QPainter &painter, const QPointF &oldPos, const Q
 bool ToolEraser::sceneEventFilter(QGraphicsItem *, QEvent *event){
     bool eventFiltered = false;
     switch (event->type()) {
+        case QEvent::GraphicsSceneMousePress: {
+        eventFiltered = true;
+        event->accept();
+    }
+        break;
         case QEvent::GraphicsSceneMouseMove :{
             moveMouse(static_cast<QGraphicsSceneMouseEvent*>(event));
             eventFiltered = true;

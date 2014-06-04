@@ -55,12 +55,15 @@ void DrawingLayer::initDrawingZone() {
     foreach (ToolCodes code, m_Tools->s_ToolCodesMap.values()) {
         this->scene()->addItem(m_Tools->getTool(code));
     }
+    m_OldTool = m_Tools->getCurrentTool();
     this->installSceneEventFilter(m_Tools->getCurrentTool());
 
     connect(m_Tools, SIGNAL(changeTool()), this, SLOT(changeTool()));
 }
 
 void DrawingLayer::changeTool(){
+    this->removeSceneEventFilter(m_OldTool);
+    m_OldTool = m_Tools->getCurrentTool();
     this->installSceneEventFilter(m_Tools->getCurrentTool());
 }
 
