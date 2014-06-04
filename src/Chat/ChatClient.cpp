@@ -4,7 +4,7 @@
 #include "Common.h"
 
 ChatClient::ChatClient(User *user, QHash<QString, User *> *usersList) :
-    ClientReceiver(user, usersList)
+    SenderClient(user, usersList)
 {
     m_User = user;
     m_UsersList = usersList;
@@ -21,7 +21,7 @@ ChatClient::ChatClient(User *user, QHash<QString, User *> *usersList) :
 ChatClient::~ChatClient() {
 }
 
-void ChatClient::processNewMessage(Header header, QByteArray& data) {
+void ChatClient::processNewData(Header header, QByteArray& data) {
     ChatCodes code = (ChatCodes) header.getCode();
     Message message(data);
 

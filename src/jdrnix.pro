@@ -63,10 +63,10 @@ SOURCES += \
     Network/SwitchServer.cpp \
     Network/SwitchClient.cpp \
     Network/Switch.cpp \
-    Network/ServerReceiver.cpp \
-    Network/ClientReceiver.cpp \
-    Network/Receiver.cpp \
     Network/Serializable/Message.cpp \
+    Network/Sender.cpp \
+    Network/SenderClient.cpp \
+    Network/SenderServer.cpp \
     Database/Database.cpp \
     Database/DBItem.cpp \
     Database/QueryBuilder.cpp \
@@ -133,9 +133,10 @@ HEADERS  += \
     Network/SwitchServer.h \
     Network/SwitchClient.h \
     Network/Receiver.h \
+    Network/Sender.h \
+    Network/SenderClient.h \
+    Network/SenderServer.h \
     Network/Header.h \
-    Network/ServerReceiver.h \
-    Network/ClientReceiver.h \
     Network/Serializable/Message.h \
     Network/Serializable/Serializable.h \
     Database/Database.h \
