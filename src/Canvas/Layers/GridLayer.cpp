@@ -66,19 +66,20 @@ void GridLayer::addSpriteToDb(TokenItem *tokenItem, QPoint position, int zValue)
     // Notifies every client that a new sprite has been added
     QString msg = QString("addSprite %1").arg(sprite->id());
     m_SenderClient->sendMessageToServer(msg);
-
-    delete sprite; // delete the sprite to avoid duplicate
 }
 
 /**
- * @brief GridLayer::removeSpriteToDb Notifies it to all the clients that a sprite need to be
- * removed.
+ * @brief GridLayer::removeSpriteToDb Notifies to all the clients that a sprite need to be
+ * removed and delete it locally on the layer.
  * @param sprite
  */
-void GridLayer::removeSpriteToDb(Sprite *sprite) {
-    // Notifies all the clients that a Sprite has been removed
+void GridLayer::removeSprite(Sprite *sprite) {
+    // Notifies all the clients that a Sprite needs to be removed
     QString msg = QString("removeSprite %1").arg(sprite->id());
     m_SenderClient->sendMessageToServer(msg);
+
+    // Delete the sprite from the layer
+    delete sprite;
 }
 
 /**
@@ -189,7 +190,7 @@ void GridLayer::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent) {
         }
 
         if (sprite) { // TODO timer or boolean to slow down the deletion
-            removeSpriteToDb(sprite);
+            removeSprite(sprite);
         }
     }
 }
@@ -220,6 +221,6 @@ void GridLayer::spriteMouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent, Sp
                                     - mouseEvent->scenePos()).manhattanLength();
 
     if (mouseEvent->button() == Qt::RightButton && distanceCovered < DELTA_DELETE_SPRITE) {
-        removeSpriteToDb(watched);
+        removeSprite(watched);
     }
 }

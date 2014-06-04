@@ -46,7 +46,7 @@ void MapLayer::initDragEvent(Sprite *watched, QGraphicsSceneMouseEvent *mouseEve
     if (dropAction == Qt::IgnoreAction) {
         watched->setTransparent(false);
     } else {
-        removeSpriteToDb(watched);
+        removeSprite(watched);
     }
 }
 
@@ -134,7 +134,7 @@ void MapLayer::ShowContextMenu(QGraphicsSceneMouseEvent *mouseEvent, Sprite *wat
 
     QAction* selectedItem = menu.exec(mouseEvent->screenPos());
     if(selectedItem == deleteAction){
-        removeSpriteToDb(watched);
+        removeSprite(watched);
     }
     else if(selectedItem == rangeAction){
 

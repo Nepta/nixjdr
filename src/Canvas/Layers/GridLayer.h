@@ -32,7 +32,7 @@ public:
     Sprite *addSpriteToLayer(TokenItem *tokenItem, QPoint position, int zValue);
     virtual void addSpriteToDb(TokenItem *tokenItem, QPoint position, int zValue = 1);
 
-    virtual void removeSpriteToDb(Sprite *sprite);
+    virtual void removeSprite(Sprite *sprite);
     void removeSpriteById(int id);
     void removeAllSprites();
 

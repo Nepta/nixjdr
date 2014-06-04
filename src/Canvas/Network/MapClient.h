@@ -9,7 +9,7 @@
 
 class Map;
 
-// TODO MapCodes dans action.h
+// TODO MapCodes dans actions.h
 enum class MapCodes : quint16 {
     UNDEFINED = Receiver::UNDEFINED_CODE,
 
