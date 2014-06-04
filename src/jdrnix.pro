@@ -87,7 +87,10 @@ SOURCES += \
     Token/TokenList.cpp \
     Token/TokenItem.cpp \
     TurnMenu/TurnList.cpp \
-    TurnMenu/TurnMenu.cpp
+    TurnMenu/TurnMenu.cpp \
+    Log/Logger.cpp \
+    Log/Log.cpp \
+    Log/MapLog.cpp
 
 HEADERS  += \
     MainWindow.h \
@@ -163,7 +166,10 @@ HEADERS  += \
     Token/TokenItem.h \
     TurnMenu/TurnList.h \
     TurnMenu/TurnMenu.h \
-    Canvas/Tools/ToolPing.h
+    Canvas/Tools/ToolPing.h \
+    Log/Logger.h \
+    Log/Log.h \
+    Log/MapLog.h
 
 FORMS    += \
     TokenMenu.ui \
