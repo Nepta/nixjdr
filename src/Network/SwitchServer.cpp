@@ -1,19 +1,19 @@
 #include "Chat/ChatServer.h"
-#include "Server.h"
+#include "SwitchServer.h"
 
-Server::Server() {
+SwitchServer::SwitchServer() {
     m_Server = new QTcpServer(this);
 
     m_Nodes.insert(TargetCode::CHAT_SERVER, new ChatServer(&m_UsersList));
     // TODO m_Nodes.insert(TargetCode::MAP_SERVER, new MapServer(m_UsersList));
 }
 
-Server::~Server() {
+SwitchServer::~SwitchServer() {
     m_Server->deleteLater();
     qDeleteAll(m_Nodes);
 }
 
-void Server::init() {
+void SwitchServer::init() {
     if (!m_Server->listen(QHostAddress::Any, 50885)) {
         QString msg = tr("Le serveur n'a pas pu être démarré. Raison :<br />") +
                 m_Server->errorString();
@@ -29,7 +29,7 @@ void Server::init() {
     }
 }
 
-void Server::newClientConnection()
+void SwitchServer::newClientConnection()
 {
     User *newUser = new User(m_Server->nextPendingConnection());
 
@@ -44,7 +44,7 @@ void Server::newClientConnection()
     connect(newUser, SIGNAL(userDisconnectedNotify(User&)), this, SLOT(userDisconnected(User&)));
 }
 
-void Server::userDisconnected(User &user)
+void SwitchServer::userDisconnected(User &user)
 {
     // Notify everyone on the chat that a user has been disconnected
     ChatServer *chatServer = dynamic_cast<ChatServer*>(

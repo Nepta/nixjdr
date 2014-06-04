@@ -4,13 +4,13 @@
 #include "Switch.h"
 #include "User.h"
 
-class Client : public Switch
+class SwitchClient : public Switch
 {
     Q_OBJECT
 
 public:
-    Client(User *user);
-    ~Client();
+    SwitchClient(User *user);
+    ~SwitchClient();
 
    /**
     * @brief ChatClient::connection    Connects the client to the specified host (IP and port).

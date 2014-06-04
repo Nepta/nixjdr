@@ -157,7 +157,7 @@ void MainWindow::on_actionConnection_triggered(){
 }
 
 void MainWindow::setupMJ() {
-    m_Server = new Server;
+    m_Server = new SwitchServer;
 
     /* Connect sendMessageToChatUi from m_Server to m_ChatWidget in order to display system messages
      * during the initialization. */
@@ -177,7 +177,7 @@ void MainWindow::setupMJ() {
 }
 
 void MainWindow::setupPlayer() {
-    m_Client = new Client(m_User);
+    m_Client = new SwitchClient(m_User);
 
     connect(m_Client, SIGNAL(sendMessageToChatUi(QString)),
             ui->m_ChatWidget, SLOT(receivedMessage(QString))

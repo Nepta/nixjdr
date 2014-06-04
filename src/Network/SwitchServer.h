@@ -5,13 +5,13 @@
 #include "User.h"
 #include "Switch.h"
 
-class Server : public Switch
+class SwitchServer : public Switch
 {
     Q_OBJECT
 
 public:
-    Server();
-    ~Server();
+    SwitchServer();
+    ~SwitchServer();
 
     /**
      * @brief init Initializes the server to listen to any IP adress on the port 50885, and checks

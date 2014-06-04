@@ -60,10 +60,10 @@ SOURCES += \
     Canvas/Tools/Tools.cpp \
     Canvas/SideMenuWidgets/DrawingMenu.cpp \
     Network/Header.cpp \
-    Network/Server.cpp \
+    Network/SwitchServer.cpp \
+    Network/SwitchClient.cpp \
     Network/Switch.cpp \
     Network/ServerReceiver.cpp \
-    Network/Client.cpp \
     Network/ClientReceiver.cpp \
     Network/Receiver.cpp \
     Network/Serializable/Message.cpp \
@@ -130,11 +130,11 @@ HEADERS  += \
     Canvas/ImageWidget.h \
     Canvas/SideMenuWidgets/DrawingMenu.h \
     Network/Switch.h \
+    Network/SwitchServer.h \
+    Network/SwitchClient.h \
     Network/Receiver.h \
     Network/Header.h \
-    Network/Server.h \
     Network/ServerReceiver.h \
-    Network/Client.h \
     Network/ClientReceiver.h \
     Network/Serializable/Message.h \
     Network/Serializable/Serializable.h \
