@@ -41,6 +41,6 @@ int SpriteRepository::insertSprite(Sprite *sprite, Database *db) {
 void SpriteRepository::removeAllSpritesFromFoWLayer(int fowLayerId, Database *db) {
     QueryBuilder qb;
 
-    qb.deleteFrom(getTableName())->where("fowlayerid = " + fowLayerId);
+    qb.deleteFrom(getTableName())->where("fowlayerid = " + QString::number(fowLayerId));
     db->push(qb.getQuery());
 }
