@@ -3,20 +3,24 @@
 
 #include "Network/Receiver.h"
 #include "Chat/Message.h"
+#include "Network/Header.h"
 #include <QString>
 
 class Log{
 	Receiver& receiver_;
 	Message message_;
+	Header header_;
 
 public:
 	Log(Receiver& receiver);
 	Receiver& reveiver();
 	virtual QString toString() = 0;
-	virtual void setMessage(Message message);
+	void setMessage(Message message);
+	void setHeader(Header head);
 
 protected:
 	Message& getMessage();
+	Header& getHeader();
 };
 
 #endif // LOG_H
