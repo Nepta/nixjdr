@@ -4,7 +4,9 @@
 #include "Chat/Message.h"
 
 class MapLog : public Log{
-
+public:
+	MapLog(Receiver& receiver);
+	QString toString();
 };
 
 #endif // MAPLOG_H
