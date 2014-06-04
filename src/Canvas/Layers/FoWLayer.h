@@ -29,7 +29,7 @@ private:
 
 private slots:
     void fillFoW();
-    void removeFoWFromDb();
+    void removeFoW();
 };
 
 #endif // FOWLAYER_H

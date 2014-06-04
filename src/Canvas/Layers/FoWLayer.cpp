@@ -60,7 +60,7 @@ bool FoWLayer::sceneEventFilter(QGraphicsItem *watched, QEvent *event) {
  * @brief FoWLayer::fillFoW Fill the entire map with FoW sprites (delete all the FoW sprites before).
  */
 void FoWLayer::fillFoW() {
-    removeFoWFromDb();
+    removeFoW();
 
     for(int i = 0 ; i < boundingRect().width() ; i += m_Step) {
         for(int j = 0 ; j < boundingRect().height() ; j += m_Step) {
@@ -70,14 +70,17 @@ void FoWLayer::fillFoW() {
 }
 
 /**
- * @brief FoWLayer::removeFoWFromDb Remove all the FoW sprites from the db and notifies all the clients
- * that they need to remove those sprites from their layers.
+ * @brief FoWLayer::removeFoW Remove all the FoW sprites from the db and notifies all the clients
+ * that they need to remove those sprites from their layers. The FoW is then removed locally.
  */
-void FoWLayer::removeFoWFromDb() {
+void FoWLayer::removeFoW() {
     // Remove all the FoW Sprites for this layer from the db
     RepositoryManager::s_SpriteRepository.removeAllSpritesFromFoWLayer(this->id(), db_);
 
     // Notifies all the clients that all the FoW sprites for this layer need to be removed
     QString msg = QString("removeAllFoW");
     m_SenderClient->sendMessageToServer(msg);
+
+    // Removes the FoW locally
+    removeAllSprites();
 }
