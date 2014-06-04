@@ -29,4 +29,3 @@ QGraphicsPixmapItem *AbstractTool::getDrawingZone(){
 void AbstractTool::updateDisplay(){
     AbstractTool::s_DrawingZone->setPixmap(*AbstractTool::s_Pixmap); // update the drawing zone
 }
-

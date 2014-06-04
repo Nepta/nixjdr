@@ -39,16 +39,19 @@ bool ToolPen::sceneEventFilter(QGraphicsItem *, QEvent *event){
         case QEvent::GraphicsSceneMousePress:{
             pressMouse(static_cast<QGraphicsSceneMouseEvent*>(event));
             eventFiltered = true;
+            AbstractTool::updateDisplay();
         }
             break;
         case QEvent::GraphicsSceneMouseMove	:{
             moveMouse(static_cast<QGraphicsSceneMouseEvent*>(event));
             eventFiltered = true;
+            AbstractTool::updateDisplay();
         }
             break;
         case QEvent::GraphicsSceneMouseRelease: {
             releaseMouse(static_cast<QGraphicsSceneMouseEvent*>(event));
             eventFiltered = true;
+            AbstractTool::updateDisplay();
         }
             break;
         case QEvent::KeyPress: {
@@ -59,12 +62,12 @@ bool ToolPen::sceneEventFilter(QGraphicsItem *, QEvent *event){
         case QEvent::KeyRelease: {
             releaseKey((QKeyEvent*)(event));
             eventFiltered = true;
+            AbstractTool::updateDisplay();
         }
             break;
         default:
             break;
         }
-    AbstractTool::updateDisplay();
     if(eventFiltered){
         event->accept();
     }

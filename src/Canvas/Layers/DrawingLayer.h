@@ -39,6 +39,8 @@ private:
     QPixmap *m_Pixmap;
     Tools *m_Tools;
     AbstractTool *m_OldTool;
+
+    bool sceneEventFilter(QGraphicsItem *watched, QEvent *event);
 };
 
 #endif // DRAWINGLAYER_H

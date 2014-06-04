@@ -1,5 +1,6 @@
 #include <QGraphicsScene>
 #include <QBuffer>
+#include <QDebug>
 
 #include "DrawingLayer.h"
 #include "Canvas/Tools/AbstractTool.h"
@@ -11,7 +12,9 @@ DrawingLayer::DrawingLayer(int penSize, int eraserSize, QColor color):
 {}
 
 DrawingLayer::~DrawingLayer() {
+    AbstractTool::setPixmap(NULL);
     delete m_Pixmap;
+    AbstractTool::setDrawingZone(NULL);
     delete m_DrawingZone;
     delete m_Tools;
 }
@@ -55,6 +58,8 @@ void DrawingLayer::initDrawingZone() {
     foreach (ToolCodes code, m_Tools->s_ToolCodesMap.values()) {
         this->scene()->addItem(m_Tools->getTool(code));
     }
+
+    this->installSceneEventFilter(this);
     m_OldTool = m_Tools->getCurrentTool();
     this->installSceneEventFilter(m_Tools->getCurrentTool());
 
@@ -71,4 +76,11 @@ void DrawingLayer::changeTool(){
 void DrawingLayer::erasePixmapContent() {
     m_Pixmap->fill(Qt::transparent);
     m_DrawingZone->setPixmap(*m_Pixmap);
+}
+
+
+bool DrawingLayer::sceneEventFilter(QGraphicsItem *watched, QEvent *event){
+    AbstractTool::setDrawingZone(m_DrawingZone);
+    AbstractTool::setPixmap(m_Pixmap);
+    return AbstractLayer::sceneEventFilter(watched, event);
 }
