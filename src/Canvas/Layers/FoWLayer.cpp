@@ -79,5 +79,5 @@ void FoWLayer::removeFoWFromDb() {
 
     // Notifies all the clients that all the FoW sprites for this layer need to be removed
     QString msg = QString("removeAllFoW");
-    m_ClientReceiver->sendMessageToServer(msg);
+    m_SenderClient->sendMessageToServer(msg);
 }

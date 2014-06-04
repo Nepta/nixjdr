@@ -3,11 +3,13 @@
 
 #include <QtNetwork>
 #include <QString>
-#include "Network/ClientReceiver.h"
+
+#include "Network/Receiver.h"
+#include "Network/SenderClient.h"
 #include "ChatProcessor.h"
 #include "User.h"
 
-class ChatClient : public ClientReceiver, public ChatProcessor
+class ChatClient : public SenderClient, public Receiver, public ChatProcessor
 {
     Q_OBJECT
 
@@ -20,6 +22,8 @@ public:
     ChatClient(User *user, QHash<QString, User *> *usersList);
     ~ChatClient();
 
+    void processNewData(Header header, QByteArray &data);
+
 private:
     ChatCodes translateCommandToCode(const QString &msg);
     QString stripCommandFromMessage(const QString &msg);
@@ -31,14 +35,6 @@ public slots:
      * @param msg   Reference to the message to send
      */
     void sendMessageToServer(const QString &msg);
-
-private slots:
-    /**
-     * @brief processNewMessage     Interprets incoming server message's commands
-     * @param header    message's header, contains the command to interpret
-     * @param message   message to process
-     */
-    void processNewMessage(Header header, QByteArray &data);
 
 signals:
     void sendMessageToChatUi(const QString &msg);

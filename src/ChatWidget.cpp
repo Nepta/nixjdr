@@ -23,15 +23,15 @@ ChatWidget::~ChatWidget()
 void ChatWidget::on_msgField_returnPressed()
 {
     if (!ui->msgField->text().isEmpty()) {
-        m_ClientReceiver->sendMessageToServer(ui->msgField->text());
+        m_SenderClient->sendMessageToServer(ui->msgField->text());
         ui->msgField->clear();
     }
 }
 
-void ChatWidget::setupClientReceiver(ClientReceiver *clientReceiver) {
-    ReceiverHandler::setupClientReceiver(clientReceiver);
+void ChatWidget::setupSenderClient(SenderClient *senderClient) {
+    SenderHandler::setupSenderClient(senderClient);
 
-    ChatClient *chatClient = dynamic_cast<ChatClient*>(m_ClientReceiver);
+    ChatClient *chatClient = dynamic_cast<ChatClient*>(m_SenderClient);
 
     // TODO se paser de connects (le chatclient connait le chatwidget)
     connect(chatClient, SIGNAL(sendMessageToChatUi(QString)),
@@ -40,10 +40,10 @@ void ChatWidget::setupClientReceiver(ClientReceiver *clientReceiver) {
                         this, SLOT(updateNicknamesListView()));
 }
 
-void ChatWidget::setupServerReceiver(ServerReceiver *serverReceiver) {
-    ReceiverHandler::setupServerReceiver(serverReceiver);
+void ChatWidget::setupSenderServer(SenderServer *senderServer) {
+    SenderHandler::setupSenderServer(senderServer);
 
-    ChatServer *chatServer = dynamic_cast<ChatServer*>(m_ServerReceiver);
+    ChatServer *chatServer = dynamic_cast<ChatServer*>(m_SenderServer);
 
     // TODO se passer de connects (le chatserver connait le chatwidget)
     connect(chatServer, SIGNAL(sendMessageToChatUi(QString)),
@@ -67,10 +67,10 @@ void ChatWidget::rollDice(QString dice, bool hidden){
     QString msg = QString("/roll %1").arg(dice);
 
     if (hidden) {
-        msg += QString(" | %2").arg(m_ClientReceiver->getUser()->getNickname());
+        msg += QString(" | %2").arg(m_SenderClient->getUser()->getNickname());
     }
 
-    m_ClientReceiver->sendMessageToServer(msg);
+    m_SenderClient->sendMessageToServer(msg);
 }
 
 
@@ -103,7 +103,7 @@ void ChatWidget::sendRolledDiceToUsers(QList<QListWidgetItem *> list){
         msg += QString(" |%1").arg(item->text());
     }
 
-    m_ClientReceiver->sendMessageToServer(msg);
+    m_SenderClient->sendMessageToServer(msg);
     setFocusToChat();
 }
 

@@ -1,11 +1,8 @@
 #include "Canvas/Network/MapClient.h"
-
 #include "Chat/ChatClient.h"
+#include "SwitchClient.h"
 
-#include "Client.h"
-
-Client::Client(User *user, Database *db, TokenList *tokenList)
-{
+SwitchClient::SwitchClient(User *user, Database *db, TokenList *tokenList) {
     m_User = user;
     m_UsersList.insert(m_User->getNickname(), m_User);
 
@@ -25,17 +22,17 @@ Client::Client(User *user, Database *db, TokenList *tokenList)
     connection(m_User->getServerIpAddress(), 50885);
 }
 
-Client::~Client() {
+SwitchClient::~SwitchClient() {
     qDeleteAll(m_Nodes);
 }
 
-void Client::connection(const QString &serverIP, const quint16 &serverPort)
+void SwitchClient::connection(const QString &serverIP, const quint16 &serverPort)
 {
     m_User->getSocket()->abort(); // disable previous connection
     m_User->getSocket()->connectToHost(serverIP, serverPort);
 }
 
-void Client::socketError(QAbstractSocket::SocketError error)
+void SwitchClient::socketError(QAbstractSocket::SocketError error)
 {
     QString errMsg;
 
@@ -56,16 +53,16 @@ void Client::socketError(QAbstractSocket::SocketError error)
     emit sendMessageToChatUi(errMsg);
 }
 
-void Client::clientConnected()
+void SwitchClient::clientConnected()
 {
     emit sendMessageToChatUi(tr("<em>Connexion réussie !</em>"));
 }
 
-void Client::clientDisconnected(User &)
+void SwitchClient::clientDisconnected(User &)
 {
     emit sendMessageToChatUi(tr("<em>Déconnecté du serveur</em>"));
 }
 
-User *Client::getUser() {
+User *SwitchClient::getUser() {
     return m_User;
 }

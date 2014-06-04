@@ -105,14 +105,14 @@ void MainWindow::createMap(QString filename) {
     if (m_Server != NULL) {
         MapServer* mapServer = dynamic_cast<MapServer*>(
                     m_Server->getReceiver(TargetCode::MAP_SERVER));
-        map->setupServerReceiver(mapServer);
+        map->setupSenderServer(mapServer);
     }
 
     // Initialize Map with the MapClient
     MapClient* mapClient = dynamic_cast<MapClient*>(
                 m_Client->getReceiver(TargetCode::MAP_CLIENT));
     mapClient->addMapToList(map);
-    map->setupClientReceiver(mapClient);
+    map->setupSenderClient(mapClient);
 
     QMdiSubWindow *subwindow = ui->tableArea->addSubWindow(map);
     subwindow->show();
@@ -172,7 +172,7 @@ void MainWindow::on_actionConnection_triggered(){
 }
 
 void MainWindow::setupMJ() {
-    m_Server = new Server;
+    m_Server = new SwitchServer;
 
     /* Connect sendMessageToChatUi from m_Server to m_ChatWidget in order to display system messages
      * during the initialization. */
@@ -186,14 +186,14 @@ void MainWindow::setupMJ() {
     // Initialize ChatWidget with the ChatServer
     ChatServer* chatServer = dynamic_cast<ChatServer*>(
                 m_Server->getReceiver(TargetCode::CHAT_SERVER));
-    ui->m_ChatWidget->setupServerReceiver(chatServer);
+    ui->m_ChatWidget->setupSenderServer(chatServer);
 
     setupPlayer();
 }
 
 void MainWindow::setupPlayer() {
     TokenList *tokenList = ui->tokenPage->getUi()->m_tokenList;
-    m_Client = new Client(m_User, db_, tokenList);
+    m_Client = new SwitchClient(m_User, db_, tokenList);
 
     connect(m_Client, SIGNAL(sendMessageToChatUi(QString)),
             ui->m_ChatWidget, SLOT(receivedMessage(QString))
@@ -202,7 +202,7 @@ void MainWindow::setupPlayer() {
     // Initialize ChatWidget with the ChatClient
     ChatClient* chatClient = dynamic_cast<ChatClient*>(
                 m_Client->getReceiver(TargetCode::CHAT_CLIENT));
-    ui->m_ChatWidget->setupClientReceiver(chatClient);
+    ui->m_ChatWidget->setupSenderClient(chatClient);
 
     /* The dice menu is able to send system messages to the Chat in order to display error messages
      * or warnings */

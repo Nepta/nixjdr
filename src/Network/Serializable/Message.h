@@ -2,7 +2,8 @@
 #define MESSAGE_H
 
 #include <QString>
-#include "Network/Serializable.h"
+
+#include "Serializable.h"
 
 class Message : public Serializable
 {

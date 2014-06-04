@@ -24,7 +24,6 @@ SOURCES += \
     ConnectionHelper.cpp \
     Common.cpp \
     Tooltip.cpp \
-    Chat/Message.cpp \
     Chat/ChatServer.cpp \
     Chat/ChatClient.cpp \
     Chat/ChatProcessor.cpp \
@@ -63,13 +62,14 @@ SOURCES += \
     Canvas/Tools/Tools.cpp \
     Canvas/SideMenuWidgets/DrawingMenu.cpp \
     Network/Header.cpp \
-    Network/Server.cpp \
+    Network/SwitchServer.cpp \
+    Network/SwitchClient.cpp \
     Network/Switch.cpp \
-    Network/ServerReceiver.cpp \
-    Network/Client.cpp \
-    Network/ClientReceiver.cpp \
-    Network/Receiver.cpp \
-    Network/ReceiverHandler.cpp \
+    Network/SenderHandler.cpp \
+    Network/Serializable/Message.cpp \
+    Network/Sender.cpp \
+    Network/SenderClient.cpp \
+    Network/SenderServer.cpp \
     Database/Database.cpp \
     Database/DBItem.cpp \
     Database/QueryBuilder.cpp \
@@ -98,7 +98,6 @@ HEADERS  += \
     ChatWidget.h \
     Common.h \
     Tooltip.h \
-    Chat/Message.h \
     Chat/ChatServer.h \
     Chat/ChatClient.h \
     Chat/ChatProcessor.h \
@@ -136,14 +135,19 @@ HEADERS  += \
     Canvas/Network/MapClient.h \
     Canvas/Network/MapServer.h \
     Network/Switch.h \
+    Network/SwitchServer.h \
+    Network/SwitchClient.h \
     Network/Receiver.h \
+    Network/Sender.h \
+    Network/SenderClient.h \
+    Network/SenderServer.h \
     Network/Header.h \
     Network/Server.h \
-    Network/ServerReceiver.h \
     Network/Client.h \
-    Network/ClientReceiver.h \
     Network/Serializable.h \
-    Network/ReceiverHandler.h \
+    Network/SenderHandler.h \
+    Network/Serializable/Message.h \
+    Network/Serializable/Serializable.h \
     Database/Database.h \
     Database/DBItem.h \
     Database/QueryBuilder.h \

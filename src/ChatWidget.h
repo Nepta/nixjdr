@@ -5,7 +5,7 @@
 #include <QListWidgetItem>
 #include <QContextMenuEvent>
 
-#include "Network/ReceiverHandler.h"
+#include "Network/SenderHandler.h"
 
 #include "Chat/ChatServer.h"
 #include "Chat/ChatClient.h"
@@ -16,15 +16,15 @@ namespace Ui {
 class ChatWidget;
 }
 
-class ChatWidget : public QWidget, public ReceiverHandler
+class ChatWidget : public QWidget, public SenderHandler
 {
     Q_OBJECT
 
 public:
     explicit ChatWidget(QWidget *parent = 0);
     ~ChatWidget();
-    void setupClientReceiver(ClientReceiver *clientReceiver);
-    void setupServerReceiver(ServerReceiver *serverReceiver);
+    void setupSenderClient(SenderClient *senderClient);
+    void setupSenderServer(SenderServer *senderServer);
     void sendMessageFromClientToServer(QString message);
 
 signals:

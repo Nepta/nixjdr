@@ -1,9 +1,10 @@
 #ifndef MAPSERVER_H
 #define MAPSERVER_H
 
-#include "Network/ServerReceiver.h"
+#include "Network/SenderServer.h"
+#include "Network/Receiver.h"
 
-class MapServer : public ServerReceiver
+class MapServer : public SenderServer, public Receiver
 {
     Q_OBJECT
 
@@ -12,7 +13,7 @@ public:
     ~MapServer();
 
 public slots:
-    void processNewMessage(Header header, QByteArray& data);
+    void processNewData(Header header, QByteArray& data);
 };
 
 #endif // MAPSERVER_H

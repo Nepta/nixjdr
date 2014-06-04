@@ -1,7 +1,8 @@
 #ifndef MAPCLIENT_H
 #define MAPCLIENT_H
 
-#include "Network/ClientReceiver.h"
+#include "Network/SenderClient.h"
+#include "Network/Receiver.h"
 #include "Database/DBComponent.h"
 #include "Token/TokenList.h"
 #include "Canvas/Map.h"
@@ -17,7 +18,7 @@ enum class MapCodes : quint16 {
     REMOVE_ALL_FOW
 };
 
-class MapClient : public ClientReceiver, public DBComponent
+class MapClient : public SenderClient, public Receiver, public DBComponent
 {
     Q_OBJECT
 
@@ -41,7 +42,7 @@ private:
     Map *GetMapById(int id);
 
 private slots:
-    void processNewMessage(Header header, QByteArray &data);
+    void processNewData(Header header, QByteArray &data);
 };
 
 #endif // MAPCLIENT_H

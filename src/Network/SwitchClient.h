@@ -1,18 +1,18 @@
-#ifndef CLIENT_H
-#define CLIENT_H
+#ifndef SWITCHCLIENT_H
+#define SWITCHCLIENT_H
 
 #include "Database/Database.h"
 #include "Token/TokenList.h"
 #include "Switch.h"
 #include "User.h"
 
-class Client : public Switch
+class SwitchClient : public Switch
 {
     Q_OBJECT
 
 public:
-    Client(User *user, Database *db, TokenList *tokenList);
-    ~Client();
+    SwitchClient(User *user, Database *db, TokenList *tokenList);
+    ~SwitchClient();
 
    /**
     * @brief ChatClient::connection    Connects the client to the specified host (IP and port).
@@ -52,4 +52,4 @@ private:
     QHash<QString, User *> m_UsersList;
 };
 
-#endif // CLIENT_H
+#endif // SWITCHCLIENT_H

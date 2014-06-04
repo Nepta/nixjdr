@@ -1,10 +1,10 @@
+#include "Network/Serializable/Message.h"
 #include "Commands/AbstractCmd.h"
-#include "Message.h"
 #include "ChatClient.h"
 #include "Common.h"
 
 ChatClient::ChatClient(User *user, QHash<QString, User *> *usersList) :
-    ClientReceiver(user, usersList)
+    SenderClient(user, usersList)
 {
     AbstractCmd::setUsersListClient(m_UsersList);
 
@@ -18,7 +18,7 @@ ChatClient::ChatClient(User *user, QHash<QString, User *> *usersList) :
 ChatClient::~ChatClient() {
 }
 
-void ChatClient::processNewMessage(Header header, QByteArray& data) {
+void ChatClient::processNewData(Header header, QByteArray& data) {
     ChatCodes code = (ChatCodes) header.getCode();
     Message message(data);
 

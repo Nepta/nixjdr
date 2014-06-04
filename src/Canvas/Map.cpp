@@ -72,11 +72,11 @@ void Map::initFoWTools(){
             fowLayer, SLOT(removeFoWFromDb()));
 }
 
-void Map::setupClientReceiver(ClientReceiver *clientReceiver) {
-    ReceiverHandler::setupClientReceiver(clientReceiver);
+void Map::setupSenderClient(SenderClient *senderClient) {
+    SenderHandler::setupSenderClient(senderClient);
 
     for (AbstractLayer *layer : m_Layers->getLayersList()) {
-        layer->setClientReceiver(clientReceiver);
+        layer->setSenderClient(senderClient);
     }
 }
 

@@ -1,11 +1,11 @@
 #include "Database/Repository/RepositoryManager.h"
+#include "Network/Serializable/Message.h"
 #include "Network/Switch.h"
-#include "Chat/Message.h"
 #include "MapClient.h"
 #include "Common.h"
 
 MapClient::MapClient(User *user, QHash<QString, User *> *usersList, Database *db, TokenList *tokenList) :
-    ClientReceiver(user, usersList),
+    SenderClient(user, usersList),
     DBComponent(db)
 {
     m_TokenList = tokenList;
@@ -13,7 +13,7 @@ MapClient::MapClient(User *user, QHash<QString, User *> *usersList, Database *db
 
 MapClient::~MapClient() {}
 
-void MapClient::processNewMessage(Header header, QByteArray& data) {
+void MapClient::processNewData(Header header, QByteArray& data) {
     Message msg(data);
     MapCodes code = (MapCodes) header.getCode();
 

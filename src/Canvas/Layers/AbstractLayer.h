@@ -8,7 +8,7 @@
 #include <QPainter>
 #include <QRectF>
 
-#include "Network/ClientReceiver.h"
+#include "Network/SenderClient.h"
 
 #include "Database/Database.h"
 #include "Database/DBComponent.h"
@@ -34,10 +34,10 @@ public:
     QRectF boundingRect() const;
     void paint(QPainter *, const QStyleOptionGraphicsItem *, QWidget *);
     void setEnabled(bool enabled);
-    void setClientReceiver(ClientReceiver *clientReceiver);
+    void setSenderClient(SenderClient *senderClient);
 
 protected:
-    ClientReceiver *m_ClientReceiver;
+    SenderClient *m_SenderClient;
 
     virtual void keyPressEvent(QKeyEvent *);
     virtual void keyReleaseEvent(QKeyEvent *);

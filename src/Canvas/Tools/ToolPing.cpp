@@ -42,13 +42,14 @@ bool ToolPing::sceneEventFilter(QGraphicsItem *, QEvent *event){
         case  QEvent::GraphicsSceneMousePress:{
             pressMouse(static_cast<QGraphicsSceneMouseEvent*>(event));
             eventFiltered = true;
-            event->accept();
         }
             break;
         default:
             break;
     }
-    AbstractTool::updateDisplay();
+    if(eventFiltered){
+        event->accept();
+    }
     return eventFiltered;
 }
 

@@ -4,7 +4,7 @@
 #include <QWidget>
 #include <QAbstractButton>
 
-#include "Network/ReceiverHandler.h"
+#include "Network/SenderHandler.h"
 
 #include "Layers/BackgroundLayer.h"
 #include "Layers/MapLayer.h"
@@ -24,7 +24,7 @@ namespace Ui {
     class Map;
 }
 
-class Map : public QWidget, public DBItem, public DBComponent, public ReceiverHandler
+class Map : public QWidget, public DBItem, public DBComponent, public SenderHandler
 {
     Q_OBJECT
 
@@ -35,7 +35,7 @@ public:
     // TODO Map(DBItem item);
     ~Map();
 
-    void setupClientReceiver(ClientReceiver *clientReceiver);
+    void setupSenderClient(SenderClient *senderClient);
 
     int getSceneHeight();
     int getSceneWidth();

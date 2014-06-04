@@ -5,13 +5,15 @@
 #include <QMdiSubWindow>
 #include <QSplitter>
 
-#include "Canvas/Map.h"
-#include "Network/Server.h"
-#include "Network/Client.h"
-#include "Database/DBComponent.h"
-#include "ChatWidget.h"
-#include "Token/TokenMenu.h"
+#include "Network/SwitchServer.h"
+#include "Network/SwitchClient.h"
 #include "TurnMenu/TurnMenu.h"
+#include "Token/TokenMenu.h"
+#include "Canvas/Map.h"
+
+#include "Database/DBComponent.h"
+
+#include "ChatWidget.h"
 #include "DiceMenu.h"
 #include "ui_TokenMenu.h"
 #include "ui_DiceMenu.h"
@@ -60,8 +62,8 @@ private:
 
     Ui::MainWindow *ui;
     User *m_User;
-    Server *m_Server;
-    Client *m_Client;
+    SwitchServer *m_Server;
+    SwitchClient *m_Client;
     TurnMenu *m_turnMenu;
 };
 

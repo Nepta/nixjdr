@@ -65,7 +65,7 @@ void GridLayer::addSpriteToDb(TokenItem *tokenItem, QPoint position, int zValue)
 
     // Notifies every client that a new sprite has been added
     QString msg = QString("addSprite %1").arg(sprite->id());
-    m_ClientReceiver->sendMessageToServer(msg);
+    m_SenderClient->sendMessageToServer(msg);
 
     delete sprite; // delete the sprite to avoid duplicate
 }
@@ -78,7 +78,7 @@ void GridLayer::addSpriteToDb(TokenItem *tokenItem, QPoint position, int zValue)
 void GridLayer::removeSpriteToDb(Sprite *sprite) {
     // Notifies all the clients that a Sprite has been removed
     QString msg = QString("removeSprite %1").arg(sprite->id());
-    m_ClientReceiver->sendMessageToServer(msg);
+    m_SenderClient->sendMessageToServer(msg);
 }
 
 /**
@@ -178,7 +178,7 @@ void GridLayer::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent) {
     Sprite *sprite = dynamic_cast<Sprite*>(item);
 
     if (mouseEvent->buttons() & Qt::LeftButton) {
-        if (!sprite) {
+        if (!sprite && isInScene(mouseEvent)) {
             addSpriteToDb(m_TokenItem, mouseScenePos, 1);
         }
     }
@@ -191,6 +191,21 @@ void GridLayer::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent) {
         if (sprite) { // TODO timer or boolean to slow down the deletion
             removeSpriteToDb(sprite);
         }
+    }
+}
+
+bool GridLayer::isInScene(QGraphicsSceneMouseEvent *mouseEvent){
+    int x = mouseEvent->pos().x();
+    int y = mouseEvent->pos().y();
+    QRectF sceneRect = scene()->sceneRect();
+    if(x > sceneRect.left()
+            && x < sceneRect.right()
+            && y < sceneRect.bottom()
+            && y > sceneRect.top()){
+        return true;
+    }
+    else{
+        return false;
     }
 }
 
