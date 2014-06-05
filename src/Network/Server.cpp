@@ -3,12 +3,14 @@
 #include "Chat/ChatServer.h"
 
 #include "Server.h"
-
+#include "Log/Logger.h"
 Server::Server() {
-    m_Server = new QTcpServer(this);
+	m_Server = new QTcpServer(this);
+	Logger *logger = new Logger(&m_UsersList);
+	m_Nodes.insert(TargetCode::CHAT_SERVER, new ChatServer(&m_UsersList));
+	logger->insert(TargetCode::MAP_SERVER, new MapServer(&m_UsersList));
 
-    m_Nodes.insert(TargetCode::CHAT_SERVER, new ChatServer(&m_UsersList));
-    m_Nodes.insert(TargetCode::MAP_SERVER, new MapServer(&m_UsersList));
+	m_Nodes.insert(TargetCode::MAP_SERVER, logger);
 }
 
 Server::~Server() {
