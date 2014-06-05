@@ -28,6 +28,7 @@ public:
     ~MapClient();
 
     void addMapToList(Map* map);
+    void processNewData(Header header, QByteArray &data);
 
 public slots:
     void sendMessageToServer(const QString& msg);
@@ -44,9 +45,6 @@ private:
     Map *getMapById(int mapId);
     Map *getMapByMapLayerId(int mapLayerId);
     Map *getMapByFoWLayerId(int fowLayerId);
-
-private slots:
-    void processNewData(Header header, QByteArray &data);
 
 signals:
     void openMap(Map *map);

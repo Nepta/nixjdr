@@ -187,7 +187,7 @@ void MainWindow::on_actionConnection_triggered(){
 }
 
 void MainWindow::setupMJ() {
-    m_Server = new SwitchServer;
+    m_Server = new SwitchServer(db_);
 
     /* Connect sendMessageToChatUi from m_Server to m_ChatWidget in order to display system messages
      * during the initialization. */

@@ -1,13 +1,22 @@
+#include "Database/Repository/RepositoryManager.h"
 #include "Network/Serializable/Message.h"
 #include "Network/Switch.h"
-
 #include "MapServer.h"
 
-MapServer::MapServer(QHash<QString, User *> *usersList) : SenderServer(usersList) {}
+MapServer::MapServer(QHash<QString, User *> *usersList, Database *db) :
+    SenderServer(usersList),
+    DBComponent(db)
+{}
+
 MapServer::~MapServer() {}
 
 void MapServer::processNewData(Header header, QByteArray& data) {
     Message message(data);
+    MapCodes code = (MapCodes) header.getCode();
+
+    if (code == MapCodes::REMOVE_ALL_FOW) {
+        removeAllFoWAction(message.getString());
+    }
 
     // TODO permission system : action accepted -> sendPacketToList,
     //                          action refused -> sendPacketToOne
@@ -18,4 +27,11 @@ void MapServer::processNewData(Header header, QByteArray& data) {
     recipients.removeOne(m_UsersList->value(header.getSocketUserNickname()));
 
     sendPacketToList((quint16) TargetCode::MAP_CLIENT, header.getCode(), message, recipients);
+}
+
+void MapServer::removeAllFoWAction(const QString& msg) {
+    int fowLayerId = msg.toInt();
+
+    // Remove all the FoW Sprites for this layer from the db
+    RepositoryManager::s_SpriteRepository.removeAllSpritesFromFoWLayer(fowLayerId, db_);
 }

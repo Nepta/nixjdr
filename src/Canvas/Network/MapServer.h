@@ -3,17 +3,21 @@
 
 #include "Network/SenderServer.h"
 #include "Network/Receiver.h"
+#include "Database/DBComponent.h"
 
-class MapServer : public SenderServer, public Receiver
+#include "MapClient.h" // TODO MapCodes should be elsewhere
+
+class MapServer : public SenderServer, public Receiver, public DBComponent
 {
     Q_OBJECT
 
 public:
-    MapServer(QHash<QString, User *> *usersList);
+    MapServer(QHash<QString, User *> *usersList, Database *db);
     ~MapServer();
-
-public slots:
     void processNewData(Header header, QByteArray& data);
+
+private:
+    void removeAllFoWAction(const QString& msg);
 };
 
 #endif // MAPSERVER_H

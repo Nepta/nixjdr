@@ -2,6 +2,7 @@
 #define SWITCHSERVER_H
 
 #include <QTcpServer>
+#include "Database/Database.h"
 #include "User.h"
 #include "Switch.h"
 
@@ -10,7 +11,7 @@ class SwitchServer : public Switch
     Q_OBJECT
 
 public:
-    SwitchServer();
+    SwitchServer(Database *db);
     ~SwitchServer();
 
     /**

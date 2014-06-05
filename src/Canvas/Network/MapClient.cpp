@@ -75,7 +75,6 @@ void MapClient::addSpriteAction(const QString& msg) {
     int tokenItemId = dbItem.getHashMap().value("tokenitemid").toInt();
     TokenItem *tokenItem = m_TokenList->findTokenItemById(tokenItemId);
 
-
     // Retrieve the map and the layer on which the sprite should be added
     Map *map = NULL;
     GridLayer *layer = NULL;

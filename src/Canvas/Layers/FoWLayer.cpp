@@ -80,19 +80,16 @@ void FoWLayer::fillFoW() {
 
     for(int i = 0 ; i < boundingRect().width() ; i += m_Step) {
         for(int j = 0 ; j < boundingRect().height() ; j += m_Step) {
-            GridLayer::addSpriteToDb(m_TokenItem, QPoint(i, j));
+            GridLayer::addSprite(m_TokenItem, QPoint(i, j));
         }
     }
 }
 
 /**
- * @brief FoWLayer::removeFoW Remove all the FoW sprites from the db and notifies all the clients
- * that they need to remove those sprites from their layers. The FoW is then removed locally.
+ * @brief FoWLayer::removeFoW Remove all the FoW sprites from the layer and notifies all the clients
+ * that they need to remove those sprites..
  */
 void FoWLayer::removeFoW() {
-    // Remove all the FoW Sprites for this layer from the db
-    RepositoryManager::s_SpriteRepository.removeAllSpritesFromFoWLayer(this->id(), db_);
-
     // Notifies all the clients that all the FoW sprites for this layer need to be removed
     QString msg = QString("removeAllFoW %1").arg(this->id());
     m_SenderClient->sendMessageToServer(msg);

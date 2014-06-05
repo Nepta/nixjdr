@@ -29,7 +29,7 @@ public:
 
     virtual Sprite *addSpriteToLayer(Sprite* sprite);
     Sprite *addSpriteToLayer(TokenItem *tokenItem, QPoint position, int zValue);
-    virtual void addSpriteToDb(TokenItem *tokenItem, QPoint position, int zValue = 1);
+    virtual void addSprite(TokenItem *tokenItem, QPoint position, int zValue = 1);
 
     virtual void removeSprite(Sprite *sprite);
     void removeSpriteById(int id);

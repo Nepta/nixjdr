@@ -2,11 +2,11 @@
 #include "Chat/ChatServer.h"
 #include "SwitchServer.h"
 
-SwitchServer::SwitchServer() {
+SwitchServer::SwitchServer(Database *db) {
     m_Server = new QTcpServer(this);
 
     m_Nodes.insert(TargetCode::CHAT_SERVER, new ChatServer(&m_UsersList));
-    m_Nodes.insert(TargetCode::MAP_SERVER, new MapServer(&m_UsersList));
+    m_Nodes.insert(TargetCode::MAP_SERVER, new MapServer(&m_UsersList, db));
 }
 
 SwitchServer::~SwitchServer() {
