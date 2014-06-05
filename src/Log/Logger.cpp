@@ -11,9 +11,9 @@ void Logger::insert(TargetCode targetCode, Receiver *receiver){
 }
 
 void Logger::processNewMessage(Header header, QByteArray &data){
-	switchNewMessage(header, data);
+	Receiver *receiver = switchNewMessage(header, data);
 
-	MapLog log(*this);
+	MapLog log(*receiver);
 	log.setMessage(data);
 	log.setHeader(header);
 	qDebug() << log.toString();
