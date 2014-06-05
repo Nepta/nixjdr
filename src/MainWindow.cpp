@@ -90,27 +90,19 @@ void MainWindow::updateMenu() {
     }
 }
 
-void MainWindow::createMap(QString filename) {
+void MainWindow::openMap(Map *map) {
     QListWidget *tokenList = ui->tokenPage->getUi()->m_tokenList;
-
-    TokenItem *currentTokenItem = dynamic_cast<TokenItem*>(tokenList->currentItem());
-    // TODO should be able to choose the step value in a message box
-    Map *map = new Map(filename, currentTokenItem, 32);
-    map->setDatabase(db_);
-
-    // Add Map to the database
-    RepositoryManager::s_MapRepository.insertMap(map, db_);
 
     // Initialize Map with the MapServer
     if (m_Server != NULL) {
-        MapServer* mapServer = dynamic_cast<MapServer*>(
-                    m_Server->getReceiver(TargetCode::MAP_SERVER));
+        Receiver *mapServerReceiver = m_Client->getReceiver(TargetCode::MAP_SERVER);
+        MapServer *mapServer = dynamic_cast<MapServer*>(mapServerReceiver);
         map->setupSenderServer(mapServer);
     }
 
     // Initialize Map with the MapClient
-    MapClient* mapClient = dynamic_cast<MapClient*>(
-                m_Client->getReceiver(TargetCode::MAP_CLIENT));
+    Receiver *mapClientReceiver = m_Client->getReceiver(TargetCode::MAP_CLIENT);
+    MapClient *mapClient = dynamic_cast<MapClient*>(mapClientReceiver);
     mapClient->addMapToList(map);
     map->setupSenderClient(mapClient);
 
@@ -119,7 +111,23 @@ void MainWindow::createMap(QString filename) {
     subwindow->move(0, 0);
 
     connect(tokenList, SIGNAL(currentItemChanged(QListWidgetItem*,  QListWidgetItem *)),
-            map->getMapLayer(), SLOT(setTokenItem(QListWidgetItem*)));
+            map->getMapLayer(), SLOT(setTokenItem(QListWidgetItem*))
+    );
+}
+
+void MainWindow::createMap(QString filename) {
+    QListWidget *tokenList = ui->tokenPage->getUi()->m_tokenList;
+    TokenItem *currentTokenItem = dynamic_cast<TokenItem*>(tokenList->currentItem());
+
+    // TODO should be able to choose the step value in a message box
+    Map *map = new Map(filename, currentTokenItem, 32);
+    map->setDatabase(db_);
+
+    // Add Map to the database
+    RepositoryManager::s_MapRepository.insertMap(map, db_);
+
+    // Initialize and open map
+    openMap(map);
 }
 
 void MainWindow::on_actionCreateMap_triggered(){
@@ -203,6 +211,12 @@ void MainWindow::setupPlayer() {
     ChatClient* chatClient = dynamic_cast<ChatClient*>(
                 m_Client->getReceiver(TargetCode::CHAT_CLIENT));
     ui->m_ChatWidget->setupSenderClient(chatClient);
+
+    // Initialize MapClient connect
+    Receiver *mapClientReceiver = m_Client->getReceiver(TargetCode::MAP_CLIENT);
+    MapClient *mapClient = dynamic_cast<MapClient*>(mapClientReceiver);
+    connect(mapClient, SIGNAL(openMap(Map*)),
+            this, SLOT(openMap(Map*)));
 
     /* The dice menu is able to send system messages to the Chat in order to display error messages
      * or warnings */

@@ -59,15 +59,12 @@ void MapClient::addMapToList(Map* map) {
     m_MapsList.append(map);
 }
 
-// TODO add openMap menu action in MainWindow
 void MapClient::openMapAction(const QString& msg) {
     int mapId = msg.toInt();
     Map *map = RepositoryManager::s_MapRepository.findMapById(mapId, db_);
+    map->getMapLayer()->setTokenItem(m_TokenList->currentItem());
 
-    addMapToList(map);
-    map->setupSenderClient(this);
-
-    // TODO add map to tableArea
+    emit openMap(map);
 }
 
 void MapClient::addSpriteAction(const QString& msg) {

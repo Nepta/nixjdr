@@ -45,6 +45,9 @@ private:
 
 private slots:
     void processNewData(Header header, QByteArray &data);
+
+signals:
+    void openMap(Map *map);
 };
 
 #endif // MAPCLIENT_H

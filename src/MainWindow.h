@@ -31,12 +31,12 @@ public:
     ~MainWindow();
 
 private slots:
+    void openMap(Map *map);
     void updateMenu();
     void on_actionCreateMap_triggered();
     void on_actionEditMap_triggered();
     void on_actionCreateImage_triggered();
     void on_actionConnection_triggered();
-
     void on_collapseButtonRightMenu_clicked(bool checked);
     void on_collapseButtonTurnMenu_clicked(bool checked);
 
