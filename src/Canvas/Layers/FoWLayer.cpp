@@ -8,12 +8,7 @@ FoWLayer::FoWLayer(int step, bool transparentSprites) :
     GridLayer(step),
     m_TransparentSprites(transparentSprites)
 {
-    // TODO multiple colors for multiple players (shift the hue of the pixmap?)
-
-    // Retrieve the fow TokenItem from the database
-    TokenItem *fowItem = RepositoryManager::s_TokenItemRepository.getFowTokenItem(db_);
-
-    setTokenItem(fowItem);
+    construct(step, transparentSprites);
 }
 
 FoWLayer::FoWLayer(DBItem item) : GridLayer()
@@ -25,11 +20,19 @@ FoWLayer::FoWLayer(DBItem item) : GridLayer()
     int step = itemHashMap.value("step").toInt();
 
     id_ = id;
-    m_Step = step;
-    m_TransparentSprites = true; // TODO should be set by the permission system
+    construct(step, true);
 }
 
 FoWLayer::~FoWLayer() {}
+
+void FoWLayer::construct(int step, bool transparentSprites) {
+    m_TransparentSprites = transparentSprites;
+    m_Step = step;
+
+    // Retrieve the fow TokenItem from the database
+    TokenItem *fowItem = RepositoryManager::s_TokenItemRepository.getFowTokenItem(db_);
+    setTokenItem(fowItem);
+}
 
 /**
  * @brief FoWLayer::addSpriteFromDb Reimplemented from GridLayer to add transparency to the new
@@ -91,7 +94,7 @@ void FoWLayer::removeFoW() {
     RepositoryManager::s_SpriteRepository.removeAllSpritesFromFoWLayer(this->id(), db_);
 
     // Notifies all the clients that all the FoW sprites for this layer need to be removed
-    QString msg = QString("removeAllFoW");
+    QString msg = QString("removeAllFoW %1").arg(this->id());
     m_SenderClient->sendMessageToServer(msg);
 
     // Removes the FoW locally

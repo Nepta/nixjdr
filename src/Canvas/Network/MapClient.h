@@ -41,7 +41,9 @@ private:
     void removeSpriteAction(const QString& msg);
     void removeAllFoWAction(const QString& msg);
 
-    Map *GetMapById(int id);
+    Map *getMapById(int mapId);
+    Map *getMapByMapLayerId(int mapLayerId);
+    Map *getMapByFoWLayerId(int fowLayerId);
 
 private slots:
     void processNewData(Header header, QByteArray &data);

@@ -25,6 +25,7 @@ private:
      */
     bool m_TransparentSprites;
 
+    void construct(int step, bool transparentSprites);
     void mousePressEvent(QGraphicsSceneMouseEvent *);
     bool sceneEventFilter(QGraphicsItem *watched, QEvent *event);
 

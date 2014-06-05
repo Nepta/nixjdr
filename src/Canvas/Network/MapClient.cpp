@@ -75,28 +75,27 @@ void MapClient::addSpriteAction(const QString& msg) {
     int tokenItemId = dbItem.getHashMap().value("tokenitemid").toInt();
     TokenItem *tokenItem = m_TokenList->findTokenItemById(tokenItemId);
 
+
+    // Retrieve the map and the layer on which the sprite should be added
+    Map *map = NULL;
+    GridLayer *layer = NULL;
+
+    int mapLayerId = dbItem.getHashMap().value("maplayerid").toInt();
+    int fowLayerId = dbItem.getHashMap().value("fowlayerid").toInt();
+
+    if (mapLayerId != 0) {
+        map = getMapByMapLayerId(mapLayerId);
+        layer = dynamic_cast<GridLayer*>(map->getMapLayer());
+    }
+    else if (fowLayerId != 0) {
+        map = getMapByFoWLayerId(fowLayerId);
+        layer = dynamic_cast<GridLayer*>(map->getFoWLayer());
+    }
+
     // Creates the Sprite and adds it to the intended map and layer
-    Sprite *sprite;
-
-    if (!m_MapsList.isEmpty()) {
-        Map *map = m_MapsList.at(0); // TODO select the correct map
-
-        int mapLayerId = dbItem.getHashMap().value("maplayerid").toInt();
-        int fowLayerId = dbItem.getHashMap().value("fowlayerid").toInt();
-
-        GridLayer *layer;
-        if (mapLayerId != 0) {
-            layer = dynamic_cast<MapLayer*>(map->getMapLayer());
-        }
-        else if (fowLayerId != 0) {
-            layer = dynamic_cast<FoWLayer*>(map->getFoWLayer());
-        }
-        else {
-            return;
-        }
-        sprite =  new Sprite(dbItem, tokenItem, layer);
+    if (map != NULL) {
+        Sprite *sprite = new Sprite(dbItem, tokenItem, layer);
         layer->addSpriteToLayer(sprite);
-
     }
 }
 
@@ -104,23 +103,24 @@ void MapClient::removeSpriteAction(const QString& msg) {
     int id = msg.toInt();
     DBItem dbItem = RepositoryManager::s_SpriteRepository.findById(id, db_);
 
-    if (!m_MapsList.isEmpty()) {
-        Map *map = m_MapsList.at(0); // TODO select the correct map
+    // Retrieve the map and the layer on which the sprite should be deleted
+    Map *map = NULL;
+    GridLayer *layer = NULL;
 
-        int mapLayerId = dbItem.getHashMap().value("maplayerid").toInt();
-        int fowLayerId = dbItem.getHashMap().value("fowlayerid").toInt();
+    int mapLayerId = dbItem.getHashMap().value("maplayerid").toInt();
+    int fowLayerId = dbItem.getHashMap().value("fowlayerid").toInt();
 
-        GridLayer *layer;
-        if (mapLayerId != 0) {
-            layer = dynamic_cast<GridLayer*>(map->getMapLayer());
-        }
-        else if (fowLayerId != 0) {
-            layer = dynamic_cast<GridLayer*>(map->getFoWLayer());
-        }
-        else {
-            return;
-        }
+    if (mapLayerId != 0) {
+        map = getMapByMapLayerId(mapLayerId);
+        layer = dynamic_cast<GridLayer*>(map->getMapLayer());
+    }
+    else if (fowLayerId != 0) {
+        map = getMapByFoWLayerId(fowLayerId);
+        layer = dynamic_cast<GridLayer*>(map->getFoWLayer());
+    }
 
+    // Delete the sprite
+    if (map != NULL) {
         // Delete the sprite from the database
         RepositoryManager::s_SpriteRepository.deleteById(id, db_);
 
@@ -129,19 +129,44 @@ void MapClient::removeSpriteAction(const QString& msg) {
     }
 }
 
-void MapClient::removeAllFoWAction(const QString&) {
-    if (!m_MapsList.isEmpty()) {
-        Map *map = m_MapsList.at(0); // TODO select the correct map
+void MapClient::removeAllFoWAction(const QString& msg) {
+    int fowLayerId = msg.toInt();
+    Map *map = getMapByFoWLayerId(fowLayerId);
 
+    if (map != NULL) {
         map->getFoWLayer()->removeAllSprites();
     }
 }
 
-Map *MapClient::GetMapById(int id) {
+Map *MapClient::getMapById(int mapId) {
     Map *result = NULL;
 
     for (Map *map : m_MapsList) {
-        if (map->id() == id) {
+        if (map->id() == mapId) {
+            result = map;
+        }
+    }
+
+    return result;
+}
+
+Map *MapClient::getMapByMapLayerId(int mapLayerId) {
+    Map *result = NULL;
+
+    for (Map *map : m_MapsList) {
+        if (map->getMapLayer()->id() == mapLayerId) {
+            result = map;
+        }
+    }
+
+    return result;
+}
+
+Map *MapClient::getMapByFoWLayerId(int fowLayerId) {
+    Map *result = NULL;
+
+    for (Map *map : m_MapsList) {
+        if (map->getFoWLayer()->id() == fowLayerId) {
             result = map;
         }
     }
