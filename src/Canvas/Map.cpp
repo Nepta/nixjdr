@@ -11,7 +11,6 @@ Map::Map(QString bgFilename, TokenItem *tokenItem, int tileStep, QWidget *parent
 {
     ui->setupUi(this);
     m_Layers = new Layers(bgFilename, 2, 2, Qt::black, tileStep, tokenItem);
-    setWindowTitle(tr("Carte"));
 
     initScene(tileStep);
     initLayers();

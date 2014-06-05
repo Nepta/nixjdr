@@ -45,7 +45,7 @@ Map *MapRepository::findMapById(int id, Database *db) {
     FoWLayer *fowLayer = new FoWLayer(fowLayerItem);
 
     // Retrieve & construct DrawingLayer
-    int drawingLayerId = mapItem.getHashMap().value("drawingLayerId").toInt();
+    int drawingLayerId = mapItem.getHashMap().value("drawinglayerid").toInt();
     DBItem drawingLayerItem = RepositoryManager::s_DrawingLayerRepository.findById(drawingLayerId, db);
     DrawingLayer *drawingLayer = new DrawingLayer(drawingLayerItem);
 

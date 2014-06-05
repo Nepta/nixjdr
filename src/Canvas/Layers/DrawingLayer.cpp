@@ -19,7 +19,9 @@ DrawingLayer::DrawingLayer(DBItem item) {
     QByteArray pixmap = itemHashMap.value("pixmap").toByteArray();
 
     id_ = id;
+    m_Pixmap = new QPixmap;
     m_Pixmap->loadFromData(pixmap, "PNG");
+
     m_PenSize = 2;
     m_EraserSize = 2;
     m_Color = Qt::black;

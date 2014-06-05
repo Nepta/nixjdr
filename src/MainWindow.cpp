@@ -128,6 +128,13 @@ void MainWindow::createMap(QString filename) {
 
     // Initialize and open map
     openMap(map);
+
+    // Notifies all the clients that a new map has been opened
+    Receiver *mapClientReceiver = m_Client->getReceiver(TargetCode::MAP_CLIENT);
+    MapClient *mapClient = dynamic_cast<MapClient*>(mapClientReceiver);
+    QString msg = QString("openMap %1").arg(map->id());
+    mapClient->sendMessageToServer(msg);
+
 }
 
 void MainWindow::on_actionCreateMap_triggered(){
@@ -239,7 +246,7 @@ void MainWindow::on_collapseButtonTurnMenu_clicked(bool checked)
     collapseMenu(checked, ui->turnWidget, ui->tableTurnSplitter, min, max);
 }
 
-void MainWindow::collapseMenu(bool checked, QWidget *widget, QSplitter *splitter, int min, int max){
+void MainWindow::collapseMenu(bool checked, QWidget *widget, QSplitter *splitter, int min, int max) {
     QList<int> sizes = splitter->sizes();
     widget->setVisible(checked);
     if(checked){
