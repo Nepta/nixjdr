@@ -1,3 +1,4 @@
+DROP VIEW  IF EXISTS spritename;
 DROP TABLE IF EXISTS sprite;
 DROP TABLE IF EXISTS tokenitem;
 DROP TABLE IF EXISTS map;
@@ -5,7 +6,6 @@ DROP TABLE IF EXISTS backgroundlayer;
 DROP TABLE IF EXISTS maplayer;
 DROP TABLE IF EXISTS fowlayer;
 DROP TABLE IF EXISTS drawinglayer;
-
 CREATE TABLE tokenitem (
 	id      serial not NULL,
 	text    character varying(20) UNIQUE,
@@ -59,3 +59,9 @@ CREATE TABLE sprite (
 	fowlayerid          integer REFERENCES fowlayer(id),
 	CONSTRAINT sprite_pkey PRIMARY KEY (id)
 );
+
+CREATE VIEW spritename AS
+	SELECT sprite.id,text AS name
+	FROM sprite JOIN tokenitem
+	ON sprite.tokenitemid = tokenitem.id
+;
