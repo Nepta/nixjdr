@@ -79,13 +79,11 @@ void MainWindow::initRole(){
     }
 }
 
+/**
+ * @brief MainWindow::updateMenu Update the top menu available functions.
+ */
 void MainWindow::updateMenu() {
-    QMdiSubWindow *subwindow  = ui->tableArea->activeSubWindow();
-    if (subwindow != NULL) {
-        bool isMapSubwindow = (subwindow->windowTitle() == tr("Carte"));
-
-        ui->actionEditMap->setEnabled(isMapSubwindow);
-    }
+    // TODO update menu
 }
 
 void MainWindow::createMap(QString filename) {
@@ -131,17 +129,6 @@ void MainWindow::createImage(QString filename) {
     QMdiSubWindow *subwindow = ui->tableArea->addSubWindow(image);
     subwindow->show();
     subwindow->move(0, 0);
-}
-
-void MainWindow::on_actionEditMap_triggered()
-{
-    QString filename = QFileDialog::getOpenFileName(this, "Ouvrir un fichier", "resource",
-                                                    "Images (*.png *.xpm *.jpg)");
-
-    if (filename != NULL) {
-        delete ui->tableArea->activeSubWindow();
-        createMap(filename);
-    }
 }
 
 void MainWindow::on_actionConnection_triggered(){

@@ -237,7 +237,6 @@
      <string>File</string>
     </property>
     <addaction name="actionCreateMap"/>
-    <addaction name="actionEditMap"/>
     <addaction name="actionCreateImage"/>
     <addaction name="actionConnection"/>
    </widget>
@@ -249,14 +248,6 @@
    </property>
    <property name="menuRole">
     <enum>QAction::TextHeuristicRole</enum>
-   </property>
-  </action>
-  <action name="actionEditMap">
-   <property name="enabled">
-    <bool>false</bool>
-   </property>
-   <property name="text">
-    <string>Editer map...</string>
    </property>
   </action>
   <action name="actionConnection">
