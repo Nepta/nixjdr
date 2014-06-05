@@ -14,6 +14,7 @@ public:
     const QString getTableName();
 
     int insertMap(Map *map, Database *db);
+    Map *findMapById(int id, Database *db);
 };
 
 #endif // MAPREPOSITORY_H

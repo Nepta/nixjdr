@@ -59,41 +59,15 @@ void MapClient::addMapToList(Map* map) {
     m_MapsList.append(map);
 }
 
-// TODO should be in MapRepository
 // TODO add openMap menu action in MainWindow
 void MapClient::openMapAction(const QString& msg) {
-    // Retrieve Map
     int mapId = msg.toInt();
-    DBItem mapItem = RepositoryManager::s_MapRepository.findById(mapId, db_);
+    Map *map = RepositoryManager::s_MapRepository.findMapById(mapId, db_);
 
-    // Retrieve & construct BackgroundLayer
-    int bgLayerId = mapItem.getHashMap().value("backgroundlayerid").toInt();
-    DBItem bgLayerItem = RepositoryManager::s_BgLayerRepository.findById(bgLayerId, db_);
-    BackgroundLayer *bgLayer = new BackgroundLayer(bgLayerItem);
-
-    // Retrieve & construct MapLayer
-    int mapLayerId = mapItem.getHashMap().value("maplayerid").toInt();
-    DBItem mapLayerItem = RepositoryManager::s_MapLayerRepository.findById(mapLayerId, db_);
-    MapLayer *mapLayer = new MapLayer(mapLayerItem);
-
-    // Retrieve & construct FoWLayer
-    int fowLayerId = mapItem.getHashMap().value("fowlayerid").toInt();
-    DBItem fowLayerItem = RepositoryManager::s_FoWLayerRepository.findById(fowLayerId, db_);
-    FoWLayer *fowLayer = new FoWLayer(fowLayerItem);
-
-    // Retrieve & construct DrawingLayer
-    int drawingLayerId = mapItem.getHashMap().value("drawingLayerId").toInt();
-    DBItem drawingLayerItem = RepositoryManager::s_DrawingLayerRepository.findById(drawingLayerId, db_);
-    DrawingLayer *drawingLayer = new DrawingLayer(drawingLayerItem);
-
-    // TODO Retrieve Sprites
-
-    // Construct map
-    Map *map = new Map(mapItem, bgLayer, mapLayer, fowLayer, drawingLayer);
     addMapToList(map);
     map->setupSenderClient(this);
 
-    // TODO add Map to the tableArea
+    // TODO add map to tableArea
 }
 
 void MapClient::addSpriteAction(const QString& msg) {
