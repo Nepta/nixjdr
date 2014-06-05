@@ -34,7 +34,7 @@ Map::Map(DBItem item, BackgroundLayer *bgLayer, MapLayer *mapLayer, FoWLayer *fo
 
     id_ = id;
     m_Layers = new Layers(bgLayer, mapLayer, fowLayer, drawingLayer);
-    initScene(sceneHeight, sceneWidth);
+    initScene(sceneWidth, sceneHeight);
     initLayers(false);
     initDisplay();
     initTooltip();

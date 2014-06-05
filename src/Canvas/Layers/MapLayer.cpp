@@ -23,6 +23,8 @@ MapLayer::MapLayer(DBItem item) : GridLayer()
 
     id_ = id;
     m_Step = step;
+
+    setAcceptDrops(true);
 }
 
 MapLayer::~MapLayer() {}
