@@ -4,7 +4,9 @@
 #include <QDebug>
 #include "Log/MapLog.h"
 
-MapServer::MapServer(QHash<QString, User *> *usersList) : ServerReceiver(usersList) {}
+MapServer::MapServer(QHash<QString, User *> *usersList) : ServerReceiver(usersList) {
+	isLoggable(true);
+}
 MapServer::~MapServer() {}
 
 void MapServer::processNewMessage(Header header, QByteArray& data) {
