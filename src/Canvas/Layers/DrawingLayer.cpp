@@ -11,6 +11,20 @@ DrawingLayer::DrawingLayer(int penSize, int eraserSize, QColor color):
     m_Color(color)
 {}
 
+DrawingLayer::DrawingLayer(DBItem item) {
+    QHash<QString, QVariant> itemHashMap = item.getHashMap();
+    columnsValues_ = item.getHashMap();
+
+    int id = itemHashMap.value("id").toInt();
+    QByteArray pixmap = itemHashMap.value("pixmap").toByteArray();
+
+    id_ = id;
+    m_Pixmap->loadFromData(pixmap, "PNG");
+    m_PenSize = 2;
+    m_EraserSize = 2;
+    m_Color = Qt::black;
+}
+
 DrawingLayer::~DrawingLayer() {
     AbstractTool::setPixmap(NULL);
     delete m_Pixmap;
@@ -44,9 +58,12 @@ void DrawingLayer::setEraserSize(int size) {
     m_Tools->getTool(ToolCodes::TOOL_ERASER)->setSize(size);
 }
 
-void DrawingLayer::initDrawingZone() {
-    m_Pixmap = new QPixmap(scene()->sceneRect().size().toSize());
-    m_Pixmap->fill(Qt::transparent);
+void DrawingLayer::initDrawingZone(bool newPixmap) {
+    if (newPixmap) {
+        m_Pixmap = new QPixmap(scene()->sceneRect().size().toSize());
+        m_Pixmap->fill(Qt::transparent);
+    }
+
     m_DrawingZone = new QGraphicsPixmapItem(this);
     m_DrawingZone->setPixmap(*m_Pixmap);
 

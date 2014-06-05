@@ -13,6 +13,7 @@ class Map;
 enum class MapCodes : quint16 {
     UNDEFINED = Receiver::UNDEFINED_CODE,
 
+    OPEN_MAP,
     ADD_SPRITE,
     REMOVE_SPRITE,
     REMOVE_ALL_FOW
@@ -35,6 +36,7 @@ private:
     TokenList *m_TokenList;
     QList<Map*> m_MapsList;
 
+    void openMapAction(const QString& msg);
     void addSpriteAction(const QString& msg);
     void removeSpriteAction(const QString& msg);
     void removeAllFoWAction(const QString& msg);

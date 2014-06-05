@@ -5,7 +5,12 @@ const QString MapLayerRepository::getTableName() {
 }
 
 int MapLayerRepository::insertMapLayer(MapLayer *mapLayer, Database *db) {
-    int id = insertIntoDefault(mapLayer, db);
+    QHash<QString, QVariant> args {
+        {"step", mapLayer->getStep()}
+    };
+
+    QueryBuilder qb = insertQB(args.keys());
+    int id = insert(mapLayer, qb, args, db);
 
     return id;
 }

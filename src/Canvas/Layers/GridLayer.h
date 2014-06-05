@@ -26,7 +26,6 @@ public:
     GridLayer(int step = 1);
     virtual ~GridLayer() {}
 
-    int getStep();
 
     virtual Sprite *addSpriteToLayer(Sprite* sprite);
     Sprite *addSpriteToLayer(TokenItem *tokenItem, QPoint position, int zValue);
@@ -37,6 +36,8 @@ public:
     void removeAllSprites();
 
     void drawBackground(QPainter *painter, const QRectF &rect);
+
+    int getStep();
 
 public slots:
     void setTokenItem(QListWidgetItem* token);

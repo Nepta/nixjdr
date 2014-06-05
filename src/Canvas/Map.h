@@ -32,7 +32,8 @@ public:
     static const int BG_OFFSET = 2*4;
 
     explicit Map(QString bgFilename, TokenItem *tokenItem, int tileStep, QWidget *parent = 0);
-    // TODO Map(DBItem item);
+    Map(DBItem item, BackgroundLayer *bgLayer, MapLayer *mapLayer, FoWLayer *fowLayer,
+        DrawingLayer *drawingLayer);
     ~Map();
 
     void setupSenderClient(SenderClient *senderClient);
@@ -59,16 +60,18 @@ private:
     QHash<LayerCodes, QWidget *> m_EditionMap;
 
     void initScene(int tileStep);
+    void initScene(int sceneWidth, int sceneHeight);
     void initDisplay();
     void initTooltip();
 
-    void initLayers();
+    void initLayers(bool addToDb = true);
     void initMapTools();
     void initFoWTools();
-    void initBgLayer();
-    void initMapLayer();
-    void initFoWLayer();
-    void initDrawingLayer();
+    void initDrawingTools();
+    void initBgLayer(bool addToDb);
+    void initMapLayer(bool addToDb);
+    void initFoWLayer(bool addToDb);
+    void initDrawingLayer(bool addToDb);
 
     void showMapTooltip(QString tooltip);
     void hideAllToolBoxes();

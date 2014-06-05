@@ -5,7 +5,12 @@ const QString FoWLayerRepository::getTableName() {
 }
 
 int FoWLayerRepository::insertFoWLayer(FoWLayer *fowLayer, Database *db) {
-    int id = insertIntoDefault(fowLayer, db);
+    QHash<QString, QVariant> args {
+        {"step", fowLayer->getStep()}
+    };
+
+    QueryBuilder qb = insertQB(args.keys());
+    int id = insert(fowLayer, qb, args, db);
 
     return id;
 }

@@ -24,11 +24,13 @@ CREATE TABLE backgroundlayer (
 
 CREATE TABLE maplayer (
 	id          serial NOT NULL,
+	step        integer,
 	CONSTRAINT maplayer_pkey PRIMARY KEY (id)
 );
 
 CREATE TABLE fowlayer (
 	id          serial NOT NULL,
+	step        integer,
 	CONSTRAINT fowlayer_pkey PRIMARY KEY (id)
 );
 

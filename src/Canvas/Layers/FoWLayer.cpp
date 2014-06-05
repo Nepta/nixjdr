@@ -16,6 +16,19 @@ FoWLayer::FoWLayer(int step, bool transparentSprites) :
     setTokenItem(fowItem);
 }
 
+FoWLayer::FoWLayer(DBItem item) : GridLayer()
+{
+    QHash<QString, QVariant> itemHashMap = item.getHashMap();
+    columnsValues_ = item.getHashMap();
+
+    int id =  itemHashMap.value("id").toInt();
+    int step = itemHashMap.value("step").toInt();
+
+    id_ = id;
+    m_Step = step;
+    m_TransparentSprites = true; // TODO should be set by the permission system
+}
+
 FoWLayer::~FoWLayer() {}
 
 /**

@@ -13,6 +13,7 @@ class FoWLayer : public GridLayer
 
 public:
     FoWLayer(int step = 1, bool transparentSprites = true);
+    FoWLayer(DBItem item);
     ~FoWLayer();
 
     Sprite *addSpriteToLayer(Sprite* sprite);

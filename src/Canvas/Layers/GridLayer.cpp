@@ -10,16 +10,6 @@ GridLayer::GridLayer(int step)
     m_ActiveMouseMoveEvent = false;
 }
 
-int GridLayer::getStep()
-{
-    return m_Step;
-}
-
-void GridLayer::setTokenItem(QListWidgetItem* token) {
-    TokenItem *tokenItem = dynamic_cast<TokenItem*>(token);
-    m_TokenItem = tokenItem;
-}
-
 /**
  * @brief GridLayer::addSpriteToLayer Creates a new Sprite with the given parameters and adds it to
  * the layer.
@@ -223,4 +213,13 @@ void GridLayer::spriteMouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent, Sp
     if (mouseEvent->button() == Qt::RightButton && distanceCovered < DELTA_DELETE_SPRITE) {
         removeSprite(watched);
     }
+}
+
+int GridLayer::getStep() {
+    return m_Step;
+}
+
+void GridLayer::setTokenItem(QListWidgetItem* token) {
+    TokenItem *tokenItem = dynamic_cast<TokenItem*>(token);
+    m_TokenItem = tokenItem;
 }
