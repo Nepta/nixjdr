@@ -2,8 +2,10 @@
 #define MAPLOG_H
 #include "Log.h"
 #include "Chat/Message.h"
+#include "Database/DBComponent.h"
 
-class MapLog : public Log{
+//TODO DBComponent <|-- MapLog : deficient by design
+class MapLog : public Log, public DBComponent{
 public:
 	MapLog(Receiver& receiver);
 	QString toString();
