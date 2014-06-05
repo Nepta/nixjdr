@@ -14,6 +14,7 @@ public:
 
     Receiver(QHash<QString, User *> *usersList);
     virtual ~Receiver(){}
+	 bool isLoggable();
 
 protected:
     /**
@@ -27,8 +28,13 @@ protected:
 
     QHash<QString, User *> *m_UsersList;
 
+	 void isLoggable(bool newStatus);
+
 public slots:
     virtual void processNewMessage(Header header, QByteArray& data) = 0;
+
+private:
+	 bool m_isLoggable;
 };
 
 #endif // RECEIVER_H
