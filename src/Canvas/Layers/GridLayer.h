@@ -64,6 +64,7 @@ protected:
     virtual void spriteMouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent, Sprite *watched);
 
 private:
+    QPointF m_LastRemovedSpritePoint;
     void drawRows(QPainter *painter, int rowLength, int limit, bool orientation);
     bool isInScene(QGraphicsSceneMouseEvent *mouseEvent);
 

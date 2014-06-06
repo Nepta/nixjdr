@@ -8,6 +8,7 @@ GridLayer::GridLayer(int step)
 {
     m_Step = step;
     m_ActiveMouseMoveEvent = false;
+    m_LastRemovedSpritePoint = QPointF(-1,-1);
 }
 
 /**
@@ -176,10 +177,12 @@ void GridLayer::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent) {
     else if (mouseEvent->buttons() & Qt::RightButton) {
         // avoid deletion of items from another layer
         if (!childItems().contains(item)) {
+            m_LastRemovedSpritePoint = QPointF(-1,-1);
             return;
         }
 
-        if (sprite) { // TODO timer or boolean to slow down the deletion
+        if (sprite && m_LastRemovedSpritePoint != sprite->scenePos()) { // TODO timer or boolean to slow down the deletion
+            m_LastRemovedSpritePoint = sprite->scenePos();
             removeSprite(sprite);
         }
     }
