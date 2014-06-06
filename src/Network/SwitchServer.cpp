@@ -1,12 +1,16 @@
 #include "Canvas/Network/MapServer.h"
 #include "Chat/ChatServer.h"
+#include "Log/Logger.h"
 #include "SwitchServer.h"
 
 SwitchServer::SwitchServer(Database *db) {
     m_Server = new QTcpServer(this);
 
-    m_Nodes.insert(TargetCode::CHAT_SERVER, new ChatServer(&m_UsersList));
-    m_Nodes.insert(TargetCode::MAP_SERVER, new MapServer(&m_UsersList, db));
+	 Logger *logger = new Logger();
+	 m_Nodes.insert(TargetCode::MAP_SERVER, logger);
+
+	 m_Nodes.insert(TargetCode::CHAT_SERVER, new ChatServer(&m_UsersList));
+	 logger->insert(TargetCode::MAP_SERVER, new MapServer(&m_UsersList,db));
 }
 
 SwitchServer::~SwitchServer() {

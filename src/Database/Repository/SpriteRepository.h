@@ -15,6 +15,7 @@ public:
 
     int insertSprite(Sprite *sprite, Database *db);
     void removeAllSpritesFromFoWLayer(int fowLayerId, Database *db);
+	 QString getSpriteName(int spriteId, Database *db);
 };
 
 #endif // SPRITEREPOSITORY_H
