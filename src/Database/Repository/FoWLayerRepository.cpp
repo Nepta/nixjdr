@@ -4,13 +4,13 @@ const QString FoWLayerRepository::getTableName() {
     return "fowlayer";
 }
 
-int FoWLayerRepository::insertFoWLayer(FoWLayer *fowLayer, Database *db) {
+int FoWLayerRepository::insertFoWLayer(FoWLayer *fowLayer) {
     QHash<QString, QVariant> args {
         {"step", fowLayer->getStep()}
     };
 
     QueryBuilder qb = insertQB(args.keys());
-    int id = insert(fowLayer, qb, args, db);
+    int id = insert(fowLayer, qb, args);
 
     return id;
 }

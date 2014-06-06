@@ -30,7 +30,7 @@ void FoWLayer::construct(int step, bool transparentSprites) {
     m_Step = step;
 
     // Retrieve the fow TokenItem from the database
-    TokenItem *fowItem = RepositoryManager::s_TokenItemRepository.getFowTokenItem(db_);
+    TokenItem *fowItem = RepositoryManager::s_TokenItemRepository.getFowTokenItem();
     setTokenItem(fowItem);
 }
 

@@ -139,7 +139,7 @@ void Map::initBgLayer(bool addToDb) {
 
     if (addToDb) {
         // Add BackgroundLayer to the database
-        RepositoryManager::s_BgLayerRepository.insertBgLayer(bgLayer, db_);
+        RepositoryManager::s_BgLayerRepository.insertBgLayer(bgLayer);
     }
 }
 
@@ -150,7 +150,6 @@ void Map::initMapLayer(bool addToDb) {
 
     m_Scene->addLayer(mapLayer);
     mapLayer->setEnabled(true);
-    mapLayer->setDatabase(db_);
     m_SelectedLayer = mapLayer;
 
     // Map tools
@@ -158,7 +157,7 @@ void Map::initMapLayer(bool addToDb) {
 
     if (addToDb) {
         // Add MapLayer to the database
-        RepositoryManager::s_MapLayerRepository.insertMapLayer(mapLayer, db_);
+        RepositoryManager::s_MapLayerRepository.insertMapLayer(mapLayer);
     }
 }
 
@@ -174,14 +173,13 @@ void Map::initFoWLayer(bool addToDb) {
 
     m_Scene->addLayer(fowLayer);
     fowLayer->setEnabled(false);
-    fowLayer->setDatabase(db_);
 
     // FoW tools
     initFoWTools();
 
     if (addToDb) {
         // Add FoWLayer to the database
-        RepositoryManager::s_FoWLayerRepository.insertFoWLayer(fowLayer, db_);
+        RepositoryManager::s_FoWLayerRepository.insertFoWLayer(fowLayer);
     }
 }
 
@@ -207,7 +205,7 @@ void Map::initDrawingLayer(bool addToDb) {
 
     if (addToDb) {
         // Add DrawingLayer to the database
-        RepositoryManager::s_DrawingLayerRepository.insertDrawingLayer(drawingLayer, db_);
+        RepositoryManager::s_DrawingLayerRepository.insertDrawingLayer(drawingLayer);
     }
 }
 

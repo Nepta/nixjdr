@@ -11,7 +11,7 @@ class SwitchServer : public Switch
     Q_OBJECT
 
 public:
-    SwitchServer(Database *db);
+    SwitchServer();
     ~SwitchServer();
 
     /**

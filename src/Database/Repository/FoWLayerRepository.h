@@ -13,7 +13,7 @@ public:
 
     const QString getTableName();
 
-    int insertFoWLayer(FoWLayer *fowLayer, Database *db);
+    int insertFoWLayer(FoWLayer *fowLayer);
 };
 
 #endif // FOWLAYERREPOSITORY_H

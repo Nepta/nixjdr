@@ -14,7 +14,7 @@ const QString SpriteRepository::getTableName() {
  * @param db
  * @return Id given by the database to the newly inserted row.
  */
-int SpriteRepository::insertSprite(Sprite *sprite, Database *db) {
+int SpriteRepository::insertSprite(Sprite *sprite) {
     QHash<QString, QVariant> args {
         {"posx", sprite->pos().x()},
         {"posy", sprite->pos().y()},
@@ -33,22 +33,23 @@ int SpriteRepository::insertSprite(Sprite *sprite, Database *db) {
     }
 
     QueryBuilder qb = insertQB(args.keys());
-    int id = insert(sprite, qb, args, db);
+    int id = insert(sprite, qb, args);
 
     return id;
 }
 
-void SpriteRepository::removeAllSpritesFromFoWLayer(int fowLayerId, Database *db) {
+void SpriteRepository::removeAllSpritesFromFoWLayer(int fowLayerId) {
     QueryBuilder qb;
 
     qb.deleteFrom(getTableName())->where("fowlayerid = " + QString::number(fowLayerId));
-    db->push(qb.getQuery());
+    Database::instance()->push(qb.getQuery());
 }
 
-QString SpriteRepository::getSpriteName(int spriteId, Database *db){
+QString SpriteRepository::getSpriteName(int spriteId){
 	QueryBuilder qb;
-	//WARNING using static string for the view "sprite_name"
+
+    // Retrieve the sprite name from the db's view "sprite_name"
 	qb.select("name")->from("sprite_name")->where("id = " + QString::number(spriteId));
-	DBItem spriteName = db->pullFirst(qb.getQuery());
+    DBItem spriteName = Database::instance()->pullFirst(qb.getQuery());
 	return spriteName.getHashMap().value("name").toString();
 }

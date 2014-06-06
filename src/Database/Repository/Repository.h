@@ -25,10 +25,10 @@ public:
     QueryBuilder findAllQB();
     QueryBuilder insertQB(QList<QString> cols);
 
-    DBItem findById(int id, Database *db);
-    int insert(DBItem *item, QueryBuilder qb, QHash<QString, QVariant> pBindValues, Database *db);
-    int insertIntoDefault(DBItem *item, Database *db);
-    void deleteById(int id, Database *db);
+    DBItem findById(int id);
+    int insert(DBItem *item, QueryBuilder qb, QHash<QString, QVariant> pBindValues);
+    int insertIntoDefault(DBItem *item);
+    void deleteById(int id);
 
     void bindValues(QSqlQuery *query, QHash<QString, QVariant> bindValues);
     void bindValue(QSqlQuery *query, const QString& placeholder, const QVariant& val);

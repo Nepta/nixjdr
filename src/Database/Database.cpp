@@ -8,6 +8,8 @@
 
 #include "Database.h"
 
+Database* Database::m_Instance = NULL;
+
 Database::Database(const QString dbName, const QString& serverAddress, const int& serverPort) {
     db_ = QSqlDatabase::addDatabase("QPSQL");
 	db_.setUserName("jdr");
@@ -20,6 +22,20 @@ Database::Database(const QString dbName, const QString& serverAddress, const int
 
 Database::~Database(){
 	db_.close();
+}
+
+Database* Database::instantiate(const QString& dbName, const QString& serverAddress,
+    const int& serverPort)
+{
+    if (!m_Instance) {
+        m_Instance = new Database(dbName, serverAddress, serverPort);
+    }
+
+    return m_Instance;
+}
+
+Database* Database::instance() {
+    return m_Instance;
 }
 
 /**

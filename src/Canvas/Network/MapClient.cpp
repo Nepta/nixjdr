@@ -4,9 +4,8 @@
 #include "MapClient.h"
 #include "Common.h"
 
-MapClient::MapClient(User *user, QHash<QString, User *> *usersList, Database *db, TokenList *tokenList) :
-    SenderClient(user, usersList),
-    DBComponent(db)
+MapClient::MapClient(User *user, QHash<QString, User *> *usersList, TokenList *tokenList) :
+    SenderClient(user, usersList)
 {
     m_TokenList = tokenList;
 }
@@ -65,7 +64,7 @@ void MapClient::removeMapFromList(Map *map) {
 
 void MapClient::openMapAction(const QString& msg) {
     int mapId = msg.toInt();
-    Map *map = RepositoryManager::s_MapRepository.findMapById(mapId, db_);
+    Map *map = RepositoryManager::s_MapRepository.findMapById(mapId);
     map->getMapLayer()->setTokenItem(m_TokenList->currentItem());
 
     emit openMap(map);
@@ -73,7 +72,7 @@ void MapClient::openMapAction(const QString& msg) {
 
 void MapClient::addSpriteAction(const QString& msg) {
     int id = msg.toInt();
-    DBItem dbItem = RepositoryManager::s_SpriteRepository.findById(id, db_);
+    DBItem dbItem = RepositoryManager::s_SpriteRepository.findById(id);
 
     // Retrieves the TokenItem from its id in the TokenList
     int tokenItemId = dbItem.getHashMap().value("tokenitemid").toInt();
@@ -108,7 +107,7 @@ void MapClient::addSpriteAction(const QString& msg) {
 
 void MapClient::removeSpriteAction(const QString& msg) {
     int id = msg.toInt();
-    DBItem dbItem = RepositoryManager::s_SpriteRepository.findById(id, db_);
+    DBItem dbItem = RepositoryManager::s_SpriteRepository.findById(id);
 
     // Retrieve the map and the layer on which the sprite should be deleted
     Map *map = NULL;
@@ -133,7 +132,7 @@ void MapClient::removeSpriteAction(const QString& msg) {
     // Delete the sprite
     if (map != NULL) {
         // Delete the sprite from the database
-        RepositoryManager::s_SpriteRepository.deleteById(id, db_);
+        RepositoryManager::s_SpriteRepository.deleteById(id);
 
         // Delete the sprite from the correct layer
         layer->removeSpriteById(id);

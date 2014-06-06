@@ -13,7 +13,6 @@
 #include "Layers/Layers.h"
 #include "Layers/AbstractLayer.h"
 
-#include "Database/DBComponent.h"
 #include "Database/DBItem.h"
 
 #include "Tooltip.h"
@@ -24,7 +23,7 @@ namespace Ui {
     class Map;
 }
 
-class Map : public QWidget, public DBItem, public DBComponent, public SenderHandler
+class Map : public QWidget, public DBItem, public SenderHandler
 {
     Q_OBJECT
 

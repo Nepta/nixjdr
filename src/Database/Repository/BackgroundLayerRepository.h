@@ -13,7 +13,7 @@ public:
 
     const QString getTableName();
 
-    int insertBgLayer(BackgroundLayer *bgLayer, Database *db);
+    int insertBgLayer(BackgroundLayer *bgLayer);
 };
 
 #endif // BACKGROUNDLAYERREPOSITORY_H

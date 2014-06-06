@@ -13,7 +13,7 @@ public:
 
     const QString getTableName();
 
-    int insertDrawingLayer(DrawingLayer *drawingLayer, Database *db);
+    int insertDrawingLayer(DrawingLayer *drawingLayer);
 };
 
 #endif // DRAWINGLAYERREPOSITORY_H

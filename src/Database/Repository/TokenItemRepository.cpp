@@ -30,9 +30,9 @@ QueryBuilder TokenItemRepository::getSpecialTokenItemsQB() {
  * @param db The database in which the TokenItems will be retrieved.
  * @return QList of TokenItem
  */
-QList<TokenItem*> TokenItemRepository::getTokenItems(Database *db) {
+QList<TokenItem*> TokenItemRepository::getTokenItems() {
     QueryBuilder qb = findAllQB();
-    DBItemList<TokenItem> dbItems(db->pull(qb.getQuery()));
+    DBItemList<TokenItem> dbItems(Database::instance()->pull(qb.getQuery()));
     QList<TokenItem*> tokenItems = dbItems.construct();
 
     return tokenItems;
@@ -43,11 +43,11 @@ QList<TokenItem*> TokenItemRepository::getTokenItems(Database *db) {
  * @param db
  * @return Fog of war TokenItem
  */
-TokenItem* TokenItemRepository::getFowTokenItem(Database *db) {
+TokenItem* TokenItemRepository::getFowTokenItem() {
     QueryBuilder qb = getSpecialTokenItemsQB();
     qb.andWhere("text = 'fow'");
 
-    DBItem dbItem = db->pullFirst(qb.getQuery());
+    DBItem dbItem = Database::instance()->pullFirst(qb.getQuery());
     TokenItem* tokenItem = new TokenItem(dbItem);
 
     return tokenItem;
@@ -60,7 +60,7 @@ TokenItem* TokenItemRepository::getFowTokenItem(Database *db) {
  * @param db
  * @return Id given by the database to the newly inserted row.
  */
-int TokenItemRepository::insertTokenItem(TokenItem *tokenItem, Database *db) {
+int TokenItemRepository::insertTokenItem(TokenItem *tokenItem) {
     QHash<QString, QVariant> args {
         {"text", tokenItem->text()},
         {"path", tokenItem->path()},
@@ -70,7 +70,7 @@ int TokenItemRepository::insertTokenItem(TokenItem *tokenItem, Database *db) {
     };
 
     QueryBuilder qb = insertQB(args.keys());
-    int id = insert(tokenItem, qb, args, db);
+    int id = insert(tokenItem, qb, args);
 
     return id;
 }

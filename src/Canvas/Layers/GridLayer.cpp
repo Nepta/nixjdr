@@ -52,7 +52,7 @@ void GridLayer::addSprite(TokenItem *tokenItem, QPoint position, int zValue) {
     Sprite *sprite = addSpriteToLayer(tokenItem, position, zValue);
 
     // Insert the sprite in the database
-    RepositoryManager::s_SpriteRepository.insertSprite(sprite, db_);
+    RepositoryManager::s_SpriteRepository.insertSprite(sprite);
 
     // Notifies every client that a new sprite has been added
     QString msg = QString("addSprite %1").arg(sprite->id());

@@ -30,7 +30,7 @@ MainWindow::MainWindow(User *user, QWidget *parent) :
 
     m_User = user;
 
-    initDBComponents();
+    //initDBComponents();
     initTableTurnSplitter();
     initConnects();
     initRole();
@@ -49,9 +49,9 @@ MainWindow::~MainWindow()
  * @brief MainWindow::initDBComponents Initializes all the objects from classes inheriting DBComponent
  * with the application Database.
  */
-void MainWindow::initDBComponents() {
-    ui->tokenPage->initTokenMenu(db_);
-}
+/*void MainWindow::initDBComponents() {
+    ui->tokenPage->initTokenMenu();
+}*/
 
 void MainWindow::initTableTurnSplitter(){
     QList<int> sizes;
@@ -119,10 +119,9 @@ void MainWindow::createMap(QString filename) {
 
     // TODO should be able to choose the step value in a message box
     Map *map = new Map(filename, currentTokenItem, 32);
-    map->setDatabase(db_);
 
     // Add Map to the database
-    RepositoryManager::s_MapRepository.insertMap(map, db_);
+    RepositoryManager::s_MapRepository.insertMap(map);
 
     // Initialize and open map
     openMap(map);
@@ -173,7 +172,7 @@ void MainWindow::on_actionConnection_triggered(){
 }
 
 void MainWindow::setupMJ() {
-    m_Server = new SwitchServer(db_);
+    m_Server = new SwitchServer();
 
     /* Connect sendMessageToChatUi from m_Server to m_ChatWidget in order to display system messages
      * during the initialization. */
@@ -194,7 +193,7 @@ void MainWindow::setupMJ() {
 
 void MainWindow::setupPlayer() {
     TokenList *tokenList = ui->tokenPage->getUi()->m_tokenList;
-    m_Client = new SwitchClient(m_User, db_, tokenList);
+    m_Client = new SwitchClient(m_User, tokenList);
 
     connect(m_Client, SIGNAL(sendMessageToChatUi(QString)),
             ui->m_ChatWidget, SLOT(receivedMessage(QString))

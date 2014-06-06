@@ -11,7 +11,7 @@ class SwitchClient : public Switch
     Q_OBJECT
 
 public:
-    SwitchClient(User *user, Database *db, TokenList *tokenList);
+    SwitchClient(User *user, TokenList *tokenList);
     ~SwitchClient();
 
    /**

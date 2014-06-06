@@ -13,8 +13,8 @@ public:
 
     const QString getTableName();
 
-    int insertMap(Map *map, Database *db);
-    Map *findMapById(int id, Database *db);
+    int insertMap(Map *map);
+    Map *findMapById(int id);
 };
 
 #endif // MAPREPOSITORY_H

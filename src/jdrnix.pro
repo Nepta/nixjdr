@@ -73,7 +73,6 @@ SOURCES += \
     Database/Database.cpp \
     Database/DBItem.cpp \
     Database/QueryBuilder.cpp \
-    Database/DBComponent.cpp \
     Database/Repository/Repository.cpp \
     Database/Repository/RepositoryManager.cpp \
     Database/Repository/TokenItemRepository.cpp \
@@ -156,7 +155,6 @@ HEADERS  += \
     Database/Database.h \
     Database/DBItem.h \
     Database/QueryBuilder.h \
-    Database/DBComponent.h \
     Database/DBItemList.h \
     Database/Repository/Repository.h \
     Database/Repository/RepositoryManager.h \

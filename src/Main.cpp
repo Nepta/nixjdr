@@ -22,11 +22,9 @@ int main(int argc, char *argv[])
     ConnectionHelper connectionHelper(user);
     connectionHelper.exec();
 
-    Database *database = new Database("jdrdb", "127.0.0.1", 5432);
-    //DataBase *database = new DataBase("jdrdb", "lune.hurata.fr", 45001);
+    Database::instantiate("jdrdb", "127.0.0.1", 5432);
 
     MainWindow mainWindow(user);
-    mainWindow.setDatabase(database);
     mainWindow.show();
 
     return a.exec();

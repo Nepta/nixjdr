@@ -16,9 +16,9 @@ public:
     QueryBuilder getNormalTokenItemsQB();
     QueryBuilder getSpecialTokenItemsQB();
 
-    QList<TokenItem *> getTokenItems(Database *db);
-    TokenItem* getFowTokenItem(Database *db);
-    int insertTokenItem(TokenItem *tokenItem, Database *db);
+    QList<TokenItem *> getTokenItems();
+    TokenItem* getFowTokenItem();
+    int insertTokenItem(TokenItem *tokenItem);
 };
 
 #endif // TOKENITEMREPOSITORY_H

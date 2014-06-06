@@ -5,7 +5,7 @@ const QString MapRepository::getTableName() {
     return "map";
 }
 
-int MapRepository::insertMap(Map *map, Database *db) {
+int MapRepository::insertMap(Map *map) {
     QHash<QString, QVariant> args {
         {"sceneheight", map->getSceneHeight()},
         {"scenewidth", map->getSceneWidth()},
@@ -16,7 +16,7 @@ int MapRepository::insertMap(Map *map, Database *db) {
     };
 
     QueryBuilder qb = insertQB(args.keys());
-    int id = insert(map, qb, args, db);
+    int id = insert(map, qb, args);
 
     return id;
 }
@@ -26,27 +26,27 @@ int MapRepository::insertMap(Map *map, Database *db) {
  * @param id Map's id
  * @return Map
  */
-Map *MapRepository::findMapById(int id, Database *db) {
-    DBItem mapItem = RepositoryManager::s_MapRepository.findById(id, db);
+Map *MapRepository::findMapById(int id) {
+    DBItem mapItem = RepositoryManager::s_MapRepository.findById(id);
 
     // Retrieve & construct BackgroundLayer
     int bgLayerId = mapItem.getHashMap().value("backgroundlayerid").toInt();
-    DBItem bgLayerItem = RepositoryManager::s_BgLayerRepository.findById(bgLayerId, db);
+    DBItem bgLayerItem = RepositoryManager::s_BgLayerRepository.findById(bgLayerId);
     BackgroundLayer *bgLayer = new BackgroundLayer(bgLayerItem);
 
     // Retrieve & construct MapLayer
     int mapLayerId = mapItem.getHashMap().value("maplayerid").toInt();
-    DBItem mapLayerItem = RepositoryManager::s_MapLayerRepository.findById(mapLayerId, db);
+    DBItem mapLayerItem = RepositoryManager::s_MapLayerRepository.findById(mapLayerId);
     MapLayer *mapLayer = new MapLayer(mapLayerItem);
 
     // Retrieve & construct FoWLayer
     int fowLayerId = mapItem.getHashMap().value("fowlayerid").toInt();
-    DBItem fowLayerItem = RepositoryManager::s_FoWLayerRepository.findById(fowLayerId, db);
+    DBItem fowLayerItem = RepositoryManager::s_FoWLayerRepository.findById(fowLayerId);
     FoWLayer *fowLayer = new FoWLayer(fowLayerItem);
 
     // Retrieve & construct DrawingLayer
     int drawingLayerId = mapItem.getHashMap().value("drawinglayerid").toInt();
-    DBItem drawingLayerItem = RepositoryManager::s_DrawingLayerRepository.findById(drawingLayerId, db);
+    DBItem drawingLayerItem = RepositoryManager::s_DrawingLayerRepository.findById(drawingLayerId);
     DrawingLayer *drawingLayer = new DrawingLayer(drawingLayerItem);
 
     // TODO Retrieve Sprites

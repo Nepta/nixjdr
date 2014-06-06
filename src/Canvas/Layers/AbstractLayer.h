@@ -11,7 +11,6 @@
 #include "Network/SenderClient.h"
 
 #include "Database/Database.h"
-#include "Database/DBComponent.h"
 #include "Database/DBItem.h"
 #include <QHash>
 
@@ -21,7 +20,7 @@ enum class LayerCodes : quint16;
  * @brief The abstract Layer class is used to stack and separate different type of elements
  * from a scene.
  */
-class AbstractLayer : public QGraphicsObject, public DBComponent, public DBItem
+class AbstractLayer : public QGraphicsObject, public DBItem
 {
     Q_OBJECT
 

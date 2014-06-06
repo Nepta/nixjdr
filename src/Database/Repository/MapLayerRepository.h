@@ -13,7 +13,7 @@ public:
 
     const QString getTableName();
 
-    int insertMapLayer(MapLayer *mapLayer, Database *db);
+    int insertMapLayer(MapLayer *mapLayer);
 };
 
 #endif // MAPLAYERREPOSITORY_H

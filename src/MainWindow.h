@@ -11,8 +11,6 @@
 #include "Token/TokenMenu.h"
 #include "Canvas/Map.h"
 
-#include "Database/DBComponent.h"
-
 #include "ChatWidget.h"
 #include "DiceMenu.h"
 #include "ui_TokenMenu.h"
@@ -22,7 +20,7 @@ namespace Ui {
     class MainWindow;
 }
 
-class MainWindow : public QMainWindow, public DBComponent
+class MainWindow : public QMainWindow
 {
     Q_OBJECT
 
@@ -50,7 +48,7 @@ private:
     void createImage(QString filename);
 
     // inits
-    void initDBComponents();
+    //void initDBComponents();
     void initDiceMenu();
     void initConnects();
     void initRole();

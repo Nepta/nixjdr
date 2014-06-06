@@ -7,7 +7,10 @@ MapLog::MapLog(Receiver& receiver) : Log(receiver){}
 
 QString MapLog::toString(){
 	QString logMessage;
-	QString spriteName = RepositoryManager::s_SpriteRepository.getSpriteName(getMessage().getString().toInt(),db_);
+    QString spriteName = RepositoryManager::s_SpriteRepository.getSpriteName(
+        getMessage().getString().toInt()
+    );
+
 	switch((MapCodes) getHeader().getCode()){
 		case MapCodes::ADD_SPRITE:
 			logMessage = "addSpriteAction(" + spriteName + ")";

@@ -49,10 +49,10 @@ QueryBuilder Repository::insertQB(QList<QString> cols) {
     return qb;
 }
 
-DBItem Repository::findById(int id, Database *db) {
+DBItem Repository::findById(int id) {
     QueryBuilder qb = findByIdQB(id);
 
-    DBItem dbItem = db->pullFirst(qb.getQuery());
+    DBItem dbItem = Database::instance()->pullFirst(qb.getQuery());
     return dbItem;
 }
 
@@ -67,35 +67,34 @@ DBItem Repository::findById(int id, Database *db) {
  * @param db Database
  * @return Id of the inserted row.
  */
-int Repository::insert(DBItem *item, QueryBuilder qb, QHash<QString, QVariant> pBindValues,
-    Database *db)
+int Repository::insert(DBItem *item, QueryBuilder qb, QHash<QString, QVariant> pBindValues)
 {
     qb.withAsSelect(qb, "id");
     QSqlQuery query = qb.getPreparedQuery();
     bindValues(&query, pBindValues);
 
-    int id = db->pushPreparedWithId(query);
+    int id = Database::instance()->pushPreparedWithId(query);
     item->setId(id);
 
     return id;
 }
 
-int Repository::insertIntoDefault(DBItem *item, Database *db) {
+int Repository::insertIntoDefault(DBItem *item) {
     QueryBuilder qb;
     qb.insertIntoDefault(getTableName());
     qb.withAsSelect(qb, "id");
     QSqlQuery query = qb.getQuery();
 
-    int id = db->pushWithId(query);
+    int id = Database::instance()->pushWithId(query);
     item->setId(id);
 
     return id;
 }
 
-void Repository::deleteById(int id, Database *db) {
+void Repository::deleteById(int id) {
     QueryBuilder qb = deleteByIdQb(id);
 
-    db->push(qb.getQuery());
+    Database::instance()->push(qb.getQuery());
 }
 
 /**

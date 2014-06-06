@@ -2,12 +2,12 @@
 #include "Chat/ChatClient.h"
 #include "SwitchClient.h"
 
-SwitchClient::SwitchClient(User *user, Database *db, TokenList *tokenList) {
+SwitchClient::SwitchClient(User *user, TokenList *tokenList) {
     m_User = user;
     m_UsersList.insert(m_User->getNickname(), m_User);
 
     m_Nodes.insert(TargetCode::CHAT_CLIENT, new ChatClient(m_User, &m_UsersList));
-    m_Nodes.insert(TargetCode::MAP_CLIENT, new MapClient(m_User, &m_UsersList, db, tokenList));
+    m_Nodes.insert(TargetCode::MAP_CLIENT, new MapClient(m_User, &m_UsersList, tokenList));
 
     connect(m_User, SIGNAL(receivedFullData(Header, QByteArray)),
             this, SLOT(switchNewMessage(Header, QByteArray)));

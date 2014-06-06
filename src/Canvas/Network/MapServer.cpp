@@ -4,9 +4,8 @@
 #include "MapServer.h"
 #include "Log/MapLog.h"
 
-MapServer::MapServer(QHash<QString, User *> *usersList, Database *db) :
-    SenderServer(usersList),
-    DBComponent(db)
+MapServer::MapServer(QHash<QString, User *> *usersList) :
+    SenderServer(usersList)
 {
 	isLoggable(true);
 }
@@ -36,5 +35,5 @@ void MapServer::removeAllFoWAction(const QString& msg) {
     int fowLayerId = msg.toInt();
 
     // Remove all the FoW Sprites for this layer from the db
-    RepositoryManager::s_SpriteRepository.removeAllSpritesFromFoWLayer(fowLayerId, db_);
+    RepositoryManager::s_SpriteRepository.removeAllSpritesFromFoWLayer(fowLayerId);
 }

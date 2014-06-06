@@ -14,8 +14,11 @@ class Database : public QObject {
 	Q_OBJECT
 
 public:
-    Database(const QString dbName, const QString& serverAddress, const int &serverPort);
-    virtual ~Database();
+    ~Database();
+
+    static Database* instantiate(const QString& dbName, const QString& serverAddress,
+                                 const int& serverPort);
+    static Database* instance();
 
     void push(QSqlQuery query);
     int pushWithId(QSqlQuery query);
@@ -24,6 +27,9 @@ public:
     DBItem pullFirst(QSqlQuery query);
 
 private:
+    Database(const QString dbName, const QString& serverAddress, const int &serverPort);
+    static Database* m_Instance;
+
     QSqlDatabase db_;
 };
 

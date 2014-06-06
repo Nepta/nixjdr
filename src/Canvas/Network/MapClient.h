@@ -3,7 +3,6 @@
 
 #include "Network/SenderClient.h"
 #include "Network/Receiver.h"
-#include "Database/DBComponent.h"
 #include "Token/TokenList.h"
 #include "Canvas/Map.h"
 
@@ -19,12 +18,12 @@ enum class MapCodes : quint16 {
     REMOVE_ALL_FOW
 };
 
-class MapClient : public SenderClient, public Receiver, public DBComponent
+class MapClient : public SenderClient, public Receiver
 {
     Q_OBJECT
 
 public:
-    MapClient(User *user, QHash<QString, User *> *usersList, Database *db, TokenList *tokenList);
+    MapClient(User *user, QHash<QString, User *> *usersList, TokenList *tokenList);
     ~MapClient();
 
     void addMapToList(Map* map);

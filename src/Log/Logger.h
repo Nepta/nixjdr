@@ -6,7 +6,7 @@
 #include "Log.h"
 #include <QStack>
 
-class Logger : public Switch, public Receiver{
+class Logger : public Switch, public Receiver {
 
 	QStack<Log*> logStack_;
 

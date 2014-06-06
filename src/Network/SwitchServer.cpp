@@ -3,14 +3,14 @@
 #include "Log/Logger.h"
 #include "SwitchServer.h"
 
-SwitchServer::SwitchServer(Database *db) {
+SwitchServer::SwitchServer() {
     m_Server = new QTcpServer(this);
 
 	 Logger *logger = new Logger();
 	 m_Nodes.insert(TargetCode::MAP_SERVER, logger);
 
 	 m_Nodes.insert(TargetCode::CHAT_SERVER, new ChatServer(&m_UsersList));
-	 logger->insert(TargetCode::MAP_SERVER, new MapServer(&m_UsersList,db));
+     logger->insert(TargetCode::MAP_SERVER, new MapServer(&m_UsersList));
 }
 
 SwitchServer::~SwitchServer() {

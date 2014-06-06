@@ -13,9 +13,9 @@ public:
 
     const QString getTableName();
 
-    int insertSprite(Sprite *sprite, Database *db);
-    void removeAllSpritesFromFoWLayer(int fowLayerId, Database *db);
-	 QString getSpriteName(int spriteId, Database *db);
+    int insertSprite(Sprite *sprite);
+    void removeAllSpritesFromFoWLayer(int fowLayerId);
+    QString getSpriteName(int spriteId);
 };
 
 #endif // SPRITEREPOSITORY_H

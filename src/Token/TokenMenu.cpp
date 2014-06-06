@@ -14,6 +14,8 @@ TokenMenu::TokenMenu(QWidget *parent) :
     ui(new Ui::TokenMenu)
 {
     ui->setupUi(this);
+
+    initTokenMenu();
 }
 
 TokenMenu::~TokenMenu()
@@ -21,11 +23,9 @@ TokenMenu::~TokenMenu()
     delete ui;
 }
 
-void TokenMenu::initTokenMenu(Database *db) {
-    setDatabase(db);
-
+void TokenMenu::initTokenMenu() {
     // Retrieve TokenItems from the database
-    QList<TokenItem*> tokenItems = RepositoryManager::s_TokenItemRepository.getTokenItems(db_);
+    QList<TokenItem*> tokenItems = RepositoryManager::s_TokenItemRepository.getTokenItems();
     for (TokenItem *tokenItem : tokenItems) {
         ui->m_tokenList->addItem(tokenItem);
 
@@ -33,8 +33,6 @@ void TokenMenu::initTokenMenu(Database *db) {
             tokenItem->setHidden(true);
         }
     }
-
-
 
     ui->m_tokenList->setCurrentItem(ui->m_tokenList->item(0));
 }
@@ -57,7 +55,7 @@ void TokenMenu::on_tokenButton_clicked()
         TokenItem *item = new TokenItem(filePath, text, size, custom);
 
         // push the item into the database
-        RepositoryManager::s_TokenItemRepository.insertTokenItem(item, db_);
+        RepositoryManager::s_TokenItemRepository.insertTokenItem(item);
 
         // add the item to the tokenList
         ui->m_tokenList->addItem(item);
