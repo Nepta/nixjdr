@@ -6,6 +6,21 @@ void DBItem::appendValue(QString columName, QVariant newValue) {
     columnsValues_.insert(columName, newValue);
 }
 
+QByteArray DBItem::serialize() {
+    QByteArray serializedData;
+    QDataStream stream(&serializedData, QIODevice::WriteOnly);
+
+    stream << columnsValues_;
+
+    return serializedData;
+}
+
+void DBItem::unserialize(QByteArray& data) {
+    QDataStream stream(&data, QIODevice::ReadOnly);
+
+    stream >> columnsValues_;
+}
+
 QHash<QString, QVariant>& DBItem::getHashMap(){
 	return columnsValues_;
 }

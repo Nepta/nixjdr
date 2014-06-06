@@ -91,7 +91,8 @@ SOURCES += \
     Log/Logger.cpp \
     Log/Log.cpp \
     Log/MapLog.cpp \
-    Network/Receiver.cpp
+    Network/Receiver.cpp \
+    Actions/AbstractAction.cpp
 
 HEADERS  += \
     MainWindow.h \
@@ -174,7 +175,8 @@ HEADERS  += \
     Canvas/Tools/ToolPing.h \
     Log/Logger.h \
     Log/Log.h \
-    Log/MapLog.h
+    Log/MapLog.h \
+    Actions/AbstractAction.h
 
 FORMS    += \
     TokenMenu.ui \

@@ -5,11 +5,9 @@
 #include <QHash>
 #include <QVariant>
 
-class DBItem {
-protected:
-    int id_;
-    QHash<QString, QVariant> columnsValues_;
+#include "Network/Serializable/Serializable.h"
 
+class DBItem : public Serializable {
 public:
     DBItem(int id = 0);
 
@@ -17,8 +15,15 @@ public:
     void appendValue(QString columName, int newValue);
     void setId(int id);
 
+    virtual QByteArray serialize();
+    virtual void unserialize(QByteArray& data);
+
     QHash<QString, QVariant> &getHashMap();
     int id();
+
+protected:
+    int id_;
+    QHash<QString, QVariant> columnsValues_;
 };
 
 #endif // DBITEM_H

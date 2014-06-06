@@ -11,8 +11,6 @@ public:
 
 public:
     virtual QByteArray serialize() = 0;
-
-protected:
     virtual void unserialize(QByteArray& data) = 0;
 };
 
