@@ -30,7 +30,6 @@ MainWindow::MainWindow(User *user, QWidget *parent) :
 
     m_User = user;
 
-    //initDBComponents();
     initTableTurnSplitter();
     initConnects();
     initRole();
@@ -44,14 +43,6 @@ MainWindow::~MainWindow()
     delete m_Server;
     delete m_Client;
 }
-
-/**
- * @brief MainWindow::initDBComponents Initializes all the objects from classes inheriting DBComponent
- * with the application Database.
- */
-/*void MainWindow::initDBComponents() {
-    ui->tokenPage->initTokenMenu();
-}*/
 
 void MainWindow::initTableTurnSplitter(){
     QList<int> sizes;

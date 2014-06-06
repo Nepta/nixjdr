@@ -48,7 +48,6 @@ private:
     void createImage(QString filename);
 
     // inits
-    //void initDBComponents();
     void initDiceMenu();
     void initConnects();
     void initRole();
