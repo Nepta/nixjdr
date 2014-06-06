@@ -1,5 +1,5 @@
 #include "Database/Repository/RepositoryManager.h"
-#include <algorithm>
+#include "Network/MapClient.h"
 #include "Map.h"
 #include "ui_Map.h"
 #include "ui_DrawingMenu.h"
@@ -41,6 +41,9 @@ Map::Map(DBItem item, BackgroundLayer *bgLayer, MapLayer *mapLayer, FoWLayer *fo
 }
 
 Map::~Map() {
+    MapClient *mapClient = dynamic_cast<MapClient*>(m_SenderClient);
+    mapClient->removeMapFromList(this);
+
     delete ui;
     delete m_Scene;
 }
@@ -275,10 +278,6 @@ void Map::keyPressEvent(QKeyEvent *keyEvent){
 void Map::keyReleaseEvent(QKeyEvent *keyEvent){
     m_Scene->sendEvent(m_SelectedLayer, keyEvent);
 }
-
-/*Ui::Map *Map::getUi() {
-    return ui;
-}*/
 
 MapLayer *Map::getMapLayer() {
     return dynamic_cast<MapLayer *>(m_Layers->getLayer(LayerCodes::LAYER_MAP));

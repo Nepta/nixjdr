@@ -28,6 +28,7 @@ public:
     ~MapClient();
 
     void addMapToList(Map* map);
+    void removeMapFromList(Map *map);
     void processNewData(Header header, QByteArray &data);
 
 public slots:

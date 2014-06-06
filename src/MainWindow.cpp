@@ -134,7 +134,6 @@ void MainWindow::createMap(QString filename) {
     MapClient *mapClient = dynamic_cast<MapClient*>(mapClientReceiver);
     QString msg = QString("openMap %1").arg(map->id());
     mapClient->sendMessageToServer(msg);
-
 }
 
 void MainWindow::on_actionCreateMap_triggered(){
@@ -222,8 +221,7 @@ void MainWindow::setupPlayer() {
     // Initialize MapClient connect
     Receiver *mapClientReceiver = m_Client->getReceiver(TargetCode::MAP_CLIENT);
     MapClient *mapClient = dynamic_cast<MapClient*>(mapClientReceiver);
-    connect(mapClient, SIGNAL(openMap(Map*)),
-            this, SLOT(openMap(Map*)));
+    connect(mapClient, SIGNAL(openMap(Map*)), this, SLOT(openMap(Map*)));
 
     /* The dice menu is able to send system messages to the Chat in order to display error messages
      * or warnings */

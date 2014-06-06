@@ -59,6 +59,10 @@ void MapClient::addMapToList(Map* map) {
     m_MapsList.append(map);
 }
 
+void MapClient::removeMapFromList(Map *map) {
+    m_MapsList.removeOne(map);
+}
+
 void MapClient::openMapAction(const QString& msg) {
     int mapId = msg.toInt();
     Map *map = RepositoryManager::s_MapRepository.findMapById(mapId, db_);
@@ -84,11 +88,15 @@ void MapClient::addSpriteAction(const QString& msg) {
 
     if (mapLayerId != 0) {
         map = getMapByMapLayerId(mapLayerId);
-        layer = dynamic_cast<GridLayer*>(map->getMapLayer());
+        if (map != NULL) {
+            layer = dynamic_cast<GridLayer*>(map->getMapLayer());
+        }
     }
     else if (fowLayerId != 0) {
         map = getMapByFoWLayerId(fowLayerId);
-        layer = dynamic_cast<GridLayer*>(map->getFoWLayer());
+        if (map != NULL) {
+            layer = dynamic_cast<GridLayer*>(map->getFoWLayer());
+        }
     }
 
     // Creates the Sprite and adds it to the intended map and layer
@@ -111,11 +119,15 @@ void MapClient::removeSpriteAction(const QString& msg) {
 
     if (mapLayerId != 0) {
         map = getMapByMapLayerId(mapLayerId);
-        layer = dynamic_cast<GridLayer*>(map->getMapLayer());
+        if (map != NULL) {
+            layer = dynamic_cast<GridLayer*>(map->getMapLayer());
+        }
     }
     else if (fowLayerId != 0) {
         map = getMapByFoWLayerId(fowLayerId);
-        layer = dynamic_cast<GridLayer*>(map->getFoWLayer());
+        if (map != NULL) {
+            layer = dynamic_cast<GridLayer*>(map->getFoWLayer());
+        }
     }
 
     // Delete the sprite
