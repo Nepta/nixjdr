@@ -15,7 +15,7 @@ solution "Template"
 	project "mainWidget.bin"
 		kind "WindowedApp"
 		language "C++"
-		uses {"QtGui", "QtWidgets", "QtNetwork"}
+		uses {"QtGui", "QtWidgets", "QtNetwork", "QtSql"}
 		buildoptions{"-fPIC"}
 		includedirs{"src"}
 		files{
