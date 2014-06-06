@@ -13,9 +13,10 @@ class FoWLayer : public GridLayer
 
 public:
     FoWLayer(int step = 1, bool transparentSprites = true);
+    FoWLayer(DBItem item);
     ~FoWLayer();
 
-    Sprite *addSprite(TokenItem *tokenItem, QPoint position, int zValue, QGraphicsItem *parentItem);
+    Sprite *addSpriteToLayer(Sprite* sprite);
 
 private:
     /**
@@ -24,6 +25,7 @@ private:
      */
     bool m_TransparentSprites;
 
+    void construct(int step, bool transparentSprites);
     void mousePressEvent(QGraphicsSceneMouseEvent *);
     bool sceneEventFilter(QGraphicsItem *watched, QEvent *event);
 

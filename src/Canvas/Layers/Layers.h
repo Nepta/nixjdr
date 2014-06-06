@@ -4,6 +4,10 @@
 #include <QHash>
 #include "Canvas/CanvasScene.h"
 #include "Canvas/Layers/AbstractLayer.h"
+#include "Canvas/Layers/BackgroundLayer.h"
+#include "Canvas/Layers/DrawingLayer.h"
+#include "Canvas/Layers/FoWLayer.h"
+#include "Canvas/Layers/MapLayer.h"
 #include "Token/TokenItem.h"
 
 enum class LayerCodes : quint16 {
@@ -22,6 +26,8 @@ public:
     const static QHash<QString, LayerCodes> s_ButtonCodesMap;
 
     Layers(QString filename, int penSize, int eraserSize, QColor color, int step, TokenItem *spritePath);
+    Layers(BackgroundLayer *bgLayer, MapLayer *mapLayer, FoWLayer *fowLayer,
+        DrawingLayer *drawingLayer);
     ~Layers();
 
     AbstractLayer *getLayer(LayerCodes code);

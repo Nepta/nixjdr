@@ -10,6 +10,9 @@
 #include "TurnMenu/TurnMenu.h"
 #include "Token/TokenMenu.h"
 #include "Canvas/Map.h"
+
+#include "Database/DBComponent.h"
+
 #include "ChatWidget.h"
 #include "DiceMenu.h"
 #include "ui_TokenMenu.h"
@@ -19,7 +22,7 @@ namespace Ui {
     class MainWindow;
 }
 
-class MainWindow : public QMainWindow
+class MainWindow : public QMainWindow, public DBComponent
 {
     Q_OBJECT
 
@@ -28,11 +31,11 @@ public:
     ~MainWindow();
 
 private slots:
+    void openMap(Map *map);
     void updateMenu();
     void on_actionCreateMap_triggered();
     void on_actionCreateImage_triggered();
     void on_actionConnection_triggered();
-
     void on_collapseButtonRightMenu_clicked(bool checked);
     void on_collapseButtonTurnMenu_clicked(bool checked);
 

@@ -24,13 +24,17 @@ TokenMenu::~TokenMenu()
 void TokenMenu::initTokenMenu(Database *db) {
     setDatabase(db);
 
-    //RepositoryManager::s_TokenItemRepository.test(db_);
-
     // Retrieve TokenItems from the database
     QList<TokenItem*> tokenItems = RepositoryManager::s_TokenItemRepository.getTokenItems(db_);
     for (TokenItem *tokenItem : tokenItems) {
         ui->m_tokenList->addItem(tokenItem);
+
+        if (tokenItem->isSpecial()) {
+            tokenItem->setHidden(true);
+        }
     }
+
+
 
     ui->m_tokenList->setCurrentItem(ui->m_tokenList->item(0));
 }

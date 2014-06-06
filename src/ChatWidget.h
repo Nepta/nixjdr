@@ -5,23 +5,26 @@
 #include <QListWidgetItem>
 #include <QContextMenuEvent>
 
+#include "Network/SenderHandler.h"
+
 #include "Chat/ChatServer.h"
 #include "Chat/ChatClient.h"
+
 #include "User.h"
 
 namespace Ui {
 class ChatWidget;
 }
 
-class ChatWidget : public QWidget
+class ChatWidget : public QWidget, public SenderHandler
 {
     Q_OBJECT
 
 public:
     explicit ChatWidget(QWidget *parent = 0);
     ~ChatWidget();
-    void setupChatServer(ChatServer *chatServer);
-    void setupChatClient(ChatClient *chatClient);
+    void setupSenderClient(SenderClient *senderClient);
+    void setupSenderServer(SenderServer *senderServer);
     void sendMessageFromClientToServer(QString message);
 
 signals:
@@ -41,8 +44,6 @@ private:
 
 private:
     Ui::ChatWidget *ui;
-    ChatServer *m_ChatServer;
-    ChatClient *m_ChatClient;
 
 };
 

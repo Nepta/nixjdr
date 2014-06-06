@@ -13,7 +13,22 @@ MapLayer::MapLayer(TokenItem *tokenItem, int step) :
     setAcceptDrops(true);
 }
 
+MapLayer::MapLayer(DBItem item) : GridLayer()
+{
+    QHash<QString, QVariant> itemHashMap = item.getHashMap();
+    columnsValues_ = item.getHashMap();
+
+    int id =  itemHashMap.value("id").toInt();
+    int step = itemHashMap.value("step").toInt();
+
+    id_ = id;
+    m_Step = step;
+
+    setAcceptDrops(true);
+}
+
 MapLayer::~MapLayer() {}
+
 
 /**
  * @brief MapLayer::initDragEvent Starts a drag event if a START_DRAG_DISTANCE has been traveled.

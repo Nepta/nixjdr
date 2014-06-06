@@ -3,6 +3,13 @@
 SenderServer::SenderServer(QHash<QString, User *> *usersList) : Sender(usersList) {}
 SenderServer::~SenderServer() {}
 
+void SenderServer::sendPacketToList(quint16 target, quint16 code, Serializable &data,
+    QList<User*> recipients)
+{
+     QByteArray packet = preparePacket(code, target, data.serialize());
+     Sender::sendPacketToList(recipients, packet);
+}
+
 /**
  * @brief SenderServer::sendPacketToAll Prepares a packet and forwards it to all the users of
  * m_UsersList.
@@ -13,7 +20,7 @@ SenderServer::~SenderServer() {}
 void SenderServer::sendPacketToAll(quint16 target, quint16 code, Serializable &data) {
     QByteArray packet = preparePacket(code, target, data.serialize());
 
-    sendPacketToList(m_UsersList->values(), packet);
+    Sender::sendPacketToList(m_UsersList->values(), packet);
 }
 
 /**

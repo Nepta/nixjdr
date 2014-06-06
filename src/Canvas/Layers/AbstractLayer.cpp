@@ -34,8 +34,10 @@ void AbstractLayer::setEnabled(bool enabled) {
     QGraphicsObject::setEnabled(enabled);
 }
 
-void AbstractLayer::keyPressEvent(QKeyEvent *)
-{}
+void AbstractLayer::setSenderClient(SenderClient *senderClient) {
+    m_SenderClient = senderClient;
+}
 
-void AbstractLayer::keyReleaseEvent(QKeyEvent *)
-{}
+void AbstractLayer::keyPressEvent(QKeyEvent *) {}
+
+void AbstractLayer::keyReleaseEvent(QKeyEvent *) {}

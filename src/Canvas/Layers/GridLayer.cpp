@@ -10,62 +10,88 @@ GridLayer::GridLayer(int step)
     m_ActiveMouseMoveEvent = false;
 }
 
-int GridLayer::getStep()
-{
-    return m_Step;
-}
-
-void GridLayer::setTokenItem(QListWidgetItem* token) {
-    TokenItem *tokenItem = dynamic_cast<TokenItem*>(token);
-    m_TokenItem = tokenItem;
-}
-
 /**
- * @brief GridLayer::addSprite Adds a sprite to the Layer.
- * @param tokenItem Sprite's associated TokenItem.
- * @param position Sprite's position
- * @param zValue Indicates the position of the sprite in the stack.
- * @param parentItem Indicates in which QGraphicsItem the new Sprite belongs (in general the layer
- * in which the sprite is created).
- * @return The newly created sprite.
+ * @brief GridLayer::addSpriteToLayer Creates a new Sprite with the given parameters and adds it to
+ * the layer.
+ * @param tokenItem
+ * @param position
+ * @param zValue
+ * @return The newly created and added Sprite.
  */
-Sprite *GridLayer::addSprite(TokenItem *tokenItem, QPoint position, int zValue,
-    QGraphicsItem *parentItem)
-{
+Sprite *GridLayer::addSpriteToLayer(TokenItem *tokenItem, QPoint position, int zValue) {
     QPoint spritePos(position.x()/m_Step, position.y()/m_Step);
     spritePos *= m_Step;
 
-    Sprite *sprite = new Sprite(tokenItem, parentItem, zValue);
+    Sprite *sprite = new Sprite(tokenItem, this, zValue);
     sprite->setPos(spritePos);
 
-    // Insert the sprite in the database
-    RepositoryManager::s_SpriteRepository.insertSprite(sprite, db_);
-
-    if (parentItem != NULL) {
-        sprite->installSceneEventFilter(this);
-    }
+    addSpriteToLayer(sprite);
 
     return sprite;
 }
 
 /**
- * @brief GridLayer::addSprite Overloaded for convenience.
- * @param tokenItem
- * @param position
- * @param zValue
- * @return The newly created sprite.
- * @sa addSprite()
+ * @brief GridLayer::addSprite Adds the given sprite to this layer.
+ * @param sprite Sprite to add to this layer.
+ * @return The added Sprite.
  */
-Sprite *GridLayer::addSprite(TokenItem *tokenItem, QPoint position, int zValue) {
-    return addSprite(tokenItem, position, zValue, this);
+Sprite *GridLayer::addSpriteToLayer(Sprite* sprite) {
+    sprite->installSceneEventFilter(this);
+
+    return sprite;
 }
 
 /**
- * @brief GridLayer::removeSprite Remove the given Sprite.
+ * @brief GridLayer::addSprite Adds a sprite to the db and sends a notification to all the clients.
+ * @param tokenItem Sprite's associated TokenItem.
+ * @param position Sprite's position
+ * @param zValue Indicates the position of the sprite in the stack.
+ */
+void GridLayer::addSprite(TokenItem *tokenItem, QPoint position, int zValue) {
+    Sprite *sprite = addSpriteToLayer(tokenItem, position, zValue);
+
+    // Insert the sprite in the database
+    RepositoryManager::s_SpriteRepository.insertSprite(sprite, db_);
+
+    // Notifies every client that a new sprite has been added
+    QString msg = QString("addSprite %1").arg(sprite->id());
+    m_SenderClient->sendMessageToServer(msg);
+}
+
+/**
+ * @brief GridLayer::removeSpriteToDb Notifies to all the clients that a sprite need to be
+ * removed and delete it locally on the layer.
  * @param sprite
  */
-void GridLayer::removeSprite(QGraphicsItem *sprite) {
+void GridLayer::removeSprite(Sprite *sprite) {
+    // Notifies all the clients that a Sprite needs to be removed
+    QString msg = QString("removeSprite %1").arg(sprite->id());
+    m_SenderClient->sendMessageToServer(msg);
+
+    // Delete the sprite from the layer
     delete sprite;
+}
+
+/**
+ * @brief GridLayer::removeSpriteById Remove a sprite on the grid which possess the given id
+ * @param id
+ */
+void GridLayer::removeSpriteById(int id) {
+    for (QGraphicsItem *item : childItems()) {
+        Sprite *sprite = dynamic_cast<Sprite*>(item);
+
+        if (sprite->id() == id) {
+            delete sprite;
+            break;
+        }
+    }
+}
+
+/**
+ * @brief GridLayer::removeAllSprites Remove all the sprites from the layer.
+ */
+void GridLayer::removeAllSprites() {
+    qDeleteAll(childItems());
 }
 
 /**
@@ -187,4 +213,13 @@ void GridLayer::spriteMouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent, Sp
     if (mouseEvent->button() == Qt::RightButton && distanceCovered < DELTA_DELETE_SPRITE) {
         removeSprite(watched);
     }
+}
+
+int GridLayer::getStep() {
+    return m_Step;
+}
+
+void GridLayer::setTokenItem(QListWidgetItem* token) {
+    TokenItem *tokenItem = dynamic_cast<TokenItem*>(token);
+    m_TokenItem = tokenItem;
 }

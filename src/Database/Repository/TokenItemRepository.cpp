@@ -31,7 +31,7 @@ QueryBuilder TokenItemRepository::getSpecialTokenItemsQB() {
  * @return QList of TokenItem
  */
 QList<TokenItem*> TokenItemRepository::getTokenItems(Database *db) {
-    QueryBuilder qb = getNormalTokenItemsQB();
+    QueryBuilder qb = findAllQB();
     DBItemList<TokenItem> dbItems(db->pull(qb.getQuery()));
     QList<TokenItem*> tokenItems = dbItems.construct();
 

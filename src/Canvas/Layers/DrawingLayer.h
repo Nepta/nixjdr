@@ -18,10 +18,11 @@ class DrawingLayer : public AbstractLayer
 public:
 
     DrawingLayer(int penSize, int eraserSize, QColor color);
+    DrawingLayer(DBItem item);
     ~DrawingLayer();
     void drawBackground(QPainter *, const QRectF &);
     QByteArray getPixmapData();
-    void initDrawingZone();
+    void initDrawingZone(bool newPixmap = true);
     Tools *getTools();
 
 public slots:

@@ -7,6 +7,17 @@ BackgroundLayer::BackgroundLayer(QString filename) :
     m_Background(filename)
 {}
 
+BackgroundLayer::BackgroundLayer(DBItem item) {
+    QHash<QString, QVariant> itemHashMap = item.getHashMap();
+    columnsValues_ = item.getHashMap();
+
+    int id = itemHashMap.value("id").toInt();
+    QByteArray pixmap = itemHashMap.value("pixmap").toByteArray();
+
+    id_ = id;
+    m_Background.loadFromData(pixmap, "PNG");
+}
+
 BackgroundLayer::~BackgroundLayer() {}
 
 void BackgroundLayer::drawBackground(QPainter *painter, const QRectF &rect) {

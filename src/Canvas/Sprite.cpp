@@ -20,6 +20,22 @@ Sprite::Sprite(TokenItem *tokenItem, QGraphicsItem *parent, int zValue) :
     setZValue(zValue);
 }
 
+Sprite::Sprite(DBItem item, TokenItem *tokenItem, QGraphicsItem *parent) :
+    Sprite(tokenItem, parent)
+{
+    QHash<QString, QVariant> itemHashMap = item.getHashMap();
+    columnsValues_ = item.getHashMap();
+
+    int id = itemHashMap.value("id").toInt();
+    int posx = itemHashMap.value("posx").toInt();
+    int posy = itemHashMap.value("posy").toInt();
+    int zvalue = itemHashMap.value("zvalue").toInt();
+
+    id_ = id;
+    setPos(posx, posy);
+    setZValue(zvalue);
+}
+
 Sprite::~Sprite() {
 }
 

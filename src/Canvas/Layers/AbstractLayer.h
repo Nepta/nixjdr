@@ -7,6 +7,9 @@
 #include <QGraphicsSceneMouseEvent>
 #include <QPainter>
 #include <QRectF>
+
+#include "Network/SenderClient.h"
+
 #include "Database/Database.h"
 #include "Database/DBComponent.h"
 #include "Database/DBItem.h"
@@ -31,8 +34,11 @@ public:
     QRectF boundingRect() const;
     void paint(QPainter *, const QStyleOptionGraphicsItem *, QWidget *);
     void setEnabled(bool enabled);
+    void setSenderClient(SenderClient *senderClient);
 
 protected:
+    SenderClient *m_SenderClient;
+
     virtual void keyPressEvent(QKeyEvent *);
     virtual void keyReleaseEvent(QKeyEvent *);
 };

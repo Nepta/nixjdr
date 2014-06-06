@@ -23,6 +23,8 @@ public:
     TokenList(QWidget * parent = 0);
     QListWidgetItem getCurrentItem();
 
+    TokenItem *findTokenItemById(int id);
+
 private:
     void dragMoveEvent(QDragMoveEvent * event);
     void mousePressEvent(QMouseEvent * event);

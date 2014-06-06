@@ -8,29 +8,40 @@ FoWLayer::FoWLayer(int step, bool transparentSprites) :
     GridLayer(step),
     m_TransparentSprites(transparentSprites)
 {
-    // TODO multiple colors for multiple players (shift the hue of the pixmap?)
+    construct(step, transparentSprites);
+}
 
-    // Retrieve the fow TokenItem from the database
-    TokenItem *fowItem = RepositoryManager::s_TokenItemRepository.getFowTokenItem(db_);
+FoWLayer::FoWLayer(DBItem item) : GridLayer()
+{
+    QHash<QString, QVariant> itemHashMap = item.getHashMap();
+    columnsValues_ = item.getHashMap();
 
+    int id =  itemHashMap.value("id").toInt();
+    int step = itemHashMap.value("step").toInt();
 
-    setTokenItem(fowItem);
+    id_ = id;
+    construct(step, true);
 }
 
 FoWLayer::~FoWLayer() {}
 
+void FoWLayer::construct(int step, bool transparentSprites) {
+    m_TransparentSprites = transparentSprites;
+    m_Step = step;
+
+    // Retrieve the fow TokenItem from the database
+    TokenItem *fowItem = RepositoryManager::s_TokenItemRepository.getFowTokenItem(db_);
+    setTokenItem(fowItem);
+}
+
 /**
- * @brief FoWLayer::addSprite Reimplemented from GridLayer to add transparency to the new Sprite if
- * m_TransparentSprites is true.
- * @param tokenItem
- * @param position
- * @param zValue
- * @param parentItem
- * @return Returns the added sprite.
+ * @brief FoWLayer::addSpriteFromDb Reimplemented from GridLayer to add transparency to the new
+ * Sprite if m_TransparentSprites is true.
+ * @param sprite
  */
-Sprite *FoWLayer::addSprite(TokenItem *tokenItem, QPoint position, int zValue, QGraphicsItem *parentItem)
+Sprite *FoWLayer::addSpriteToLayer(Sprite* sprite)
 {
-    Sprite* sprite = GridLayer::addSprite(tokenItem, position, zValue, parentItem);
+    GridLayer::addSpriteToLayer(sprite);
     sprite->setTransparent(m_TransparentSprites);
 
     return sprite;
@@ -67,22 +78,22 @@ bool FoWLayer::sceneEventFilter(QGraphicsItem *watched, QEvent *event) {
 void FoWLayer::fillFoW() {
     removeFoW();
 
-    QPoint iterator(0,0);
-
-    for(int i = 0; i < boundingRect().width(); i+=m_Step){
-        for(int j = 0; j < boundingRect().height(); j +=m_Step){
-            iterator.setX(i);
-            iterator.setY(j);
-            GridLayer::addSprite(m_TokenItem, iterator);
+    for(int i = 0 ; i < boundingRect().width() ; i += m_Step) {
+        for(int j = 0 ; j < boundingRect().height() ; j += m_Step) {
+            GridLayer::addSprite(m_TokenItem, QPoint(i, j));
         }
     }
 }
 
 /**
- * @brief FoWLayer::removeFoW Remove all the FoW sprites from the map.
+ * @brief FoWLayer::removeFoW Remove all the FoW sprites from the layer and notifies all the clients
+ * that they need to remove those sprites..
  */
 void FoWLayer::removeFoW() {
-    foreach (QGraphicsItem* item, childItems()) {
-        removeSprite(item);
-    }
+    // Notifies all the clients that all the FoW sprites for this layer need to be removed
+    QString msg = QString("removeAllFoW %1").arg(this->id());
+    m_SenderClient->sendMessageToServer(msg);
+
+    // Removes the FoW locally
+    removeAllSprites();
 }

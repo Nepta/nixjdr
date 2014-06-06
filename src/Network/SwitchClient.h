@@ -1,6 +1,8 @@
-#ifndef CLIENT_H
-#define CLIENT_H
+#ifndef SWITCHCLIENT_H
+#define SWITCHCLIENT_H
 
+#include "Database/Database.h"
+#include "Token/TokenList.h"
 #include "Switch.h"
 #include "User.h"
 
@@ -9,7 +11,7 @@ class SwitchClient : public Switch
     Q_OBJECT
 
 public:
-    SwitchClient(User *user);
+    SwitchClient(User *user, Database *db, TokenList *tokenList);
     ~SwitchClient();
 
    /**
@@ -50,4 +52,4 @@ private:
     QHash<QString, User *> m_UsersList;
 };
 
-#endif // CLIENT_H
+#endif // SWITCHCLIENT_H

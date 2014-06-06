@@ -1,8 +1,4 @@
 #include "Layers.h"
-#include "Canvas/Layers/BackgroundLayer.h"
-#include "Canvas/Layers/DrawingLayer.h"
-#include "Canvas/Layers/FoWLayer.h"
-#include "Canvas/Layers/MapLayer.h"
 
 const QHash<QString, LayerCodes> Layers::s_ButtonCodesMap = {
     {"m_BgDisplay", LayerCodes::LAYER_BACKGROUND},
@@ -24,6 +20,17 @@ Layers::Layers(QString filename, int penSize, int eraserSize, QColor color, int 
     m_LayersMap.insert(LayerCodes::LAYER_DRAW, new DrawingLayer(penSize, eraserSize, color));
     m_LayersMap.insert(LayerCodes::LAYER_FOW, new FoWLayer(step));
     m_LayersMap.insert(LayerCodes::LAYER_MAP, new MapLayer(spritePath, step));
+
+    m_CurrentLayerCode = LayerCodes::LAYER_MAP;
+}
+
+Layers::Layers(BackgroundLayer *bgLayer, MapLayer *mapLayer, FoWLayer *fowLayer,
+    DrawingLayer *drawingLayer)
+{
+    m_LayersMap.insert(LayerCodes::LAYER_BACKGROUND, bgLayer);
+    m_LayersMap.insert(LayerCodes::LAYER_DRAW, drawingLayer);
+    m_LayersMap.insert(LayerCodes::LAYER_FOW, fowLayer);
+    m_LayersMap.insert(LayerCodes::LAYER_MAP, mapLayer);
 
     m_CurrentLayerCode = LayerCodes::LAYER_MAP;
 }

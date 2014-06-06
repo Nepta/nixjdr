@@ -6,6 +6,8 @@
 
 #include "Database/Repository/RepositoryManager.h"
 
+#include "Canvas/Network/MapClient.h"
+#include "Canvas/Network/MapServer.h"
 #include "Canvas/Layers/MapLayer.h"
 #include "Canvas/CanvasScene.h"
 #include "Canvas/CanvasView.h"
@@ -48,7 +50,7 @@ MainWindow::~MainWindow()
  * with the application Database.
  */
 void MainWindow::initDBComponents() {
-    ui->tokenPage->initTokenMenu(m_User->getDB());
+    ui->tokenPage->initTokenMenu(db_);
 }
 
 void MainWindow::initTableTurnSplitter(){
@@ -86,23 +88,50 @@ void MainWindow::updateMenu() {
     // TODO update menu
 }
 
-void MainWindow::createMap(QString filename) {
+void MainWindow::openMap(Map *map) {
     QListWidget *tokenList = ui->tokenPage->getUi()->m_tokenList;
 
-    TokenItem *currentTokenItem = dynamic_cast<TokenItem*>(tokenList->currentItem());
-    // TODO should be able to choose the step value in a message box
-    Map *map = new Map(filename, currentTokenItem, 32);
-    map->setDatabase(m_User->getDB());
+    // Initialize Map with the MapServer
+    if (m_Server != NULL) {
+        Receiver *mapServerReceiver = m_Client->getReceiver(TargetCode::MAP_SERVER);
+        MapServer *mapServer = dynamic_cast<MapServer*>(mapServerReceiver);
+        map->setupSenderServer(mapServer);
+    }
 
-    // Add Map to the database
-    RepositoryManager::s_MapRepository.insertMap(map, m_User->getDB());
+    // Initialize Map with the MapClient
+    Receiver *mapClientReceiver = m_Client->getReceiver(TargetCode::MAP_CLIENT);
+    MapClient *mapClient = dynamic_cast<MapClient*>(mapClientReceiver);
+    mapClient->addMapToList(map);
+    map->setupSenderClient(mapClient);
 
     QMdiSubWindow *subwindow = ui->tableArea->addSubWindow(map);
     subwindow->show();
     subwindow->move(0, 0);
 
     connect(tokenList, SIGNAL(currentItemChanged(QListWidgetItem*,  QListWidgetItem *)),
-            map->getMapLayer(), SLOT(setTokenItem(QListWidgetItem*)));
+            map->getMapLayer(), SLOT(setTokenItem(QListWidgetItem*))
+    );
+}
+
+void MainWindow::createMap(QString filename) {
+    QListWidget *tokenList = ui->tokenPage->getUi()->m_tokenList;
+    TokenItem *currentTokenItem = dynamic_cast<TokenItem*>(tokenList->currentItem());
+
+    // TODO should be able to choose the step value in a message box
+    Map *map = new Map(filename, currentTokenItem, 32);
+    map->setDatabase(db_);
+
+    // Add Map to the database
+    RepositoryManager::s_MapRepository.insertMap(map, db_);
+
+    // Initialize and open map
+    openMap(map);
+
+    // Notifies all the clients that a new map has been opened
+    Receiver *mapClientReceiver = m_Client->getReceiver(TargetCode::MAP_CLIENT);
+    MapClient *mapClient = dynamic_cast<MapClient*>(mapClientReceiver);
+    QString msg = QString("openMap %1").arg(map->id());
+    mapClient->sendMessageToServer(msg);
 }
 
 void MainWindow::on_actionCreateMap_triggered(){
@@ -144,7 +173,7 @@ void MainWindow::on_actionConnection_triggered(){
 }
 
 void MainWindow::setupMJ() {
-    m_Server = new SwitchServer;
+    m_Server = new SwitchServer(db_);
 
     /* Connect sendMessageToChatUi from m_Server to m_ChatWidget in order to display system messages
      * during the initialization. */
@@ -158,13 +187,14 @@ void MainWindow::setupMJ() {
     // Initialize ChatWidget with the ChatServer
     ChatServer* chatServer = dynamic_cast<ChatServer*>(
                 m_Server->getReceiver(TargetCode::CHAT_SERVER));
-    ui->m_ChatWidget->setupChatServer(chatServer);
+    ui->m_ChatWidget->setupSenderServer(chatServer);
 
     setupPlayer();
 }
 
 void MainWindow::setupPlayer() {
-    m_Client = new SwitchClient(m_User);
+    TokenList *tokenList = ui->tokenPage->getUi()->m_tokenList;
+    m_Client = new SwitchClient(m_User, db_, tokenList);
 
     connect(m_Client, SIGNAL(sendMessageToChatUi(QString)),
             ui->m_ChatWidget, SLOT(receivedMessage(QString))
@@ -173,7 +203,12 @@ void MainWindow::setupPlayer() {
     // Initialize ChatWidget with the ChatClient
     ChatClient* chatClient = dynamic_cast<ChatClient*>(
                 m_Client->getReceiver(TargetCode::CHAT_CLIENT));
-    ui->m_ChatWidget->setupChatClient(chatClient);
+    ui->m_ChatWidget->setupSenderClient(chatClient);
+
+    // Initialize MapClient connect
+    Receiver *mapClientReceiver = m_Client->getReceiver(TargetCode::MAP_CLIENT);
+    MapClient *mapClient = dynamic_cast<MapClient*>(mapClientReceiver);
+    connect(mapClient, SIGNAL(openMap(Map*)), this, SLOT(openMap(Map*)));
 
     /* The dice menu is able to send system messages to the Chat in order to display error messages
      * or warnings */
@@ -196,7 +231,7 @@ void MainWindow::on_collapseButtonTurnMenu_clicked(bool checked)
     collapseMenu(checked, ui->turnWidget, ui->tableTurnSplitter, min, max);
 }
 
-void MainWindow::collapseMenu(bool checked, QWidget *widget, QSplitter *splitter, int min, int max){
+void MainWindow::collapseMenu(bool checked, QWidget *widget, QSplitter *splitter, int min, int max) {
     QList<int> sizes = splitter->sizes();
     widget->setVisible(checked);
     if(checked){

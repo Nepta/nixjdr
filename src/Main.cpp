@@ -24,9 +24,9 @@ int main(int argc, char *argv[])
 
     Database *database = new Database("jdrdb", "127.0.0.1", 5432);
     //DataBase *database = new DataBase("jdrdb", "lune.hurata.fr", 45001);
-    user->setDatabase(database);
 
     MainWindow mainWindow(user);
+    mainWindow.setDatabase(database);
     mainWindow.show();
 
     return a.exec();

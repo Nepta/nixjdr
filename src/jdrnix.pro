@@ -51,6 +51,8 @@ SOURCES += \
     Canvas/Layers/FoWLayer.cpp \
     Canvas/Layers/BackgroundLayer.cpp \
     Canvas/Layers/DrawingLayer.cpp \
+    Canvas/Network/MapClient.cpp \
+    Canvas/Network/MapServer.cpp \
     Canvas/Layers/AbstractLayer.cpp \
     Canvas/Layers/Layers.cpp \
     Canvas/Tools/AbstractTool.cpp \
@@ -63,6 +65,7 @@ SOURCES += \
     Network/SwitchServer.cpp \
     Network/SwitchClient.cpp \
     Network/Switch.cpp \
+    Network/SenderHandler.cpp \
     Network/Serializable/Message.cpp \
     Network/Sender.cpp \
     Network/SenderClient.cpp \
@@ -129,6 +132,8 @@ HEADERS  += \
     Canvas/Tools/Tools.h \
     Canvas/ImageWidget.h \
     Canvas/SideMenuWidgets/DrawingMenu.h \
+    Canvas/Network/MapClient.h \
+    Canvas/Network/MapServer.h \
     Network/Switch.h \
     Network/SwitchServer.h \
     Network/SwitchClient.h \
@@ -137,6 +142,10 @@ HEADERS  += \
     Network/SenderClient.h \
     Network/SenderServer.h \
     Network/Header.h \
+    Network/Server.h \
+    Network/Client.h \
+    Network/Serializable.h \
+    Network/SenderHandler.h \
     Network/Serializable/Message.h \
     Network/Serializable/Serializable.h \
     Database/Database.h \

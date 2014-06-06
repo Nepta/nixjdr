@@ -7,6 +7,7 @@ class BackgroundLayer : public AbstractLayer
 {
 public:
     BackgroundLayer(QString filename);
+    BackgroundLayer(DBItem item);
     ~BackgroundLayer();
 
     /**

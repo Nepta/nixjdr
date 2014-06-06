@@ -1,5 +1,5 @@
 #include "Database/Repository/RepositoryManager.h"
-#include <algorithm>
+#include "Network/MapClient.h"
 #include "Map.h"
 #include "ui_Map.h"
 #include "ui_DrawingMenu.h"
@@ -11,7 +11,6 @@ Map::Map(QString bgFilename, TokenItem *tokenItem, int tileStep, QWidget *parent
 {
     ui->setupUi(this);
     m_Layers = new Layers(bgFilename, 2, 2, Qt::black, tileStep, tokenItem);
-    setWindowTitle(tr("Carte"));
 
     initScene(tileStep);
     initLayers();
@@ -19,28 +18,59 @@ Map::Map(QString bgFilename, TokenItem *tokenItem, int tileStep, QWidget *parent
     initTooltip();
 }
 
+Map::Map(DBItem item, BackgroundLayer *bgLayer, MapLayer *mapLayer, FoWLayer *fowLayer,
+    DrawingLayer *drawingLayer) :
+    DBItem(),
+    ui(new Ui::Map)
+{
+    ui->setupUi(this);
+
+    QHash<QString, QVariant> itemHashMap = item.getHashMap();
+    columnsValues_ = item.getHashMap();
+
+    int id = itemHashMap.value("id").toInt();
+    int sceneHeight = itemHashMap.value("sceneheight").toInt();
+    int sceneWidth = itemHashMap.value("scenewidth").toInt();
+
+    id_ = id;
+    m_Layers = new Layers(bgLayer, mapLayer, fowLayer, drawingLayer);
+    initScene(sceneWidth, sceneHeight);
+    initLayers(false);
+    initDisplay();
+    initTooltip();
+}
+
 Map::~Map() {
+    MapClient *mapClient = dynamic_cast<MapClient*>(m_SenderClient);
+    mapClient->removeMapFromList(this);
+
     delete ui;
     delete m_Scene;
 }
 
 void Map::initScene(int tileStep) {
-    BackgroundLayer *bgLayer = dynamic_cast<BackgroundLayer *>(m_Layers->getLayer(LayerCodes::LAYER_BACKGROUND));
+    BackgroundLayer *bgLayer = dynamic_cast<BackgroundLayer *>(
+        m_Layers->getLayer(LayerCodes::LAYER_BACKGROUND)
+    );
 
     int sceneHeight = bgLayer->getBackground()->rect().height()
             + BG_OFFSET * tileStep;
     int sceneWidth = bgLayer->getBackground()->rect().width()
             + BG_OFFSET * tileStep;
 
+    initScene(sceneWidth, sceneHeight);
+}
+
+void Map::initScene(int sceneWidth, int sceneHeight) {
     m_Scene = new CanvasScene(sceneWidth, sceneHeight);
     ui->m_View->setScene(m_Scene);
 }
 
-void Map::initLayers() {
-    initBgLayer();
-    initMapLayer();
-    initFoWLayer();
-    initDrawingLayer();
+void Map::initLayers(bool addToDb) {
+    initBgLayer(addToDb);
+    initMapLayer(addToDb);
+    initFoWLayer(addToDb);
+    initDrawingLayer(addToDb);
 }
 
 void Map::initDisplay(){
@@ -70,71 +100,11 @@ void Map::initFoWTools(){
             fowLayer, SLOT(removeFoW()));
 }
 
-void Map::initBgLayer() {
-    BackgroundLayer *bgLayer = dynamic_cast<BackgroundLayer *>(
-        m_Layers->getLayer(LayerCodes::LAYER_BACKGROUND)
-    );
-
-    m_Scene->addLayer(bgLayer);
-    bgLayer->setEnabled(false);
-
-    // Add BackgroundLayer to the database
-    RepositoryManager::s_BgLayerRepository.insertBgLayer(bgLayer, db_);
-}
-
-void Map::initMapLayer() {
-    MapLayer *mapLayer = dynamic_cast<MapLayer *>(
-        m_Layers->getLayer(LayerCodes::LAYER_MAP)
-    );
-
-    m_Scene->addLayer(mapLayer);
-    mapLayer->setEnabled(true);
-    mapLayer->setDatabase(db_);
-    m_SelectedLayer = mapLayer;
-
-    // Add MapLayer to the database
-    RepositoryManager::s_MapLayerRepository.insertMapLayer(mapLayer, db_);
-
-    // Map tools
-    initMapTools();
-}
-
-/**
- * @brief Map::initFoWLayer Initializes the Fog of War Layer. If the tilestep is equal to 1, the
- * layer will be an instance of DrawingLayer, else it will be an instance of FoWLayer.
- * @param tileStep
- */
-void Map::initFoWLayer() {
-    FoWLayer *fowLayer = dynamic_cast<FoWLayer *>(
-        m_Layers->getLayer(LayerCodes::LAYER_FOW)
-    );
-
-    m_Scene->addLayer(fowLayer);
-    fowLayer->setEnabled(false);
-    fowLayer->setDatabase(db_);
-
-    // Add FoWLayer to the database
-    RepositoryManager::s_FoWLayerRepository.insertFoWLayer(fowLayer, db_);
-
-    // FoW tools
-    initFoWTools();
-}
-
-/**
- * @brief Map::initDrawingLayer Initialize the specified layer as a DrawingLayer. Adds the layer to
- * the scene, initializes its drawing zone (transparent pixmap on which drawings are made) and connect
- * the signals and slots.
- * @param layer
- */
-void Map::initDrawingLayer() {
+void Map::initDrawingTools() {
     Ui::DrawingMenu *drawingUi = ui->m_PageDrawingTools->getUi();
-    DrawingLayer *drawingLayer = static_cast<DrawingLayer *>(
+    DrawingLayer *drawingLayer = dynamic_cast<DrawingLayer*>(
         m_Layers->getLayer(LayerCodes::LAYER_DRAW)
     );
-
-    m_Scene->addLayer(drawingLayer);
-    drawingLayer->initDrawingZone();
-    drawingLayer->setEnabled(false);
 
     connect(drawingUi->m_PenSpinBox, SIGNAL(valueChanged(int)),
             drawingLayer, SLOT(setPenSize(int)));
@@ -149,7 +119,96 @@ void Map::initDrawingLayer() {
         connect(currentButton, SIGNAL(clicked()),
                 drawingLayer->getTools(), SLOT(setCurrentToolCode()));
     }
+}
 
+void Map::setupSenderClient(SenderClient *senderClient) {
+    SenderHandler::setupSenderClient(senderClient);
+
+    for (AbstractLayer *layer : m_Layers->getLayersList()) {
+        layer->setSenderClient(senderClient);
+    }
+}
+
+void Map::initBgLayer(bool addToDb) {
+    BackgroundLayer *bgLayer = dynamic_cast<BackgroundLayer *>(
+        m_Layers->getLayer(LayerCodes::LAYER_BACKGROUND)
+    );
+
+    m_Scene->addLayer(bgLayer);
+    bgLayer->setEnabled(false);
+
+    if (addToDb) {
+        // Add BackgroundLayer to the database
+        RepositoryManager::s_BgLayerRepository.insertBgLayer(bgLayer, db_);
+    }
+}
+
+void Map::initMapLayer(bool addToDb) {
+    MapLayer *mapLayer = dynamic_cast<MapLayer *>(
+        m_Layers->getLayer(LayerCodes::LAYER_MAP)
+    );
+
+    m_Scene->addLayer(mapLayer);
+    mapLayer->setEnabled(true);
+    mapLayer->setDatabase(db_);
+    m_SelectedLayer = mapLayer;
+
+    // Map tools
+    initMapTools();
+
+    if (addToDb) {
+        // Add MapLayer to the database
+        RepositoryManager::s_MapLayerRepository.insertMapLayer(mapLayer, db_);
+    }
+}
+
+/**
+ * @brief Map::initFoWLayer Initializes the Fog of War Layer. If the tilestep is equal to 1, the
+ * layer will be an instance of DrawingLayer, else it will be an instance of FoWLayer.
+ * @param tileStep
+ */
+void Map::initFoWLayer(bool addToDb) {
+    FoWLayer *fowLayer = dynamic_cast<FoWLayer *>(
+        m_Layers->getLayer(LayerCodes::LAYER_FOW)
+    );
+
+    m_Scene->addLayer(fowLayer);
+    fowLayer->setEnabled(false);
+    fowLayer->setDatabase(db_);
+
+    // FoW tools
+    initFoWTools();
+
+    if (addToDb) {
+        // Add FoWLayer to the database
+        RepositoryManager::s_FoWLayerRepository.insertFoWLayer(fowLayer, db_);
+    }
+}
+
+/**
+ * @brief Map::initDrawingLayer Initialize the specified layer as a DrawingLayer. Adds the layer to
+ * the scene, initializes its drawing zone (transparent pixmap on which drawings are made) and connect
+ * the signals and slots.
+ * @param layer
+ */
+void Map::initDrawingLayer(bool addToDb) {
+    DrawingLayer *drawingLayer = static_cast<DrawingLayer *>(
+        m_Layers->getLayer(LayerCodes::LAYER_DRAW)
+    );
+
+    m_Scene->addLayer(drawingLayer);
+
+    // if the drawingLayer has been loaded from the db, the drawing zone is not initialized with a
+    // new pixmap.
+    drawingLayer->initDrawingZone(addToDb);
+    drawingLayer->setEnabled(false);
+
+    initDrawingTools();
+
+    if (addToDb) {
+        // Add DrawingLayer to the database
+        RepositoryManager::s_DrawingLayerRepository.insertDrawingLayer(drawingLayer, db_);
+    }
 }
 
 void Map::initTooltip() {
@@ -218,10 +277,6 @@ void Map::keyPressEvent(QKeyEvent *keyEvent){
  */
 void Map::keyReleaseEvent(QKeyEvent *keyEvent){
     m_Scene->sendEvent(m_SelectedLayer, keyEvent);
-}
-
-Ui::Map *Map::getUi() {
-    return ui;
 }
 
 MapLayer *Map::getMapLayer() {

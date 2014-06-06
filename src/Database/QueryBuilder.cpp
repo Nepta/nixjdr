@@ -77,6 +77,14 @@ QueryBuilder *QueryBuilder::andWhere(QString where) {
     return this;
 }
 
+QueryBuilder *QueryBuilder::deleteFrom(QString from) {
+    query_ = QString(
+        "DELETE FROM %1"
+    ).arg(from);
+
+    return this;
+}
+
 void QueryBuilder::withAsSelect(QueryBuilder qb, QString select) {
     query_ = QString(
         "WITH row AS ("

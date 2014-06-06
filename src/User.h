@@ -4,9 +4,8 @@
 #include <QObject>
 #include <QString>
 #include <QtNetwork>
+
 #include "Network/Header.h"
-#include "User.h"
-#include "Database/Database.h"
 
 enum class Role {
     ROLE_MJ = 0,
@@ -28,13 +27,11 @@ public:
     QString getPendingNickname();
     QString getServerIpAddress();
     Role getRole();
-    Database* getDB();
 
     User* setNickname(const QString &nickname);
     User* setPendingNickname(const QString &nickname);
     User* setServerIpAddress(const QString &serverIpAddress);
     User* setRole(const Role &role);
-    User* setDatabase(Database *database);
 
 private slots:
     void receivedData();
@@ -63,7 +60,6 @@ private:
     QString m_PendingNickname;
     QString m_serverIpAddress;
     Role m_Role;
-    Database *m_Database;
 };
 
 #endif // USER_H

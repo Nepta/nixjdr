@@ -14,6 +14,7 @@ public:
 
 protected slots:
     void sendPacketToAll(quint16 target, quint16 code, Serializable &data);
+    void sendPacketToList(quint16 target, quint16 code, Serializable &data,QList<User*> recipients);
     void sendPacketToOne(quint16 target, quint16 code, Serializable& data, QString receiverNickname);
 };
 

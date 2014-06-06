@@ -54,3 +54,24 @@ void TokenList::mouseMoveEvent(QMouseEvent *event){
         drag->exec(Qt::CopyAction | Qt::MoveAction);
     }
 }
+
+/**
+ * @brief TokenList::findTokenItemById Find a token in the list by its id (assignated by the db).
+ * @param id Id of the token to find.
+ * @return The TokenItem associated with the given id, or NULL if no TokenItem is found.
+ */
+TokenItem *TokenList::findTokenItemById(int id) {
+    TokenItem *result = NULL;
+
+    for (int i = 0 ; i < count() ; i++) {
+        QListWidgetItem *listWidgetItem = item(i);
+        TokenItem *tokenItem = dynamic_cast<TokenItem*>(listWidgetItem);
+
+        if (tokenItem->id() == id) {
+            result = tokenItem;
+            break;
+        }
+    }
+
+    return result;
+}

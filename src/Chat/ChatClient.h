@@ -28,8 +28,6 @@ private:
     ChatCodes translateCommandToCode(const QString &msg);
     QString stripCommandFromMessage(const QString &msg);
 
-    QHash<QString, User *> *m_UsersList;
-
 public slots:
     /**
      * @brief ChatClient::sendMessageToServer   Sends the message to the server in order
