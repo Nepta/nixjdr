@@ -10,8 +10,8 @@ public:
     SenderHandler();
     ~SenderHandler();
 
-    virtual void setupSenderClient(SenderClient *senderClient);
-    virtual void setupSenderServer(SenderServer *senderServer);
+    virtual void setSenderClient(SenderClient *senderClient);
+    virtual void setSenderServer(SenderServer *senderServer);
 
 protected:
     SenderClient *m_SenderClient;

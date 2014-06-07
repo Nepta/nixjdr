@@ -35,7 +35,7 @@ public:
         DrawingLayer *drawingLayer);
     ~Map();
 
-    void setupSenderClient(SenderClient *senderClient);
+    void setSenderClient(SenderClient *senderClient);
 
     int getSceneHeight();
     int getSceneWidth();

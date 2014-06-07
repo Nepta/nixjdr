@@ -5,6 +5,7 @@
 #include "Database/QueryBuilder.h"
 #include "Database/DBItemList.h"
 
+#include "Network/TokenMenuCodes.h"
 #include "TokenMenu.h"
 #include "ui_TokenMenu.h"
 
@@ -64,6 +65,10 @@ void TokenMenu::on_tokenButton_clicked()
         // add the item to the tokenList
         ui->m_tokenList->addItem(item);
         ui->m_tokenList->setCurrentItem(item);
+
+        // Notifies everyone that an item has been added
+        QString msg = QString("%1").arg(item->id());
+        m_SenderClient->sendMessageToServer(msg, (quint16) TokenMenuCodes::ADD_TOKEN);
     }
     else {
         // TODO display a notification that an item with the given text already exists.

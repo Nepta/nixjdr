@@ -28,8 +28,8 @@ void ChatWidget::on_msgField_returnPressed()
     }
 }
 
-void ChatWidget::setupSenderClient(SenderClient *senderClient) {
-    SenderHandler::setupSenderClient(senderClient);
+void ChatWidget::setSenderClient(SenderClient *senderClient) {
+    SenderHandler::setSenderClient(senderClient);
 
     ChatClient *chatClient = dynamic_cast<ChatClient*>(m_SenderClient);
 
@@ -40,8 +40,8 @@ void ChatWidget::setupSenderClient(SenderClient *senderClient) {
                         this, SLOT(updateNicknamesListView()));
 }
 
-void ChatWidget::setupSenderServer(SenderServer *senderServer) {
-    SenderHandler::setupSenderServer(senderServer);
+void ChatWidget::setSenderServer(SenderServer *senderServer) {
+    SenderHandler::setSenderServer(senderServer);
 
     ChatServer *chatServer = dynamic_cast<ChatServer*>(m_SenderServer);
 

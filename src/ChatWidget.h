@@ -23,8 +23,8 @@ class ChatWidget : public QWidget, public SenderHandler
 public:
     explicit ChatWidget(QWidget *parent = 0);
     ~ChatWidget();
-    void setupSenderClient(SenderClient *senderClient);
-    void setupSenderServer(SenderServer *senderServer);
+    void setSenderClient(SenderClient *senderClient);
+    void setSenderServer(SenderServer *senderServer);
     void sendMessageFromClientToServer(QString message);
 
 signals:

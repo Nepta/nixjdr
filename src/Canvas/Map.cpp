@@ -118,8 +118,8 @@ void Map::initDrawingTools() {
     }
 }
 
-void Map::setupSenderClient(SenderClient *senderClient) {
-    SenderHandler::setupSenderClient(senderClient);
+void Map::setSenderClient(SenderClient *senderClient) {
+    SenderHandler::setSenderClient(senderClient);
 
     for (AbstractLayer *layer : m_Layers->getLayersList()) {
         layer->setSenderClient(senderClient);

@@ -6,6 +6,9 @@
 
 #include "Database/Repository/RepositoryManager.h"
 
+#include "Token/Network/TokenMenuClient.h"
+#include "Token/Network/TokenMenuServer.h"
+
 #include "Canvas/Network/MapClient.h"
 #include "Canvas/Network/MapServer.h"
 #include "Canvas/Layers/MapLayer.h"
@@ -86,14 +89,14 @@ void MainWindow::openMap(Map *map) {
     if (m_Server != NULL) {
         Receiver *mapServerReceiver = m_Client->getReceiver(TargetCode::MAP_SERVER);
         MapServer *mapServer = dynamic_cast<MapServer*>(mapServerReceiver);
-        map->setupSenderServer(mapServer);
+        map->setSenderServer(mapServer);
     }
 
     // Initialize Map with the MapClient
     Receiver *mapClientReceiver = m_Client->getReceiver(TargetCode::MAP_CLIENT);
     MapClient *mapClient = dynamic_cast<MapClient*>(mapClientReceiver);
     mapClient->addMapToList(map);
-    map->setupSenderClient(mapClient);
+    map->setSenderClient(mapClient);
 
     QMdiSubWindow *subwindow = ui->tableArea->addSubWindow(map);
     subwindow->show();
@@ -177,14 +180,19 @@ void MainWindow::setupMJ() {
     // Initialize ChatWidget with the ChatServer
     ChatServer* chatServer = dynamic_cast<ChatServer*>(
                 m_Server->getReceiver(TargetCode::CHAT_SERVER));
-    ui->m_ChatWidget->setupSenderServer(chatServer);
+    ui->m_ChatWidget->setSenderServer(chatServer);
+
+    // Initialize TokenMenu with the TokenMenuServer
+    Receiver *tokenMenuServerReceiver = m_Server->getReceiver(TargetCode::TOKEN_MENU_SERVER);
+    TokenMenuServer *tokenMenuServer = dynamic_cast<TokenMenuServer*>(tokenMenuServerReceiver);
+    ui->tokenPage->setSenderServer(tokenMenuServer);
 
     setupPlayer();
 }
 
 void MainWindow::setupPlayer() {
-    TokenList *tokenList = ui->tokenPage->getUi()->m_tokenList;
-    m_Client = new SwitchClient(m_User, tokenList);
+    TokenMenu *tokenMenu = ui->tokenPage;
+    m_Client = new SwitchClient(m_User, tokenMenu);
 
     connect(m_Client, SIGNAL(sendMessageToChatUi(QString)),
             ui->m_ChatWidget, SLOT(receivedMessage(QString))
@@ -193,12 +201,17 @@ void MainWindow::setupPlayer() {
     // Initialize ChatWidget with the ChatClient
     ChatClient* chatClient = dynamic_cast<ChatClient*>(
                 m_Client->getReceiver(TargetCode::CHAT_CLIENT));
-    ui->m_ChatWidget->setupSenderClient(chatClient);
+    ui->m_ChatWidget->setSenderClient(chatClient);
 
     // Initialize MapClient connect
     Receiver *mapClientReceiver = m_Client->getReceiver(TargetCode::MAP_CLIENT);
     MapClient *mapClient = dynamic_cast<MapClient*>(mapClientReceiver);
     connect(mapClient, SIGNAL(openMap(Map*)), this, SLOT(openMap(Map*)));
+
+    // Initialize TokenMenu with the TokenMenuClient
+    Receiver *tokenMenuClientReceiver = m_Client->getReceiver(TargetCode::TOKEN_MENU_CLIENT);
+    TokenMenuClient *tokenMenuClient = dynamic_cast<TokenMenuClient*>(tokenMenuClientReceiver);
+    ui->tokenPage->setSenderClient(tokenMenuClient);
 
     /* The dice menu is able to send system messages to the Chat in order to display error messages
      * or warnings */

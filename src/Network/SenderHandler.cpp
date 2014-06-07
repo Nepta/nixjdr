@@ -3,10 +3,10 @@
 SenderHandler::SenderHandler() {}
 SenderHandler::~SenderHandler() {}
 
-void SenderHandler::setupSenderClient(SenderClient *senderClient) {
+void SenderHandler::setSenderClient(SenderClient *senderClient) {
     m_SenderClient = senderClient;
 }
 
-void SenderHandler::setupSenderServer(SenderServer *senderServer) {
+void SenderHandler::setSenderServer(SenderServer *senderServer) {
     m_SenderServer = senderServer;
 }

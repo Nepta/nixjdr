@@ -4,7 +4,7 @@
 #include "Network/SenderServer.h"
 #include "Network/Receiver.h"
 
-class TokenMenuServer : public SenderServer
+class TokenMenuServer : public SenderServer, public Receiver
 {
 public:
     TokenMenuServer(QHash<QString, User *> *usersList);
