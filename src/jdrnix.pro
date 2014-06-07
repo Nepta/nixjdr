@@ -18,7 +18,7 @@ SOURCES += \
     Main.cpp \
     MainWindow.cpp \
     User.cpp \
-    DiceMenu.cpp \
+    DiceMenu/DiceMenu.cpp \
     CustomMdiArea.cpp \
     ConnectionHelper.cpp \
     Common.cpp \
@@ -98,11 +98,11 @@ SOURCES += \
 HEADERS  += \
     MainWindow.h \
     User.h \
-    DiceMenu.h \
     ConnectionHelper.h \
     CustomMdiArea.h \
     Common.h \
     Tooltip.h \
+    DiceMenu/DiceMenu.h \
     Chat/ChatWidget.h \
     Chat/ChatServer.h \
     Chat/ChatClient.h \
@@ -184,7 +184,7 @@ HEADERS  += \
 
 FORMS    += \
     TokenMenu.ui \
-    DiceMenu.ui \
+    DiceMenu/DiceMenu.ui \
     Chat/ChatWidget.ui \
     ConnectionHelper.ui \
     MainWindow.ui \

@@ -180,7 +180,7 @@
   <customwidget>
    <class>DiceMenu</class>
    <extends>QWidget</extends>
-   <header location="global">DiceMenu.h</header>
+   <header location="global">DiceMenu/DiceMenu.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

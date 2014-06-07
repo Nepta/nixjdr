@@ -11,8 +11,8 @@
 #include "Token/TokenMenu.h"
 #include "Canvas/Map.h"
 #include "Chat/ChatWidget.h"
+#include "DiceMenu/DiceMenu.h"
 
-#include "DiceMenu.h"
 #include "ui_TokenMenu.h"
 #include "ui_DiceMenu.h"
 
