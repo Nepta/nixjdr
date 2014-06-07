@@ -85,6 +85,8 @@ SOURCES += \
     Token/TokenMenu.cpp \
     Token/TokenList.cpp \
     Token/TokenItem.cpp \
+    Token/Network/TokenMenuClient.cpp \
+    Token/Network/TokenMenuServer.cpp \
     TurnMenu/TurnList.cpp \
     TurnMenu/TurnMenu.cpp \
     Log/Logger.cpp \
@@ -168,6 +170,8 @@ HEADERS  += \
     Token/TokenMenu.h \
     Token/TokenList.h \
     Token/TokenItem.h \
+    Token/Network/TokenMenuClient.h \
+    Token/Network/TokenMenuServer.h \
     TurnMenu/TurnList.h \
     TurnMenu/TurnMenu.h \
     Canvas/Tools/ToolPing.h \
