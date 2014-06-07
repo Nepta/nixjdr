@@ -48,8 +48,8 @@ void SpriteRepository::removeAllSpritesFromFoWLayer(int fowLayerId) {
 QString SpriteRepository::getSpriteName(int spriteId){
 	QueryBuilder qb;
 
-    // Retrieve the sprite name from the db's view "sprite_name"
-	qb.select("name")->from("sprite_name")->where("id = " + QString::number(spriteId));
+    // Retrieve the sprite name from the db's view "spritename"
+    qb.select("name")->from("spritename")->where("id = " + QString::number(spriteId));
     DBItem spriteName = Database::instance()->pullFirst(qb.getQuery());
 	return spriteName.getHashMap().value("name").toString();
 }
