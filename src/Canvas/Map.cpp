@@ -41,9 +41,6 @@ Map::Map(DBItem item, BackgroundLayer *bgLayer, MapLayer *mapLayer, FoWLayer *fo
 }
 
 Map::~Map() {
-    MapClient *mapClient = dynamic_cast<MapClient*>(m_SenderClient);
-    mapClient->removeMapFromList(this);
-
     delete ui;
     delete m_Scene;
 }
