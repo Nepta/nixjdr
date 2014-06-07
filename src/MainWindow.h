@@ -10,8 +10,8 @@
 #include "TurnMenu/TurnMenu.h"
 #include "Token/TokenMenu.h"
 #include "Canvas/Map.h"
+#include "Chat/ChatWidget.h"
 
-#include "ChatWidget.h"
 #include "DiceMenu.h"
 #include "ui_TokenMenu.h"
 #include "ui_DiceMenu.h"

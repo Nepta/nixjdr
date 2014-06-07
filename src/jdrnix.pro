@@ -20,10 +20,10 @@ SOURCES += \
     User.cpp \
     DiceMenu.cpp \
     CustomMdiArea.cpp \
-    ChatWidget.cpp \
     ConnectionHelper.cpp \
     Common.cpp \
     Tooltip.cpp \
+    Chat/ChatWidget.cpp \
     Chat/ChatServer.cpp \
     Chat/ChatClient.cpp \
     Chat/ChatProcessor.cpp \
@@ -101,9 +101,9 @@ HEADERS  += \
     DiceMenu.h \
     ConnectionHelper.h \
     CustomMdiArea.h \
-    ChatWidget.h \
     Common.h \
     Tooltip.h \
+    Chat/ChatWidget.h \
     Chat/ChatServer.h \
     Chat/ChatClient.h \
     Chat/ChatProcessor.h \
@@ -185,7 +185,7 @@ HEADERS  += \
 FORMS    += \
     TokenMenu.ui \
     DiceMenu.ui \
-    ChatWidget.ui \
+    Chat/ChatWidget.ui \
     ConnectionHelper.ui \
     MainWindow.ui \
     TurnMenu.ui \
