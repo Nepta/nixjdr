@@ -41,6 +41,10 @@ Ui::TokenMenu *TokenMenu::getUi() {
     return ui;
 }
 
+void TokenMenu::addItem(QListWidgetItem *item) {
+    ui->m_tokenList->addItem(item);
+}
+
 void TokenMenu::on_tokenButton_clicked()
 {
     // TODO filePath and size are hard-coded

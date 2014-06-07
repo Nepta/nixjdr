@@ -53,6 +53,13 @@ TokenItem* TokenItemRepository::getFowTokenItem() {
     return tokenItem;
 }
 
+TokenItem* TokenItemRepository::getTokenItemById(int id) {
+    DBItem dbItem = findById(id);
+    TokenItem* tokenItem = new TokenItem(dbItem);
+
+    return tokenItem;
+}
+
 /**
  * @brief TokenItemRepository::insertTokenItem Inserts the given TokenItem in the database, retrieve
  * the id given by the db to the new row and sets it on the TokenItem.

@@ -1,5 +1,5 @@
-#ifndef TOKENCODES_H
-#define TOKENCODES_H
+#ifndef TOKENMENUCODES_H
+#define TOKENMENUCODES_H
 
 #include "Network/Receiver.h"
 #include "QtGlobal"
@@ -10,4 +10,4 @@ enum class TokenMenuCodes : quint16 {
     ADD_TOKEN
 };
 
-#endif // TOKENCODES_H
+#endif // TOKENMENUCODES_H

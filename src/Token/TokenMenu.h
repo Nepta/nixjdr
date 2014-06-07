@@ -18,6 +18,7 @@ public:
     ~TokenMenu();
     Ui::TokenMenu *getUi();
     void initTokenMenu();
+    void addItem(QListWidgetItem *item);
 
 private slots:
     void on_tokenButton_clicked();

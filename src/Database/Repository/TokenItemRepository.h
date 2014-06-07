@@ -18,6 +18,7 @@ public:
 
     QList<TokenItem *> getTokenItems();
     TokenItem* getFowTokenItem();
+    TokenItem* getTokenItemById(int id);
     int insertTokenItem(TokenItem *tokenItem);
 };
 
