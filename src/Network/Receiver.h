@@ -11,8 +11,8 @@ class Receiver
 
 public:
     static const quint16 UNDEFINED_CODE = 0;
-	 virtual ~Receiver();
-	 bool isLoggable();
+    virtual ~Receiver();
+    bool isLoggable();
 
     /**
      * @brief processNewData Interprets incoming data from a packet

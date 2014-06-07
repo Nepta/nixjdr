@@ -120,8 +120,8 @@ void MainWindow::createMap(QString filename) {
     // Notifies all the clients that a new map has been opened
     Receiver *mapClientReceiver = m_Client->getReceiver(TargetCode::MAP_CLIENT);
     MapClient *mapClient = dynamic_cast<MapClient*>(mapClientReceiver);
-    QString msg = QString("openMap %1").arg(map->id());
-    mapClient->sendMessageToServer(msg);
+    QString msg = QString("%1").arg(map->id());
+    mapClient->sendMessageToServer(msg, (quint16) MapCodes::OPEN_MAP);
 }
 
 void MainWindow::on_actionCreateMap_triggered(){

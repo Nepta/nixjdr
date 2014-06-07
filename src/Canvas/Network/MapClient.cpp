@@ -30,28 +30,11 @@ void MapClient::processNewData(Header header, QByteArray& data) {
     }
 }
 
-void MapClient::sendMessageToServer(const QString& msg) {
-    QString strippedMsg = msg;
-    QString action = Common::extractFirstWord(strippedMsg);
-    Message message(strippedMsg);
-
+void MapClient::sendMessageToServer(const QString& msg, quint16 code) {
+    Message message(msg);
     TargetCode target = TargetCode::MAP_SERVER;
-    quint16 mapCode;
 
-    if (action == "openMap") {
-        mapCode = (quint16) MapCodes::OPEN_MAP;
-    }
-    else if (action == "addSprite") {
-        mapCode = (quint16) MapCodes::ADD_SPRITE;
-    }
-    else if (action == "removeSprite") {
-        mapCode = (quint16) MapCodes::REMOVE_SPRITE;
-    }
-    else if (action == "removeAllFoW") {
-        mapCode = (quint16) MapCodes::REMOVE_ALL_FOW;
-    }
-
-    sendPacketToServer(mapCode, (quint16) target, message);
+    sendPacketToServer(code, (quint16) target, message);
 }
 
 void MapClient::addMapToList(Map* map) {

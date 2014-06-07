@@ -20,7 +20,7 @@ public:
     void processNewData(Header header, QByteArray &data);
 
 public slots:
-    void sendMessageToServer(const QString& msg);
+    void sendMessageToServer(const QString& msg, quint16 code);
 
 private:
     TokenList *m_TokenList;

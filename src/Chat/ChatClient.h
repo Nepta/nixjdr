@@ -29,12 +29,7 @@ private:
     QString stripCommandFromMessage(const QString &msg);
 
 public slots:
-    /**
-     * @brief ChatClient::sendMessageToServer   Sends the message to the server in order
-     * to broadcast it to all the users.
-     * @param msg   Reference to the message to send
-     */
-    void sendMessageToServer(const QString &msg);
+    void sendMessageToServer(const QString& msg, quint16 code = Receiver::UNDEFINED_CODE);
 
 signals:
     void sendMessageToChatUi(const QString &msg);

@@ -25,12 +25,27 @@ void ChatClient::processNewData(Header header, QByteArray& data) {
     m_Commands.getServerCommand(code)->execute(header, message.getString());
 }
 
-void ChatClient::sendMessageToServer(const QString &msg) {
-    ChatCodes cmdCode = translateCommandToCode(msg);
-    TargetCode target = TargetCode::CHAT_SERVER;
-    Message strippedMsg(stripCommandFromMessage(msg));
+/**
+ * @brief sendMessageToServer Sends a Message with the given code to the CHAT_SERVER. If the given
+ * code is UNDEFINED, interprets the command given in msg to retrieve the code.
+ * @param msg
+ * @param code
+ */
+void ChatClient::sendMessageToServer(const QString& msg, quint16 code) {
+    quint16 cmdCode;
+    QString strippedMsg;
+    if (code == (quint16) ChatCodes::UNDEFINED) {
+        cmdCode = (quint16) translateCommandToCode(msg);
+        strippedMsg = stripCommandFromMessage(msg);
+    } else {
+        cmdCode = code;
+        strippedMsg = msg;
+    }
 
-    sendPacketToServer((quint16) cmdCode, (quint16) target, strippedMsg);
+    TargetCode target = TargetCode::CHAT_SERVER;
+    Message message(strippedMsg);
+
+    sendPacketToServer(cmdCode, (quint16) target, message);
 }
 
 ChatCodes ChatClient::translateCommandToCode(const QString &msg) {

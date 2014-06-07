@@ -1,7 +1,7 @@
 #include <QGraphicsScene>
 
 #include "Database/Repository/RepositoryManager.h"
-
+#include "Canvas/Network/MapCodes.h"
 #include "FoWLayer.h"
 
 FoWLayer::FoWLayer(int step, bool transparentSprites) :
@@ -91,8 +91,8 @@ void FoWLayer::fillFoW() {
  */
 void FoWLayer::removeFoW() {
     // Notifies all the clients that all the FoW sprites for this layer need to be removed
-    QString msg = QString("removeAllFoW %1").arg(this->id());
-    m_SenderClient->sendMessageToServer(msg);
+    QString msg = QString("%1").arg(this->id());
+    m_SenderClient->sendMessageToServer(msg, (quint16) MapCodes::REMOVE_ALL_FOW);
 
     // Removes the FoW locally
     removeAllSprites();

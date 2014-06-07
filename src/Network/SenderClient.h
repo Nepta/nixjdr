@@ -2,6 +2,7 @@
 #define SENDERCLIENT_H
 
 #include "Serializable/Serializable.h"
+#include "Receiver.h"
 #include "Sender.h"
 
 class SenderClient : public Sender
@@ -15,7 +16,7 @@ public:
     User *getUser();
 
 public slots:
-    virtual void sendMessageToServer(const QString& msg) = 0;
+    virtual void sendMessageToServer(const QString& msg, quint16 code = Receiver::UNDEFINED_CODE) = 0;
 
 protected:
     User *m_User;

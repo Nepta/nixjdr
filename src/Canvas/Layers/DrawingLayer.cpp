@@ -1,6 +1,5 @@
 #include <QGraphicsScene>
 #include <QBuffer>
-#include <QDebug>
 
 #include "DrawingLayer.h"
 #include "Canvas/Tools/AbstractTool.h"

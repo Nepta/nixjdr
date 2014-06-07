@@ -1,7 +1,7 @@
 #include <QGraphicsScene>
 
 #include "Database/Repository/RepositoryManager.h"
-
+#include "Canvas/Network/MapCodes.h"
 #include "GridLayer.h"
 
 GridLayer::GridLayer(int step)
@@ -55,8 +55,8 @@ void GridLayer::addSprite(TokenItem *tokenItem, QPoint position, int zValue) {
     RepositoryManager::s_SpriteRepository.insertSprite(sprite);
 
     // Notifies every client that a new sprite has been added
-    QString msg = QString("addSprite %1").arg(sprite->id());
-    m_SenderClient->sendMessageToServer(msg);
+    QString msg = QString("%1").arg(sprite->id());
+    m_SenderClient->sendMessageToServer(msg, (quint16) MapCodes::ADD_SPRITE);
 }
 
 /**
@@ -66,8 +66,8 @@ void GridLayer::addSprite(TokenItem *tokenItem, QPoint position, int zValue) {
  */
 void GridLayer::removeSprite(Sprite *sprite) {
     // Notifies all the clients that a Sprite needs to be removed
-    QString msg = QString("removeSprite %1").arg(sprite->id());
-    m_SenderClient->sendMessageToServer(msg);
+    QString msg = QString("%1").arg(sprite->id());
+    m_SenderClient->sendMessageToServer(msg, (quint16) MapCodes::REMOVE_SPRITE);
 
     // Delete the sprite from the layer
     delete sprite;
