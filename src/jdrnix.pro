@@ -183,12 +183,12 @@ HEADERS  += \
     Actions/AbstractAction.h
 
 FORMS    += \
-    TokenMenu.ui \
+    Tooltip.ui \
+    MainWindow.ui \
+    ConnectionHelper.ui \
+    Token/TokenMenu.ui \
     DiceMenu/DiceMenu.ui \
     Chat/ChatWidget.ui \
-    ConnectionHelper.ui \
-    MainWindow.ui \
-    TurnMenu.ui \
-    Map.ui \
-    Tooltip.ui \
+    TurnMenu/TurnMenu.ui \
+    Canvas/Map.ui \
     Canvas/SideMenuWidgets/DrawingMenu.ui
