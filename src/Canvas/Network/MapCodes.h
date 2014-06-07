@@ -1,6 +1,7 @@
 #ifndef MAPCODES_H
 #define MAPCODES_H
 
+#include "Network/Receiver.h"
 #include "QtGlobal"
 
 enum class MapCodes : quint16 {

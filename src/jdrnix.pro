@@ -173,6 +173,7 @@ HEADERS  += \
     Token/TokenItem.h \
     Token/Network/TokenMenuClient.h \
     Token/Network/TokenMenuServer.h \
+    Token/Network/TokenCodes.h \
     TurnMenu/TurnList.h \
     TurnMenu/TurnMenu.h \
     Canvas/Tools/ToolPing.h \
