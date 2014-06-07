@@ -122,3 +122,19 @@ DBItem Database::pullFirst(QSqlQuery query) {
 
     return item;
 }
+
+/**
+ * @brief Database::begin Starts a transaction.
+ * @return Returns true if the operation succeded, false otherwise.
+ */
+bool Database::begin() {
+    return db_.transaction();
+}
+
+/**
+ * @brief Database::commit Commits a transaction.
+ * @return Returns true if the operation succeded, false otherwise.
+ */
+bool Database::commit() {
+    return db_.commit();
+}

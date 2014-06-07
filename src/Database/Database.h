@@ -25,6 +25,8 @@ public:
     int pushPreparedWithId(QSqlQuery query);
     QList<DBItem> pull(QSqlQuery query);
     DBItem pullFirst(QSqlQuery query);
+    bool begin();
+    bool commit();
 
 private:
     Database(const QString dbName, const QString& serverAddress, const int &serverPort);

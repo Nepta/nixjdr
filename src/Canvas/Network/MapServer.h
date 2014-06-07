@@ -14,8 +14,8 @@ public:
     ~MapServer();
     void processNewData(Header header, QByteArray& data);
 
-private:
-    void removeAllFoWAction(const QString& msg);
+/*private:
+    void removeAllFoWAction(const QString& msg);*/
 };
 
 #endif // MAPSERVER_H

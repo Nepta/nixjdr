@@ -78,11 +78,13 @@ bool FoWLayer::sceneEventFilter(QGraphicsItem *watched, QEvent *event) {
 void FoWLayer::fillFoW() {
     removeFoW();
 
+    Database::instance()->begin();
     for(int i = 0 ; i < boundingRect().width() ; i += m_Step) {
         for(int j = 0 ; j < boundingRect().height() ; j += m_Step) {
             GridLayer::addSprite(m_TokenItem, QPoint(i, j));
         }
     }
+    Database::instance()->commit();
 }
 
 /**
@@ -93,6 +95,9 @@ void FoWLayer::removeFoW() {
     // Notifies all the clients that all the FoW sprites for this layer need to be removed
     QString msg = QString("%1").arg(this->id());
     m_SenderClient->sendMessageToServer(msg, (quint16) MapCodes::REMOVE_ALL_FOW);
+
+    // Remove all the FoW Sprites for this layer from the db
+    RepositoryManager::s_SpriteRepository.removeAllSpritesFromFoWLayer(this->id());
 
     // Removes the FoW locally
     removeAllSprites();

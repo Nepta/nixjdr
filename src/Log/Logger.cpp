@@ -34,6 +34,6 @@ void Logger::processNewData(Header header, QByteArray &data){
 		log->setMessage(data);
 		log->setHeader(header);
 		push(log);
-		qDebug() << log->toString();
+        //qDebug() << log->toString();
 	}
 }
