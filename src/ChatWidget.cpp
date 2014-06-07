@@ -67,7 +67,7 @@ void ChatWidget::rollDice(QString dice, bool hidden){
     QString msg = QString("/roll %1").arg(dice);
 
     if (hidden) {
-        msg += QString(" | %2").arg(m_SenderClient->getUser()->getNickname());
+        msg += QString(" |%1").arg(m_SenderClient->getUser()->getNickname());
     }
 
     m_SenderClient->sendMessageToServer(msg);

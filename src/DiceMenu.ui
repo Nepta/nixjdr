@@ -165,7 +165,7 @@
               </size>
              </property>
              <property name="text">
-              <string>Annuler</string>
+              <string>Réinitialiser</string>
              </property>
             </widget>
            </item>
