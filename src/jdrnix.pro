@@ -140,6 +140,7 @@ HEADERS  += \
     Canvas/SideMenuWidgets/DrawingMenu.h \
     Canvas/Network/MapClient.h \
     Canvas/Network/MapServer.h \
+    Canvas/Network/MapCodes.h \
     Network/Switch.h \
     Network/SwitchServer.h \
     Network/SwitchClient.h \

@@ -5,18 +5,7 @@
 #include "Network/Receiver.h"
 #include "Token/TokenList.h"
 #include "Canvas/Map.h"
-
-class Map;
-
-// TODO MapCodes dans actions.h
-enum class MapCodes : quint16 {
-    UNDEFINED = Receiver::UNDEFINED_CODE,
-
-    OPEN_MAP,
-    ADD_SPRITE,
-    REMOVE_SPRITE,
-    REMOVE_ALL_FOW
-};
+#include "MapCodes.h"
 
 class MapClient : public SenderClient, public Receiver
 {

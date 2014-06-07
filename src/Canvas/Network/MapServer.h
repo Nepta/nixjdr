@@ -3,8 +3,7 @@
 
 #include "Network/SenderServer.h"
 #include "Network/Receiver.h"
-
-#include "MapClient.h" // TODO MapCodes should be elsewhere
+#include "MapCodes.h"
 
 class MapServer : public SenderServer, public Receiver
 {
