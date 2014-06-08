@@ -9,8 +9,7 @@ ToolPen::ToolPen(QGraphicsItem *drawingItem, int penSize, QColor color):
     m_LineItem(drawingItem)
 {}
 
-ToolPen::~ToolPen()
-{}
+ToolPen::~ToolPen() {}
 
 void ToolPen::setSize(int size){
     m_PenSize = size;
@@ -32,45 +31,46 @@ void ToolPen::paintOnPixmap(QPainter &painter, const QPointF &oldPos, const QPoi
     }
 }
 
-
 bool ToolPen::sceneEventFilter(QGraphicsItem *, QEvent *event){
     bool eventFiltered = false;
+
+    QGraphicsSceneMouseEvent *mouseEvent = dynamic_cast<QGraphicsSceneMouseEvent*>(event);
+    QKeyEvent *keyEvent = dynamic_cast<QKeyEvent*>(event);
+
     switch (event->type()) {
         case QEvent::GraphicsSceneMousePress:{
-            pressMouse(static_cast<QGraphicsSceneMouseEvent*>(event));
+            pressMouse(mouseEvent);
             eventFiltered = true;
-            AbstractTool::updateDisplay();
-        }
-            break;
+        } break;
+
         case QEvent::GraphicsSceneMouseMove	:{
-            moveMouse(static_cast<QGraphicsSceneMouseEvent*>(event));
+            moveMouse(mouseEvent);
             eventFiltered = true;
-            AbstractTool::updateDisplay();
-        }
-            break;
+        } break;
+
         case QEvent::GraphicsSceneMouseRelease: {
-            releaseMouse(static_cast<QGraphicsSceneMouseEvent*>(event));
+            releaseMouse(mouseEvent);
             eventFiltered = true;
-            AbstractTool::updateDisplay();
-        }
-            break;
+        } break;
+
         case QEvent::KeyPress: {
-            pressKey((QKeyEvent*)(event));
+            pressKey(keyEvent);
             eventFiltered = true;
-        }
-            break;
+        } break;
+
         case QEvent::KeyRelease: {
-            releaseKey((QKeyEvent*)(event));
+            releaseKey(keyEvent);
             eventFiltered = true;
-            AbstractTool::updateDisplay();
-        }
-            break;
-        default:
-            break;
-        }
-    if(eventFiltered){
+        } break;
+
+        default: break;
+    }
+
+    if (eventFiltered) {
+        AbstractTool::updateDisplay();
         event->accept();
     }
+
     return eventFiltered;
 }
 
@@ -78,6 +78,7 @@ void ToolPen::pressMouse(QGraphicsSceneMouseEvent *mouseEvent){
     if(mouseEvent->button() == Qt::LeftButton){
         m_DrawStartPosition = mouseEvent->pos();
         m_DrawLastPosition = mouseEvent->pos();
+
         m_LineItem.setLine(QLineF(m_DrawStartPosition, m_DrawStartPosition));
         paintOnPixmap(m_DrawStartPosition, m_DrawStartPosition, m_Color);
     }
@@ -112,20 +113,21 @@ void ToolPen::pressKey(QKeyEvent *keyEvent){
         paintOnPixmap(m_LineItem.line().p1(), m_LineItem.line().p2(), m_Color);
         m_DrawStartPosition = m_DrawLastPosition;
         keyEvent->accept();
-        }
-    else{
+    }
+    else {
         keyEvent->ignore();
     }
 }
 
 void ToolPen::releaseKey(QKeyEvent *keyEvent){
-    if(keyEvent->key() == Qt::Key_Shift){
+    if (keyEvent->key() == Qt::Key_Shift && m_LineItem.isVisible()) {
         m_LineItem.hide();
         paintOnPixmap(m_LineItem.line().p1(), m_LineItem.line().p2(), m_Color);
+
         m_LineItem.setEnabled(false);
         keyEvent->accept();
     }
-    else{
+    else {
         keyEvent->ignore();
     }
 }
