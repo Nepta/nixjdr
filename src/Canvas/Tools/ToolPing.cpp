@@ -8,6 +8,7 @@ ToolPing::ToolPing(QGraphicsScene *scene, QString gifPath):
     m_Gif = new QLabel();
     m_Movie = new QMovie(m_GifPath);
     m_Gif->setMovie(m_Movie);
+    m_Gif->setAttribute(Qt::WA_TranslucentBackground);
     m_Proxy = m_Scene->addWidget(m_Gif);
     m_Proxy->hide();
 }
@@ -23,7 +24,10 @@ void ToolPing::ping(QPointF pos){
     if(!m_Pinging){
         emit sendPing(pos);
 
-        m_Proxy->setGeometry(QRectF(pos, QSizeF(32, 32)));
+        QRectF rect(pos, QSizeF(32, 32));
+        rect.moveCenter(pos);
+
+        m_Proxy->setGeometry(rect);
         m_Movie->start();
         m_Proxy->show();
         m_Pinging = true;

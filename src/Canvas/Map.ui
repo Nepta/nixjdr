@@ -377,11 +377,11 @@
   </connection>
  </connections>
  <buttongroups>
+  <buttongroup name="m_EditGroup"/>
   <buttongroup name="m_DisplayGroup">
    <property name="exclusive">
     <bool>false</bool>
    </property>
   </buttongroup>
-  <buttongroup name="m_EditGroup"/>
  </buttongroups>
 </ui>
