@@ -5,11 +5,13 @@
 #include <QMovie>
 #include <QGraphicsScene>
 #include <QGraphicsProxyWidget>
+#include <QPointF>
 
 #include "AbstractTool.h"
 
 class ToolPing : public AbstractTool
 {
+    Q_OBJECT
 public:
     ToolPing(QGraphicsScene *scene, QString gifPath);
     ~ToolPing();
@@ -17,7 +19,7 @@ public:
     void setSize(int);
     bool sceneEventFilter(QGraphicsItem *, QEvent *event);
 
-    void ping(QPointF);
+    void ping(QPointF pos);
 
 private:
     QGraphicsScene *m_Scene;
@@ -30,6 +32,9 @@ private:
 
     void pressMouse(QGraphicsSceneMouseEvent *mouseEvent);
     void timerEvent(QTimerEvent *timerEvent);
+
+signals:
+    void sendPing(QPointF pos);
 
 };
 

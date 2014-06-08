@@ -1,6 +1,7 @@
 #include "Database/Repository/RepositoryManager.h"
 #include "Network/Serializable/Message.h"
 #include "Network/Switch.h"
+#include "Canvas/Tools/ToolPing.h"
 #include "MapClient.h"
 #include "Common.h"
 
@@ -30,6 +31,9 @@ void MapClient::processNewData(Header header, QByteArray& data) {
     }
     else if (code == MapCodes::UPDATE_DRAWING_LAYER_PIXMAP) {
         updateDrawingLayerPixmapAction(msg.getString());
+    }
+    else if (code == MapCodes::PING) {
+        pingAction(msg.getString());
     }
 }
 
@@ -148,6 +152,21 @@ void MapClient::updateDrawingLayerPixmapAction(const QString& msg) {
         // Sets the new pixmap to the DrawingLayer
         map->getDrawingLayer()->setPixmap(pixmap);
         map->getDrawingLayer()->updateDisplay();
+    }
+}
+
+void MapClient::pingAction(const QString& msg) {
+    QString temp = msg;
+    int drawingLayerId = Common::extractFirstWord(temp).toInt();
+    qreal x = Common::extractFirstWord(temp).toDouble();
+    qreal y = Common::extractFirstWord(temp).toDouble();
+
+     Map *map = getMapByDrawingLayerId(drawingLayerId);
+    if (map != NULL) {
+        ToolPing *toolPing = dynamic_cast<ToolPing*>(
+            map->getDrawingLayer()->getTools()->getTool(ToolCodes::TOOL_PING)
+        );
+        toolPing->ping(QPointF(x, y));
     }
 }
 

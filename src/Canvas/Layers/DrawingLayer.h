@@ -46,6 +46,7 @@ private:
 
 private slots:
     void updateDisplayRemote();
+    void sendPing(QPointF pos);
 };
 
 #endif // DRAWINGLAYER_H

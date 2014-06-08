@@ -3,6 +3,7 @@
 
 #include "Database/Repository/RepositoryManager.h"
 #include "Canvas/Tools/AbstractTool.h"
+#include "Canvas/Tools/ToolPing.h"
 #include "Canvas/Network/MapCodes.h"
 #include "DrawingLayer.h"
 
@@ -79,6 +80,9 @@ void DrawingLayer::initDrawingZone(bool newPixmap) {
         connect(tool, SIGNAL(updateDisplay()), this, SLOT(updateDisplay()));
     }
 
+    ToolPing *toolPing = dynamic_cast<ToolPing*>(m_Tools->getTool(ToolCodes::TOOL_PING));
+    connect(toolPing, SIGNAL(sendPing(QPointF)), this, SLOT(sendPing(QPointF)));
+
     this->installSceneEventFilter(this);
     m_OldTool = m_Tools->getCurrentTool();
     this->installSceneEventFilter(m_Tools->getCurrentTool());
@@ -127,4 +131,13 @@ void DrawingLayer::updateDisplayRemote() {
 void DrawingLayer::setPixmap(QPixmap *pixmap) {
     delete m_Pixmap;
     m_Pixmap = pixmap;
+}
+
+/**
+ * @brief DrawingLayer::sendPing Sends a ping to all the clients.
+ * @param pos
+ */
+void DrawingLayer::sendPing(QPointF pos) {
+    QString msg = QString("%1 %2 %3").arg(this->id()).arg(pos.x()).arg(pos.y());
+    m_SenderClient->sendMessageToServer(msg, (quint16) MapCodes::PING);
 }

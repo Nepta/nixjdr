@@ -21,6 +21,8 @@ void ToolPing::setSize(int){}
 
 void ToolPing::ping(QPointF pos){
     if(!m_Pinging){
+        emit sendPing(pos);
+
         m_Proxy->setGeometry(QRectF(pos, QSizeF(32, 32)));
         m_Movie->start();
         m_Proxy->show();

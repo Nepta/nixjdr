@@ -31,6 +31,7 @@ private:
     void removeSpriteAction(const QString& msg);
     void removeAllFoWAction(const QString& msg);
     void updateDrawingLayerPixmapAction(const QString& msg);
+    void pingAction(const QString& msg);
 
     Map *getMapById(int mapId);
     Map *getMapByMapLayerId(int mapLayerId);
