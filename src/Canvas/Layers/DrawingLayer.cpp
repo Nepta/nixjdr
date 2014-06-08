@@ -29,7 +29,7 @@ DrawingLayer::DrawingLayer(DBItem item) {
 DrawingLayer::~DrawingLayer() {
     AbstractTool::setPixmap(NULL);
     delete m_Pixmap;
-    AbstractTool::setDrawingZone(NULL);
+
     delete m_DrawingZone;
     delete m_Tools;
 }
@@ -71,10 +71,10 @@ void DrawingLayer::initDrawingZone(bool newPixmap) {
     m_Tools = new Tools(this, m_PenSize, m_Color, m_EraserSize, this, this->scene());
 
     AbstractTool::setPixmap(m_Pixmap);
-    AbstractTool::setDrawingZone(m_DrawingZone);
 
-    foreach (ToolCodes code, m_Tools->s_ToolCodesMap.values()) {
-        this->scene()->addItem(m_Tools->getTool(code));
+    foreach (AbstractTool *tool, m_Tools->getTools()) {
+        this->scene()->addItem(tool);
+        connect(tool, SIGNAL(updateDisplay()), this, SLOT(updateDisplay()));
     }
 
     this->installSceneEventFilter(this);
@@ -98,7 +98,13 @@ void DrawingLayer::erasePixmapContent() {
 
 
 bool DrawingLayer::sceneEventFilter(QGraphicsItem *watched, QEvent *event){
-    AbstractTool::setDrawingZone(m_DrawingZone);
     AbstractTool::setPixmap(m_Pixmap);
     return AbstractLayer::sceneEventFilter(watched, event);
+}
+
+/**
+ * @brief AbstractTool::updateDisplay Updates the drawing zone.
+ */
+void DrawingLayer::updateDisplay() {
+    m_DrawingZone->setPixmap(*m_Pixmap);
 }

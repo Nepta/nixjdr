@@ -67,7 +67,7 @@ bool ToolPen::sceneEventFilter(QGraphicsItem *, QEvent *event){
     }
 
     if (eventFiltered) {
-        AbstractTool::updateDisplay();
+        emit AbstractTool::updateDisplay();
         event->accept();
     }
 

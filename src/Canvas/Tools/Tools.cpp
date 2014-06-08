@@ -26,6 +26,10 @@ Tools::~Tools(){
     qDeleteAll(m_ToolsMap);
 }
 
+QList<AbstractTool*> Tools::getTools() {
+    return m_ToolsMap.values();
+}
+
 AbstractTool *Tools::getTool(ToolCodes code){
     return m_ToolsMap.value(code);
 }

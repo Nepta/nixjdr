@@ -42,6 +42,9 @@ private:
     AbstractTool *m_OldTool;
 
     bool sceneEventFilter(QGraphicsItem *watched, QEvent *event);
+
+private slots:
+    void updateDisplay();
 };
 
 #endif // DRAWINGLAYER_H

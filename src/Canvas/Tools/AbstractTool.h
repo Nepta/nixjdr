@@ -14,9 +14,6 @@ class AbstractTool : public QGraphicsObject
 public:
     static QPixmap *getPixmap();
     static void setPixmap(QPixmap *pixmap);
-    static QGraphicsPixmapItem *getDrawingZone();
-    static void setDrawingZone(QGraphicsPixmapItem *drawingZone);
-
 
     AbstractTool() {}
     virtual ~AbstractTool(){}
@@ -27,13 +24,13 @@ public:
     virtual void setSize(int size) = 0;
 
 protected:
-    virtual void updateDisplay();
-
-    virtual bool sceneEventFilter(QGraphicsItem *watched, QEvent *event) =0;
+    virtual bool sceneEventFilter(QGraphicsItem *watched, QEvent *event) = 0;
 
 private:
     static QPixmap *s_Pixmap;
-    static QGraphicsPixmapItem *s_DrawingZone;
+
+signals:
+    void updateDisplay();
 
 };
 

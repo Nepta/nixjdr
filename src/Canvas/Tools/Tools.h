@@ -25,6 +25,7 @@ public:
                    int eraserSize = 0, QGraphicsItem *drawingItem =0, QGraphicsScene *scene =0);
     ~Tools();
 
+    QList<AbstractTool *> getTools();
     AbstractTool *getTool(ToolCodes code);
     AbstractTool *getCurrentTool();
 
