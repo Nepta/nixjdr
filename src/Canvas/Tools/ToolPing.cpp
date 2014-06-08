@@ -6,7 +6,7 @@ ToolPing::ToolPing(QGraphicsScene *scene, QString gifPath):
     m_GifPath(gifPath)
 {
     m_Gif = new QLabel();
-    m_Movie = new QMovie("resource/gifs/ping/pingSuwako.gif");
+    m_Movie = new QMovie(m_GifPath);
     m_Gif->setMovie(m_Movie);
     m_Proxy = m_Scene->addWidget(m_Gif);
     m_Proxy->hide();

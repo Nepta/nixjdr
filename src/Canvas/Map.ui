@@ -88,9 +88,18 @@
    </item>
    <item>
     <widget class="QScrollArea" name="scrollArea">
+     <property name="enabled">
+      <bool>true</bool>
+     </property>
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="MinimumExpanding" vsizetype="Expanding">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
      <property name="minimumSize">
       <size>
-       <width>350</width>
+       <width>0</width>
        <height>0</height>
       </size>
      </property>
@@ -100,15 +109,21 @@
        <height>16777215</height>
       </size>
      </property>
+     <property name="verticalScrollBarPolicy">
+      <enum>Qt::ScrollBarAsNeeded</enum>
+     </property>
+     <property name="horizontalScrollBarPolicy">
+      <enum>Qt::ScrollBarAlwaysOff</enum>
+     </property>
      <property name="widgetResizable">
-      <bool>true</bool>
+      <bool>false</bool>
      </property>
      <widget class="QWidget" name="collapsibleWidget">
       <property name="geometry">
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>348</width>
+        <width>209</width>
         <height>513</height>
        </rect>
       </property>
@@ -224,6 +239,12 @@
          <widget class="DrawingMenu" name="m_PageDrawingTools"/>
          <widget class="QWidget" name="m_PageMapTools">
           <layout class="QVBoxLayout" name="verticalLayout_9">
+           <property name="leftMargin">
+            <number>0</number>
+           </property>
+           <property name="rightMargin">
+            <number>0</number>
+           </property>
            <item>
             <widget class="QGroupBox" name="m_MapTools">
              <property name="title">
@@ -271,6 +292,12 @@
          </widget>
          <widget class="QWidget" name="m_PageFoWTools">
           <layout class="QVBoxLayout" name="verticalLayout_6">
+           <property name="leftMargin">
+            <number>0</number>
+           </property>
+           <property name="rightMargin">
+            <number>0</number>
+           </property>
            <item>
             <widget class="QGroupBox" name="m_FoWTools">
              <property name="title">
@@ -350,11 +377,11 @@
   </connection>
  </connections>
  <buttongroups>
-  <buttongroup name="m_EditGroup"/>
   <buttongroup name="m_DisplayGroup">
    <property name="exclusive">
     <bool>false</bool>
    </property>
   </buttongroup>
+  <buttongroup name="m_EditGroup"/>
  </buttongroups>
 </ui>
