@@ -14,3 +14,11 @@ int DrawingLayerRepository::insertDrawingLayer(DrawingLayer *drawingLayer) {
 
     return id;
 }
+
+void DrawingLayerRepository::updateDrawingLayer(DrawingLayer *drawingLayer) {
+    QHash<QString, QVariant> args {
+        {"pixmap", drawingLayer->getPixmapData()}
+    };
+
+    updateById(drawingLayer->id(), args);
+}

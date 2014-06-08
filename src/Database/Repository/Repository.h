@@ -20,12 +20,14 @@ public:
 
     virtual const QString getTableName() = 0;
 
+    QueryBuilder updateByIdQB(int id, QList<QString> cols);
     QueryBuilder findByIdQB(int id);
     QueryBuilder deleteByIdQb(int id);
     QueryBuilder findAllQB();
     QueryBuilder insertQB(QList<QString> cols);
 
     DBItem findById(int id);
+    void updateById(int id, QHash<QString, QVariant> pBindValues);
     int insert(DBItem *item, QueryBuilder qb, QHash<QString, QVariant> pBindValues);
     int insertIntoDefault(DBItem *item);
     void deleteById(int id);

@@ -1,8 +1,10 @@
 #include <QGraphicsScene>
 #include <QBuffer>
 
-#include "DrawingLayer.h"
+#include "Database/Repository/RepositoryManager.h"
 #include "Canvas/Tools/AbstractTool.h"
+#include "Canvas/Network/MapCodes.h"
+#include "DrawingLayer.h"
 
 DrawingLayer::DrawingLayer(int penSize, int eraserSize, QColor color):
     m_PenSize(penSize),
@@ -93,7 +95,7 @@ void DrawingLayer::changeTool(){
 
 void DrawingLayer::erasePixmapContent() {
     m_Pixmap->fill(Qt::transparent);
-    m_DrawingZone->setPixmap(*m_Pixmap);
+    updateDisplay();
 }
 
 
@@ -107,4 +109,22 @@ bool DrawingLayer::sceneEventFilter(QGraphicsItem *watched, QEvent *event){
  */
 void DrawingLayer::updateDisplay() {
     m_DrawingZone->setPixmap(*m_Pixmap);
+}
+
+/**
+ * @brief DrawingLayer::updateDisplayRemote Sends the modification made to the drawing zone to the
+ * database and the remote clients.
+ */
+void DrawingLayer::updateDisplayRemote() {
+    // Update this layer's pixmap in the database
+    RepositoryManager::s_DrawingLayerRepository.updateDrawingLayer(this);
+
+    // Notifies all the clients to update their pixmap for this layer
+    QString msg = QString("%1").arg(this->id());
+    m_SenderClient->sendMessageToServer(msg, (quint16) MapCodes::UPDATE_DRAWING_LAYER_PIXMAP);
+}
+
+void DrawingLayer::setPixmap(QPixmap *pixmap) {
+    delete m_Pixmap;
+    m_Pixmap = pixmap;
 }

@@ -10,7 +10,8 @@ enum class MapCodes : quint16 {
     OPEN_MAP,
     ADD_SPRITE,
     REMOVE_SPRITE,
-    REMOVE_ALL_FOW
+    REMOVE_ALL_FOW,
+    UPDATE_DRAWING_LAYER_PIXMAP
 };
 
 #endif // MAPCODES_H

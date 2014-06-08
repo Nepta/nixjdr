@@ -16,7 +16,6 @@ class DrawingLayer : public AbstractLayer
     Q_OBJECT
 
 public:
-
     DrawingLayer(int penSize, int eraserSize, QColor color);
     DrawingLayer(DBItem item);
     ~DrawingLayer();
@@ -24,12 +23,14 @@ public:
     QByteArray getPixmapData();
     void initDrawingZone(bool newPixmap = true);
     Tools *getTools();
+    void setPixmap(QPixmap *pixmap);
 
 public slots:
     void setPenSize(int size);
     void setEraserSize(int size);
     void erasePixmapContent();
     void changeTool();
+    void updateDisplay();
 
 private:
     int m_PenSize;
@@ -44,7 +45,7 @@ private:
     bool sceneEventFilter(QGraphicsItem *watched, QEvent *event);
 
 private slots:
-    void updateDisplay();
+    void updateDisplayRemote();
 };
 
 #endif // DRAWINGLAYER_H

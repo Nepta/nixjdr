@@ -25,6 +25,22 @@ QueryBuilder *QueryBuilder::select(QString arg) {
     return this;
 }
 
+QueryBuilder *QueryBuilder::update(QString table, QStringList cols) {
+    QStringList formattedCols;
+
+    for (QString col : cols) {
+        formattedCols.append(col + " = :" + col);
+    }
+
+    QString formattedColsString = formattedCols.join(",");
+
+    query_ = QString("UPDATE %1 SET %2")
+             .arg(table)
+             .arg(formattedColsString);
+
+    return this;
+}
+
 QueryBuilder *QueryBuilder::insertInto(QString table, QStringList cols) {
     QString colsString = cols.join(",");
 

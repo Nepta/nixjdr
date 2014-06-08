@@ -30,10 +30,12 @@ private:
     void addSpriteAction(const QString& msg);
     void removeSpriteAction(const QString& msg);
     void removeAllFoWAction(const QString& msg);
+    void updateDrawingLayerPixmapAction(const QString& msg);
 
     Map *getMapById(int mapId);
     Map *getMapByMapLayerId(int mapLayerId);
     Map *getMapByFoWLayerId(int fowLayerId);
+    Map *getMapByDrawingLayerId(int drawingLayerId);
 
 signals:
     void openMap(Map *map);

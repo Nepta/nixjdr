@@ -109,6 +109,8 @@ void Map::initDrawingTools() {
             drawingLayer, SLOT(setEraserSize(int)));
     connect(drawingUi->m_EraseButton, SIGNAL(clicked(bool)),
             drawingLayer, SLOT(erasePixmapContent()));
+    connect(drawingUi->m_SendButton, SIGNAL(clicked(bool)),
+            drawingLayer, SLOT(updateDisplayRemote()));
 
     for(int i=0; i < drawingUi->m_ToolLayout->count(); i++){
         QPushButton *currentButton = dynamic_cast<QPushButton*>(

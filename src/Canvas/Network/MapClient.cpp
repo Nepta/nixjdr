@@ -28,6 +28,9 @@ void MapClient::processNewData(Header header, QByteArray& data) {
     else if (code == MapCodes::REMOVE_ALL_FOW) {
         removeAllFoWAction(msg.getString());
     }
+    else if (code == MapCodes::UPDATE_DRAWING_LAYER_PIXMAP) {
+        updateDrawingLayerPixmapAction(msg.getString());
+    }
 }
 
 void MapClient::sendMessageToServer(const QString& msg, quint16 code) {
@@ -131,6 +134,23 @@ void MapClient::removeAllFoWAction(const QString& msg) {
     }
 }
 
+void MapClient::updateDrawingLayerPixmapAction(const QString& msg) {
+    int drawingLayerId = msg.toInt();
+    Map *map = getMapByDrawingLayerId(drawingLayerId);
+
+    if (map != NULL) {
+        // Retrieve pixmap from the DrawingLayer stored in the Db
+        DBItem dbItem = RepositoryManager::s_DrawingLayerRepository.findById(drawingLayerId);
+        QByteArray pixmapData = dbItem.getHashMap().value("pixmap").toByteArray();
+        QPixmap *pixmap = new QPixmap;
+        pixmap->loadFromData(pixmapData, "PNG");
+
+        // Sets the new pixmap to the DrawingLayer
+        map->getDrawingLayer()->setPixmap(pixmap);
+        map->getDrawingLayer()->updateDisplay();
+    }
+}
+
 Map *MapClient::getMapById(int mapId) {
     Map *result = NULL;
 
@@ -160,6 +180,18 @@ Map *MapClient::getMapByFoWLayerId(int fowLayerId) {
 
     for (Map *map : m_MapsList) {
         if (map->getFoWLayer()->id() == fowLayerId) {
+            result = map;
+        }
+    }
+
+    return result;
+}
+
+Map *MapClient::getMapByDrawingLayerId(int drawingLayerId) {
+    Map *result = NULL;
+
+    for (Map *map : m_MapsList) {
+        if (map->getDrawingLayer()->id() == drawingLayerId) {
             result = map;
         }
     }

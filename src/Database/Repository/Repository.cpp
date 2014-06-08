@@ -49,11 +49,46 @@ QueryBuilder Repository::insertQB(QList<QString> cols) {
     return qb;
 }
 
+/**
+ * @brief Repository::updateByIdQB Constructs a query to update a row identified by its ID in the
+ * child's Repository associated table.
+ * @param id Id of the row to update.
+ * @param cols Columns to update.
+ */
+QueryBuilder Repository::updateByIdQB(int id, QList<QString> cols) {
+    QueryBuilder qb;
+    qb.update(getTableName(), QStringList(cols));
+    qb.where("id = " + QString::number(id));
+
+    return qb;
+}
+
+/**
+ * @brief Repository::findById Constructs a query to find a row by its ID in the child's Repository
+ * associated table.
+ * @param id Id of the row to find.
+ * @return DBItem filled with the retrieved row columns.
+ */
 DBItem Repository::findById(int id) {
     QueryBuilder qb = findByIdQB(id);
 
     DBItem dbItem = Database::instance()->pullFirst(qb.getQuery());
     return dbItem;
+}
+
+/**
+ * @brief Repository::updateById Updates the row associated with the given id in the database. The
+ * new values are in the pBindValues Qhash.
+ * @param id Id of the row to update.
+ * @param pBindValues Columns to update with their new values.
+ */
+void Repository::updateById(int id, QHash<QString, QVariant> pBindValues) {
+    QueryBuilder qb = updateByIdQB(id, pBindValues.keys());
+    QSqlQuery query = qb.getPreparedQuery();
+
+    bindValues(&query, pBindValues);
+
+    Database::instance()->push(query);
 }
 
 /**

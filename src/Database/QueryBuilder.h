@@ -12,6 +12,7 @@ public:
     ~QueryBuilder();
 
     QueryBuilder *select(QString arg);
+    QueryBuilder *update(QString table, QStringList cols);
     QueryBuilder *insertInto(QString table, QStringList cols);
     QueryBuilder *insertIntoDefault(QString table);
     QueryBuilder *from(QString from, QString alias = "");

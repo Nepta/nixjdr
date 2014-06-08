@@ -124,6 +124,13 @@
           </property>
          </widget>
         </item>
+        <item>
+         <widget class="QPushButton" name="m_SendButton">
+          <property name="text">
+           <string>Envoyer</string>
+          </property>
+         </widget>
+        </item>
        </layout>
       </item>
      </layout>

@@ -14,6 +14,7 @@ MapServer::~MapServer() {}
 
 void MapServer::processNewData(Header header, QByteArray& data) {
     Message message(data);
+
     /*MapCodes code = (MapCodes) header.getCode();
 
     if (code == MapCodes::REMOVE_ALL_FOW) {
