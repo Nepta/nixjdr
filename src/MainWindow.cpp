@@ -159,9 +159,8 @@ void MainWindow::on_actionOpenMap_triggered() {
     openMapWidget.exec();
 
     if (mapId != 0) {
-        Map *map = RepositoryManager::s_MapRepository.findMapById(mapId);
-
-        QListWidget *tokenList = ui->tokenPage->getUi()->m_tokenList;
+        TokenList *tokenList = ui->tokenPage->getUi()->m_tokenList;
+        Map *map = RepositoryManager::s_MapRepository.findMapById(mapId, tokenList);
         map->getMapLayer()->setTokenItem(tokenList->currentItem());
 
         openMap(map, true);

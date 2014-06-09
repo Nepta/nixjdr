@@ -54,7 +54,7 @@ void MapClient::removeMapFromList(Map *map) {
 
 void MapClient::openMapAction(const QString& msg) {
     int mapId = msg.toInt();
-    Map *map = RepositoryManager::s_MapRepository.findMapById(mapId);
+    Map *map = RepositoryManager::s_MapRepository.findMapById(mapId, m_TokenList);
     map->getMapLayer()->setTokenItem(m_TokenList->currentItem());
 
     emit openMap(map);
