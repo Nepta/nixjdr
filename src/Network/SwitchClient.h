@@ -4,6 +4,7 @@
 #include "Database/Database.h"
 #include "Token/TokenList.h"
 #include "Token/TokenMenu.h"
+#include "TurnMenu/TurnMenu.h"
 #include "Switch.h"
 #include "User.h"
 
@@ -12,7 +13,7 @@ class SwitchClient : public Switch
     Q_OBJECT
 
 public:
-    SwitchClient(User *user, TokenMenu *tokenMenu);
+    SwitchClient(User *user, TokenMenu *tokenMenu, TurnMenu *turnMenu);
     ~SwitchClient();
 
    /**

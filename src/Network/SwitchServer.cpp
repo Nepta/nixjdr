@@ -1,6 +1,7 @@
 #include "Canvas/Network/MapServer.h"
 #include "Chat/ChatServer.h"
 #include "Token/Network/TokenMenuServer.h"
+#include "TurnMenu/Network/TurnMenuServer.h"
 #include "Log/Logger.h"
 #include "SwitchServer.h"
 
@@ -9,6 +10,7 @@ SwitchServer::SwitchServer() {
 
     m_Nodes.insert(TargetCode::CHAT_SERVER, new ChatServer(&m_UsersList));
     m_Nodes.insert(TargetCode::TOKEN_MENU_SERVER, new TokenMenuServer(&m_UsersList));
+    m_Nodes.insert(TargetCode::TURN_MENU_SERVER, new TurnMenuServer(&m_UsersList));
 
     Logger *logger = new Logger();
     m_Nodes.insert(TargetCode::MAP_SERVER, logger);

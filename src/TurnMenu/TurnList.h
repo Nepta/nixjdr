@@ -18,18 +18,23 @@ public:
 
     void selectNextItem();
     void deleteCurrentItems();
-    void addQStringAsItem(QString p_string);
+    void addQStringAsItem(QString p_string, bool update = true);
 
 private slots:
-    void ShowContextMenu(const QPoint& pos);
+    void showContextMenu(const QPoint& pos);
 
 private:
     void keyPressEvent(QKeyEvent *event);
+    void dropEvent(QDropEvent *event);
     void moveItemList(QList<QListWidgetItem*> itemsToMove, bool direction);
     void selectNearestItem(bool direction);
     void moveToItemInDirection(bool direction);
     int directionToInt(bool direction);
     void unselectItems();
+    void updateTurnList();
+
+signals:
+    void updatedTurnList(QString items);
 };
 
 #endif //TURNLIST_H

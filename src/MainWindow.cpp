@@ -9,6 +9,9 @@
 #include "Token/Network/TokenMenuClient.h"
 #include "Token/Network/TokenMenuServer.h"
 
+#include "TurnMenu/Network/TurnMenuClient.h"
+#include "TurnMenu/Network/TurnMenuServer.h"
+
 #include "Canvas/Network/MapClient.h"
 #include "Canvas/Network/MapServer.h"
 #include "Canvas/Layers/MapLayer.h"
@@ -187,12 +190,18 @@ void MainWindow::setupMJ() {
     TokenMenuServer *tokenMenuServer = dynamic_cast<TokenMenuServer*>(tokenMenuServerReceiver);
     ui->tokenPage->setSenderServer(tokenMenuServer);
 
+    // Initialize TurnMenu with the TurnMenuServer
+    Receiver *turnMenuServerReceiver = m_Server->getReceiver(TargetCode::TURN_MENU_SERVER);
+    TurnMenuClient *turnMenuServer = dynamic_cast<TurnMenuClient*>(turnMenuServerReceiver);
+    ui->turnWidget->setSenderClient(turnMenuServer);
+
     setupPlayer();
 }
 
 void MainWindow::setupPlayer() {
     TokenMenu *tokenMenu = ui->tokenPage;
-    m_Client = new SwitchClient(m_User, tokenMenu);
+    TurnMenu *turnMenu = ui->turnWidget;
+    m_Client = new SwitchClient(m_User, tokenMenu, turnMenu);
 
     connect(m_Client, SIGNAL(sendMessageToChatUi(QString)),
             ui->m_ChatWidget, SLOT(receivedMessage(QString))
@@ -212,6 +221,11 @@ void MainWindow::setupPlayer() {
     Receiver *tokenMenuClientReceiver = m_Client->getReceiver(TargetCode::TOKEN_MENU_CLIENT);
     TokenMenuClient *tokenMenuClient = dynamic_cast<TokenMenuClient*>(tokenMenuClientReceiver);
     ui->tokenPage->setSenderClient(tokenMenuClient);
+
+    // Initialize TurnMenu with the TurnMenuClient
+    Receiver *turnMenuClientReceiver = m_Client->getReceiver(TargetCode::TURN_MENU_CLIENT);
+    TurnMenuClient *turnMenuClient = dynamic_cast<TurnMenuClient*>(turnMenuClientReceiver);
+    ui->turnWidget->setSenderClient(turnMenuClient);
 
     /* The dice menu is able to send system messages to the Chat in order to display error messages
      * or warnings */

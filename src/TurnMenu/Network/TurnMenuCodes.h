@@ -7,8 +7,7 @@
 enum class TurnMenuCodes : quint16 {
     UNDEFINED = Receiver::UNDEFINED_CODE,
 
-    ADD_TURN,
-    REMOVE_TURN
+    UPDATE_TURN
 };
 
 #endif // TURNMENUCODES_H

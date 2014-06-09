@@ -20,6 +20,8 @@ public slots:
 
 private:
     TurnMenu *m_TurnMenu;
+
+    void updateTurnAction(const QString& msg);
 };
 
 #endif // TURNMENUCLIENT_H
