@@ -17,7 +17,7 @@ Tools::Tools(QObject *parent, int penSize, QColor color, int eraserSize,
 {
     m_ToolsMap.insert(ToolCodes::TOOL_PEN, new ToolPen(drawingItem, penSize, color));
     m_ToolsMap.insert(ToolCodes::TOOL_ERASER, new ToolEraser(eraserSize));
-    m_ToolsMap.insert(ToolCodes::TOOL_PING, new ToolPing(scene, "resource/gifs/ping/ping.gif"));
+    m_ToolsMap.insert(ToolCodes::TOOL_PING, new ToolPing(scene, "resource/Map/Ping/ping.gif"));
 
     m_CurrentToolCode = ToolCodes::TOOL_PEN;
 }

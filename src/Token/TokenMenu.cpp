@@ -55,7 +55,7 @@ void TokenMenu::on_tokenButton_clicked()
 }
 
 void TokenMenu::addCustomToken(QString text){
-    QString filePath("resource/keroro.png");
+    QString filePath("resource/TokenMenu/keroro.png");
     int size = 32;
     bool custom = true;
     // Check if the list already contains a token with the same text before insertion.
