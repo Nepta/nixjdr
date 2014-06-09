@@ -154,11 +154,18 @@ void MainWindow::on_actionCreateMap_triggered(){
 }
 
 void MainWindow::on_actionOpenMap_triggered() {
-    int mapId;
+    int mapId = 0;
     OpenMapWidget openMapWidget(&mapId);
     openMapWidget.exec();
 
-    // TODO
+    if (mapId != 0) {
+        Map *map = RepositoryManager::s_MapRepository.findMapById(mapId);
+
+        QListWidget *tokenList = ui->tokenPage->getUi()->m_tokenList;
+        map->getMapLayer()->setTokenItem(tokenList->currentItem());
+
+        openMap(map, true);
+    }
 }
 
 void MainWindow::on_actionCreateImage_triggered(){
