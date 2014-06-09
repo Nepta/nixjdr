@@ -19,6 +19,9 @@ enum class TargetCode {
     TOKEN_MENU_SERVER,
     TOKEN_MENU_CLIENT,
 
+    TURN_MENU_SERVER,
+    TURN_MENU_CLIENT,
+
     UNDEFINED
 };
 inline uint qHash(const TargetCode &key) { return qHash((quint16) key); }

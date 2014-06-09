@@ -2,8 +2,6 @@
 #include <QAction>
 
 #include "TurnList.h"
-
-
 TurnList::TurnList(QWidget *parent)
     : QListWidget(parent)
 {
@@ -14,8 +12,15 @@ TurnList::TurnList(QWidget *parent)
     this->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
     //style
-    this->setStyleSheet( "QListWidget::item {background: lightgray; border: 1px solid black; \
-                         selection-background-color: blue;}" );
+    this->setStyleSheet("\
+        QListWidget::item { \
+            background: lightgray; border: 1px solid black; \
+            selection-background-color: blue;\
+        }\
+        QListWidget::item:hover {\
+            background: #CCCCF5;\
+        }\
+    ");
 
     // selection & drag / drop
     this->setSelectionMode(QAbstractItemView::ExtendedSelection);
@@ -23,7 +28,7 @@ TurnList::TurnList(QWidget *parent)
 
     this->setContextMenuPolicy(Qt::CustomContextMenu);
     connect(this, SIGNAL(customContextMenuRequested(const QPoint&)),
-        SLOT(ShowContextMenu(const QPoint&)));
+        SLOT(showContextMenu(const QPoint&)));
 }
 
 TurnList::~TurnList()
@@ -31,15 +36,27 @@ TurnList::~TurnList()
 
 }
 
-void TurnList::addQStringAsItem(QString p_string){
+/**
+ * @brief TurnList::addQStringAsItem Adds an item to the TurnList with the given QString. Sets the
+ * selected item to the one inserted in order to scroll to the end of the list.
+ * @param p_string QString to insert in the TurnList.
+ * @param update Sends a notification that the TurnList has been updated if true, false otherwise.
+ */
+void TurnList::addQStringAsItem(QString p_string, bool update) {
     this->setFocus();
     this->addItem(new QListWidgetItem(p_string));
     this->setCurrentRow(this->count()-1);
     this->item(this->count()-1)->setSelected(false);
+
+    if (update) {
+        updateTurnList();
+    }
 }
 
 void TurnList::deleteCurrentItems(){
     qDeleteAll(this->selectedItems());
+
+    updateTurnList();
 }
 
 void TurnList::selectNextItem(){
@@ -87,6 +104,8 @@ void TurnList::moveItemList(QList<QListWidgetItem*> itemsToMove, bool direction)
             }
         }
     }
+
+    updateTurnList();
 }
 
 void TurnList::selectNearestItem(bool direction){
@@ -108,6 +127,8 @@ void TurnList::moveToItemInDirection(bool direction){
     else{
         this->setCurrentRow(this->currentRow()+move);
     }
+
+    updateTurnList();
 }
 
 int TurnList::directionToInt(bool direction){
@@ -158,8 +179,13 @@ void TurnList::keyPressEvent(QKeyEvent *event){
     }
 }
 
+void TurnList::dropEvent(QDropEvent *event) {
+    QListWidget::dropEvent(event);
 
-void TurnList::ShowContextMenu(const QPoint& pos){
+    updateTurnList();
+}
+
+void TurnList::showContextMenu(const QPoint& pos){
     QPoint globalPos = this->mapToGlobal(pos);
     QString msg;
     QMenu menu;
@@ -170,4 +196,23 @@ void TurnList::ShowContextMenu(const QPoint& pos){
     {
         deleteCurrentItems();
     }
+}
+
+/**
+ * @brief TurnList::updateTurnList Notifies that the TurnList has been updated, and sends all the
+ * items strings.
+ */
+void TurnList::updateTurnList() {
+    QStringList itemStrings;
+    QString result = "";
+
+    for (int i = 0 ; i < count() ; i++) {
+        itemStrings.append(item(i)->text());
+    }
+
+    if (!itemStrings.isEmpty()) {
+        result = itemStrings.join(" ");
+    }
+
+    emit updatedTurnList(result);
 }

@@ -1,10 +1,11 @@
 #include "Canvas/Network/MapClient.h"
 #include "Token/Network/TokenMenuClient.h"
+#include "TurnMenu/Network/TurnMenuClient.h"
 #include "Chat/ChatClient.h"
 #include "SwitchClient.h"
 #include "ui_TokenMenu.h"
 
-SwitchClient::SwitchClient(User *user, TokenMenu *tokenMenu) {
+SwitchClient::SwitchClient(User *user, TokenMenu *tokenMenu, TurnMenu *turnMenu) {
     m_User = user;
     m_UsersList.insert(m_User->getNickname(), m_User);
 
@@ -13,6 +14,7 @@ SwitchClient::SwitchClient(User *user, TokenMenu *tokenMenu) {
                                                          tokenMenu->getUi()->m_tokenList)
     );
     m_Nodes.insert(TargetCode::TOKEN_MENU_CLIENT, new TokenMenuClient(m_User, &m_UsersList, tokenMenu));
+    m_Nodes.insert(TargetCode::TURN_MENU_CLIENT, new TurnMenuClient(m_User, & m_UsersList, turnMenu));
 
     connect(m_User, SIGNAL(receivedFullData(Header, QByteArray)),
             this, SLOT(switchNewMessage(Header, QByteArray)));
