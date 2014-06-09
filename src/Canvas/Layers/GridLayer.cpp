@@ -168,9 +168,10 @@ void GridLayer::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent) {
 
     QGraphicsItem *item = scene()->itemAt(mouseEvent->pos(), QTransform());
     Sprite *sprite = dynamic_cast<Sprite*>(item);
+    AbstractLayer *layer =dynamic_cast<AbstractLayer *>(item);
 
     if (mouseEvent->buttons() & Qt::LeftButton) {
-        if (!sprite && isInScene(mouseEvent)) {
+        if (isInScene(mouseEvent) && layer) {
             addSprite(m_TokenItem, mouseScenePos, 1);
         }
     }
@@ -181,7 +182,7 @@ void GridLayer::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent) {
             return;
         }
 
-        if (sprite && m_LastRemovedSpritePoint != sprite->scenePos()) { // TODO timer or boolean to slow down the deletion
+        if (sprite && m_LastRemovedSpritePoint != sprite->scenePos()) {
             m_LastRemovedSpritePoint = sprite->scenePos();
             removeSprite(sprite);
         }
