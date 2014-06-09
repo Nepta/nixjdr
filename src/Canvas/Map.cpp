@@ -237,7 +237,6 @@ void Map::selectedDisplayLayer(QAbstractButton *button, bool checked) {
 
     if (selectedLayer != NULL) {
         selectedLayer->setVisible(checked);
-        selectedLayer->setEnabled(true);
         ui->m_View->scene()->update(); // update the background part of the Scene
     }
 }
