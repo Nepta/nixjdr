@@ -180,6 +180,7 @@ HEADERS  += \
     TurnMenu/TurnMenu.h \
     TurnMenu/Network/TurnMenuClient.h \
     TurnMenu/Network/TurnMenuServer.h \
+    TurnMenu/Network/TurnMenuCodes.h \
     Canvas/Tools/ToolPing.h \
     Log/Logger.h \
     Log/Log.h \
