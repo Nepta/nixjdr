@@ -23,7 +23,7 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>Form</string>
+   <string>Création d'une carte</string>
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout_3">
    <item>

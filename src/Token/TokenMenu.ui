@@ -50,7 +50,11 @@
        <item>
         <widget class="QPushButton" name="tokenButton">
          <property name="text">
-          <string>Ajouter</string>
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset>
+           <normaloff>resource/General/add.png</normaloff>resource/General/add.png</iconset>
          </property>
         </widget>
        </item>
