@@ -5,6 +5,8 @@
 
 class CmdNickname : public AbstractCmd
 {
+    Q_OBJECT
+
 public:
     CmdNickname();
 
@@ -45,6 +47,13 @@ public:
      * @param isNew
      */
     void updateClientsUsersList(QString oldNickname, QString checkedNickname, bool isOwner, bool isNew);
+
+signals:
+    /**
+     * @brief addPlayerToInterface signals that a new player, whose nickname does not start by "guest",
+     * is to be added to the interface (e.g. in turnMenu & tokenMenu)
+     */
+    void addPlayerToInterface(QString);
 };
 
 #endif // CmdNickname_H

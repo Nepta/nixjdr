@@ -21,6 +21,7 @@ public:
 
     QWidget *getDiceWidget();
     void setTurnList(QStringList turnItems);
+    TurnList *getTurnList();
 
 private slots:
     void on_addItemEdit_returnPressed();

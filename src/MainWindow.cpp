@@ -4,6 +4,8 @@
 #include <QDesktopWidget>
 #include <QToolBox>
 
+#include "Chat/Commands/CmdNickname.h"
+
 #include "Database/Repository/RepositoryManager.h"
 
 #include "Token/Network/TokenMenuClient.h"
@@ -139,7 +141,6 @@ void MainWindow::on_actionCreateMap_triggered(){
 
     if(m_FilePath != ""){
         connect(m_CreationWidget, SIGNAL(createMap(QString,int)), this, SLOT(createMap(QString,int)));
-//        ui->tableArea->addSubWindow(creationWidget);
         m_CreationWidget->show();
     }
 }
@@ -201,7 +202,18 @@ void MainWindow::setupMJ() {
     ui->turnWidget->setSenderClient(turnMenuServer);
 
     setupPlayer();
+
+    connect(dynamic_cast<CmdNickname *>(chatServer->getCommands()->getUserCommand(ChatCodes::USERCMD_NICK)),
+            SIGNAL(addPlayerToInterface(QString)),
+            this,
+            SLOT(addPlayerToInterface(QString)));
 }
+
+void MainWindow::addPlayerToInterface(QString playerNickname){
+    ui->turnWidget->getTurnList()->addQStringAsItem(playerNickname);
+    ui->tokenPage->addCustomToken(playerNickname);
+}
+
 
 void MainWindow::setupPlayer() {
     TokenMenu *tokenMenu = ui->tokenPage;

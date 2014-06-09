@@ -26,6 +26,10 @@ TurnMenu::~TurnMenu()
     delete m_turnList;
 }
 
+TurnList *TurnMenu::getTurnList(){
+    return m_turnList;
+}
+
 void TurnMenu::on_addItemEdit_returnPressed()
 {
     if (!ui->addItemEdit->text().isEmpty()) {

@@ -50,10 +50,14 @@ void TokenMenu::on_tokenButton_clicked()
 {
     // TODO filePath and size are hard-coded
     QString text = ui->inputSearchField->text();
+
+    addCustomToken(text);
+}
+
+void TokenMenu::addCustomToken(QString text){
     QString filePath("resource/keroro.png");
     int size = 32;
     bool custom = true;
-
     // Check if the list already contains a token with the same text before insertion.
     QList<QListWidgetItem*> items = ui->m_tokenList->findItems(text, Qt::MatchExactly);
     if (items.empty()) {

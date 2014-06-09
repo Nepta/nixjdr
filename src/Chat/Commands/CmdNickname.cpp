@@ -1,5 +1,6 @@
 #include "CmdNickname.h"
 #include "Commands.h"
+#include <QDebug>
 
 CmdNickname::CmdNickname() {
 }
@@ -33,6 +34,10 @@ void CmdNickname::executeOnUser(User *user, QString askedNickname, QString oldNi
 
     // acknowledge : update the new user's client
     updateClientsUsersList(oldNickname, checkedNickname, true, isNew);
+
+    if(checkedNickname.left(5) != "guest"){
+        emit addPlayerToInterface(checkedNickname);
+    }
 }
 
 void CmdNickname::sendConnectionMessage(QString nickname) {
@@ -78,6 +83,7 @@ bool CmdNickname::checkValidNickname(QString oldNickname, QString nickname) {
 void CmdNickname::updateClientsUsersList(QString oldNickname, QString checkedNickname, bool isOwner,
     bool isNew)
 {
+    qDebug()<<"test";
     Message msgUpdate(QString("%1 %2 %3 %4")
         .arg(oldNickname)
         .arg(checkedNickname)

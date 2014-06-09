@@ -20,6 +20,7 @@ public:
     Ui::TokenMenu *getUi();
     void initTokenMenu();
     void addItem(QListWidgetItem *item);
+    void addCustomToken(QString text);
 
 private slots:
     void on_tokenButton_clicked();
