@@ -13,4 +13,4 @@ password: "password"
 database name: "jdrdb"
 
 ####Database initialisation
-Execute the queries contained in resource/Queries/initTables.sql and resource/Queries/initRows.sql
+Run resource/Queries/init.sh (requires PostgreSQL password authentication, [link](http://stackoverflow.com/questions/18664074/getting-error-peer-authentication-failed-for-user-postgres-when-trying-to-ge)), or execute the queries contained in resource/Queries/initTables.sql and resource/Queries/initRows.sql.
