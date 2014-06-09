@@ -174,7 +174,7 @@
                   <x>0</x>
                   <y>0</y>
                   <width>833</width>
-                  <height>321</height>
+                  <height>268</height>
                  </rect>
                 </property>
                 <property name="minimumSize">
@@ -199,6 +199,16 @@
                </property>
                <property name="orientation">
                 <enum>Qt::Horizontal</enum>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="LogGui" name="m_LogGui" native="true">
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>100</height>
+                </size>
                </property>
               </widget>
              </item>
@@ -292,6 +302,12 @@
    <class>TurnMenu</class>
    <extends>QWidget</extends>
    <header>TurnMenu/TurnMenu.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>LogGui</class>
+   <extends>QWidget</extends>
+   <header>Log/LogGui.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

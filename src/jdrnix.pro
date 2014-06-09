@@ -94,6 +94,7 @@ SOURCES += \
     Log/Logger.cpp \
     Log/Log.cpp \
     Log/MapLog.cpp \
+    Log/LogGui.cpp \
     Network/Receiver.cpp \
     Actions/AbstractAction.cpp \
     Canvas/MapCreationWidget.cpp \
@@ -183,6 +184,7 @@ HEADERS  += \
     Canvas/Tools/ToolPing.h \
     Log/Logger.h \
     Log/Log.h \
+    Log/LogGui.h \
     Log/MapLog.h \
     Actions/AbstractAction.h \
     Canvas/MapCreationWidget.h \
@@ -196,6 +198,7 @@ FORMS    += \
     DiceMenu/DiceMenu.ui \
     Chat/ChatWidget.ui \
     TurnMenu/TurnMenu.ui \
+	 Log/LogGui.ui \
     Canvas/Map.ui \
     Canvas/SideMenuWidgets/DrawingMenu.ui \
     Canvas/MapCreationWidget.ui \
