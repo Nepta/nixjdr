@@ -14,6 +14,7 @@
 #include "TurnMenu/Network/TurnMenuClient.h"
 #include "TurnMenu/Network/TurnMenuServer.h"
 
+#include "Canvas/OpenMapWidget.h"
 #include "Canvas/Network/MapClient.h"
 #include "Canvas/Network/MapServer.h"
 #include "Canvas/Layers/MapLayer.h"
@@ -89,7 +90,12 @@ void MainWindow::updateMenu() {
     // TODO update menu
 }
 
-void MainWindow::openMap(Map *map) {
+/**
+ * @brief MainWindow::openMap Initialize and opens the given map.
+ * @param map
+ * @param notify Notifies all the clients that a new map has been opened if true.
+ */
+void MainWindow::openMap(Map *map, bool notify) {
     QListWidget *tokenList = ui->tokenPage->getUi()->m_tokenList;
 
     // Initialize Map with the MapServer
@@ -112,6 +118,14 @@ void MainWindow::openMap(Map *map) {
     connect(tokenList, SIGNAL(currentItemChanged(QListWidgetItem*,  QListWidgetItem *)),
             map->getMapLayer(), SLOT(setTokenItem(QListWidgetItem*))
     );
+
+    if (notify) {
+        // Notifies all the clients that a new map has been opened
+        Receiver *mapClientReceiver = m_Client->getReceiver(TargetCode::MAP_CLIENT);
+        MapClient *mapClient = dynamic_cast<MapClient*>(mapClientReceiver);
+        QString msg = QString("%1").arg(map->id());
+        mapClient->sendMessageToServer(msg, (quint16) MapCodes::OPEN_MAP);
+    }
 }
 
 void MainWindow::createMap(QString mapName, int mapStep) {
@@ -124,13 +138,7 @@ void MainWindow::createMap(QString mapName, int mapStep) {
     RepositoryManager::s_MapRepository.insertMap(map);
 
     // Initialize and open map
-    openMap(map);
-
-    // Notifies all the clients that a new map has been opened
-    Receiver *mapClientReceiver = m_Client->getReceiver(TargetCode::MAP_CLIENT);
-    MapClient *mapClient = dynamic_cast<MapClient*>(mapClientReceiver);
-    QString msg = QString("%1").arg(map->id());
-    mapClient->sendMessageToServer(msg, (quint16) MapCodes::OPEN_MAP);
+    openMap(map, true);
     m_CreationWidget->hide();
 }
 
@@ -139,9 +147,23 @@ void MainWindow::on_actionCreateMap_triggered(){
     m_FilePath = QFileDialog::getOpenFileName(this, "Ouvrir un fichier", "resource",
                                                     "Images (*.png *.xpm *.jpg)");
 
-    if(m_FilePath != ""){
+    if (m_FilePath != ""){
         connect(m_CreationWidget, SIGNAL(createMap(QString,int)), this, SLOT(createMap(QString,int)));
         m_CreationWidget->show();
+    }
+}
+
+void MainWindow::on_actionOpenMap_triggered() {
+    int mapId = 0;
+    OpenMapWidget openMapWidget(&mapId);
+    openMapWidget.exec();
+
+    if (mapId != 0) {
+        TokenList *tokenList = ui->tokenPage->getUi()->m_tokenList;
+        Map *map = RepositoryManager::s_MapRepository.findMapById(mapId, tokenList);
+        map->getMapLayer()->setTokenItem(tokenList->currentItem());
+
+        openMap(map, true);
     }
 }
 

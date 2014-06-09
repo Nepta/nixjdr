@@ -48,6 +48,15 @@ Map::~Map() {
     delete m_Scene;
 }
 
+void Map::closeEvent(QCloseEvent *closeEvent) {
+    QWidget::closeEvent(closeEvent);
+
+    if (m_SenderClient != NULL) {
+        MapClient *mapClient = dynamic_cast<MapClient*>(m_SenderClient);
+        mapClient->removeMapFromList(this);
+    }
+}
+
 void Map::initScene(int tileStep) {
     BackgroundLayer *bgLayer = dynamic_cast<BackgroundLayer *>(
         m_Layers->getLayer(LayerCodes::LAYER_BACKGROUND)

@@ -29,6 +29,10 @@ public:
         return resultItems;
     }
 
+    QList<DBItem> getList() {
+        return dbItems_;
+    }
+
 private:
     QList<DBItem> dbItems_;
 };

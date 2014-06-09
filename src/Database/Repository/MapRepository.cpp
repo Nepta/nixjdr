@@ -1,3 +1,6 @@
+#include <QStringList>
+
+#include "Token/TokenList.h"
 #include "MapRepository.h"
 #include "RepositoryManager.h"
 
@@ -27,7 +30,7 @@ int MapRepository::insertMap(Map *map) {
  * @param id Map's id
  * @return Map
  */
-Map *MapRepository::findMapById(int id) {
+Map *MapRepository::findMapById(int id, TokenList *tokenList) {
     DBItem mapItem = RepositoryManager::s_MapRepository.findById(id);
 
     // Retrieve & construct BackgroundLayer
@@ -50,7 +53,9 @@ Map *MapRepository::findMapById(int id) {
     DBItem drawingLayerItem = RepositoryManager::s_DrawingLayerRepository.findById(drawingLayerId);
     DrawingLayer *drawingLayer = new DrawingLayer(drawingLayerItem);
 
-    // TODO Retrieve Sprites
+    // Retrieve Sprites
+    RepositoryManager::s_SpriteRepository.getMapSprites(tokenList, mapLayer);
+    RepositoryManager::s_SpriteRepository.getFoWSprites(tokenList, fowLayer);
 
     // Construct map
     Map *map = new Map(mapItem, bgLayer, mapLayer, fowLayer, drawingLayer);
