@@ -26,6 +26,7 @@ MainWindow::MainWindow(User *user, QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    m_CreationWidget = new MapCreationWidget();
 
     // Sets Null pointer for later deletion if m_Server and/or m_Client are not used
     m_Server = NULL;
@@ -45,6 +46,7 @@ MainWindow::~MainWindow()
     delete ui;
     delete m_Server;
     delete m_Client;
+    delete m_CreationWidget;
 }
 
 void MainWindow::initTableTurnSplitter(){
@@ -107,12 +109,11 @@ void MainWindow::openMap(Map *map) {
     );
 }
 
-void MainWindow::createMap(QString filename) {
+void MainWindow::createMap(QString mapName, int mapStep) {
     QListWidget *tokenList = ui->tokenPage->getUi()->m_tokenList;
     TokenItem *currentTokenItem = dynamic_cast<TokenItem*>(tokenList->currentItem());
 
-    // TODO should be able to choose the step value in a message box
-    Map *map = new Map(filename, currentTokenItem, 32);
+    Map *map = new Map(mapName, m_FilePath , currentTokenItem, mapStep);
 
     // Add Map to the database
     RepositoryManager::s_MapRepository.insertMap(map);
@@ -125,14 +126,18 @@ void MainWindow::createMap(QString filename) {
     MapClient *mapClient = dynamic_cast<MapClient*>(mapClientReceiver);
     QString msg = QString("%1").arg(map->id());
     mapClient->sendMessageToServer(msg, (quint16) MapCodes::OPEN_MAP);
+    m_CreationWidget->hide();
 }
 
 void MainWindow::on_actionCreateMap_triggered(){
-    QString filename = QFileDialog::getOpenFileName(this, "Ouvrir un fichier", "resource",
+    m_FilePath = "";
+    m_FilePath = QFileDialog::getOpenFileName(this, "Ouvrir un fichier", "resource",
                                                     "Images (*.png *.xpm *.jpg)");
 
-    if (filename != NULL) {
-        createMap(filename);
+    if(m_FilePath != ""){
+        connect(m_CreationWidget, SIGNAL(createMap(QString,int)), this, SLOT(createMap(QString,int)));
+//        ui->tableArea->addSubWindow(creationWidget);
+        m_CreationWidget->show();
     }
 }
 

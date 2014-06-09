@@ -4,12 +4,13 @@
 #include "ui_Map.h"
 #include "ui_DrawingMenu.h"
 
-Map::Map(QString bgFilename, TokenItem *tokenItem, int tileStep, QWidget *parent) :
+Map::Map(QString mapName, QString bgFilename, TokenItem *tokenItem, int tileStep, QWidget *parent) :
     QWidget(parent),
     DBItem(),
     ui(new Ui::Map)
 {
     ui->setupUi(this);
+    this->setWindowTitle(mapName);
     m_Layers = new Layers(bgFilename, 2, 2, Qt::black, tileStep, tokenItem);
 
     initScene(tileStep);
@@ -29,10 +30,12 @@ Map::Map(DBItem item, BackgroundLayer *bgLayer, MapLayer *mapLayer, FoWLayer *fo
     columnsValues_ = item.getHashMap();
 
     int id = itemHashMap.value("id").toInt();
+    QString windowtitle = itemHashMap.value("windowtitle").toString();
     int sceneHeight = itemHashMap.value("sceneheight").toInt();
     int sceneWidth = itemHashMap.value("scenewidth").toInt();
 
     id_ = id;
+    setWindowTitle(windowtitle);
     m_Layers = new Layers(bgLayer, mapLayer, fowLayer, drawingLayer);
     initScene(sceneWidth, sceneHeight);
     initLayers(false);

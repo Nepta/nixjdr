@@ -12,6 +12,7 @@
 #include "Canvas/Map.h"
 #include "Chat/ChatWidget.h"
 #include "DiceMenu/DiceMenu.h"
+#include "Canvas/MapCreationWidget.h"
 
 #include "ui_TokenMenu.h"
 #include "ui_DiceMenu.h"
@@ -36,6 +37,7 @@ private slots:
     void on_actionConnection_triggered();
     void on_collapseButtonRightMenu_clicked(bool checked);
     void on_collapseButtonTurnMenu_clicked(bool checked);
+    void createMap(QString mapName, int mapStep);
 
 signals:
     void initMainWindow();
@@ -44,7 +46,6 @@ signals:
 private:
     void setupMJ();
     void setupPlayer();
-    void createMap(QString filename);
     void createImage(QString filename);
 
     // inits
@@ -61,6 +62,8 @@ private:
     SwitchServer *m_Server;
     SwitchClient *m_Client;
     TurnMenu *m_turnMenu;
+    QString m_FilePath ;
+    MapCreationWidget *m_CreationWidget;
 };
 
 #endif // MAINWINDOW_H

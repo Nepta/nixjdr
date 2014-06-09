@@ -7,6 +7,7 @@ const QString MapRepository::getTableName() {
 
 int MapRepository::insertMap(Map *map) {
     QHash<QString, QVariant> args {
+        {"windowtitle", map->windowTitle()},
         {"sceneheight", map->getSceneHeight()},
         {"scenewidth", map->getSceneWidth()},
         {"backgroundlayerid", map->getBgLayer()->id()},

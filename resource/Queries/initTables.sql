@@ -43,6 +43,7 @@ CREATE TABLE drawinglayer (
 
 CREATE TABLE map (
 	id                serial NOT NULL,
+	windowtitle       character varying(150),
 	sceneheight       integer,
 	scenewidth        integer,
 	backgroundlayerid integer REFERENCES backgroundlayer(id) NOT NULL,

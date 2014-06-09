@@ -30,7 +30,7 @@ class Map : public QWidget, public DBItem, public SenderHandler
 public:
     static const int BG_OFFSET = 2*4;
 
-    explicit Map(QString bgFilename, TokenItem *tokenItem, int tileStep, QWidget *parent = 0);
+    explicit Map(QString mapName, QString bgFilename, TokenItem *tokenItem, int tileStep, QWidget *parent = 0);
     Map(DBItem item, BackgroundLayer *bgLayer, MapLayer *mapLayer, FoWLayer *fowLayer,
         DrawingLayer *drawingLayer);
     ~Map();
