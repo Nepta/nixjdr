@@ -16,8 +16,9 @@ TurnList::TurnList(QWidget *parent)
         QListWidget::item { \
             background: lightgray; border: 1px solid black; \
             selection-background-color: blue;\
-            padding-left: 5px; \
-            padding-right: 5px; \
+        }\
+        QListWidget::item:hover {\
+            background: #CCCCF5;\
         }\
     ");
 
