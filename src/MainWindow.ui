@@ -236,15 +236,17 @@
     <property name="title">
      <string>File</string>
     </property>
-    <addaction name="actionCreateMap"/>
-    <addaction name="actionCreateImage"/>
     <addaction name="actionConnection"/>
+    <addaction name="separator"/>
+    <addaction name="actionCreateMap"/>
+    <addaction name="actionOpenMap"/>
+    <addaction name="actionCreateImage"/>
    </widget>
    <addaction name="menuFile"/>
   </widget>
   <action name="actionCreateMap">
    <property name="text">
-    <string>Créer map...</string>
+    <string>Créer une carte</string>
    </property>
    <property name="menuRole">
     <enum>QAction::TextHeuristicRole</enum>
@@ -257,7 +259,12 @@
   </action>
   <action name="actionCreateImage">
    <property name="text">
-    <string>Créer image</string>
+    <string>Créer une image</string>
+   </property>
+  </action>
+  <action name="actionOpenMap">
+   <property name="text">
+    <string>Ouvrir une carte...</string>
    </property>
   </action>
  </widget>

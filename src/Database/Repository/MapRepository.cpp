@@ -1,3 +1,5 @@
+#include <QStringList>
+
 #include "MapRepository.h"
 #include "RepositoryManager.h"
 

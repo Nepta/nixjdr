@@ -96,7 +96,8 @@ SOURCES += \
     Log/MapLog.cpp \
     Network/Receiver.cpp \
     Actions/AbstractAction.cpp \
-    Canvas/MapCreationWidget.cpp
+    Canvas/MapCreationWidget.cpp \
+    Canvas/OpenMapWidget.cpp
 
 HEADERS  += \
     MainWindow.h \
@@ -184,7 +185,8 @@ HEADERS  += \
     Log/Log.h \
     Log/MapLog.h \
     Actions/AbstractAction.h \
-    Canvas/MapCreationWidget.h
+    Canvas/MapCreationWidget.h \
+    Canvas/OpenMapWidget.h
 
 FORMS    += \
     Tooltip.ui \
@@ -196,4 +198,5 @@ FORMS    += \
     TurnMenu/TurnMenu.ui \
     Canvas/Map.ui \
     Canvas/SideMenuWidgets/DrawingMenu.ui \
-    Canvas/MapCreationWidget.ui
+    Canvas/MapCreationWidget.ui \
+    Canvas/OpenMapWidget.ui
