@@ -1,6 +1,5 @@
 #include "CmdNickname.h"
 #include "Commands.h"
-#include <QDebug>
 
 CmdNickname::CmdNickname() {
 }
@@ -83,7 +82,6 @@ bool CmdNickname::checkValidNickname(QString oldNickname, QString nickname) {
 void CmdNickname::updateClientsUsersList(QString oldNickname, QString checkedNickname, bool isOwner,
     bool isNew)
 {
-    qDebug()<<"test";
     Message msgUpdate(QString("%1 %2 %3 %4")
         .arg(oldNickname)
         .arg(checkedNickname)

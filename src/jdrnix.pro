@@ -152,9 +152,6 @@ HEADERS  += \
     Network/SenderClient.h \
     Network/SenderServer.h \
     Network/Header.h \
-    Network/Server.h \
-    Network/Client.h \
-    Network/Serializable.h \
     Network/SenderHandler.h \
     Network/Serializable/Message.h \
     Network/Serializable/Serializable.h \
