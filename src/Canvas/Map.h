@@ -35,6 +35,8 @@ public:
         DrawingLayer *drawingLayer);
     ~Map();
 
+    void closeEvent(QCloseEvent *closeEvent);
+
     void setSenderClient(SenderClient *senderClient);
 
     int getSceneHeight();
