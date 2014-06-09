@@ -9,10 +9,7 @@ TurnMenu::TurnMenu(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    QList<int> sizes;
-    sizes.push_back(60);
-    sizes.push_back(600);
-    sizes.push_back(300);
+    QList<int> sizes = {60, 600, 300};
     ui->splitter->setSizes(sizes);
 
     m_turnList = new TurnList();
