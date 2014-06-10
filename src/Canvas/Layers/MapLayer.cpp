@@ -46,9 +46,11 @@ void MapLayer::initDragEvent(Sprite *watched, QGraphicsSceneMouseEvent *mouseEve
 
     QDrag *drag = new QDrag(mouseEvent->widget());
     QMimeData *mime = new QMimeData;
-    QByteArray data = watched->getTokenItem()->toQByteArray();
+    //QByteArray data = watched->getTokenItem()->toQByteArray();
+    QByteArray data = watched->toQByteArray();
 
-    mime->setData("application/tokenitem", data);
+    //mime->setData("application/tokenitem", data);
+    mime->setData("application/sprite", data);
     drag->setMimeData(mime);
 
     QGraphicsPixmapItem *pixmapItem = dynamic_cast<QGraphicsPixmapItem*>(watched);
@@ -106,11 +108,20 @@ void MapLayer::dropEvent(QGraphicsSceneDragDropEvent *event)
  */
 void MapLayer::dropEvent(QGraphicsSceneDragDropEvent *event, Sprite *watched)
 {
-    QByteArray data = event->mimeData()->data("application/tokenitem");
-    if(!data.isEmpty()) {
-        TokenItem *tokenItem = new TokenItem(data);
+    QByteArray tokenItemData = event->mimeData()->data("application/tokenitem");
+    QByteArray spriteData = event->mimeData()->data("application/sprite");
+
+    if(!tokenItemData.isEmpty()) {
         int zValue = (watched ? watched->zValue() + 1 : 1);
+        TokenItem *tokenItem = new TokenItem(tokenItemData);
         addSprite(tokenItem, event->scenePos().toPoint(), zValue);
+
+        event->acceptProposedAction();
+    }
+    else if (!spriteData.isEmpty()) {
+        int zValue = (watched ? watched->zValue() + 1 : 1);
+        Sprite *sprite = new Sprite(spriteData, this, zValue);
+        addSprite(sprite, event->scenePos().toPoint());
 
         event->acceptProposedAction();
     }

@@ -20,13 +20,16 @@ private:
 
     void construct(int id, QString path, QString text, int size, bool custom, bool special);
     void construct(QString path, QString text, int size, bool custom, bool special);
+    void construct(QDataStream *stream);
 
 public:
     TokenItem(QString path, QString text, int size, bool custom = false, bool special = false);
     TokenItem(const QByteArray& data);
     TokenItem(DBItem item);
+    TokenItem(QDataStream *stream);
 
     QByteArray toQByteArray();
+    void toQByteArray(QDataStream *stream);
 
     QString path();
     int size();

@@ -1,8 +1,8 @@
 DROP VIEW  IF EXISTS spritename;
 DROP TABLE IF EXISTS character;
 DROP TABLE IF EXISTS sprite;
-DROP TABLE if EXISTS gameobject;
 DROP TABLE IF EXISTS tokenitem;
+DROP TABLE if EXISTS gameobject;
 DROP TABLE IF EXISTS map;
 DROP TABLE IF EXISTS backgroundlayer;
 DROP TABLE IF EXISTS maplayer;
@@ -24,12 +24,13 @@ CREATE TABLE character (
 );
 
 CREATE TABLE tokenitem (
-	id      serial not NULL,
-	text    character varying(20) UNIQUE,
-	path    character varying(120),
-	size    integer,
-	custom  bool,
-	special bool,
+	id           serial not NULL,
+	text         character varying(20) UNIQUE,
+	path         character varying(120),
+	size         integer,
+	custom       bool,
+	special      bool,
+	gameobjectid integer REFERENCES gameobject(id),
 	CONSTRAINT tokenitem_pkey PRIMARY KEY (id)
 );
 

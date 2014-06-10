@@ -22,13 +22,11 @@ TokenItem::TokenItem(const QByteArray& data) :
     DBItem()
 {
     QDataStream stream(data);
+    construct(&stream);
+}
 
-    int id, size;
-    QString text, path;
-    bool custom, special;
-
-    stream >> id >> text >> path >> size >> custom >> special;
-    construct(id, path, text, size, custom, special);
+TokenItem::TokenItem(QDataStream *stream) {
+    construct(stream);
 }
 
 TokenItem::TokenItem(DBItem item) :
@@ -63,6 +61,15 @@ void TokenItem::construct(QString path, QString text, int size, bool custom, boo
     } else {
         setIcon(QIcon(path));
     }
+}
+
+void TokenItem::construct(QDataStream *stream) {
+    int id, size;
+    QString text, path;
+    bool custom, special;
+
+    *stream >> id >> text >> path >> size >> custom >> special;
+    construct(id, path, text, size, custom, special);
 }
 
 /**
@@ -111,7 +118,11 @@ QByteArray TokenItem::toQByteArray() {
     QByteArray out;
     QDataStream stream(&out, QIODevice::WriteOnly);
 
-    stream << id_ << text() << path_ << size_ << custom_ << special_;
+    toQByteArray(&stream);
 
     return out;
+}
+
+void TokenItem::toQByteArray(QDataStream *stream) {
+    *stream << id_ << text() << path_ << size_ << custom_ << special_;
 }

@@ -15,9 +15,13 @@ class Sprite : public QGraphicsPixmapItem, public DBItem
 public:
     Sprite(TokenItem *tokenItem, QGraphicsItem *parent = 0, int zValue = 1);
     Sprite(DBItem item, TokenItem *tokenItem, QGraphicsItem *parent);
+    Sprite(const QByteArray& data, QGraphicsItem *parent = 0, int zValue = 1);
     ~Sprite();
+
+    void construct(TokenItem *tokenItem, QGraphicsItem *parent, int zValue);
     void setTransparent(bool enabled);
     TokenItem *getTokenItem();
+    QByteArray toQByteArray();
 
 private:
     TokenItem *m_TokenItem;
