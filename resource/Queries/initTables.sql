@@ -1,11 +1,27 @@
 DROP VIEW  IF EXISTS spritename;
+DROP TABLE IF EXISTS character;
 DROP TABLE IF EXISTS sprite;
+DROP TABLE if EXISTS gameobject;
 DROP TABLE IF EXISTS tokenitem;
 DROP TABLE IF EXISTS map;
 DROP TABLE IF EXISTS backgroundlayer;
 DROP TABLE IF EXISTS maplayer;
 DROP TABLE IF EXISTS fowlayer;
 DROP TABLE IF EXISTS drawinglayer;
+
+CREATE TABLE gameobject (
+	id   serial NOT NULL,
+	name character varying(100),
+	type integer,
+	CONSTRAINT gameobject_pkey PRIMARY KEY (id)
+);
+
+CREATE TABLE character (
+	id    integer REFERENCES gameobject(id) NOT NULL,
+	hp    integer,
+	maxhp integer,
+	CONSTRAINT character_pkey PRIMARY KEY (id)
+);
 
 CREATE TABLE tokenitem (
 	id      serial not NULL,
@@ -61,6 +77,7 @@ CREATE TABLE sprite (
 	tokenitemid         integer REFERENCES tokenitem(id) NOT NULL,
 	maplayerid          integer REFERENCES maplayer(id),
 	fowlayerid          integer REFERENCES fowlayer(id),
+	gameobjectid        integer REFERENCES gameobject(id),
 	CONSTRAINT sprite_pkey PRIMARY KEY (id)
 );
 
