@@ -9,6 +9,7 @@ class GameObject
 {
 public:
     GameObject();
+    ~GameObject();
 
 private:
     QString m_Name;

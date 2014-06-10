@@ -99,7 +99,9 @@ SOURCES += \
     Canvas/MapCreationWidget.cpp \
     Canvas/OpenMapWidget.cpp \
     GameObjects/GameObject.cpp \
-    GameObjects/Character.cpp
+    GameObjects/Character.cpp \
+    Database/Repository/GameObjectRepository.cpp \
+    Database/Repository/CharacterRepository.cpp
 
 HEADERS  += \
     MainWindow.h \
@@ -191,7 +193,9 @@ HEADERS  += \
     Canvas/OpenMapWidget.h \
     GameObjects/GameObject.h \
     GameObjects/GameObjectType.h \
-    GameObjects/Character.h
+    GameObjects/Character.h \
+    Database/Repository/GameObjectRepository.h \
+    Database/Repository/CharacterRepository.h
 
 FORMS    += \
     Tooltip.ui \
