@@ -195,7 +195,8 @@ HEADERS  += \
     GameObjects/GameObjectType.h \
     GameObjects/Character.h \
     Database/Repository/GameObjectRepository.h \
-    Database/Repository/CharacterRepository.h
+    Database/Repository/CharacterRepository.h \
+    Database/Repository/GameObjectSubRepository.h
 
 FORMS    += \
     Tooltip.ui \

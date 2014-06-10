@@ -3,7 +3,9 @@
 
 #include <QString>
 
+#include "GameObjects/GameObject.h"
 #include "GameObjects/GameObjectType.h"
+#include "GameObjectSubRepository.h"
 #include "Repository.h"
 
 class GameObjectRepository : public Repository
@@ -14,10 +16,12 @@ public:
 
     const QString getTableName();
 
-    Repository *getRepositoryByGameObjectType(GameObjectType type);
+    int insertGameObject(GameObject *gameObject);
+    GameObjectSubRepository *getRepositoryByGameObjectType(GameObjectType type);
+    GameObject *getGameObjectById(int id);
 
 private:
-    QHash<GameObjectType, Repository*> m_GameObjectTypeRepo;
+    QHash<GameObjectType, GameObjectSubRepository*> m_GameObjectTypeRepo;
 };
 
 #endif // GAMEOBJECTREPOSITORY_H

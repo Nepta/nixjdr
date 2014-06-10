@@ -1,17 +1,22 @@
 #ifndef CHARACTER_H
 #define CHARACTER_H
 
+#include "Database/DBItem.h"
 #include "GameObject.h"
 
 class Character : public GameObject
 {
 public:
-    Character();
+    Character(QString name, GameObjectType type, int maxHp, int hp);
+    Character(DBItem gameObjectDbItem, DBItem characterDbItem);
     ~Character();
 
+    int getMaxHp();
+    int getHp();
+
 private:
-    int m_MaxHP;
-    int m_HP;
+    int m_MaxHp;
+    int m_Hp;
 };
 
 #endif // CHARACTER_H

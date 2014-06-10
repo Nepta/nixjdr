@@ -3,13 +3,18 @@
 
 #include <QString>
 
+#include "Database/DBItem.h"
 #include "GameObjectType.h"
 
-class GameObject
+class GameObject : public DBItem
 {
 public:
-    GameObject();
+    GameObject(QString name, GameObjectType type);
+    GameObject(DBItem item);
     ~GameObject();
+
+    QString getName();
+    GameObjectType getType();
 
 private:
     QString m_Name;
