@@ -4,14 +4,17 @@
 #include "Network/Receiver.h"
 #include "Database/Database.h"
 #include "Log.h"
+#include "LogGui.h"
 #include <QStack>
 
 class Logger : public Switch, public Receiver {
 
 	QStack<Log*> logStack_;
+	LogGui *gui_;
 
 public:
-	void insert(TargetCode targetCode, Receiver *receiver);
+	void setGui(LogGui *gui);
+	void insertRoute(TargetCode targetCode, Receiver *receiver);
 	Log* pop();
 	void push(Log *log);
 

@@ -3,7 +3,11 @@
 #include "Network/Serializable/Message.h"
 #include "MapLog.h"
 
-void Logger::insert(TargetCode targetCode, Receiver *receiver){
+void Logger::setGui(LogGui *gui){
+	gui_ = gui;
+}
+
+void Logger::insertRoute(TargetCode targetCode, Receiver *receiver){
 	m_Nodes.insert(targetCode, receiver);
 }
 
