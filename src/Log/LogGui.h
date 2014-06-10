@@ -3,18 +3,19 @@
 
 #include <QWidget>
 
-namespace Ui {
+namespace Ui{
 	class LogGui;
 }
 
-class LogGui : public QWidget
-{
+class LogGui : public QWidget{
 	Q_OBJECT
 
 public:
 	explicit LogGui(QWidget *parent = 0);
 	~LogGui();
 
+	void pushLog(QString log);
+	QString popLog();
 private:
 	Ui::LogGui *ui;
 };
