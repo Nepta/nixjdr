@@ -82,6 +82,8 @@ SOURCES += \
     Database/Repository/FoWLayerRepository.cpp \
     Database/Repository/BackgroundLayerRepository.cpp \
     Database/Repository/DrawingLayerRepository.cpp \
+    Database/Repository/GameObjectRepository.cpp \
+    Database/Repository/CharacterRepository.cpp \
     Token/TokenMenu.cpp \
     Token/TokenList.cpp \
     Token/TokenItem.cpp \
@@ -99,9 +101,7 @@ SOURCES += \
     Canvas/MapCreationWidget.cpp \
     Canvas/OpenMapWidget.cpp \
     GameObjects/GameObject.cpp \
-    GameObjects/Character.cpp \
-    Database/Repository/GameObjectRepository.cpp \
-    Database/Repository/CharacterRepository.cpp
+    GameObjects/Character.cpp
 
 HEADERS  += \
     MainWindow.h \
@@ -173,6 +173,9 @@ HEADERS  += \
     Database/Repository/FoWLayerRepository.h \
     Database/Repository/BackgroundLayerRepository.h \
     Database/Repository/DrawingLayerRepository.h \
+    Database/Repository/GameObjectRepository.h \
+    Database/Repository/CharacterRepository.h \
+    Database/Repository/GameObjectSubRepository.h \
     Token/TokenMenu.h \
     Token/TokenList.h \
     Token/TokenItem.h \
@@ -193,10 +196,7 @@ HEADERS  += \
     Canvas/OpenMapWidget.h \
     GameObjects/GameObject.h \
     GameObjects/GameObjectType.h \
-    GameObjects/Character.h \
-    Database/Repository/GameObjectRepository.h \
-    Database/Repository/CharacterRepository.h \
-    Database/Repository/GameObjectSubRepository.h
+    GameObjects/Character.h
 
 FORMS    += \
     Tooltip.ui \
