@@ -65,7 +65,6 @@ private:
     SwitchClient *m_Client;
     TurnMenu *m_turnMenu;
     QString m_FilePath ;
-    MapCreationWidget *m_CreationWidget;
 };
 
 #endif // MAINWINDOW_H

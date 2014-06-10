@@ -1,13 +1,13 @@
 #ifndef MAPCREATIONWIDGET_H
 #define MAPCREATIONWIDGET_H
 
-#include <QWidget>
+#include <QDialog>
 
 namespace Ui {
 class MapCreationWidget;
 }
 
-class MapCreationWidget : public QWidget
+class MapCreationWidget : public QDialog
 {
     Q_OBJECT
 

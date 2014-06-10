@@ -32,7 +32,6 @@ MainWindow::MainWindow(User *user, QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    m_CreationWidget = new MapCreationWidget();
 
     // Sets Null pointer for later deletion if m_Server and/or m_Client are not used
     m_Server = NULL;
@@ -52,7 +51,6 @@ MainWindow::~MainWindow()
     delete ui;
     delete m_Server;
     delete m_Client;
-    delete m_CreationWidget;
 }
 
 void MainWindow::initTableTurnSplitter(){
@@ -139,7 +137,6 @@ void MainWindow::createMap(QString mapName, int mapStep) {
 
     // Initialize and open map
     openMap(map, true);
-    m_CreationWidget->hide();
 }
 
 void MainWindow::on_actionCreateMap_triggered(){
@@ -147,9 +144,10 @@ void MainWindow::on_actionCreateMap_triggered(){
     m_FilePath = QFileDialog::getOpenFileName(this, "Ouvrir un fichier", "resource",
                                                     "Images (*.png *.xpm *.jpg)");
 
-    if (m_FilePath != ""){
-        connect(m_CreationWidget, SIGNAL(createMap(QString,int)), this, SLOT(createMap(QString,int)));
-        m_CreationWidget->show();
+    if(m_FilePath != ""){
+        MapCreationWidget mapCreationWidget;
+        connect(&mapCreationWidget, SIGNAL(createMap(QString,int)), this, SLOT(createMap(QString,int)));
+        mapCreationWidget.exec();
     }
 }
 
