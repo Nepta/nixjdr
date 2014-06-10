@@ -97,7 +97,9 @@ SOURCES += \
     Network/Receiver.cpp \
     Actions/AbstractAction.cpp \
     Canvas/MapCreationWidget.cpp \
-    Canvas/OpenMapWidget.cpp
+    Canvas/OpenMapWidget.cpp \
+    GameObjects/GameObject.cpp \
+    GameObjects/Character.cpp
 
 HEADERS  += \
     MainWindow.h \
@@ -186,7 +188,10 @@ HEADERS  += \
     Log/MapLog.h \
     Actions/AbstractAction.h \
     Canvas/MapCreationWidget.h \
-    Canvas/OpenMapWidget.h
+    Canvas/OpenMapWidget.h \
+    GameObjects/GameObject.h \
+    GameObjects/GameObjectType.h \
+    GameObjects/Character.h
 
 FORMS    += \
     Tooltip.ui \
