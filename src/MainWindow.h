@@ -55,6 +55,7 @@ private:
     void initConnects();
     void initRole();
     void initTableTurnSplitter();
+	 void initLogger();
 
 
     void collapseMenu(bool checked, QWidget *widget, QSplitter *splitter, int min, int max);

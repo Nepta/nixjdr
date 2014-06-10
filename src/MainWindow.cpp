@@ -14,6 +14,8 @@
 #include "TurnMenu/Network/TurnMenuClient.h"
 #include "TurnMenu/Network/TurnMenuServer.h"
 
+#include "Log/Logger.h"
+
 #include "Canvas/OpenMapWidget.h"
 #include "Canvas/Network/MapClient.h"
 #include "Canvas/Network/MapServer.h"
@@ -42,6 +44,7 @@ MainWindow::MainWindow(User *user, QWidget *parent) :
     initTableTurnSplitter();
     initConnects();
     initRole();
+	 initLogger();
 
     //showFullScreen();
 }
@@ -57,7 +60,14 @@ void MainWindow::initTableTurnSplitter(){
     QList<int> sizes;
     sizes.push_back(1000);
     sizes.push_back(100);
-    ui->tableTurnSplitter->setSizes(sizes);
+	 ui->tableTurnSplitter->setSizes(sizes);
+}
+
+void MainWindow::initLogger()
+{
+	Receiver *receiver = m_Server->getReceiver(TargetCode::MAP_SERVER);
+	Logger *logger = dynamic_cast<Logger*>(receiver);
+	logger->setGui(ui->m_LogGui);
 }
 
 void MainWindow::initConnects(){
