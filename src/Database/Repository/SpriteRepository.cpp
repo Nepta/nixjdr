@@ -84,8 +84,7 @@ QList<Sprite*> SpriteRepository::getMapSprites(TokenList *tokenList, MapLayer *m
     return getSprites(qb, tokenList, mapLayer);
 }
 
-QList<Sprite*> SpriteRepository::getSprites(QueryBuilder qb, TokenList *tokenList,
-    AbstractLayer *layer)
+QList<Sprite*> SpriteRepository::getSprites(QueryBuilder qb, TokenList *tokenList, GridLayer *layer)
 {
     DBItemList<Sprite> dbItemList(Database::instance()->pull(qb.getQuery()));
     QList<DBItem> dbItems = dbItemList.getList();
@@ -96,6 +95,7 @@ QList<Sprite*> SpriteRepository::getSprites(QueryBuilder qb, TokenList *tokenLis
         TokenItem *tokenItem = tokenList->findTokenItemById(tokenItemId);
         Sprite *sprite = new Sprite(dbItem, tokenItem, layer);
         sprites.append(sprite);
+        layer->addSpriteToLayer(sprite);
     }
 
     return sprites;
