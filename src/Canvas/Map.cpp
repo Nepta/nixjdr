@@ -267,7 +267,6 @@ void Map::showMapTooltip() {
     );
 
     m_Tooltip.showTooltip(position);
-    emit notify();
 }
 
 void Map::on_collapseButton_clicked(bool checked) {
@@ -281,6 +280,7 @@ void Map::on_collapseButton_clicked(bool checked) {
  */
 void Map::keyPressEvent(QKeyEvent *keyEvent){
     m_Scene->sendEvent(m_SelectedLayer, keyEvent);
+    emit notify();
 }
 
 /**
