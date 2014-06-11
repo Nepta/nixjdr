@@ -101,7 +101,8 @@ SOURCES += \
     Canvas/MapCreationWidget.cpp \
     Canvas/OpenMapWidget.cpp \
     GameObjects/GameObject.cpp \
-    GameObjects/Character.cpp
+    GameObjects/Character.cpp \
+    GameObjects/GameObjectDialog.cpp
 
 HEADERS  += \
     MainWindow.h \
@@ -196,7 +197,8 @@ HEADERS  += \
     Canvas/OpenMapWidget.h \
     GameObjects/GameObject.h \
     GameObjects/GameObjectType.h \
-    GameObjects/Character.h
+    GameObjects/Character.h \
+    GameObjects/GameObjectDialog.h
 
 FORMS    += \
     Tooltip.ui \
@@ -209,4 +211,5 @@ FORMS    += \
     Canvas/Map.ui \
     Canvas/SideMenuWidgets/DrawingMenu.ui \
     Canvas/MapCreationWidget.ui \
-    Canvas/OpenMapWidget.ui
+    Canvas/OpenMapWidget.ui \
+    GameObjects/GameObjectDialog.ui

@@ -7,7 +7,7 @@
 class Character : public GameObject
 {
 public:
-    Character(QString name, GameObjectType type, int maxHp, int hp);
+    Character(QString name, int maxHp, int hp);
     Character(DBItem gameObjectDbItem, DBItem characterDbItem);
     ~Character();
 

@@ -1,7 +1,7 @@
 #include "Character.h"
 
-Character::Character(QString name, GameObjectType type, int maxHp, int hp) :
-    GameObject(name, type)
+Character::Character(QString name, int maxHp, int hp) :
+    GameObject(name, GameObjectType::CHARACTER)
 {
     m_MaxHp = maxHp;
     m_Hp = hp;
