@@ -14,6 +14,8 @@ public:
     int getMaxHp();
     int getHp();
 
+    GameObject *clone();
+
 private:
     int m_MaxHp;
     int m_Hp;

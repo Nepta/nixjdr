@@ -4,8 +4,8 @@
 #include <QGraphicsPixmapItem>
 #include <QGraphicsSceneDragDropEvent>
 
+#include "GameObjects/GameObject.h"
 #include "Database/DBItem.h"
-
 #include "Token/TokenItem.h"
 
 class SpriteRepository;
@@ -22,10 +22,13 @@ public:
     void setTransparent(bool enabled);
     TokenItem *getTokenItem();
     QByteArray toQByteArray();
+    GameObject *getGameObject();
+    void setGameObject(GameObject *gameObject);
 
 private:
     TokenItem *m_TokenItem;
     bool m_Transparent;
+    GameObject *m_GameObject;
 };
 
 #endif // SPRITE_H

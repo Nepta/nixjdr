@@ -13,7 +13,7 @@ const QString GameObjectRepository::getTableName() {
 
 /**
  * @brief GameObjectRepository::insertGameObject Inserts a full GameObject in the database (data
- * in the GameObject class and data in the class subclassing GameObject).
+ * in the GameObject class and data in the class inheriting GameObject).
  * @param gameObject
  * @return Id of the inserted row.
  */

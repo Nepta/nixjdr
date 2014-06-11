@@ -15,8 +15,9 @@ public:
 
     QString getName();
     GameObjectType getType();
+    virtual GameObject *clone();
 
-private:
+protected:
     QString m_Name;
     GameObjectType m_Type;
 };

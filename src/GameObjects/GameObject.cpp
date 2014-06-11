@@ -17,6 +17,8 @@ GameObject::GameObject(DBItem item) {
     m_Type = type;
 }
 
+GameObject::~GameObject() {}
+
 QString GameObject::getName() {
     return m_Name;
 }
@@ -25,4 +27,8 @@ GameObjectType GameObject::getType() {
     return m_Type;
 }
 
-GameObject::~GameObject() {}
+GameObject *GameObject::clone() {
+    GameObject *clone = new GameObject(m_Name, m_Type);
+
+    return clone;
+}

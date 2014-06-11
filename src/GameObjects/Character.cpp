@@ -29,3 +29,9 @@ int Character::getMaxHp() {
 int Character::getHp() {
     return m_Hp;
 }
+
+GameObject *Character::clone() {
+    Character *clone = new Character(m_Name, m_MaxHp, m_Hp);
+
+    return clone;
+}

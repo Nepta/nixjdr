@@ -1,10 +1,15 @@
 #include <QObject>
+
+#include "Database/Repository/RepositoryManager.h"
+#include "Database/Repository/GameObjectRepository.h"
 #include "Sprite.h"
 
 #include <QDebug>
 
 Sprite::Sprite(TokenItem *tokenItem, QGraphicsItem *parent, int zValue)
 {
+    m_GameObject = NULL;
+
     construct(tokenItem, parent, zValue);
 }
 
@@ -12,13 +17,20 @@ Sprite::Sprite(DBItem item, TokenItem *tokenItem, QGraphicsItem *parent) {
     QHash<QString, QVariant> itemHashMap = item.getHashMap();
     columnsValues_ = item.getHashMap();
 
-    int id = itemHashMap.value("id").toInt();
-    int posx = itemHashMap.value("posx").toInt();
-    int posy = itemHashMap.value("posy").toInt();
-    int zvalue = itemHashMap.value("zvalue").toInt();
+    int id = columnsValues_.value("id").toInt();
+    int posx = columnsValues_.value("posx").toInt();
+    int posy = columnsValues_.value("posy").toInt();
+    int zvalue = columnsValues_.value("zvalue").toInt();
+    int gameobjectid = columnsValues_.value("gameobjectid").toInt();
 
     id_ = id;
     setPos(posx, posy);
+
+    if (gameobjectid != 0) {
+        m_GameObject = RepositoryManager::s_CharacterRepository.getFullGameObject(gameobjectid);
+    } else {
+        m_GameObject = NULL;
+    }
 
     construct(tokenItem, parent, zvalue);
 }
@@ -35,6 +47,8 @@ Sprite::Sprite(DBItem item, TokenItem *tokenItem, QGraphicsItem *parent) {
 Sprite::Sprite(const QByteArray& data, QGraphicsItem *parent, int zValue) :
     QGraphicsPixmapItem(parent)
 {
+    m_GameObject = NULL;
+
     QDataStream stream(data);
 
     stream >> id_;
@@ -85,4 +99,12 @@ QByteArray Sprite::toQByteArray() {
     m_TokenItem->toQByteArray(&stream);
 
     return out;
+}
+
+GameObject *Sprite::getGameObject() {
+    return m_GameObject;
+}
+
+void Sprite::setGameObject(GameObject *gameObject) {
+    m_GameObject = gameObject;
 }

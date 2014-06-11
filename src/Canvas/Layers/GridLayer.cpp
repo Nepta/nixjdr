@@ -1,6 +1,7 @@
 #include <QGraphicsScene>
 
 #include "Database/Repository/RepositoryManager.h"
+#include "Database/Repository/GameObjectRepository.h"
 #include "Canvas/Network/MapCodes.h"
 #include "GridLayer.h"
 
@@ -20,7 +21,12 @@ GridLayer::GridLayer(int step)
  * @return The newly created and added Sprite.
  */
 Sprite *GridLayer::addSpriteToLayer(TokenItem *tokenItem, QPoint position, int zValue) {
+    // creates a copy of the GameObject in the TokenItem and adds it to the db
+    GameObject *gameObject = tokenItem->gameObject()->clone();
+    RepositoryManager::s_GameObjectRepository.insertGameObject(gameObject);
+
     Sprite *sprite = new Sprite(tokenItem, this, zValue);
+    sprite->setGameObject(gameObject);
 
     addSpriteToLayer(sprite, position);
 
