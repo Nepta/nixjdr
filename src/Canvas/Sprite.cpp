@@ -50,11 +50,16 @@ Sprite::Sprite(const QByteArray& data, QGraphicsItem *parent, int zValue) :
     m_GameObject = NULL;
 
     QDataStream stream(data);
-
     stream >> id_;
 
     TokenItem *tokenItem = new TokenItem(&stream);
     construct(tokenItem, parent, zValue);
+
+    if (!stream.atEnd()) {
+        int gameObjectId;
+        stream >> gameObjectId;
+        m_GameObject = RepositoryManager::s_CharacterRepository.getFullGameObject(gameObjectId);
+    }
 }
 
 void Sprite::construct(TokenItem *tokenItem, QGraphicsItem *parent, int zValue) {
@@ -96,7 +101,12 @@ QByteArray Sprite::toQByteArray() {
     QDataStream stream(&out, QIODevice::WriteOnly);
 
     stream << id_;
+
     m_TokenItem->toQByteArray(&stream);
+
+    if (m_GameObject != NULL) {
+        stream << m_GameObject->id();
+    }
 
     return out;
 }

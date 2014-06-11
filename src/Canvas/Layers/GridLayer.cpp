@@ -21,9 +21,12 @@ GridLayer::GridLayer(int step)
  * @return The newly created and added Sprite.
  */
 Sprite *GridLayer::addSpriteToLayer(TokenItem *tokenItem, QPoint position, int zValue) {
-    // creates a copy of the GameObject in the TokenItem and adds it to the db
-    GameObject *gameObject = tokenItem->gameObject()->clone();
-    RepositoryManager::s_GameObjectRepository.insertGameObject(gameObject);
+    GameObject *gameObject = NULL;
+    if (tokenItem->gameObject() != NULL) {
+        // creates a copy of the GameObject in the TokenItem and adds it to the db
+        gameObject = tokenItem->gameObject()->clone();
+        RepositoryManager::s_GameObjectRepository.insertGameObject(gameObject);
+    }
 
     Sprite *sprite = new Sprite(tokenItem, this, zValue);
     sprite->setGameObject(gameObject);
