@@ -18,7 +18,7 @@
 #include "Tooltip.h"
 #include "CanvasView.h"
 #include "CanvasScene.h"
-#include "NotifyStacker.h"
+#include "NotificationStacker.h"
 
 namespace Ui {
     class Map;
@@ -57,7 +57,7 @@ private:
     Ui::Map *ui;
     CanvasScene *m_Scene;
     Tooltip m_Tooltip;
-    NotifyStacker m_NotifyStacker;
+    NotificationStacker m_NotifyStacker;
     AbstractLayer *m_SelectedLayer;
     Layers *m_Layers;
     QHash<LayerCodes, QWidget *> m_EditionMap;
@@ -80,6 +80,9 @@ private:
     void hideAllToolBoxes();
     void keyPressEvent(QKeyEvent *keyEvent);
     void keyReleaseEvent(QKeyEvent *keyEvent);
+
+signals:
+    void notify();
 };
 
 #endif // MAP_H

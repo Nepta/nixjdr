@@ -8,13 +8,20 @@
 
 class NotificationStacker : public QObject
 {
+    Q_OBJECT
+
 public:
     NotificationStacker();
+    ~NotificationStacker();
 
 private:
-    QList<Tooltip> *m_Stack;
+//    QList<Tooltip*> m_Stack;
+    int m_Size;
 
     void timerEvent(QTimerEvent *event);
+
+public slots:
+    void pushNotification();
 };
 
 #endif // NOTIFICATIONSTACKER_H
