@@ -4,6 +4,7 @@
 #include <QIcon>
 #include <QListWidgetItem>
 
+#include "GameObjects/GameObject.h"
 #include "Database/DBItem.h"
 
 class TokenItem : public QListWidgetItem, public DBItem {
@@ -17,6 +18,8 @@ private:
      * It should not be displayed in the TokenMenu's list.
      */
     bool special_;
+
+    GameObject *gameObject_;
 
     void construct(int id, QString path, QString text, int size, bool custom, bool special);
     void construct(QString path, QString text, int size, bool custom, bool special);
@@ -35,8 +38,10 @@ public:
     int size();
     bool isCustom();
     bool isSpecial();
+    GameObject *gameObject();
 
     void setCustomIcon(QString path, QString text);
+    void setGameObject(GameObject *gameObject);
 };
 
 #endif // TOKENITEM_H

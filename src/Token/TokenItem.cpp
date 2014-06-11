@@ -109,6 +109,10 @@ bool TokenItem::isSpecial() {
     return special_;
 }
 
+GameObject *TokenItem::gameObject() {
+    return gameObject_;
+}
+
 /**
  * @brief TokenItem::toQByteArray Stores the current instance of TokenItem in a QByteArray.
  * @remarks Used in drag&drop events to pass a TokenItem through the MimeData.
@@ -125,4 +129,8 @@ QByteArray TokenItem::toQByteArray() {
 
 void TokenItem::toQByteArray(QDataStream *stream) {
     *stream << id_ << text() << path_ << size_ << custom_ << special_;
+}
+
+void TokenItem::setGameObject(GameObject *gameObject) {
+    gameObject_ = gameObject;
 }

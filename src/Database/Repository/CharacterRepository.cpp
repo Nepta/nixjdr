@@ -7,17 +7,14 @@ const QString CharacterRepository::getTableName() {
 }
 
 /**
- * @brief insertCharacter Inserts a Character and its associated GameObject in the database.
+ * @brief CharacterRepository::insertCharacter Inserts a Character in the database.
  * @param character The Character to insert in the database.
  * @return ID given by the database to the newly inserted row.
- * @remarks The inserted Character and the associated GameObject have the same Id.
+ * @remarks the associated GameObject must already be inserted in the database.
  */
 int CharacterRepository::insertCharacter(Character *character) {
-    // Inserts the associated GameObject
-    int idGameObject = RepositoryManager::s_GameObjectRepository.insertGameObject(character);
-
     QHash<QString, QVariant> args {
-        {"id", idGameObject},
+        {"id", character->id()},
         {"maxhp", character->getMaxHp()},
         {"hp", character->getHp()}
     };
@@ -44,4 +41,16 @@ GameObject *CharacterRepository::getFullGameObject(int id) {
     Character *character = new Character(gameObjectDbItem, characterDbItem);
 
     return character;
+}
+
+/**
+ * @brief CharacterRepository::insertSubGameObject Reimplemented from GameObjectSubRepository.
+ * Inserts a Character in the database.
+ * @param gameObject object inheriting from Character and downcasted as a GameObject.
+ * @return Id of the inserted Character.
+ */
+int CharacterRepository::insertSubGameObject(GameObject *gameObject) {
+    Character *character = dynamic_cast<Character*>(gameObject);
+
+    return insertCharacter(character);
 }

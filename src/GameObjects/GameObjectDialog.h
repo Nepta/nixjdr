@@ -14,8 +14,10 @@ class GameObjectDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit GameObjectDialog(GameObject *object, QWidget *parent = 0);
+    GameObjectDialog(QWidget *parent = 0);
     ~GameObjectDialog();
+
+    GameObject *getGameObject();
 
 private slots:
     void on_createButton_clicked();

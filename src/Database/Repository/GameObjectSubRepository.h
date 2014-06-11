@@ -12,6 +12,7 @@ public:
 
     virtual const QString getTableName() = 0;
     virtual GameObject *getFullGameObject(int id) = 0;
+    virtual int insertSubGameObject(GameObject *gameObject) = 0;
 };
 
 #endif // GAMEOBJECTSUBREPOSITORY_H

@@ -2,7 +2,7 @@
 #include "GameObjectDialog.h"
 #include "ui_GameObjectDialog.h"
 
-GameObjectDialog::GameObjectDialog(GameObject *object, QWidget *parent) :
+GameObjectDialog::GameObjectDialog(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::GameObjectDialog)
 {
@@ -15,12 +15,15 @@ GameObjectDialog::~GameObjectDialog()
 }
 
 
-void GameObjectDialog::on_createButton_clicked()
-{
+void GameObjectDialog::on_createButton_clicked() {
     QString name = ui->m_NameEdit->text();
     int hp = ui->m_HpEdit->value();
 
     m_Object = new Character(name, hp, hp);
 
-    close();
+    accept();
+}
+
+GameObject *GameObjectDialog::getGameObject() {
+    return m_Object;
 }

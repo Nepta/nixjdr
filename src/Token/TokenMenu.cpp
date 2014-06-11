@@ -7,7 +7,7 @@
 #include "Database/QueryBuilder.h"
 #include "Database/DBItemList.h"
 
-#include "GameObjects/GameObject.h"
+#include "GameObjects/GameObjectDialog.h"
 
 #include "Network/TokenMenuCodes.h"
 #include "TokenMenu.h"
@@ -64,23 +64,44 @@ void TokenMenu::on_tokenButton_clicked()
 
     QAction* selectedItem = menu.exec(QCursor::pos());
     if (selectedItem == createCustomToken) {
-        // TODO filePath and size are hard-coded
         QString text = ui->inputSearchField->text();
         addCustomToken(text);
     }
     else if (selectedItem == createGameObject) {
-        // TODO
+        GameObjectDialog gameObjectDlg;
+        gameObjectDlg.exec();
+        GameObject *gameObject = gameObjectDlg.getGameObject();
+        gameObjectDlg.close();
+
+        if (gameObject != NULL) {
+            // Push the game object into the database
+            RepositoryManager::s_GameObjectRepository.insertGameObject(gameObject);
+
+            // TODO filePath and size are hard-coded
+            QString filePath("resource/TokenMenu/keroro.png");
+            int size = 32;
+
+            addToken(gameObject->getName(), filePath, size, false, gameObject);
+        }
     }
 }
 
-void TokenMenu::addCustomToken(QString text){
+void TokenMenu::addCustomToken(QString text) {
+    // TODO filePath and size are hard-coded
     QString filePath("resource/TokenMenu/keroro.png");
     int size = 32;
-    bool custom = true;
+
+    addToken(text, filePath, size, true);
+}
+
+void TokenMenu::addToken(QString text, QString filePath, int size, bool custom,
+    GameObject *gameObject)
+{
     // Check if the list already contains a token with the same text before insertion.
     QList<QListWidgetItem*> items = ui->m_tokenList->findItems(text, Qt::MatchExactly);
     if (items.empty()) {
         TokenItem *item = new TokenItem(filePath, text, size, custom);
+        item->setGameObject(gameObject);
 
         // push the item into the database
         RepositoryManager::s_TokenItemRepository.insertTokenItem(item);

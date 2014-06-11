@@ -11,6 +11,12 @@ const QString GameObjectRepository::getTableName() {
     return "gameobject";
 }
 
+/**
+ * @brief GameObjectRepository::insertGameObject Inserts a full GameObject in the database (data
+ * in the GameObject class and data in the class subclassing GameObject).
+ * @param gameObject
+ * @return Id of the inserted row.
+ */
 int GameObjectRepository::insertGameObject(GameObject *gameObject) {
     QHash<QString, QVariant> args {
         {"name", gameObject->getName()},
@@ -20,9 +26,21 @@ int GameObjectRepository::insertGameObject(GameObject *gameObject) {
     QueryBuilder qb = insertQB(args.keys());
     int id = insert(gameObject, qb, args);
 
+    // Insert data coming from the class inheriting GameObject
+    GameObjectSubRepository *repository = getRepositoryByGameObjectType(gameObject->getType());
+    if (repository != NULL) {
+        repository->insertSubGameObject(gameObject); // TODO
+    }
+
     return id;
 }
 
+/**
+ * @brief GameObjectRepository::getRepositoryByGameObjectType Retrieve a GameObjectSubRepository
+ * from the specified GameObjectType.
+ * @param type GameObjectType associated with the GameObjectSubRepository to get.
+ * @return A repository subclassing GameObjectSubRepository.
+ */
 GameObjectSubRepository *GameObjectRepository::getRepositoryByGameObjectType(GameObjectType type) {
     return m_GameObjectTypeRepo.value(type);
 }

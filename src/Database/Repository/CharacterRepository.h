@@ -14,6 +14,7 @@ public:
 
     int insertCharacter(Character *character);
     GameObject *getFullGameObject(int id);
+    int insertSubGameObject(GameObject *gameObject);
 };
 
 #endif // CHARACTERREPOSITORY_H
