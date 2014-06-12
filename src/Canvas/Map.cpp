@@ -3,6 +3,7 @@
 #include "Map.h"
 #include "ui_Map.h"
 #include "ui_DrawingMenu.h"
+#include <QDebug>
 
 Map::Map(QString mapName, QString bgFilename, TokenItem *tokenItem, int tileStep, QWidget *parent) :
     QWidget(parent),
@@ -170,6 +171,7 @@ void Map::initMapLayer(bool addToDb) {
         // Add MapLayer to the database
         RepositoryManager::s_MapLayerRepository.insertMapLayer(mapLayer);
     }
+	 connect(mapLayer, SIGNAL(spriteMoved(QString)), this, SLOT(printLog(QString)));
 }
 
 /**
@@ -262,7 +264,11 @@ void Map::showMapTooltip() {
         ui->m_View->size().height() - m_Tooltip.size().height() - Tooltip::TOOLTIP_OFFSET
     );
 
-    m_Tooltip.showTooltip(position);
+	 m_Tooltip.showTooltip(position);
+}
+
+void Map::printLog(QString log){
+	qDebug() << log;
 }
 
 void Map::on_collapseButton_clicked(bool checked) {

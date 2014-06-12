@@ -17,6 +17,7 @@ Log* Logger::pop(){
 
 void Logger::push(Log *log){
 	logStack_.push(log);
+	gui_->pushLog(log->toString());
 }
 
 void Logger::processNewData(Header header, QByteArray &data){
