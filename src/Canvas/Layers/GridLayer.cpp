@@ -1,6 +1,7 @@
 #include <QGraphicsScene>
 
 #include "Database/Repository/RepositoryManager.h"
+#include "Database/Repository/GameObjectRepository.h"
 #include "Canvas/Network/MapCodes.h"
 #include "GridLayer.h"
 
@@ -20,10 +21,22 @@ GridLayer::GridLayer(int step)
  * @return The newly created and added Sprite.
  */
 Sprite *GridLayer::addSpriteToLayer(TokenItem *tokenItem, QPoint position, int zValue) {
+    Sprite *sprite = new Sprite(tokenItem, this, zValue);
+    addSpriteToLayer(sprite, position);
+
+    return sprite;
+}
+
+/**
+ * @brief GridLayer::addSpriteToLayer Adds a Sprite to this layer at the specified position.
+ * @param sprite
+ * @param position
+ * @return The added Sprite.
+ */
+Sprite *GridLayer::addSpriteToLayer(Sprite* sprite, QPoint position) {
     QPoint spritePos(position.x()/m_Step, position.y()/m_Step);
     spritePos *= m_Step;
 
-    Sprite *sprite = new Sprite(tokenItem, this, zValue);
     sprite->setPos(spritePos);
 
     addSpriteToLayer(sprite);
@@ -50,7 +63,15 @@ Sprite *GridLayer::addSpriteToLayer(Sprite* sprite) {
  */
 void GridLayer::addSprite(TokenItem *tokenItem, QPoint position, int zValue) {
     Sprite *sprite = addSpriteToLayer(tokenItem, position, zValue);
+    addSpriteRemote(sprite);
+}
 
+void GridLayer::addSprite(Sprite *sprite, QPoint position) {
+    addSpriteToLayer(sprite, position);
+    addSpriteRemote(sprite);
+}
+
+void GridLayer::addSpriteRemote(Sprite *sprite) {
     // Insert the sprite in the database
     RepositoryManager::s_SpriteRepository.insertSprite(sprite);
 
@@ -71,6 +92,14 @@ void GridLayer::removeSprite(Sprite *sprite) {
 
     // Delete the sprite from the layer
     delete sprite;
+}
+
+void GridLayer::updateSprite(Sprite *sprite) {
+    // Notifies all the clients that a Sprite needs to be removed
+    QString msg = QString("%1").arg(sprite->id());
+    m_SenderClient->sendMessageToServer(msg, (quint16) MapCodes::REMOVE_SPRITE);
+
+    addSprite(sprite, sprite->pos().toPoint());
 }
 
 /**

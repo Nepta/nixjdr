@@ -3,6 +3,10 @@
 #include <QDragEnterEvent>
 #include <QMenu>
 
+#include "Database/Repository/RepositoryManager.h"
+#include "Database/Repository/CharacterRepository.h"
+#include "GameObjects/GameObjectDialog.h"
+#include "GameObjects/Character.h"
 #include "Canvas/Sprite.h"
 #include "MapLayer.h"
 
@@ -46,9 +50,9 @@ void MapLayer::initDragEvent(Sprite *watched, QGraphicsSceneMouseEvent *mouseEve
 
     QDrag *drag = new QDrag(mouseEvent->widget());
     QMimeData *mime = new QMimeData;
-    QByteArray data = watched->getTokenItem()->toQByteArray();
+    QByteArray data = watched->toQByteArray();
 
-    mime->setData("application/tokenitem", data);
+    mime->setData("application/sprite", data);
     drag->setMimeData(mime);
 
     QGraphicsPixmapItem *pixmapItem = dynamic_cast<QGraphicsPixmapItem*>(watched);
@@ -106,11 +110,20 @@ void MapLayer::dropEvent(QGraphicsSceneDragDropEvent *event)
  */
 void MapLayer::dropEvent(QGraphicsSceneDragDropEvent *event, Sprite *watched)
 {
-    QByteArray data = event->mimeData()->data("application/tokenitem");
-    if(!data.isEmpty()) {
-        TokenItem *tokenItem = new TokenItem(data);
+    QByteArray tokenItemData = event->mimeData()->data("application/tokenitem");
+    QByteArray spriteData = event->mimeData()->data("application/sprite");
+
+    if(!tokenItemData.isEmpty()) {
         int zValue = (watched ? watched->zValue() + 1 : 1);
+        TokenItem *tokenItem = new TokenItem(tokenItemData);
         addSprite(tokenItem, event->scenePos().toPoint(), zValue);
+
+        event->acceptProposedAction();
+    }
+    else if (!spriteData.isEmpty()) {
+        int zValue = (watched ? watched->zValue() + 1 : 1);
+        Sprite *sprite = new Sprite(spriteData, this, zValue);
+        addSprite(sprite, event->scenePos().toPoint());
 
         event->acceptProposedAction();
     }
@@ -145,14 +158,28 @@ void MapLayer::ShowContextMenu(QGraphicsSceneMouseEvent *mouseEvent, Sprite *wat
     QMenu menu;
 
     QAction* deleteAction = menu.addAction(tr("Supprimer"));
-    QAction* rangeAction = menu.addAction(tr("Rechercher une portée"));
+    QAction* editCharacterAction = menu.addAction(tr("Editer le personnage"));
+
+    GameObject *gameObject = watched->getGameObject();
+    Character *character = dynamic_cast<Character*>(gameObject);
+    if (character == NULL) {
+        editCharacterAction->setEnabled(false);
+    }
 
     QAction* selectedItem = menu.exec(mouseEvent->screenPos());
     if(selectedItem == deleteAction){
         removeSprite(watched);
     }
-    else if(selectedItem == rangeAction){
+    else if(selectedItem == editCharacterAction) {
+        GameObjectDialog gameObjectDlg(character);
+        gameObjectDlg.exec();
+        gameObjectDlg.close();
 
+        // Update the Character in the database
+        RepositoryManager::s_CharacterRepository.updateCharacter(character);
+
+        // Update the character for all the clients
+        updateSprite(watched);
     }
 }
 
@@ -202,6 +229,8 @@ bool MapLayer::sceneEventFilter(QGraphicsItem *watched, QEvent *event) {
 
         case QEvent::GraphicsSceneHoverMove: {
             addSpriteInfoTooltip(sprite);
+            addCharacterInfoTooltip(sprite->getGameObject());
+
             emit showMapTooltip();
         } break;
 
@@ -229,6 +258,18 @@ void MapLayer::addSpriteInfoTooltip(Sprite *sprite) {
         .arg(sprite->zValue());
 
     emit pushInfoTooltip(spriteInfo);
+}
+
+void MapLayer::addCharacterInfoTooltip(GameObject *gameObject) {
+    Character *character = dynamic_cast<Character*>(gameObject);
+
+    if (character != NULL) {
+        QString charInfo = tr("HP : %1/%2")
+                .arg(character->getHp())
+                .arg(character->getMaxHp());
+
+        emit pushInfoTooltip(charInfo);
+    }
 }
 
 /**

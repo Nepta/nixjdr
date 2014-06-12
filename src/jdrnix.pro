@@ -61,6 +61,8 @@ SOURCES += \
     Canvas/Tools/ToolPing.cpp \
     Canvas/Tools/Tools.cpp \
     Canvas/SideMenuWidgets/DrawingMenu.cpp \
+    Canvas/MapCreationWidget.cpp \
+    Canvas/OpenMapWidget.cpp \
     Network/Header.cpp \
     Network/SwitchServer.cpp \
     Network/SwitchClient.cpp \
@@ -70,6 +72,7 @@ SOURCES += \
     Network/Sender.cpp \
     Network/SenderClient.cpp \
     Network/SenderServer.cpp \
+    Network/Receiver.cpp \
     Database/Database.cpp \
     Database/DBItem.cpp \
     Database/QueryBuilder.cpp \
@@ -82,6 +85,8 @@ SOURCES += \
     Database/Repository/FoWLayerRepository.cpp \
     Database/Repository/BackgroundLayerRepository.cpp \
     Database/Repository/DrawingLayerRepository.cpp \
+    Database/Repository/GameObjectRepository.cpp \
+    Database/Repository/CharacterRepository.cpp \
     Token/TokenMenu.cpp \
     Token/TokenList.cpp \
     Token/TokenItem.cpp \
@@ -94,10 +99,10 @@ SOURCES += \
     Log/Logger.cpp \
     Log/Log.cpp \
     Log/MapLog.cpp \
-    Network/Receiver.cpp \
     Actions/AbstractAction.cpp \
-    Canvas/MapCreationWidget.cpp \
-    Canvas/OpenMapWidget.cpp
+    GameObjects/GameObject.cpp \
+    GameObjects/Character.cpp \
+    GameObjects/GameObjectDialog.cpp
 
 HEADERS  += \
     MainWindow.h \
@@ -140,11 +145,14 @@ HEADERS  += \
     Canvas/Tools/ToolPen.h \
     Canvas/Tools/ToolEraser.h \
     Canvas/Tools/Tools.h \
+    Canvas/Tools/ToolPing.h \
     Canvas/ImageWidget.h \
     Canvas/SideMenuWidgets/DrawingMenu.h \
     Canvas/Network/MapClient.h \
     Canvas/Network/MapServer.h \
     Canvas/Network/MapCodes.h \
+    Canvas/MapCreationWidget.h \
+    Canvas/OpenMapWidget.h \
     Network/Switch.h \
     Network/SwitchServer.h \
     Network/SwitchClient.h \
@@ -169,6 +177,9 @@ HEADERS  += \
     Database/Repository/FoWLayerRepository.h \
     Database/Repository/BackgroundLayerRepository.h \
     Database/Repository/DrawingLayerRepository.h \
+    Database/Repository/GameObjectRepository.h \
+    Database/Repository/CharacterRepository.h \
+    Database/Repository/GameObjectSubRepository.h \
     Token/TokenMenu.h \
     Token/TokenList.h \
     Token/TokenItem.h \
@@ -180,13 +191,14 @@ HEADERS  += \
     TurnMenu/Network/TurnMenuClient.h \
     TurnMenu/Network/TurnMenuServer.h \
     TurnMenu/Network/TurnMenuCodes.h \
-    Canvas/Tools/ToolPing.h \
     Log/Logger.h \
     Log/Log.h \
     Log/MapLog.h \
     Actions/AbstractAction.h \
-    Canvas/MapCreationWidget.h \
-    Canvas/OpenMapWidget.h
+    GameObjects/GameObject.h \
+    GameObjects/GameObjectType.h \
+    GameObjects/Character.h \
+    GameObjects/GameObjectDialog.h
 
 FORMS    += \
     Tooltip.ui \
@@ -199,4 +211,5 @@ FORMS    += \
     Canvas/Map.ui \
     Canvas/SideMenuWidgets/DrawingMenu.ui \
     Canvas/MapCreationWidget.ui \
-    Canvas/OpenMapWidget.ui
+    Canvas/OpenMapWidget.ui \
+    GameObjects/GameObjectDialog.ui

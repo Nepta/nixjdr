@@ -1,8 +1,6 @@
 #include "MapCreationWidget.h"
 #include "ui_MapCreationWidget.h"
 
-#include <QDebug>
-
 MapCreationWidget::MapCreationWidget(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::MapCreationWidget)

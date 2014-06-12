@@ -18,8 +18,12 @@ int SpriteRepository::insertSprite(Sprite *sprite) {
         {"posx", sprite->pos().x()},
         {"posy", sprite->pos().y()},
         {"zvalue", sprite->zValue()},
-        {"tokenitemid", sprite->getTokenItem()->id()},
+        {"tokenitemid", sprite->getTokenItem()->id()}
     };
+
+    if (sprite->getGameObject() != NULL) {
+        args.insert("gameobjectid", sprite->getGameObject()->id());
+    }
 
     QGraphicsItem* item = sprite->parentItem();
     MapLayer *mapLayer = dynamic_cast<MapLayer*>(item);

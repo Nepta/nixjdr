@@ -8,6 +8,8 @@
 #include "Database/Repository/MapLayerRepository.h"
 #include "Database/Repository/FoWLayerRepository.h"
 #include "Database/Repository/DrawingLayerRepository.h"
+#include "Database/Repository/GameObjectRepository.h"
+#include "Database/Repository/CharacterRepository.h"
 
 class RepositoryManager
 {
@@ -19,6 +21,8 @@ public:
     static MapLayerRepository s_MapLayerRepository;
     static FoWLayerRepository s_FoWLayerRepository;
     static DrawingLayerRepository s_DrawingLayerRepository;
+    static GameObjectRepository s_GameObjectRepository;
+    static CharacterRepository s_CharacterRepository;
 };
 
 #endif // REPOSITORYMANAGER_H

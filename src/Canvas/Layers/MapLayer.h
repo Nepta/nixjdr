@@ -31,6 +31,7 @@ private:
     void initDragEvent(Sprite *watched, QGraphicsSceneMouseEvent *mouseEvent);
     void addSpriteInfoTooltip(Sprite *sprite);
     void addMoveInfoTooltip(QPoint currentMousePoss);
+    void addCharacterInfoTooltip(GameObject *gameObject);
 
     bool sceneEventFilter(QGraphicsItem *watched, QEvent *event);
 
