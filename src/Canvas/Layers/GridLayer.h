@@ -70,7 +70,7 @@ private:
 
 signals:
 	 void spriteAdded(QString);
-
+	 void spriteRemoved(QString);
 };
 
 
