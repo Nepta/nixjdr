@@ -177,6 +177,10 @@ void GridLayer::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent) {
     if (mouseEvent->buttons() & Qt::LeftButton) {
         if (isInScene(mouseEvent) && layer) {
             addSprite(m_TokenItem, mouseScenePos, 1);
+				QString tokenItemPosition = QString("(%1,%2)")
+					.arg(QString::number(mouseScenePos.x()))
+					.arg(QString::number(mouseScenePos.y()));
+				emit spriteAdded("[added]:"+m_TokenItem->text()+":"+tokenItemPosition);
         }
     }
     else if (mouseEvent->buttons() & Qt::RightButton) {
@@ -188,7 +192,11 @@ void GridLayer::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent) {
 
         if (sprite && m_LastRemovedSpritePoint != sprite->scenePos()) {
             m_LastRemovedSpritePoint = sprite->scenePos();
-            removeSprite(sprite);
+				QString spritePosition = QString("(%1,%2)")
+					.arg(QString::number(mouseScenePos.x()))
+					.arg(QString::number(mouseScenePos.y()));
+				emit spriteRemoved("[removed]:"+sprite->getTokenItem()->text()+":"+spritePosition);
+				removeSprite(sprite);
         }
     }
 }
