@@ -154,6 +154,10 @@ void GridLayer::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent) {
     if (mouseEvent->button() == Qt::LeftButton) {
         QPoint mouseScenePos = mouseEvent->scenePos().toPoint();
         addSprite(m_TokenItem, mouseScenePos);
+		  QString tokenItemPosition = QString("(%1,%2)")
+			  .arg(QString::number(mouseScenePos.x()))
+			  .arg(QString::number(mouseScenePos.y()));
+		  emit spriteAdded("[added]:"+m_TokenItem->text()+":"+tokenItemPosition);
     }
 }
 

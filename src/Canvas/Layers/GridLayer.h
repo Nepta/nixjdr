@@ -68,6 +68,9 @@ private:
     void drawRows(QPainter *painter, int rowLength, int limit, bool orientation);
     bool isInScene(QGraphicsSceneMouseEvent *mouseEvent);
 
+signals:
+	 void spriteAdded(QString);
+
 };
 
 

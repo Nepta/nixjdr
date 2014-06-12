@@ -135,6 +135,11 @@ void MapLayer::spriteMouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent, Spr
     if (mouseEvent->button() == Qt::LeftButton) {
         QPoint mouseScenePos = mouseEvent->scenePos().toPoint();
         addSprite(m_TokenItem, mouseScenePos, watched->zValue() + 1);
+		  QString tokenItemPosition = QString("(%1,%2)")
+			  .arg(QString::number(mouseScenePos.x()))
+			  .arg(QString::number(mouseScenePos.y()));
+		  //NOTE never used?
+		  emit spriteAdded("[added]:"+m_TokenItem->text()+":"+tokenItemPosition);
     }
 
     if(mouseEvent->button() == Qt::RightButton){

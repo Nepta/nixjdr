@@ -47,7 +47,6 @@ signals:
     void pushInfoTooltip(QString info);
     void showMapTooltip();
     void hideMapTooltip();
-	 void spriteAdded(QString info);
 	 void spriteRemoved(QString info);
 	 void spriteMoved(QString info);
 
