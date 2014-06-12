@@ -102,7 +102,8 @@ SOURCES += \
     Actions/AbstractAction.cpp \
     GameObjects/GameObject.cpp \
     GameObjects/Character.cpp \
-    GameObjects/GameObjectDialog.cpp
+    GameObjects/GameObjectDialog.cpp \
+    General/CircularProgressBar.cpp
 
 HEADERS  += \
     MainWindow.h \
@@ -198,7 +199,8 @@ HEADERS  += \
     GameObjects/GameObject.h \
     GameObjects/GameObjectType.h \
     GameObjects/Character.h \
-    GameObjects/GameObjectDialog.h
+    GameObjects/GameObjectDialog.h \
+    General/CircularProgressBar.h
 
 FORMS    += \
     Tooltip.ui \

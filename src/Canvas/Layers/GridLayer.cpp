@@ -110,7 +110,7 @@ void GridLayer::removeSpriteById(int id) {
     for (QGraphicsItem *item : childItems()) {
         Sprite *sprite = dynamic_cast<Sprite*>(item);
 
-        if (sprite->id() == id) {
+        if (sprite != NULL && sprite->id() == id) {
             delete sprite;
             break;
         }

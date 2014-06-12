@@ -3,6 +3,8 @@
 
 #include <QListWidgetItem>
 #include <QPainter>
+
+#include "General/CircularProgressBar.h"
 #include "GridLayer.h"
 
 /**
@@ -28,6 +30,8 @@ private:
      */
     QPoint m_dragStartPosition;
 
+    CircularProgressBar m_LifeBar;
+
     void initDragEvent(Sprite *watched, QGraphicsSceneMouseEvent *mouseEvent);
     void addSpriteInfoTooltip(Sprite *sprite);
     void addMoveInfoTooltip(QPoint currentMousePoss);
@@ -43,6 +47,9 @@ private:
     void dragLeaveEvent(QGraphicsSceneDragDropEvent * event);
     void spriteMouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent, Sprite *watched);
     void ShowContextMenu(QGraphicsSceneMouseEvent *mouseEvent, Sprite *watched);
+
+    void showLifeBar(Sprite *sprite);
+    void hideLifeBar();
 
 signals:
     void pushInfoTooltip(QString info);

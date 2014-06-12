@@ -13,12 +13,15 @@
 MapLayer::MapLayer(TokenItem *tokenItem, int step) :
     GridLayer(step)
 {
+    m_LifeBar.setParentItem(this);
     setTokenItem(tokenItem);
     setAcceptDrops(true);
 }
 
 MapLayer::MapLayer(DBItem item) : GridLayer()
 {
+    m_LifeBar.setParentItem(this);
+
     QHash<QString, QVariant> itemHashMap = item.getHashMap();
     columnsValues_ = item.getHashMap();
 
@@ -214,6 +217,10 @@ bool MapLayer::sceneEventFilter(QGraphicsItem *watched, QEvent *event) {
             }
         } break;
 
+        case QEvent::GraphicsSceneDragEnter: {
+            hideLifeBar();
+        } break;
+
         case QEvent::GraphicsSceneDragMove: {
             QPoint pos = mouseEvent->scenePos().toPoint();
 
@@ -227,6 +234,10 @@ bool MapLayer::sceneEventFilter(QGraphicsItem *watched, QEvent *event) {
             emit hideMapTooltip();
         }
 
+        case QEvent::GraphicsSceneHoverEnter: {
+            showLifeBar(sprite);
+        }
+
         case QEvent::GraphicsSceneHoverMove: {
             addSpriteInfoTooltip(sprite);
             addCharacterInfoTooltip(sprite->getGameObject());
@@ -235,6 +246,7 @@ bool MapLayer::sceneEventFilter(QGraphicsItem *watched, QEvent *event) {
         } break;
 
         case QEvent::GraphicsSceneHoverLeave: {
+            hideLifeBar();
             emit hideMapTooltip();
         } break;
 
@@ -294,4 +306,22 @@ void MapLayer::addMoveInfoTooltip(QPoint currentMousePos) {
 
     QString moveInfo = QString(tr("Distance la plus courte: %1")).arg(shorterDistance);
     emit pushInfoTooltip(moveInfo);
+}
+
+void MapLayer::showLifeBar(Sprite *sprite) {
+    GameObject *gameObject = sprite->getGameObject();
+    Character *character = dynamic_cast<Character*>(gameObject);
+
+    if (character != NULL) {
+        m_LifeBar.setRadius(sprite->getTokenItem()->size());
+        m_LifeBar.setPos(sprite->pos());
+        m_LifeBar.setMaxValue(character->getMaxHp());
+        m_LifeBar.setValue(character->getHp());
+        m_LifeBar.setZValue(sprite->zValue() + 1);
+        m_LifeBar.show();
+    }
+}
+
+void MapLayer::hideLifeBar() {
+    m_LifeBar.hide();
 }
