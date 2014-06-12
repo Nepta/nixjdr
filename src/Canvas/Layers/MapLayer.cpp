@@ -114,7 +114,7 @@ void MapLayer::dropEvent(QGraphicsSceneDragDropEvent *event, Sprite *watched)
 		  QString tokenItemPosition = QString("(%1,%2)")
 			  .arg(QString::number(event->scenePos().toPoint().x()))
 			  .arg(QString::number(event->scenePos().toPoint().y()));
-		  emit spriteMoved(tokenItem->text()+":"+tokenItemPosition);
+		  emit spriteMoved("[moved]:"+tokenItem->text()+":"+tokenItemPosition);
 
         event->acceptProposedAction();
     }
@@ -153,7 +153,11 @@ void MapLayer::ShowContextMenu(QGraphicsSceneMouseEvent *mouseEvent, Sprite *wat
 
     QAction* selectedItem = menu.exec(mouseEvent->screenPos());
     if(selectedItem == deleteAction){
-        removeSprite(watched);
+		  QString spritePosition = QString("(%1,%2)")
+			  .arg(QString::number(mouseEvent->scenePos().toPoint().x()))
+			  .arg(QString::number(mouseEvent->scenePos().toPoint().y()));
+		  emit spriteRemoved("[delete]:"+watched->getTokenItem()->text()+":"+spritePosition);
+		  removeSprite(watched);
     }
     else if(selectedItem == rangeAction){
 
