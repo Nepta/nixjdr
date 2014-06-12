@@ -3,6 +3,7 @@
 #include <QDragEnterEvent>
 #include <QMenu>
 
+#include "GameObjects/Character.h"
 #include "Canvas/Sprite.h"
 #include "MapLayer.h"
 
@@ -13,7 +14,8 @@ MapLayer::MapLayer(TokenItem *tokenItem, int step) :
     setAcceptDrops(true);
 }
 
-MapLayer::MapLayer(DBItem item) : GridLayer()
+MapLayer::MapLayer(DBItem item) :
+    GridLayer()
 {
     QHash<QString, QVariant> itemHashMap = item.getHashMap();
     columnsValues_ = item.getHashMap();
@@ -46,10 +48,8 @@ void MapLayer::initDragEvent(Sprite *watched, QGraphicsSceneMouseEvent *mouseEve
 
     QDrag *drag = new QDrag(mouseEvent->widget());
     QMimeData *mime = new QMimeData;
-    //QByteArray data = watched->getTokenItem()->toQByteArray();
     QByteArray data = watched->toQByteArray();
 
-    //mime->setData("application/tokenitem", data);
     mime->setData("application/sprite", data);
     drag->setMimeData(mime);
 
@@ -213,6 +213,8 @@ bool MapLayer::sceneEventFilter(QGraphicsItem *watched, QEvent *event) {
 
         case QEvent::GraphicsSceneHoverMove: {
             addSpriteInfoTooltip(sprite);
+            addCharacterInfoTooltip(sprite->getGameObject());
+
             emit showMapTooltip();
         } break;
 
@@ -240,6 +242,18 @@ void MapLayer::addSpriteInfoTooltip(Sprite *sprite) {
         .arg(sprite->zValue());
 
     emit pushInfoTooltip(spriteInfo);
+}
+
+void MapLayer::addCharacterInfoTooltip(GameObject *gameObject) {
+    Character *character = dynamic_cast<Character*>(gameObject);
+
+    if (character != NULL) {
+        QString charInfo = tr("HP : %1/%2")
+                .arg(character->getHp())
+                .arg(character->getMaxHp());
+
+        emit pushInfoTooltip(charInfo);
+    }
 }
 
 /**
