@@ -3,6 +3,9 @@
 #include <QDragEnterEvent>
 #include <QMenu>
 
+#include "Database/Repository/RepositoryManager.h"
+#include "Database/Repository/CharacterRepository.h"
+#include "GameObjects/GameObjectDialog.h"
 #include "GameObjects/Character.h"
 #include "Canvas/Sprite.h"
 #include "MapLayer.h"
@@ -155,14 +158,24 @@ void MapLayer::ShowContextMenu(QGraphicsSceneMouseEvent *mouseEvent, Sprite *wat
     QMenu menu;
 
     QAction* deleteAction = menu.addAction(tr("Supprimer"));
-    QAction* rangeAction = menu.addAction(tr("Rechercher une portée"));
+    QAction* editCharacterAction = menu.addAction(tr("Editer le personnage"));
+
+    GameObject *gameObject = watched->getGameObject();
+    Character *character = dynamic_cast<Character*>(gameObject);
+    if (character == NULL) {
+        editCharacterAction->setEnabled(false);
+    }
 
     QAction* selectedItem = menu.exec(mouseEvent->screenPos());
     if(selectedItem == deleteAction){
         removeSprite(watched);
     }
-    else if(selectedItem == rangeAction){
+    else if(selectedItem == editCharacterAction) {
+        GameObjectDialog gameObjectDlg(character);
+        gameObjectDlg.exec();
+        gameObjectDlg.close();
 
+        RepositoryManager::s_CharacterRepository.updateCharacter(character);
     }
 }
 

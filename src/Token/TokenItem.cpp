@@ -151,7 +151,7 @@ QByteArray TokenItem::toQByteArray() {
 }
 
 void TokenItem::toQByteArray(QDataStream *stream) {
-    *stream << id_ << text() << path_ << size_ << custom_ << special_; // TODO gameobjectid
+    *stream << id_ << text() << path_ << size_ << custom_ << special_;
 
     // If this TokenItem possess a GameObject, adds its Id to the QByteArray, otherwise adds the id
     // 0 which does not correspond to any GameObject

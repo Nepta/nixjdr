@@ -29,7 +29,7 @@ int GameObjectRepository::insertGameObject(GameObject *gameObject) {
     // Insert data coming from the class inheriting GameObject
     GameObjectSubRepository *repository = getRepositoryByGameObjectType(gameObject->getType());
     if (repository != NULL) {
-        repository->insertSubGameObject(gameObject); // TODO
+        repository->insertSubGameObject(gameObject);
     }
 
     return id;

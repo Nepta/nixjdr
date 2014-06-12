@@ -13,6 +13,8 @@ public:
 
     int getMaxHp();
     int getHp();
+    void setMaxHp(int maxHp);
+    void setHp(int hp);
 
     GameObject *clone();
 

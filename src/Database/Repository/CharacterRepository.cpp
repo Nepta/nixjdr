@@ -25,6 +25,15 @@ int CharacterRepository::insertCharacter(Character *character) {
     return idCharacter;
 }
 
+void CharacterRepository::updateCharacter(Character *character) {
+    QHash<QString, QVariant> args {
+        {"maxhp", character->getMaxHp()},
+        {"hp", character->getHp()}
+    };
+
+    updateById(character->id(), args);
+}
+
 /**
  * @brief CharacterRepository::getGameObject Retrieve a Character (which inherits GameObject).
  * @param id Id of the Character to retrieve
@@ -54,3 +63,4 @@ int CharacterRepository::insertSubGameObject(GameObject *gameObject) {
 
     return insertCharacter(character);
 }
+

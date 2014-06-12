@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>400</width>
-    <height>300</height>
+    <height>190</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -59,12 +59,12 @@
      <item row="2" column="0">
       <widget class="QLabel" name="label_2">
        <property name="text">
-        <string>Hp</string>
+        <string>Hp Max</string>
        </property>
       </widget>
      </item>
      <item row="2" column="1">
-      <widget class="QSpinBox" name="m_HpEdit">
+      <widget class="QSpinBox" name="m_HpMaxEdit">
        <property name="maximum">
         <number>1000</number>
        </property>
@@ -87,6 +87,20 @@
          <string>Personnage</string>
         </property>
        </item>
+      </widget>
+     </item>
+     <item row="3" column="0">
+      <widget class="QLabel" name="label_4">
+       <property name="text">
+        <string>Hp</string>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="1">
+      <widget class="QSpinBox" name="m_HpEdit">
+       <property name="maximum">
+        <number>1000</number>
+       </property>
       </widget>
      </item>
     </layout>

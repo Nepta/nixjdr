@@ -13,6 +13,7 @@ public:
     const QString getTableName();
 
     int insertCharacter(Character *character);
+    void updateCharacter(Character *character);
     GameObject *getFullGameObject(int id);
     int insertSubGameObject(GameObject *gameObject);
 };

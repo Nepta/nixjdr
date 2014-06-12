@@ -30,6 +30,14 @@ int Character::getHp() {
     return m_Hp;
 }
 
+void Character::setMaxHp(int maxHp) {
+    m_MaxHp = maxHp;
+}
+
+void Character::setHp(int hp) {
+    m_Hp = hp;
+}
+
 GameObject *Character::clone() {
     Character *clone = new Character(m_Name, m_MaxHp, m_Hp);
 

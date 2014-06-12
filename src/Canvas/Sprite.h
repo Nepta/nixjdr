@@ -23,7 +23,6 @@ public:
     TokenItem *getTokenItem();
     QByteArray toQByteArray();
     GameObject *getGameObject();
-    void setGameObject(GameObject *gameObject);
 
 private:
     TokenItem *m_TokenItem;

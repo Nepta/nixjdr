@@ -133,7 +133,3 @@ QByteArray Sprite::toQByteArray() {
 GameObject *Sprite::getGameObject() {
     return m_GameObject;
 }
-
-void Sprite::setGameObject(GameObject *gameObject) {
-    m_GameObject = gameObject;
-}

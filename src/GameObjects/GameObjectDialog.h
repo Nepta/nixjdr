@@ -15,6 +15,7 @@ class GameObjectDialog : public QDialog
 
 public:
     GameObjectDialog(QWidget *parent = 0);
+    GameObjectDialog(GameObject *gameObject, QWidget *parent = 0);
     ~GameObjectDialog();
 
     GameObject *getGameObject();
@@ -25,6 +26,7 @@ private slots:
 private:
     Ui::GameObjectDialog *ui;
     GameObject *m_Object;
+    bool m_EditMode;
 };
 
 #endif // GAMEOBJECTDIALOG_H
