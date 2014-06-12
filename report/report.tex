@@ -147,6 +147,29 @@ N'étant qu'une équipe de 4 et le projet ne durant que 2 mois, nous avons dû r
 
 \section{Manuel d'utilisation}
 
+Cette application débute avec une boîte de dialogue qui laisse le choix entre deux rôles : Maître Jeu (MJ) ou Joueur. Si MJ est choisi, l'application se met en tant que serveur pour accueillir les joueurs. Si joueur est choisi, un assistant ce connexion apparaît pour choisir à quel serveur se connecter. \\
+
+L'interface qui se présente comporte un Chat, un gestionnaire de tours et le lanceur de dés. Le Chat contient la liste des utilisateurs et permet aux joueurs et au MJ de communique. De plus, le chat possède des commandes qui s'introduisent par un /. Les commandes implémentées sont :
+
+\begin{description}
+	\item[/help] \hfill \\
+		Affiche l'ensemble des autres commandes disponibles du chat avec les indications d'utilisation.
+	\item[/nickname <pseudo>] \hfill \\
+		Modifie le pseudo par celui qui suit la commande.
+	\item[/roll <nombre de dés>d<valeur max du dé>] \hfill \\
+		Roule un nombre de fois voulu du dé choisi. Peu s'utiliser en chuchotement.
+	\item[/whisper <utilisateur> <message>] \hfill \\
+		Envoie un message privé au joueur indiqué.
+\end{description}
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[scale=0.5]{img/chat_mj.jpg}
+	\hspace{10 mm}
+	\includegraphics[scale=0.5]{img/chat_player.jpg}
+	\caption{Chat MJ (à gauche) et chat Joueur (à droite)}
+\end{figure}
+
 \section{Conclusion}
 
 \end{document}
