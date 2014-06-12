@@ -61,6 +61,11 @@ void MapLayer::initDragEvent(Sprite *watched, QGraphicsSceneMouseEvent *mouseEve
     if (dropAction == Qt::IgnoreAction) {
         watched->setTransparent(false);
     } else {
+
+		  QString spritePosition = QString("(%1,%2)");
+		  spritePosition = spritePosition.arg(QString::number(mouseEvent->scenePos().toPoint().x()));
+		  spritePosition = spritePosition.arg(QString::number(mouseEvent->scenePos().toPoint().y()));
+		  emit spriteMoved("[moved]:"+watched->getTokenItem()->text()+":"+spritePosition);
         removeSprite(watched);
     }
 }
@@ -111,10 +116,6 @@ void MapLayer::dropEvent(QGraphicsSceneDragDropEvent *event, Sprite *watched)
         TokenItem *tokenItem = new TokenItem(data);
         int zValue = (watched ? watched->zValue() + 1 : 1);
         addSprite(tokenItem, event->scenePos().toPoint(), zValue);
-		  QString tokenItemPosition = QString("(%1,%2)")
-			  .arg(QString::number(event->scenePos().toPoint().x()))
-			  .arg(QString::number(event->scenePos().toPoint().y()));
-		  emit spriteMoved("[moved]:"+tokenItem->text()+":"+tokenItemPosition);
 
         event->acceptProposedAction();
     }
