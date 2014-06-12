@@ -175,7 +175,11 @@ void MapLayer::ShowContextMenu(QGraphicsSceneMouseEvent *mouseEvent, Sprite *wat
         gameObjectDlg.exec();
         gameObjectDlg.close();
 
+        // Update the Character in the database
         RepositoryManager::s_CharacterRepository.updateCharacter(character);
+
+        // Update the character for all the clients
+        updateSprite(watched);
     }
 }
 

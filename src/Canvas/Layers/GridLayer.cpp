@@ -94,6 +94,14 @@ void GridLayer::removeSprite(Sprite *sprite) {
     delete sprite;
 }
 
+void GridLayer::updateSprite(Sprite *sprite) {
+    // Notifies all the clients that a Sprite needs to be removed
+    QString msg = QString("%1").arg(sprite->id());
+    m_SenderClient->sendMessageToServer(msg, (quint16) MapCodes::REMOVE_SPRITE);
+
+    addSprite(sprite, sprite->pos().toPoint());
+}
+
 /**
  * @brief GridLayer::removeSpriteById Remove a sprite on the grid which possess the given id
  * @param id

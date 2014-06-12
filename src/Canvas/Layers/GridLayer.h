@@ -38,6 +38,8 @@ public:
     void removeSpriteById(int id);
     void removeAllSprites();
 
+    void updateSprite(Sprite *sprite);
+
     void drawBackground(QPainter *painter, const QRectF &rect);
 
     int getStep();
