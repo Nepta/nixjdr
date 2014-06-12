@@ -172,6 +172,8 @@ void Map::initMapLayer(bool addToDb) {
         RepositoryManager::s_MapLayerRepository.insertMapLayer(mapLayer);
     }
 	 connect(mapLayer, SIGNAL(spriteMoved(QString)), this, SLOT(printLog(QString)));
+	 connect(mapLayer, SIGNAL(spriteRemoved(QString)), this, SLOT(printLog(QString)));
+	 connect(mapLayer, SIGNAL(spriteAdded(QString)), this, SLOT(printLog(QString)));
 }
 
 /**
