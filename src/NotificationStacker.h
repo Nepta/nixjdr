@@ -15,7 +15,7 @@ public:
     ~NotificationStacker();
 
 private:
-//    QList<Tooltip*> m_Stack;
+    QList<Tooltip*> m_Stack;
     int m_Size;
 
     void timerEvent(QTimerEvent *event);

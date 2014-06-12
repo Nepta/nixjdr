@@ -13,22 +13,26 @@ NotificationStacker::~NotificationStacker(){
 }
 
 void NotificationStacker::pushNotification(){
-//    Tooltip* notif;
+    Tooltip* notif;
 //    notif->setToolTip("text");
 //    m_Stack.append(notif);
 //    qDebug() << "push";
+    m_Stack << notif;
     m_Size++;
 }
 
 void NotificationStacker::timerEvent(QTimerEvent *event){
 //    qDebug() << "begin";
-//    if(!m_Stack.isEmpty()){
-//        qDebug() << "not empty";
-//        m_Stack.pop_back();
+    if(!m_Stack.isEmpty()){
+        qDebug() << "not empty";
+        m_Stack.pop_front();
 //        qDebug() << "poped";
-//    }
-    if(m_Size > 0){
-        m_Size--;
-        qDebug() << m_Size;
     }
+    else{
+        qDebug() << "empty";
+    }
+//    if(m_Size > 0){
+//        m_Size--;
+//        qDebug() << m_Size;
+//    }
 }
