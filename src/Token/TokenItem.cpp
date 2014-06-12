@@ -82,11 +82,16 @@ void TokenItem::construct(QString path, QString text, int size, bool custom, boo
 }
 
 void TokenItem::construct(QDataStream *stream) {
-    int id, size;
+    int id, size, gameObjectId;
     QString text, path;
     bool custom, special;
 
-    *stream >> id >> text >> path >> size >> custom >> special;
+    *stream >> id >> text >> path >> size >> custom >> special >> gameObjectId;
+
+    if (gameObjectId != 0) {
+        gameObject_ = RepositoryManager::s_CharacterRepository.getFullGameObject(gameObjectId);
+    }
+
     construct(id, path, text, size, custom, special);
 }
 
@@ -146,7 +151,17 @@ QByteArray TokenItem::toQByteArray() {
 }
 
 void TokenItem::toQByteArray(QDataStream *stream) {
-    *stream << id_ << text() << path_ << size_ << custom_ << special_;
+    *stream << id_ << text() << path_ << size_ << custom_ << special_; // TODO gameobjectid
+
+    // If this TokenItem possess a GameObject, adds its Id to the QByteArray, otherwise adds the id
+    // 0 which does not correspond to any GameObject
+    if (gameObject_ != NULL) {
+        *stream << gameObject_->id();
+    }
+    else {
+        int id = 0;
+        *stream << id;
+    }
 }
 
 void TokenItem::setGameObject(GameObject *gameObject) {

@@ -14,8 +14,7 @@ MapLayer::MapLayer(TokenItem *tokenItem, int step) :
     setAcceptDrops(true);
 }
 
-MapLayer::MapLayer(DBItem item) :
-    GridLayer()
+MapLayer::MapLayer(DBItem item) : GridLayer()
 {
     QHash<QString, QVariant> itemHashMap = item.getHashMap();
     columnsValues_ = item.getHashMap();

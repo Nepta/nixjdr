@@ -29,6 +29,8 @@ private:
     TokenItem *m_TokenItem;
     bool m_Transparent;
     GameObject *m_GameObject;
+
+    void copyGameObjectFromTokenItem(TokenItem *tokenItem);
 };
 
 #endif // SPRITE_H

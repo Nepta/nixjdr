@@ -4,17 +4,14 @@
 #include "Database/Repository/GameObjectRepository.h"
 #include "Sprite.h"
 
-#include <QDebug>
-
 Sprite::Sprite(TokenItem *tokenItem, QGraphicsItem *parent, int zValue)
 {
     m_GameObject = NULL;
-
+    copyGameObjectFromTokenItem(tokenItem);
     construct(tokenItem, parent, zValue);
 }
 
 Sprite::Sprite(DBItem item, TokenItem *tokenItem, QGraphicsItem *parent) {
-    QHash<QString, QVariant> itemHashMap = item.getHashMap();
     columnsValues_ = item.getHashMap();
 
     int id = columnsValues_.value("id").toInt();
@@ -50,16 +47,15 @@ Sprite::Sprite(const QByteArray& data, QGraphicsItem *parent, int zValue) :
     m_GameObject = NULL;
 
     QDataStream stream(data);
-    stream >> id_;
+    int gameObjectId;
+    stream >> id_ >> gameObjectId;
+
+    if (gameObjectId != 0) {
+        m_GameObject = RepositoryManager::s_CharacterRepository.getFullGameObject(gameObjectId);
+    }
 
     TokenItem *tokenItem = new TokenItem(&stream);
     construct(tokenItem, parent, zValue);
-
-    if (!stream.atEnd()) {
-        int gameObjectId;
-        stream >> gameObjectId;
-        m_GameObject = RepositoryManager::s_CharacterRepository.getFullGameObject(gameObjectId);
-    }
 }
 
 void Sprite::construct(TokenItem *tokenItem, QGraphicsItem *parent, int zValue) {
@@ -84,6 +80,18 @@ void Sprite::construct(TokenItem *tokenItem, QGraphicsItem *parent, int zValue) 
 Sprite::~Sprite() {
 }
 
+/**
+ * @brief Sprite::copyGameObjectFromTokenItem Creates a copy of the GameObject in the specified
+ * TokenItem, adds it to the database and sets it for this sprite.
+ * @param tokenItem TokenItem from which the GameObject copy will be taken.
+ */
+void Sprite::copyGameObjectFromTokenItem(TokenItem *tokenItem) {
+    if (tokenItem->gameObject() != NULL) {
+        m_GameObject = tokenItem->gameObject()->clone();
+        RepositoryManager::s_GameObjectRepository.insertGameObject(m_GameObject);
+    }
+}
+
 void Sprite::setTransparent(bool enabled) {
     if (enabled) {
         setOpacity(0.75);
@@ -96,17 +104,28 @@ TokenItem *Sprite::getTokenItem() {
     return m_TokenItem;
 }
 
+/**
+ * @brief Sprite::toQByteArray Stores a current instance of Sprite in a QByteArray.
+ * @remarks Used in drag&drop events to pass a Sprite through the MimeData.
+ * @return QByteArray containing sufficient information about the tokenItem to reconstruct it.
+ */
 QByteArray Sprite::toQByteArray() {
     QByteArray out;
     QDataStream stream(&out, QIODevice::WriteOnly);
 
     stream << id_;
 
-    m_TokenItem->toQByteArray(&stream);
-
+    // If this Sprite possess a GameObject, adds its Id to the QByteArray, otherwise adds the id 0
+    // which does not correspond to any GameObject.
     if (m_GameObject != NULL) {
         stream << m_GameObject->id();
+    } else {
+        int id = 0;
+        stream << id;
     }
+
+    m_TokenItem->toQByteArray(&stream);
+
 
     return out;
 }
