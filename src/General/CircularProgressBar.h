@@ -10,6 +10,8 @@
 class CircularProgressBar : public QGraphicsPixmapItem
 {
 public:
+    static const int FULL_CIRCLE = 16 * 360;
+
     CircularProgressBar(QGraphicsItem *parent = 0);
     ~CircularProgressBar();
 
