@@ -156,7 +156,7 @@ void MainWindow::on_actionOpenMap_triggered() {
     OpenMapWidget openMapWidget(&mapId);
     openMapWidget.exec();
 
-    // If the map is already open, don't open it again
+    // If the map has already been opened, don't open it again
     Receiver *mapClientReceiver = m_Client->getReceiver(TargetCode::MAP_CLIENT);
     MapClient *mapClient = dynamic_cast<MapClient*>(mapClientReceiver);
     if (mapClient->containsMap(mapId)) {
