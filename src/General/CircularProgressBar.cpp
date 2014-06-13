@@ -26,6 +26,11 @@ CircularProgressBar::~CircularProgressBar() {}
 void CircularProgressBar::paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
     QWidget *widget)
 {
+    // If CircularProgressBar is not correctly initialized, do not paint it
+    if (m_MaxValue == 0) {
+        return;
+    }
+
     QGraphicsPixmapItem::paint(painter, option, widget);
     painter->setRenderHint(QPainter::Antialiasing);
 
