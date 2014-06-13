@@ -126,10 +126,30 @@ QByteArray Sprite::toQByteArray() {
 
     m_TokenItem->toQByteArray(&stream);
 
-
     return out;
 }
 
 GameObject *Sprite::getGameObject() {
     return m_GameObject;
+}
+
+/**
+ * @brief Sprite::boundingRect Reimplemented from QGraphicsPixmapItem. Use the TokenItem's size to
+ * avoid problems with pixmaps having a size inferior to the TokenItem's one.
+ * @return bounding rectangle (QRectF)
+ */
+QRectF Sprite::boundingRect() const {
+    int tokenItemSize = m_TokenItem->size();
+    return QRectF(offset(), QSize(tokenItemSize, tokenItemSize));
+}
+
+/**
+ * @brief Sprite::shape Reimplemented from QGraphicsPixmapItem. Use the boundingRect as the shape
+ * of the Sprite to avoid problems with pixmaps having a size inferior to the TokenItem's one.
+ * @return QPainterPath representing the shape of this sprite.
+ */
+QPainterPath Sprite::shape() const {
+    QPainterPath path;
+    path.addRect(boundingRect());
+    return path;
 }
