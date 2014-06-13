@@ -145,9 +145,6 @@ Quotidiennement, une réunion d'une quinzaine de minutes \textbf{debout} se fait
 
 N'étant qu'une équipe de 4 et le projet ne durant que 2 mois, nous avons dû réadapter la méthode. Nous nous sommes convenus de faire des Sprints de une semaine et travailler de façon très souple pendant les temps de travail.
 
-\section{SFML}
-\input{sfml.tex}
-
 \section{Manuel d'utilisation}
 
 Cette application débute avec une boîte de dialogue qui laisse le choix entre deux rôles : Maître Jeu (MJ) ou Joueur. Si MJ est choisi, l'application se met en tant que serveur pour accueillir les joueurs. Si joueur est choisi, un assistant ce connexion apparaît pour choisir à quel serveur se connecter. \\
@@ -171,6 +168,22 @@ L'interface qui se présente comporte un Chat, un gestionnaire de tours et le la
 	\hspace{10 mm}
 	\includegraphics[scale=0.5]{img/chat_player.jpg}
 	\caption{Chat MJ (à gauche) et chat Joueur (à droite)}
+\end{figure}
+
+Le lanceur de dés propose les dés les plus utilisés et permet de choisir pour chaque dé, le nombre de fois à lancer. Initialement, les compteurs sont à zéro. Pour augmenter le nombre de fois qu'on lance un dé, il faut appuyer sur le bouton correspondant ou utiliser la molette de la souris pour faire varier le nombre en étant sur le bouton. On peut ensuite décider de lancer les dés sur le chat (lancé public) ou de lancer les dés en privé si le MJ l'exige (lancé caché). Il est possible de réinitialiser tous les compteurs.
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[scale=0.5]{img/dice_manager.jpg}
+	\caption{Lanceur de dés}
+\end{figure}
+
+Le getsionnaire de tour est un outil qui permet au MJ de gérer ses combats. Il peut ajouter les joueurs ou PNJ en écrivant dans le champ de texte prévu à cet effet. Lorsque des utilisateurs se connectent, ils sont automatiquement ajoutés dans le gestionnaire de tour. Le MJ peut réordonner les tours à sa guise et dispose d'un certain nombre d'outils. Il peut jouter des personnages comme dit précédemment, retirer un personnage à l'aide d'un bouton, déplacer les personnages dans le gestionnaire à la souris et dispose d'un raccourci clavier pour faire avancer ou reculer le tour sur les flèches du clavier.
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[scale=0.7]{img/turn_manager.jpg}
+	\caption{Lanceur de dés}
 \end{figure}
 
 \section{Conclusion}
