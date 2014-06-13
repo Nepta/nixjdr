@@ -18,6 +18,7 @@ public:
     void addMapToList(Map* map);
     void removeMapFromList(Map *map);
     void processNewData(Header header, QByteArray &data);
+    bool containsMap(int mapId);
 
 public slots:
     void sendMessageToServer(const QString& msg, quint16 code);

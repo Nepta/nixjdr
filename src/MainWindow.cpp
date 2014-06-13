@@ -156,6 +156,13 @@ void MainWindow::on_actionOpenMap_triggered() {
     OpenMapWidget openMapWidget(&mapId);
     openMapWidget.exec();
 
+    // If the map is already open, don't open it again
+    Receiver *mapClientReceiver = m_Client->getReceiver(TargetCode::MAP_CLIENT);
+    MapClient *mapClient = dynamic_cast<MapClient*>(mapClientReceiver);
+    if (mapClient->containsMap(mapId)) {
+        return;
+    }
+
     if (mapId != 0) {
         TokenList *tokenList = ui->tokenPage->getUi()->m_tokenList;
         Map *map = RepositoryManager::s_MapRepository.findMapById(mapId, tokenList);
