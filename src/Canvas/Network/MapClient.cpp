@@ -2,6 +2,7 @@
 #include "Network/Serializable/Message.h"
 #include "Network/Switch.h"
 #include "Canvas/Tools/ToolPing.h"
+#include "Canvas/Layers/LayerType.h"
 #include "MapClient.h"
 #include "Common.h"
 
@@ -96,24 +97,23 @@ void MapClient::addSpriteAction(const QString& msg) {
 }
 
 void MapClient::removeSpriteAction(const QString& msg) {
-    int id = msg.toInt();
-    DBItem dbItem = RepositoryManager::s_SpriteRepository.findById(id);
+    QString temp = msg;
+    int spriteId = Common::extractFirstWord(temp).toInt();
+    int layerId = Common::extractFirstWord(temp).toInt();
+    LayerType layerType = (LayerType) Common::extractFirstWord(temp).toInt();
 
     // Retrieve the map and the layer on which the sprite should be deleted
     Map *map = NULL;
     GridLayer *layer = NULL;
 
-    int mapLayerId = dbItem.getHashMap().value("maplayerid").toInt();
-    int fowLayerId = dbItem.getHashMap().value("fowlayerid").toInt();
-
-    if (mapLayerId != 0) {
-        map = getMapByMapLayerId(mapLayerId);
+    if (layerType == LayerType::MAP_LAYER) {
+        map = getMapByMapLayerId(layerId);
         if (map != NULL) {
             layer = dynamic_cast<GridLayer*>(map->getMapLayer());
         }
     }
-    else if (fowLayerId != 0) {
-        map = getMapByFoWLayerId(fowLayerId);
+    else if (layerType == LayerType::FOW_LAYER) {
+        map = getMapByFoWLayerId(layerId);
         if (map != NULL) {
             layer = dynamic_cast<GridLayer*>(map->getFoWLayer());
         }
@@ -121,11 +121,8 @@ void MapClient::removeSpriteAction(const QString& msg) {
 
     // Delete the sprite
     if (map != NULL) {
-        // Delete the sprite from the database
-        RepositoryManager::s_SpriteRepository.deleteById(id);
-
         // Delete the sprite from the correct layer
-        layer->removeSpriteById(id);
+        layer->removeSpriteById(spriteId);
     }
 }
 

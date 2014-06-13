@@ -7,6 +7,7 @@
 #include <QListWidgetItem>
 #include "Token/TokenItem.h"
 #include "Canvas/Sprite.h"
+#include "LayerType.h"
 #include "AbstractLayer.h"
 
 /**
@@ -34,7 +35,7 @@ public:
     void addSprite(Sprite *sprite, QPoint position);
     void addSpriteRemote(Sprite *sprite);
 
-    virtual void removeSprite(Sprite *sprite);
+    virtual void removeSprite(Sprite *sprite, bool localDelete = true);
     void removeSpriteById(int id);
     void removeAllSprites();
 
@@ -63,6 +64,8 @@ protected:
      * mouseReleaseEvent() occurs.
      */
     bool m_ActiveMouseMoveEvent;
+
+    LayerType m_LayerType;
 
     virtual void mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent);
     virtual void mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent);

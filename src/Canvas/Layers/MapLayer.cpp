@@ -13,6 +13,7 @@
 MapLayer::MapLayer(TokenItem *tokenItem, int step) :
     GridLayer(step)
 {
+    m_LayerType = LayerType::MAP_LAYER;
     m_LifeBar.setParentItem(this);
     setTokenItem(tokenItem);
     setAcceptDrops(true);
@@ -20,6 +21,7 @@ MapLayer::MapLayer(TokenItem *tokenItem, int step) :
 
 MapLayer::MapLayer(DBItem item) : GridLayer()
 {
+    m_LayerType = LayerType::MAP_LAYER;
     m_LifeBar.setParentItem(this);
 
     QHash<QString, QVariant> itemHashMap = item.getHashMap();

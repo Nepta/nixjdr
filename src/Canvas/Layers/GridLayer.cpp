@@ -7,6 +7,8 @@
 
 GridLayer::GridLayer(int step)
 {
+    m_LayerType = LayerType::UNDEFINED;
+
     m_Step = step;
     m_ActiveMouseMoveEvent = false;
     m_LastRemovedSpritePoint = QPointF(-1,-1);
@@ -84,21 +86,27 @@ void GridLayer::addSpriteRemote(Sprite *sprite) {
  * @brief GridLayer::removeSpriteToDb Notifies to all the clients that a sprite need to be
  * removed and delete it locally on the layer.
  * @param sprite
+ * @param localDelete Bool specifying whether the Sprite should also be deleted locally or not.
  */
-void GridLayer::removeSprite(Sprite *sprite) {
+void GridLayer::removeSprite(Sprite *sprite, bool localDelete) {
     // Notifies all the clients that a Sprite needs to be removed
-    QString msg = QString("%1").arg(sprite->id());
+    QString msg = QString("%1 %2 %3")
+        .arg(sprite->id())
+        .arg(id_)
+        .arg((int) m_LayerType);
     m_SenderClient->sendMessageToServer(msg, (quint16) MapCodes::REMOVE_SPRITE);
 
+    // Delete the sprite from the database
+    RepositoryManager::s_SpriteRepository.deleteById(sprite->id());
+
     // Delete the sprite from the layer
-    delete sprite;
+    if (localDelete) {
+        delete sprite;
+    }
 }
 
 void GridLayer::updateSprite(Sprite *sprite) {
-    // Notifies all the clients that a Sprite needs to be removed
-    QString msg = QString("%1").arg(sprite->id());
-    m_SenderClient->sendMessageToServer(msg, (quint16) MapCodes::REMOVE_SPRITE);
-
+    removeSprite(sprite, false);
     addSprite(sprite, sprite->pos().toPoint());
 }
 

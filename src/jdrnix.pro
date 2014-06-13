@@ -142,6 +142,7 @@ HEADERS  += \
     Canvas/Layers/DrawingLayer.h \
     Canvas/Layers/AbstractLayer.h \
     Canvas/Layers/Layers.h \
+    Canvas/Layers/LayerType.h \
     Canvas/Tools/AbstractTool.h \
     Canvas/Tools/ToolPen.h \
     Canvas/Tools/ToolEraser.h \
