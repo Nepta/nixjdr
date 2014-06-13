@@ -106,6 +106,7 @@ void TokenItem::setCustomIcon(QString path, QString text) {
     pix.load(path);
 
     QPainter painter(&pix);
+    painter.setRenderHint(QPainter::Antialiasing); // TODO test
     QPainterPath painterPath;
 
     painterPath.addText(QPointF(1, pix.height()), QFont("Arial", 15, QFont::Bold), text);
