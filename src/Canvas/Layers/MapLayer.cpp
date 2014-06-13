@@ -102,6 +102,7 @@ void MapLayer::dragMoveEvent(QGraphicsSceneDragDropEvent *event) {
  */
 void MapLayer::dropEvent(QGraphicsSceneDragDropEvent *event)
 {
+    hideLifeBar();
     dropEvent(event, NULL);
 }
 
@@ -218,7 +219,6 @@ bool MapLayer::sceneEventFilter(QGraphicsItem *watched, QEvent *event) {
         } break;
 
         case QEvent::GraphicsSceneDragEnter: {
-            hideLifeBar();
         } break;
 
         case QEvent::GraphicsSceneDragMove: {
@@ -230,6 +230,7 @@ bool MapLayer::sceneEventFilter(QGraphicsItem *watched, QEvent *event) {
         } break;
 
         case QEvent::GraphicsSceneDrop: {
+            hideLifeBar();
             dropEvent(dragDropEvent, sprite);
             emit hideMapTooltip();
         }
