@@ -26,6 +26,7 @@ FoWLayer::FoWLayer(DBItem item) : GridLayer()
 FoWLayer::~FoWLayer() {}
 
 void FoWLayer::construct(int step, bool transparentSprites) {
+    m_LayerType = LayerType::FOW_LAYER;
     m_TransparentSprites = transparentSprites;
     m_Step = step;
 

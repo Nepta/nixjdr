@@ -76,6 +76,10 @@ int TokenItemRepository::insertTokenItem(TokenItem *tokenItem) {
         {"special", tokenItem->isSpecial()}
     };
 
+    if (tokenItem->gameObject() != NULL) {
+        args.insert("gameobjectid", tokenItem->gameObject()->id());
+    }
+
     QueryBuilder qb = insertQB(args.keys());
     int id = insert(tokenItem, qb, args);
 

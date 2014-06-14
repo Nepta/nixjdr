@@ -53,12 +53,12 @@ Map *MapRepository::findMapById(int id, TokenList *tokenList) {
     DBItem drawingLayerItem = RepositoryManager::s_DrawingLayerRepository.findById(drawingLayerId);
     DrawingLayer *drawingLayer = new DrawingLayer(drawingLayerItem);
 
+    // Construct map
+    Map *map = new Map(mapItem, bgLayer, mapLayer, fowLayer, drawingLayer);
+
     // Retrieve Sprites
     RepositoryManager::s_SpriteRepository.getMapSprites(tokenList, mapLayer);
     RepositoryManager::s_SpriteRepository.getFoWSprites(tokenList, fowLayer);
-
-    // Construct map
-    Map *map = new Map(mapItem, bgLayer, mapLayer, fowLayer, drawingLayer);
 
     return map;
 }

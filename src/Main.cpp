@@ -2,6 +2,7 @@
 #include <QTranslator>
 #include <QString>
 #include <QLibraryInfo>
+#include "QStyleFactory"
 #include "MainWindow.h"
 #include "ConnectionHelper.h"
 #include "User.h"
@@ -10,6 +11,7 @@
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
+    QApplication::setStyle(QStyleFactory::create("Fusion"));
 
     // Translation
     QString locale = QLocale::system().name().section('_', 0, 0);

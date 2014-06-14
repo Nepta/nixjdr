@@ -3,11 +3,16 @@
 #include <QPainterPath>
 #include <QByteArray>
 #include <QVariant>
+
+#include "Database/Repository/RepositoryManager.h"
+#include "Database/Repository/GameObjectRepository.h"
 #include "TokenItem.h"
 
 TokenItem::TokenItem(QString path, QString text, int size, bool custom, bool special) :
     DBItem()
 {
+    gameObject_ = NULL;
+
     construct(path, text, size, custom, special);
 }
 
@@ -21,27 +26,38 @@ TokenItem::TokenItem(QString path, QString text, int size, bool custom, bool spe
 TokenItem::TokenItem(const QByteArray& data) :
     DBItem()
 {
+    gameObject_ = NULL;
+
     QDataStream stream(data);
+    construct(&stream);
+}
 
-    int id, size;
-    QString text, path;
-    bool custom, special;
+TokenItem::TokenItem(QDataStream *stream) {
+    gameObject_ = NULL;
 
-    stream >> id >> text >> path >> size >> custom >> special;
-    construct(id, path, text, size, custom, special);
+    construct(stream);
 }
 
 TokenItem::TokenItem(DBItem item) :
     DBItem()
 {
-    QHash<QString, QVariant> itemHashMap = item.getHashMap();
+    columnsValues_ = item.getHashMap();
 
-    int id = itemHashMap.value("id").toInt();
-    QString text = itemHashMap.value("text").toString();
-    QString path =  itemHashMap.value("path").toString();
-    int size = itemHashMap.value("size").toInt();
-    bool custom = itemHashMap.value("custom").toBool();
-    bool special = itemHashMap.value("special").toBool();
+    int id = columnsValues_.value("id").toInt();
+    QString text = columnsValues_.value("text").toString();
+    QString path =  columnsValues_.value("path").toString();
+    int size = columnsValues_.value("size").toInt();
+    bool custom = columnsValues_.value("custom").toBool();
+    bool special = columnsValues_.value("special").toBool();
+
+    // Retrieve gameObject from the database
+    int gameobjectid = columnsValues_.value("gameobjectid").toInt();
+    if (gameobjectid != 0) {
+        gameObject_ = RepositoryManager::s_CharacterRepository.getFullGameObject(gameobjectid);
+    }
+    else {
+        gameObject_ = NULL;
+    }
 
     construct(id, path, text, size, custom, special);
 }
@@ -65,6 +81,20 @@ void TokenItem::construct(QString path, QString text, int size, bool custom, boo
     }
 }
 
+void TokenItem::construct(QDataStream *stream) {
+    int id, size, gameObjectId;
+    QString text, path;
+    bool custom, special;
+
+    *stream >> id >> text >> path >> size >> custom >> special >> gameObjectId;
+
+    if (gameObjectId != 0) {
+        gameObject_ = RepositoryManager::s_CharacterRepository.getFullGameObject(gameObjectId);
+    }
+
+    construct(id, path, text, size, custom, special);
+}
+
 /**
  * @brief TokenItem::setCustomIcon Sets the QIcon of this TokenItem to the image pointed by path
  * and a text added in front of it.
@@ -76,6 +106,7 @@ void TokenItem::setCustomIcon(QString path, QString text) {
     pix.load(path);
 
     QPainter painter(&pix);
+    painter.setRenderHint(QPainter::Antialiasing); // TODO test
     QPainterPath painterPath;
 
     painterPath.addText(QPointF(1, pix.height()), QFont("Arial", 15, QFont::Bold), text);
@@ -102,6 +133,10 @@ bool TokenItem::isSpecial() {
     return special_;
 }
 
+GameObject *TokenItem::gameObject() {
+    return gameObject_;
+}
+
 /**
  * @brief TokenItem::toQByteArray Stores the current instance of TokenItem in a QByteArray.
  * @remarks Used in drag&drop events to pass a TokenItem through the MimeData.
@@ -111,7 +146,25 @@ QByteArray TokenItem::toQByteArray() {
     QByteArray out;
     QDataStream stream(&out, QIODevice::WriteOnly);
 
-    stream << id_ << text() << path_ << size_ << custom_ << special_;
+    toQByteArray(&stream);
 
     return out;
+}
+
+void TokenItem::toQByteArray(QDataStream *stream) {
+    *stream << id_ << text() << path_ << size_ << custom_ << special_;
+
+    // If this TokenItem possess a GameObject, adds its Id to the QByteArray, otherwise adds the id
+    // 0 which does not correspond to any GameObject
+    if (gameObject_ != NULL) {
+        *stream << gameObject_->id();
+    }
+    else {
+        int id = 0;
+        *stream << id;
+    }
+}
+
+void TokenItem::setGameObject(GameObject *gameObject) {
+    gameObject_ = gameObject;
 }

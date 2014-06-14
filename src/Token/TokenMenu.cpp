@@ -1,9 +1,13 @@
 #include <QList>
 #include <QDebug>
+#include <QMenu>
+#include <QAction>
 
 #include "Database/Repository/RepositoryManager.h"
 #include "Database/QueryBuilder.h"
 #include "Database/DBItemList.h"
+
+#include "GameObjects/GameObjectDialog.h"
 
 #include "Network/TokenMenuCodes.h"
 #include "TokenMenu.h"
@@ -46,22 +50,54 @@ void TokenMenu::addItem(QListWidgetItem *item) {
     ui->m_tokenList->addItem(item);
 }
 
+/**
+ * @brief TokenMenu::on_tokenButton_clicked Displays a context menu which lets the user choose
+ * between the creation of a custom TokenItem and the creation of a TokenItem possessing a
+ * GameObject.
+ */
 void TokenMenu::on_tokenButton_clicked()
 {
-    // TODO filePath and size are hard-coded
-    QString text = ui->inputSearchField->text();
+    QMenu menu;
 
-    addCustomToken(text);
+    QAction* createCustomToken = menu.addAction(tr("Créer un jeton personnalisé"));
+    QAction* createGameObject = menu.addAction(tr("Créer un élément de jeu"));
+
+    QAction* selectedItem = menu.exec(QCursor::pos());
+    if (selectedItem == createCustomToken) {
+        QString text = ui->inputSearchField->text();
+        addCustomToken(text);
+    }
+    else if (selectedItem == createGameObject) {
+        GameObjectDialog gameObjectDlg;
+        gameObjectDlg.exec();
+        GameObject *gameObject = gameObjectDlg.getGameObject();
+        gameObjectDlg.close();
+
+        if (gameObject != NULL) {
+            // Push the game object into the database
+            RepositoryManager::s_GameObjectRepository.insertGameObject(gameObject);
+
+            addCustomToken(gameObject->getName(), gameObject);
+        }
+    }
 }
 
-void TokenMenu::addCustomToken(QString text){
+void TokenMenu::addCustomToken(QString text, GameObject *gameObject) {
+    // TODO filePath and size are hard-coded
     QString filePath("resource/TokenMenu/keroro.png");
     int size = 32;
-    bool custom = true;
+
+    addToken(text, filePath, size, true, gameObject);
+}
+
+void TokenMenu::addToken(QString text, QString filePath, int size, bool custom,
+    GameObject *gameObject)
+{
     // Check if the list already contains a token with the same text before insertion.
     QList<QListWidgetItem*> items = ui->m_tokenList->findItems(text, Qt::MatchExactly);
     if (items.empty()) {
         TokenItem *item = new TokenItem(filePath, text, size, custom);
+        item->setGameObject(gameObject);
 
         // push the item into the database
         RepositoryManager::s_TokenItemRepository.insertTokenItem(item);
