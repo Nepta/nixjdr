@@ -13,11 +13,24 @@ ChatWidget::ChatWidget(QWidget *parent) :
     // right-clicking on the user list shows a context menu
     connect(ui->nicknamesListWidget, SIGNAL(customContextMenuRequested(const QPoint&)),
         this, SLOT(ShowContextMenu(const QPoint&)));
+
+    // dice menu
+    m_DiceMenu = new DiceMenu(this);
+    m_DiceMenu->adjustSize();
+    m_DiceMenu->move(4, 30);
+    m_DiceMenu->hide();
+    connect(m_DiceMenu, SIGNAL(sendMessageToChatUi(QString)),
+            this, SLOT(receivedMessage(QString)));
+    connect(m_DiceMenu, SIGNAL(rollDice(QString,bool)),
+            this, SLOT(rollDice(QString,bool)));
+    connect(this, SIGNAL(requestDice(QString&)),
+            m_DiceMenu, SLOT(requestRoll(QString&)));
 }
 
 ChatWidget::~ChatWidget()
 {
     delete ui;
+    delete m_DiceMenu;
 }
 
 void ChatWidget::on_msgField_returnPressed()
@@ -125,4 +138,10 @@ void ChatWidget::prepareWhispUsers(QList<QListWidgetItem *> list){
 void ChatWidget::setFocusToChat(){
     ui->msgField->setFocus();
     ui->tabWidget->setCurrentIndex(0);
+}
+
+void ChatWidget::on_diceButton_clicked()
+{
+    bool isVisible = m_DiceMenu->isVisible();
+    m_DiceMenu->setVisible(!isVisible);
 }

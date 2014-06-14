@@ -79,16 +79,28 @@
            </sizepolicy>
           </property>
          </widget>
-         <widget class="QLineEdit" name="msgField">
-          <property name="maxLength">
-           <number>4000</number>
-          </property>
-          <property name="placeholderText">
-           <string>message</string>
-          </property>
-          <property name="clearButtonEnabled">
-           <bool>true</bool>
-          </property>
+         <widget class="QWidget" name="horizontalLayoutWidget">
+          <layout class="QHBoxLayout" name="horizontalLayout">
+           <item>
+            <widget class="QPushButton" name="diceButton">
+             <property name="text">
+              <string/>
+             </property>
+             <property name="icon">
+              <iconset>
+               <normalon>resource/General/dice.png</normalon>
+              </iconset>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLineEdit" name="msgField">
+             <property name="placeholderText">
+              <string>Message</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
          </widget>
         </widget>
        </item>

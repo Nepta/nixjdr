@@ -7,6 +7,8 @@
 
 #include "Network/SenderHandler.h"
 
+#include "DiceMenu/DiceMenu.h"
+
 #include "Chat/ChatServer.h"
 #include "Chat/ChatClient.h"
 
@@ -37,6 +39,8 @@ private slots:
     void rollDice(QString, bool hidden);
     void ShowContextMenu(const QPoint& pos);
 
+    void on_diceButton_clicked();
+
 private:
     void sendRolledDiceToUsers(QList<QListWidgetItem *> list);
     void prepareWhispUsers(QList<QListWidgetItem *> list);
@@ -44,7 +48,7 @@ private:
 
 private:
     Ui::ChatWidget *ui;
-
+    DiceMenu *m_DiceMenu;
 };
 
 #endif // CHATWIDGET_H

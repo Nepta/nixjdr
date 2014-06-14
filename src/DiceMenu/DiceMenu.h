@@ -1,7 +1,7 @@
 #ifndef DICEMENU_H
 #define DICEMENU_H
 
-#include <QWidget>
+#include <QFrame>
 #include <QPushButton>
 #include <QWheelEvent>
 
@@ -9,7 +9,7 @@ namespace Ui {
     class DiceMenu;
 }
 
-class DiceMenu : public QWidget
+class DiceMenu : public QFrame
 {
     Q_OBJECT
 
@@ -23,6 +23,8 @@ private slots:
     void on_cancelButton_clicked();
     void modifyButton(QPushButton *buttonToModidy, bool actionToExecute);
     void requestRoll(QString &msg);
+
+    void on_closeButton_clicked();
 
 signals:
     void rollDice(QString, bool);

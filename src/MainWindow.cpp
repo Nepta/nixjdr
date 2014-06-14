@@ -60,13 +60,7 @@ void MainWindow::initTableTurnSplitter(){
     ui->tableTurnSplitter->setSizes(sizes);
 }
 
-void MainWindow::initConnects(){
-    // Connect chat & dice menus
-    connect(ui->turnWidget->getDiceWidget(), SIGNAL(rollDice(QString, bool)),
-            ui->m_ChatWidget, SLOT(rollDice(QString, bool)));
-    connect(ui->m_ChatWidget, SIGNAL(requestDice(QString&)),
-            ui->turnWidget->getDiceWidget(), SLOT(requestRoll(QString&)));
-
+void MainWindow::initConnects() {
     // Top menu
     connect(ui->tableArea, SIGNAL(subWindowActivated(QMdiSubWindow*)),
                  this, SLOT(updateMenu()));
@@ -270,12 +264,6 @@ void MainWindow::setupPlayer() {
     Receiver *turnMenuClientReceiver = m_Client->getReceiver(TargetCode::TURN_MENU_CLIENT);
     TurnMenuClient *turnMenuClient = dynamic_cast<TurnMenuClient*>(turnMenuClientReceiver);
     ui->turnWidget->setSenderClient(turnMenuClient);
-
-    /* The dice menu is able to send system messages to the Chat in order to display error messages
-     * or warnings */
-    connect(ui->turnWidget->getDiceWidget(), SIGNAL(sendMessageToChatUi(QString)),
-            ui->m_ChatWidget, SLOT(receivedMessage(QString))
-    );
 }
 
 void MainWindow::on_collapseButtonRightMenu_clicked(bool checked)

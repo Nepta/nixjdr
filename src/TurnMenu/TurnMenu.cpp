@@ -75,6 +75,6 @@ void TurnMenu::sendUpdatedTurnList(const QString& turnListItems) {
     m_SenderClient->sendMessageToServer(msg, (quint16) TurnMenuCodes::UPDATE_TURN);
 }
 
-QWidget* TurnMenu::getDiceWidget(){
+/*QWidget* TurnMenu::getDiceWidget(){
     return ui->diceMenuWidget;
-}
+}*/
