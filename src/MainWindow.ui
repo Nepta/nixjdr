@@ -15,10 +15,25 @@
   </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QHBoxLayout" name="horizontalLayout_2">
+    <property name="leftMargin">
+     <number>0</number>
+    </property>
+    <property name="topMargin">
+     <number>0</number>
+    </property>
+    <property name="rightMargin">
+     <number>0</number>
+    </property>
+    <property name="bottomMargin">
+     <number>0</number>
+    </property>
     <item>
      <widget class="QSplitter" name="rightMenuSplitter">
       <property name="orientation">
        <enum>Qt::Horizontal</enum>
+      </property>
+      <property name="handleWidth">
+       <number>6</number>
       </property>
       <widget class="QSplitter" name="tableTurnSplitter">
        <property name="orientation">
@@ -97,6 +112,12 @@
       </widget>
       <widget class="QWidget" name="layoutWidget1">
        <layout class="QHBoxLayout" name="horizontalLayout">
+        <property name="spacing">
+         <number>3</number>
+        </property>
+        <property name="rightMargin">
+         <number>6</number>
+        </property>
         <item>
          <widget class="QPushButton" name="collapseButtonRightMenu">
           <property name="sizePolicy">
@@ -121,8 +142,6 @@
            <string notr="true"> QPushButton {
     border-left: 1px solid #8f8f91;
     border-right: 1px solid #8f8f91;
-    border-top: 1px solid #8f8f91;
-    border-bottom: 1px solid #8f8f91;
     border-radius: 0px;
  }
 
@@ -144,13 +163,37 @@
           <property name="checked">
            <bool>true</bool>
           </property>
+          <property name="flat">
+           <bool>false</bool>
+          </property>
          </widget>
         </item>
         <item>
          <widget class="QWidget" name="rightMenuWidget" native="true">
           <layout class="QVBoxLayout" name="verticalLayout">
+           <property name="spacing">
+            <number>0</number>
+           </property>
+           <property name="leftMargin">
+            <number>0</number>
+           </property>
+           <property name="topMargin">
+            <number>0</number>
+           </property>
+           <property name="rightMargin">
+            <number>0</number>
+           </property>
+           <property name="bottomMargin">
+            <number>0</number>
+           </property>
            <item>
             <layout class="QVBoxLayout" name="rightMenuLayout">
+             <property name="spacing">
+              <number>0</number>
+             </property>
+             <property name="bottomMargin">
+              <number>3</number>
+             </property>
              <item>
               <widget class="QToolBox" name="actionMenu">
                <property name="sizePolicy">
@@ -165,6 +208,12 @@
                  <height>0</height>
                 </size>
                </property>
+               <property name="styleSheet">
+                <string notr="true">QToolBox::tab {
+	border-top: 1px solid #DDDDDD;
+	border-bottom: 1px solid #DDDDDD;
+}</string>
+               </property>
                <property name="currentIndex">
                 <number>0</number>
                </property>
@@ -173,8 +222,8 @@
                  <rect>
                   <x>0</x>
                   <y>0</y>
-                  <width>833</width>
-                  <height>321</height>
+                  <width>832</width>
+                  <height>340</height>
                  </rect>
                 </property>
                 <property name="minimumSize">
@@ -229,7 +278,7 @@
      <x>0</x>
      <y>0</y>
      <width>985</width>
-     <height>19</height>
+     <height>25</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
