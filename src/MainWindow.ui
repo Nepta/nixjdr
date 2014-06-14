@@ -13,6 +13,12 @@
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true">QMainWindow#MainWindow {
+	background: #F1F1F1;
+}
+</string>
+  </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QHBoxLayout" name="horizontalLayout_2">
     <property name="leftMargin">
@@ -33,11 +39,14 @@
        <enum>Qt::Horizontal</enum>
       </property>
       <property name="handleWidth">
-       <number>4</number>
+       <number>1</number>
       </property>
       <widget class="QSplitter" name="tableTurnSplitter">
        <property name="orientation">
         <enum>Qt::Vertical</enum>
+       </property>
+       <property name="handleWidth">
+        <number>0</number>
        </property>
        <widget class="CustomMdiArea" name="tableArea">
         <property name="sizePolicy">
@@ -46,62 +55,95 @@
           <verstretch>4</verstretch>
          </sizepolicy>
         </property>
-        <property name="frameShape">
-         <enum>QFrame::StyledPanel</enum>
+        <property name="styleSheet">
+         <string notr="true"/>
         </property>
-        <property name="frameShadow">
-         <enum>QFrame::Raised</enum>
+        <property name="lineWidth">
+         <number>0</number>
         </property>
        </widget>
        <widget class="QWidget" name="layoutWidget">
         <layout class="QVBoxLayout" name="verticalLayout_2">
          <item>
-          <widget class="QPushButton" name="collapseButtonTurnMenu">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="minimumSize">
-            <size>
-             <width>0</width>
-             <height>16</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>16777215</width>
-             <height>16</height>
-            </size>
-           </property>
+          <widget class="QWidget" name="turnHeader" native="true">
            <property name="styleSheet">
-            <string notr="true"> QPushButton {
-    border-left: 1px solid #8f8f91;
-    border-right: 1px solid #8f8f91;
-    border-top: 1px solid #8f8f91;
-    border-bottom: 1px solid #8f8f91;
-    border-radius: 0px;
+            <string notr="true">border-top: 1px solid #DCDCDC;
+border-bottom: 1px solid #CACACA;
+background: #E5E5E5;</string>
+           </property>
+           <layout class="QHBoxLayout" name="horizontalLayout_3">
+            <property name="spacing">
+             <number>6</number>
+            </property>
+            <property name="topMargin">
+             <number>0</number>
+            </property>
+            <property name="bottomMargin">
+             <number>0</number>
+            </property>
+            <item>
+             <widget class="QLabel" name="label">
+              <property name="text">
+               <string>Gestion des tours</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <spacer name="horizontalSpacer">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>363</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item>
+             <widget class="QPushButton" name="collapseButtonTurnMenu">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>16</height>
+               </size>
+              </property>
+              <property name="styleSheet">
+               <string notr="true"> QPushButton {
  }
 
  QPushButton:pressed {
-     background-color: #8f8f91;
+	border: 1px solid #8f8f91;
+	background-color: #dddddd;
  }</string>
-           </property>
-           <property name="text">
-            <string/>
-           </property>
-           <property name="icon">
-            <iconset>
-             <normaloff>resource/CollapsibleWidget/collapseUp.png</normaloff>
-             <normalon>resource/CollapsibleWidget/collapseDown.png</normalon>resource/CollapsibleWidget/collapseUp.png</iconset>
-           </property>
-           <property name="checkable">
-            <bool>true</bool>
-           </property>
-           <property name="checked">
-            <bool>true</bool>
-           </property>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+              <property name="icon">
+               <iconset>
+                <normaloff>resource/CollapsibleWidget/up.png</normaloff>
+                <normalon>resource/CollapsibleWidget/down.png</normalon>resource/CollapsibleWidget/up.png</iconset>
+              </property>
+              <property name="checkable">
+               <bool>true</bool>
+              </property>
+              <property name="checked">
+               <bool>true</bool>
+              </property>
+              <property name="flat">
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+           </layout>
           </widget>
          </item>
          <item>
@@ -222,7 +264,7 @@
                  <rect>
                   <x>0</x>
                   <y>0</y>
-                  <width>832</width>
+                  <width>266</width>
                   <height>340</height>
                  </rect>
                 </property>
@@ -280,6 +322,11 @@
      <width>985</width>
      <height>25</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QMenuBar {
+	background: #F1F1F1;
+}</string>
    </property>
    <widget class="QMenu" name="menuConnexion">
     <property name="title">

@@ -19,7 +19,6 @@ public:
     explicit TurnMenu(QWidget *parent = 0);
     ~TurnMenu();
 
-    //QWidget *getDiceWidget();
     void setTurnList(QStringList turnItems);
     TurnList *getTurnList();
 

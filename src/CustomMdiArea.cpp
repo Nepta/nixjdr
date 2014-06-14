@@ -1,10 +1,15 @@
 #include "CustomMdiArea.h"
+#include "ui_CustomMdiArea.h"
 
 CustomMdiArea::CustomMdiArea(QWidget *parent) :
-    QMdiArea(parent)
+    QMdiArea(parent),
+    ui(new Ui::CustomMdiArea)
 {
-    setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
-    setHorizontalScrollBarPolicy(Qt::ScrollBarAsNeeded);
+    ui->setupUi(this);
+}
+
+CustomMdiArea::~CustomMdiArea() {
+    delete ui;
 }
 
 QMdiSubWindow *CustomMdiArea::addSubWindow(QWidget *widget, Qt::WindowFlags flags) {

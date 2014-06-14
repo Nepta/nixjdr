@@ -207,6 +207,7 @@ FORMS    += \
     Tooltip.ui \
     MainWindow.ui \
     ConnectionHelper.ui \
+    CustomMdiArea.ui \
     Token/TokenMenu.ui \
     DiceMenu/DiceMenu.ui \
     Chat/ChatWidget.ui \

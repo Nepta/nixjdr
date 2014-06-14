@@ -56,7 +56,6 @@ private:
     void initRole();
     void initTableTurnSplitter();
 
-
     void collapseMenu(bool checked, QWidget *widget, QSplitter *splitter, int min, int max);
 
     Ui::MainWindow *ui;

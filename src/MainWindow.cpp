@@ -273,8 +273,7 @@ void MainWindow::on_collapseButtonRightMenu_clicked(bool checked)
     collapseMenu(checked, ui->rightMenuWidget, ui->rightMenuSplitter, min, max);
 }
 
-void MainWindow::on_collapseButtonTurnMenu_clicked(bool checked)
-{
+void MainWindow::on_collapseButtonTurnMenu_clicked(bool checked) {
     int min = ui->collapseButtonTurnMenu->minimumHeight();
     int max = ui->turnWidget->minimumHeight() + ui->collapseButtonTurnMenu->minimumHeight();
     collapseMenu(checked, ui->turnWidget, ui->tableTurnSplitter, min, max);

@@ -10,8 +10,8 @@ TurnMenu::TurnMenu(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    QList<int> sizes = {60, 600, 300};
-    ui->splitter->setSizes(sizes);
+    //QList<int> sizes = {60, 600, 300};
+    //ui->splitter->setSizes(sizes);
 
     m_turnList = new TurnList();
     m_turnList->setMaximumHeight(100);
@@ -74,7 +74,3 @@ void TurnMenu::sendUpdatedTurnList(const QString& turnListItems) {
     QString msg = QString("%1").arg(turnListItems);
     m_SenderClient->sendMessageToServer(msg, (quint16) TurnMenuCodes::UPDATE_TURN);
 }
-
-/*QWidget* TurnMenu::getDiceWidget(){
-    return ui->diceMenuWidget;
-}*/
