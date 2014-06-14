@@ -34,6 +34,9 @@ OpenMapWidget::OpenMapWidget(int *mapId, QWidget *parent) :
     if (model->rowCount() == 0) {
         ui->openButton->setEnabled(false);
     }
+    else { // Select the first row by default
+        tableView->selectRow(0);
+    }
 }
 
 OpenMapWidget::~OpenMapWidget()
@@ -44,8 +47,11 @@ OpenMapWidget::~OpenMapWidget()
 void OpenMapWidget::on_openButton_clicked()
 {
     QModelIndexList selectedIndexes = ui->m_MapTableView->selectionModel()->selectedIndexes();
-    QModelIndex modelIndex = selectedIndexes.at(0);
-    *m_MapId = modelIndex.data().toInt();
 
-    this->close();
+    if (!selectedIndexes.empty()) {
+        QModelIndex modelIndex = selectedIndexes.at(0);
+        *m_MapId = modelIndex.data().toInt();
+
+        this->close();
+    }
 }

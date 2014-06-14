@@ -14,7 +14,10 @@ MapLayer::MapLayer(TokenItem *tokenItem, int step) :
     GridLayer(step)
 {
     m_LayerType = LayerType::MAP_LAYER;
+
     m_LifeBar.setParentItem(this);
+    m_LifeBar.hide();
+
     setTokenItem(tokenItem);
     setAcceptDrops(true);
 }
@@ -22,7 +25,9 @@ MapLayer::MapLayer(TokenItem *tokenItem, int step) :
 MapLayer::MapLayer(DBItem item) : GridLayer()
 {
     m_LayerType = LayerType::MAP_LAYER;
+
     m_LifeBar.setParentItem(this);
+    m_LifeBar.hide();
 
     QHash<QString, QVariant> itemHashMap = item.getHashMap();
     columnsValues_ = item.getHashMap();

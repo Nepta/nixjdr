@@ -53,8 +53,18 @@ void MapClient::removeMapFromList(Map *map) {
     m_MapsList.removeOne(map);
 }
 
+/**
+ * @brief MapClient::openMapAction Opens a map with the given id.
+ * @param msg QString containing the id of the map to open.
+ */
 void MapClient::openMapAction(const QString& msg) {
     int mapId = msg.toInt();
+
+    // If the map has already been opened, don't open it again
+    if (containsMap(mapId)) {
+        return;
+    }
+
     Map *map = RepositoryManager::s_MapRepository.findMapById(mapId, m_TokenList);
     map->getMapLayer()->setTokenItem(m_TokenList->currentItem());
 
@@ -177,6 +187,21 @@ Map *MapClient::getMapById(int mapId) {
     }
 
     return result;
+}
+
+/**
+ * @brief MapClient::containsMap Returns whether the list of maps contains the map specified
+ * in parameter (id of the map).
+ * @param mapId Id of the map to verify.
+ * @return true if the map is contained in the list, false otherwise.
+ */
+bool MapClient::containsMap(int mapId) {
+    if (getMapById(mapId) != NULL) {
+        return true;
+    }
+    else {
+        return false;
+    }
 }
 
 Map *MapClient::getMapByMapLayerId(int mapLayerId) {

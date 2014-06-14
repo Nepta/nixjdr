@@ -24,6 +24,9 @@ public:
     QByteArray toQByteArray();
     GameObject *getGameObject();
 
+    QRectF boundingRect() const;
+    QPainterPath shape() const;
+
 private:
     TokenItem *m_TokenItem;
     bool m_Transparent;

@@ -22,7 +22,7 @@ public:
     void initTokenMenu();
     void addItem(QListWidgetItem *item);
     void addToken(QString text, QString filePath, int size, bool custom, GameObject *gameObject = NULL);
-    void addCustomToken(QString text);
+    void addCustomToken(QString text, GameObject *gameObject = NULL);
 
 private slots:
     void on_tokenButton_clicked();
