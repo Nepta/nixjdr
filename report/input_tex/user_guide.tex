@@ -1,0 +1,40 @@
+\section{Manuel d'utilisation}
+
+Cette application débute avec une boîte de dialogue qui laisse le choix entre deux rôles : Maître Jeu (MJ) ou Joueur. Si MJ est choisi, l'application se met en tant que serveur pour accueillir les joueurs. Si joueur est choisi, un assistant ce connexion apparaît pour choisir à quel serveur se connecter. \\
+
+L'interface qui se présente comporte un Chat, un gestionnaire de tours et le lanceur de dés. Le Chat contient la liste des utilisateurs et permet aux joueurs et au MJ de communique. De plus, le chat possède des commandes qui s'introduisent par un /. Les commandes implémentées sont :
+
+\begin{description}
+	\item[/help] \hfill \\
+		Affiche l'ensemble des autres commandes disponibles du chat avec les indications d'utilisation.
+	\item[/nickname <pseudo>] \hfill \\
+		Modifie le pseudo par celui qui suit la commande.
+	\item[/roll <nombre de dés>d<valeur max du dé>] \hfill \\
+		Roule un nombre de fois voulu du dé choisi. Peu s'utiliser en chuchotement.
+	\item[/whisper <utilisateur> <message>] \hfill \\
+		Envoie un message privé au joueur indiqué.
+\end{description}
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[scale=0.5]{img/chat_mj.jpg}
+	\hspace{10 mm}
+	\includegraphics[scale=0.5]{img/chat_player.jpg}
+	\caption{Chat MJ (à gauche) et chat Joueur (à droite)}
+\end{figure}
+
+Le lanceur de dés propose les dés les plus utilisés et permet de choisir pour chaque dé, le nombre de fois à lancer. Initialement, les compteurs sont à zéro. Pour augmenter le nombre de fois qu'on lance un dé, il faut appuyer sur le bouton correspondant ou utiliser la molette de la souris pour faire varier le nombre en étant sur le bouton. On peut ensuite décider de lancer les dés sur le chat (lancé public) ou de lancer les dés en privé si le MJ l'exige (lancé caché). Il est possible de réinitialiser tous les compteurs.
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[scale=0.5]{img/dice_manager.jpg}
+	\caption{Lanceur de dés}
+\end{figure}
+
+Le getsionnaire de tour est un outil qui permet au MJ de gérer ses combats. Il peut ajouter les joueurs ou PNJ en écrivant dans le champ de texte prévu à cet effet. Lorsque des utilisateurs se connectent, ils sont automatiquement ajoutés dans le gestionnaire de tour. Le MJ peut réordonner les tours à sa guise et dispose d'un certain nombre d'outils. Il peut jouter des personnages comme dit précédemment, retirer un personnage à l'aide d'un bouton, déplacer les personnages dans le gestionnaire à la souris et dispose d'un raccourci clavier pour faire avancer ou reculer le tour sur les flèches du clavier.
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[scale=0.7]{img/turn_manager.jpg}
+	\caption{Gestionnaire de tour}
+\end{figure}
