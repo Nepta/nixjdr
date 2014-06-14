@@ -133,6 +133,10 @@ void MapLayer::dropEvent(QGraphicsSceneDragDropEvent *event, Sprite *watched)
         int zValue = (watched ? watched->zValue() + 1 : 1);
         TokenItem *tokenItem = new TokenItem(tokenItemData);
         addSprite(tokenItem, event->scenePos().toPoint(), zValue);
+		  QString tokenItemPosition = QString("(%1,%2)")
+			  .arg(QString::number(event->scenePos().toPoint().x()))
+			  .arg(QString::number(event->scenePos().toPoint().y()));
+		  emit spriteAdded("[added]:"+tokenItem->text()+":"+tokenItemPosition);
 
         event->acceptProposedAction();
     }
