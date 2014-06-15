@@ -1,6 +1,5 @@
 #include <QMenu>
 #include <QAction>
-#include "TurnWidgetItem.h"
 #include "TurnList.h"
 #include "ui_TurnList.h"
 
