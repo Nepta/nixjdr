@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>782</width>
-    <height>69</height>
+    <height>101</height>
    </rect>
   </property>
   <property name="baseSize">
@@ -84,10 +84,24 @@
     </layout>
    </item>
    <item>
-    <layout class="QHBoxLayout" name="listLayout"/>
+    <widget class="TurnList" name="m_TurnList">
+     <property name="maximumSize">
+      <size>
+       <width>16777215</width>
+       <height>100</height>
+      </size>
+     </property>
+    </widget>
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>TurnList</class>
+   <extends>QListWidget</extends>
+   <header>TurnMenu/TurnList.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

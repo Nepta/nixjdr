@@ -1,0 +1,102 @@
+/* General */
+QMainWindow#MainWindow, QScrollArea, QPushButton, QWidget:first-child {
+    background: #F1F1F1;
+}
+
+QToolBox:tab {
+	border-top: 1px solid #DDDDDD;
+	border-bottom: 1px solid #DDDDDD;
+}
+
+QMenuBar {
+	background: #F1F1F1;
+	border-bottom: 1px solid #CACACA;
+}
+
+/* Map */
+#Map, #collapsibleWidget {
+    background: #F1F1F1;
+}
+
+QPushButton#collapseButton {
+	border-left: 1px solid #8f8f91;
+	border-right: 1px solid #8f8f91;
+	border-radius: 0px;
+	background-color: #F1F1F1;
+}
+
+QPushButton:pressed#collapseButton {
+     background-color: #8f8f91;
+}
+
+QStackedWidget#m_StackedTools > QWidget {
+	background: #F1F1F1;
+}
+
+/* Tooltip */
+#TooltipWidget {
+	border: 1px solid rgb(50, 50, 50);
+	background: rgba(200, 200, 200, 0.85);
+}
+
+/* ConnectionHelper */
+#ConnectionHelper {
+	background: #F1F1F1;
+}
+
+/* DiceMenu */
+QWidget#DiceMenu {
+	background-color: rgba(255, 255, 255, 0.95);
+	border: 1px solid #DDDDDD;
+}
+
+/* GameObjectDialog */
+QWidget#GameObjectDialog {
+	background: #F1F1F1;
+}
+
+/* TurnMenu */
+#turnHeader {
+	border-top: 1px solid #DCDCDC;
+	border-bottom: 1px solid #CACACA;
+	background: #E5E5E5;
+}
+
+QPushButton#collapseButtonTurnMenu {
+	border: none;
+	background: #E5E5E5;
+}
+
+QPushButton#collapseButtonTurnMenu:pressed {
+	border: 1px solid #8f8f91;
+	background: #dddddd;
+}
+
+QListWidget#m_TurnList:item {
+    background: lightgray; border: 1px solid black; 
+    selection-background-color: blue;
+}
+
+QListWidget#m_TurnList:item:hover {
+    background: #CCCCF5;
+}
+
+/* Sidebar */
+QWidget#rightMenuWidget {
+	border-left: 1px solid #CACACA;
+}
+
+QPushButton#collapseButtonRightMenu {
+	border: none;
+}
+
+QPushButton#collapseButtonRightMenu:pressed {
+	border: 1px solid #8f8f91;
+	background-color: #dddddd;
+}
+
+/* Footer */
+QWidget#footer {
+	background: #F1F1F1;
+	border-top: 1px solid #CACACA;
+}

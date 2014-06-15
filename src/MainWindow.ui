@@ -13,12 +13,6 @@
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
-  <property name="styleSheet">
-   <string notr="true">QMainWindow#MainWindow {
-	background: #F1F1F1;
-}
-</string>
-  </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QVBoxLayout" name="verticalLayout_3" stretch="97,3">
     <property name="spacing">
@@ -58,9 +52,6 @@
           <verstretch>4</verstretch>
          </sizepolicy>
         </property>
-        <property name="styleSheet">
-         <string notr="true"/>
-        </property>
         <property name="lineWidth">
          <number>0</number>
         </property>
@@ -69,11 +60,6 @@
         <layout class="QVBoxLayout" name="verticalLayout_2">
          <item>
           <widget class="QWidget" name="turnHeader" native="true">
-           <property name="styleSheet">
-            <string notr="true">border-top: 1px solid #DCDCDC;
-border-bottom: 1px solid #CACACA;
-background: #E5E5E5;</string>
-           </property>
            <layout class="QHBoxLayout" name="horizontalLayout_3">
             <property name="spacing">
              <number>6</number>
@@ -106,26 +92,11 @@ background: #E5E5E5;</string>
             </item>
             <item>
              <widget class="QPushButton" name="collapseButtonTurnMenu">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
               <property name="minimumSize">
                <size>
                 <width>0</width>
                 <height>16</height>
                </size>
-              </property>
-              <property name="styleSheet">
-               <string notr="true"> QPushButton {
- }
-
- QPushButton:pressed {
-	border: 1px solid #8f8f91;
-	background-color: #dddddd;
- }</string>
               </property>
               <property name="text">
                <string/>
@@ -155,111 +126,93 @@ background: #E5E5E5;</string>
         </layout>
        </widget>
       </widget>
-      <widget class="QWidget" name="layoutWidget1">
-       <layout class="QHBoxLayout" name="horizontalLayout">
+      <widget class="QWidget" name="rightMenuWidget" native="true">
+       <layout class="QVBoxLayout" name="verticalLayout">
         <property name="spacing">
+         <number>0</number>
+        </property>
+        <property name="leftMargin">
          <number>3</number>
         </property>
+        <property name="topMargin">
+         <number>0</number>
+        </property>
         <property name="rightMargin">
-         <number>6</number>
+         <number>3</number>
+        </property>
+        <property name="bottomMargin">
+         <number>0</number>
         </property>
         <item>
-         <widget class="QWidget" name="rightMenuWidget" native="true">
-          <layout class="QVBoxLayout" name="verticalLayout">
-           <property name="spacing">
-            <number>0</number>
-           </property>
-           <property name="leftMargin">
-            <number>0</number>
-           </property>
-           <property name="topMargin">
-            <number>0</number>
-           </property>
-           <property name="rightMargin">
-            <number>0</number>
-           </property>
-           <property name="bottomMargin">
-            <number>0</number>
-           </property>
-           <item>
-            <layout class="QVBoxLayout" name="rightMenuLayout">
-             <property name="spacing">
-              <number>0</number>
+         <layout class="QVBoxLayout" name="rightMenuLayout">
+          <property name="spacing">
+           <number>0</number>
+          </property>
+          <property name="bottomMargin">
+           <number>3</number>
+          </property>
+          <item>
+           <widget class="QToolBox" name="actionMenu">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+              <horstretch>0</horstretch>
+              <verstretch>2</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>200</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="currentIndex">
+             <number>0</number>
+            </property>
+            <widget class="TokenMenu" name="tokenPage">
+             <property name="geometry">
+              <rect>
+               <x>0</x>
+               <y>0</y>
+               <width>266</width>
+               <height>326</height>
+              </rect>
              </property>
-             <property name="bottomMargin">
-              <number>3</number>
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>0</height>
+              </size>
              </property>
-             <item>
-              <widget class="QToolBox" name="actionMenu">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                 <horstretch>0</horstretch>
-                 <verstretch>2</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="minimumSize">
-                <size>
-                 <width>200</width>
-                 <height>0</height>
-                </size>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">QToolBox::tab {
-	border-top: 1px solid #DDDDDD;
-	border-bottom: 1px solid #DDDDDD;
-}</string>
-               </property>
-               <property name="currentIndex">
-                <number>0</number>
-               </property>
-               <widget class="TokenMenu" name="tokenPage">
-                <property name="geometry">
-                 <rect>
-                  <x>0</x>
-                  <y>0</y>
-                  <width>285</width>
-                  <height>328</height>
-                 </rect>
-                </property>
-                <property name="minimumSize">
-                 <size>
-                  <width>0</width>
-                  <height>0</height>
-                 </size>
-                </property>
-                <attribute name="label">
-                 <string>Liste de jetons</string>
-                </attribute>
-               </widget>
-              </widget>
-             </item>
-             <item>
-              <widget class="Line" name="line">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-                 <horstretch>1</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="orientation">
-                <enum>Qt::Horizontal</enum>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="ChatWidget" name="m_ChatWidget" native="true">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                 <horstretch>0</horstretch>
-                 <verstretch>2</verstretch>
-                </sizepolicy>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </item>
-          </layout>
-         </widget>
+             <attribute name="label">
+              <string>Liste de jetons</string>
+             </attribute>
+            </widget>
+           </widget>
+          </item>
+          <item>
+           <widget class="Line" name="line">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+              <horstretch>1</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="ChatWidget" name="m_ChatWidget" native="true">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+              <horstretch>0</horstretch>
+              <verstretch>2</verstretch>
+             </sizepolicy>
+            </property>
+           </widget>
+          </item>
+         </layout>
         </item>
        </layout>
       </widget>
@@ -267,12 +220,6 @@ background: #E5E5E5;</string>
     </item>
     <item>
      <widget class="QWidget" name="footer" native="true">
-      <property name="styleSheet">
-       <string notr="true">QWidget#footer {
-	background: #F1F1F1;
-	border-top: 1px solid #CACACA;
-}</string>
-      </property>
       <layout class="QHBoxLayout" name="horizontalLayout_2">
        <property name="leftMargin">
         <number>0</number>
@@ -301,16 +248,6 @@ background: #E5E5E5;</string>
        </item>
        <item>
         <widget class="QPushButton" name="collapseButtonRightMenu">
-         <property name="styleSheet">
-          <string notr="true">QPushButton {
-	border: none;
-}
-
-QPushButton:pressed {
-	border: 1px solid #8f8f91;
-	background-color: #dddddd;
-}</string>
-         </property>
          <property name="text">
           <string/>
          </property>
@@ -342,12 +279,6 @@ QPushButton:pressed {
      <width>985</width>
      <height>25</height>
     </rect>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">QMenuBar {
-	background: #F1F1F1;
-	border-bottom: 1px solid #CACACA;
-}</string>
    </property>
    <widget class="QMenu" name="menuConnexion">
     <property name="title">

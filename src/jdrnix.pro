@@ -23,6 +23,7 @@ SOURCES += \
     ConnectionHelper.cpp \
     Common.cpp \
     Tooltip.cpp \
+    StyleSheet.cpp \
     Chat/ChatWidget.cpp \
     Chat/ChatServer.cpp \
     Chat/ChatClient.cpp \
@@ -112,6 +113,7 @@ HEADERS  += \
     CustomMdiArea.h \
     Common.h \
     Tooltip.h \
+    StyleSheet.h \
     DiceMenu/DiceMenu.h \
     Chat/ChatWidget.h \
     Chat/ChatServer.h \
@@ -204,8 +206,8 @@ HEADERS  += \
     General/CircularProgressBar.h
 
 FORMS    += \
-    Tooltip.ui \
     MainWindow.ui \
+    Tooltip.ui \
     ConnectionHelper.ui \
     CustomMdiArea.ui \
     Token/TokenMenu.ui \

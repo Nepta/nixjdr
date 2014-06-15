@@ -8,6 +8,7 @@
 #include "GameObjects/GameObjectDialog.h"
 #include "GameObjects/Character.h"
 #include "Canvas/Sprite.h"
+#include "StyleSheet.h"
 #include "MapLayer.h"
 
 MapLayer::MapLayer(TokenItem *tokenItem, int step) :

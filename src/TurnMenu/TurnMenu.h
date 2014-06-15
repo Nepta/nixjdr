@@ -31,7 +31,6 @@ private slots:
 
 private:
     Ui::TurnMenu *ui;
-    TurnList *m_turnList;
 };
 
 #endif // TURNMENU_H

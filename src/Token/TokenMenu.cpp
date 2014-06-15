@@ -10,6 +10,7 @@
 #include "GameObjects/GameObjectDialog.h"
 
 #include "Network/TokenMenuCodes.h"
+#include "StyleSheet.h"
 #include "TokenMenu.h"
 #include "ui_TokenMenu.h"
 

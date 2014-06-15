@@ -1,12 +1,14 @@
-#include "ConnectionHelper.h"
-#include "ui_ConnectionHelper.h"
 #include <QIntValidator>
 #include <QRegExpValidator>
+#include "StyleSheet.h"
+#include "ConnectionHelper.h"
+#include "ui_ConnectionHelper.h"
 
 ConnectionHelper::ConnectionHelper(User *user, QWidget *parent) :
     QDialog(parent), ui(new Ui::ConnectionHelper)
 {
 	ui->setupUi(this);
+    setStyleSheet(StyleSheet::s_StyleSheet);
     setWindowFlags(Qt::CustomizeWindowHint | Qt::WindowTitleHint | Qt::WindowMinMaxButtonsHint);
 
 	QValidator *ipRange = new QIntValidator(0,255);

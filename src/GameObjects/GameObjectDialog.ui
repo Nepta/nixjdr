@@ -17,7 +17,7 @@
    </sizepolicy>
   </property>
   <property name="windowTitle">
-   <string>Dialog</string>
+   <string>Edition d'élément de jeu</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout" stretch="10,0">
    <property name="leftMargin">

@@ -11,17 +11,6 @@ TurnList::TurnList(QWidget *parent)
     this->setMovement(QListView::Static);
     this->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
-    //style
-    this->setStyleSheet("\
-        QListWidget::item { \
-            background: lightgray; border: 1px solid black; \
-            selection-background-color: blue;\
-        }\
-        QListWidget::item:hover {\
-            background: #CCCCF5;\
-        }\
-    ");
-
     // selection & drag / drop
     this->setSelectionMode(QAbstractItemView::ExtendedSelection);
     this->setDragDropMode(QAbstractItemView::InternalMove);

@@ -10,30 +10,22 @@ TurnMenu::TurnMenu(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    //QList<int> sizes = {60, 600, 300};
-    //ui->splitter->setSizes(sizes);
-
-    m_turnList = new TurnList();
-    m_turnList->setMaximumHeight(100);
-    ui->listLayout->addWidget(m_turnList);
-
-    connect(m_turnList, SIGNAL(updatedTurnList(QString)), this, SLOT(sendUpdatedTurnList(QString)));
+    connect(ui->m_TurnList, SIGNAL(updatedTurnList(QString)), this, SLOT(sendUpdatedTurnList(QString)));
 }
 
 TurnMenu::~TurnMenu()
 {
     delete ui;
-    delete m_turnList;
 }
 
 TurnList *TurnMenu::getTurnList(){
-    return m_turnList;
+    return ui->m_TurnList;
 }
 
 void TurnMenu::on_addItemEdit_returnPressed()
 {
     if (!ui->addItemEdit->text().isEmpty()) {
-        m_turnList->addQStringAsItem(QString("%1").arg(ui->addItemEdit->text()));
+        ui->m_TurnList->addQStringAsItem(QString("%1").arg(ui->addItemEdit->text()));
         ui->addItemEdit->clear();
         ui->addItemEdit->setFocus();
     }
@@ -46,12 +38,12 @@ void TurnMenu::on_addButton_clicked()
 
 void TurnMenu::on_nextButton_clicked()
 {
-    m_turnList->selectNextItem();
+    ui->m_TurnList->selectNextItem();
 }
 
 void TurnMenu::on_deleteButton_clicked()
 {
-    m_turnList->deleteCurrentItems();
+    ui->m_TurnList->deleteCurrentItems();
 }
 
 /**
@@ -59,10 +51,10 @@ void TurnMenu::on_deleteButton_clicked()
  * @param turnItems
  */
 void TurnMenu::setTurnList(QStringList turnItems) {
-    m_turnList->clear();
+    ui->m_TurnList->clear();
 
     for (QString turnItem : turnItems) {
-        m_turnList->addQStringAsItem(turnItem, false);
+        ui->m_TurnList->addQStringAsItem(turnItem, false);
     }
 }
 

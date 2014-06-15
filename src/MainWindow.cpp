@@ -22,6 +22,7 @@
 #include "Canvas/CanvasView.h"
 #include "Canvas/ImageWidget.h"
 
+#include "StyleSheet.h"
 #include "CustomMdiArea.h"
 #include "ConnectionHelper.h"
 #include "MainWindow.h"
@@ -32,6 +33,7 @@ MainWindow::MainWindow(User *user, QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    setStyleSheet(StyleSheet::s_StyleSheet);
 
     // Sets Null pointer for later deletion if m_Server and/or m_Client are not used
     m_Server = NULL;
