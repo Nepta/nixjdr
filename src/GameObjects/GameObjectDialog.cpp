@@ -1,4 +1,5 @@
 #include "Character.h"
+#include "StyleSheet.h"
 #include "GameObjectDialog.h"
 #include "ui_GameObjectDialog.h"
 
@@ -11,6 +12,7 @@ GameObjectDialog::GameObjectDialog(QWidget *parent) :
     ui(new Ui::GameObjectDialog)
 {
     ui->setupUi(this);
+    setStyleSheet(StyleSheet::s_StyleSheet);
     m_EditMode = false;
 }
 

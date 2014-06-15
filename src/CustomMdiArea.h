@@ -5,6 +5,10 @@
 #include <QMdiArea>
 #include <QMdiSubWindow>
 
+namespace Ui {
+    class CustomMdiArea;
+}
+
 /**
  * @brief CustomMdiArea class - redefines addSubWindow to add proper options for each
  * subwindow in order to avoid flickering problems.
@@ -16,6 +20,7 @@ class CustomMdiArea : public QMdiArea
          * @brief CustomMdiArea
          */
         CustomMdiArea(QWidget *parent);
+        ~CustomMdiArea();
 
         /**
          * @brief addSubWindow - redefines QMdiArea addSubWindow by adding the RubberBandResize
@@ -24,6 +29,9 @@ class CustomMdiArea : public QMdiArea
          * @param flags
          */
         QMdiSubWindow *addSubWindow(QWidget *widget, Qt::WindowFlags flags = 0);
+
+    private:
+        Ui::CustomMdiArea *ui;
 };
 
 #endif // CUSTOMMDIAREA_H

@@ -4,6 +4,7 @@
 
 #include "Database/Repository/RepositoryManager.h"
 #include "Database/Repository/MapRepository.h"
+#include "StyleSheet.h"
 #include "OpenMapWidget.h"
 #include "ui_OpenMapWidget.h"
 
@@ -12,6 +13,7 @@ OpenMapWidget::OpenMapWidget(int *mapId, QWidget *parent) :
     ui(new Ui::OpenMapWidget)
 {
     ui->setupUi(this);
+    setStyleSheet(StyleSheet::s_StyleSheet);
 
     m_MapId = mapId;
 

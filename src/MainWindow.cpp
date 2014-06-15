@@ -22,6 +22,7 @@
 #include "Canvas/CanvasView.h"
 #include "Canvas/ImageWidget.h"
 
+#include "StyleSheet.h"
 #include "CustomMdiArea.h"
 #include "ConnectionHelper.h"
 #include "MainWindow.h"
@@ -32,6 +33,7 @@ MainWindow::MainWindow(User *user, QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    setStyleSheet(StyleSheet::s_StyleSheet);
 
     // Sets Null pointer for later deletion if m_Server and/or m_Client are not used
     m_Server = NULL;
@@ -39,7 +41,6 @@ MainWindow::MainWindow(User *user, QWidget *parent) :
 
     m_User = user;
 
-    initTableTurnSplitter();
     initConnects();
     initRole();
 
@@ -53,20 +54,7 @@ MainWindow::~MainWindow()
     delete m_Client;
 }
 
-void MainWindow::initTableTurnSplitter(){
-    QList<int> sizes;
-    sizes.push_back(1000);
-    sizes.push_back(100);
-    ui->tableTurnSplitter->setSizes(sizes);
-}
-
-void MainWindow::initConnects(){
-    // Connect chat & dice menus
-    connect(ui->turnWidget->getDiceWidget(), SIGNAL(rollDice(QString, bool)),
-            ui->m_ChatWidget, SLOT(rollDice(QString, bool)));
-    connect(ui->m_ChatWidget, SIGNAL(requestDice(QString&)),
-            ui->turnWidget->getDiceWidget(), SLOT(requestRoll(QString&)));
-
+void MainWindow::initConnects() {
     // Top menu
     connect(ui->tableArea, SIGNAL(subWindowActivated(QMdiSubWindow*)),
                  this, SLOT(updateMenu()));
@@ -237,7 +225,7 @@ void MainWindow::setupMJ() {
 }
 
 void MainWindow::addPlayerToInterface(QString playerNickname){
-    ui->turnWidget->getTurnList()->addQStringAsItem(playerNickname);
+    ui->turnWidget->getTurnList()->addTurn(playerNickname);
     ui->tokenPage->addCustomToken(playerNickname);
 }
 
@@ -270,12 +258,6 @@ void MainWindow::setupPlayer() {
     Receiver *turnMenuClientReceiver = m_Client->getReceiver(TargetCode::TURN_MENU_CLIENT);
     TurnMenuClient *turnMenuClient = dynamic_cast<TurnMenuClient*>(turnMenuClientReceiver);
     ui->turnWidget->setSenderClient(turnMenuClient);
-
-    /* The dice menu is able to send system messages to the Chat in order to display error messages
-     * or warnings */
-    connect(ui->turnWidget->getDiceWidget(), SIGNAL(sendMessageToChatUi(QString)),
-            ui->m_ChatWidget, SLOT(receivedMessage(QString))
-    );
 }
 
 void MainWindow::on_collapseButtonRightMenu_clicked(bool checked)
@@ -285,11 +267,9 @@ void MainWindow::on_collapseButtonRightMenu_clicked(bool checked)
     collapseMenu(checked, ui->rightMenuWidget, ui->rightMenuSplitter, min, max);
 }
 
-void MainWindow::on_collapseButtonTurnMenu_clicked(bool checked)
-{
-    int min = ui->collapseButtonTurnMenu->minimumHeight();
-    int max = ui->turnWidget->minimumHeight() + ui->collapseButtonTurnMenu->minimumHeight();
-    collapseMenu(checked, ui->turnWidget, ui->tableTurnSplitter, min, max);
+void MainWindow::on_collapseButtonTurnMenu_clicked() {
+    bool isVisible = ui->turnWidget->isVisible();
+    ui->turnWidget->setVisible(!isVisible);
 }
 
 void MainWindow::collapseMenu(bool checked, QWidget *widget, QSplitter *splitter, int min, int max) {
