@@ -34,6 +34,7 @@ public:
     virtual ~Switch() {}
 
     Receiver *getReceiver(TargetCode code);
+	 void insert(TargetCode code, Receiver *receiver);
 
 protected:
     QHash<TargetCode, Receiver*> m_Nodes;
