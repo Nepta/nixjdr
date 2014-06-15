@@ -3,9 +3,12 @@
 
 #include "Network/SenderClient.h"
 #include "Network/Receiver.h"
+#include "Log/LogGui.h"
 
 class LogClient : public SenderClient, public Receiver{
 	Q_OBJECT
+
+	LogGui logGui_;
 
 public:
 	void processNewData(Header header, QByteArray &data);
