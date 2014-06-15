@@ -83,12 +83,37 @@ QPushButton#collapseButtonTurnMenu:pressed {
 }
 
 QListWidget#m_TurnList:item {
-    background: lightgray; border: 1px solid black; 
-    selection-background-color: blue;
+	background: #F5F5F5;
+	border-right: 1px solid #DDDDDD;
+	selection-background-color: #F5F5F5;
+	selection-color: black;
 }
 
-QListWidget#m_TurnList:item:hover {
-    background: #CCCCF5;
+QListWidget#m_TurnList::item:hover, 
+QListWidget#m_TurnList::item:selected
+{
+    background: #DDDDDD;
+    color: #000000;
+}
+
+QPushButton#addButton
+{
+	border: 1px solid #BBBBBB;
+	border-left: 0px;
+	border-radius: 0px;
+}
+
+QPushButton#deleteButton {
+	border: 1px solid #BBBBBB;
+	border-top: 0px;
+	border-left: 0px;
+	border-radius: 0px;
+}
+
+QPushButton#addButton:pressed, 
+QPushButton#deleteButton:pressed 
+{
+	background: #AAAAAA;
 }
 
 /* Sidebar */

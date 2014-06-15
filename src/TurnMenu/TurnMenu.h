@@ -8,7 +8,7 @@
 #include "TurnList.h"
 
 namespace Ui {
-class TurnMenu;
+    class TurnMenu;
 }
 
 class TurnMenu : public QWidget, public SenderHandler
@@ -23,9 +23,7 @@ public:
     TurnList *getTurnList();
 
 private slots:
-    void on_addItemEdit_returnPressed();
     void on_addButton_clicked();
-    void on_nextButton_clicked();
     void on_deleteButton_clicked();
     void sendUpdatedTurnList(const QString& turnListItems);
 

@@ -1,8 +1,9 @@
+#include <QList>
+
 #include "Network/TurnMenuCodes.h"
 #include "TurnMenu.h"
 #include "ui_TurnMenu.h"
 
-#include <QList>
 
 TurnMenu::TurnMenu(QWidget *parent) :
     QWidget(parent),
@@ -13,8 +14,7 @@ TurnMenu::TurnMenu(QWidget *parent) :
     connect(ui->m_TurnList, SIGNAL(updatedTurnList(QString)), this, SLOT(sendUpdatedTurnList(QString)));
 }
 
-TurnMenu::~TurnMenu()
-{
+TurnMenu::~TurnMenu() {
     delete ui;
 }
 
@@ -22,23 +22,9 @@ TurnList *TurnMenu::getTurnList(){
     return ui->m_TurnList;
 }
 
-void TurnMenu::on_addItemEdit_returnPressed()
-{
-    if (!ui->addItemEdit->text().isEmpty()) {
-        ui->m_TurnList->addQStringAsItem(QString("%1").arg(ui->addItemEdit->text()));
-        ui->addItemEdit->clear();
-        ui->addItemEdit->setFocus();
-    }
-}
-
 void TurnMenu::on_addButton_clicked()
 {
-    on_addItemEdit_returnPressed();
-}
-
-void TurnMenu::on_nextButton_clicked()
-{
-    ui->m_TurnList->selectNextItem();
+    ui->m_TurnList->addTurn();
 }
 
 void TurnMenu::on_deleteButton_clicked()
@@ -54,7 +40,7 @@ void TurnMenu::setTurnList(QStringList turnItems) {
     ui->m_TurnList->clear();
 
     for (QString turnItem : turnItems) {
-        ui->m_TurnList->addQStringAsItem(turnItem, false);
+        ui->m_TurnList->addTurn(turnItem, false);
     }
 }
 

@@ -95,6 +95,7 @@ SOURCES += \
     Token/Network/TokenMenuServer.cpp \
     TurnMenu/TurnList.cpp \
     TurnMenu/TurnMenu.cpp \
+    TurnMenu/TurnWidgetItem.cpp \
     TurnMenu/Network/TurnMenuClient.cpp \
     TurnMenu/Network/TurnMenuServer.cpp \
     Log/Logger.cpp \
@@ -192,6 +193,7 @@ HEADERS  += \
     Token/Network/TokenMenuCodes.h \
     TurnMenu/TurnList.h \
     TurnMenu/TurnMenu.h \
+    TurnMenu/TurnWidgetItem.h \
     TurnMenu/Network/TurnMenuClient.h \
     TurnMenu/Network/TurnMenuServer.h \
     TurnMenu/Network/TurnMenuCodes.h \
@@ -214,8 +216,10 @@ FORMS    += \
     DiceMenu/DiceMenu.ui \
     Chat/ChatWidget.ui \
     TurnMenu/TurnMenu.ui \
+    TurnMenu/TurnWidgetItem.ui \
     Canvas/Map.ui \
     Canvas/SideMenuWidgets/DrawingMenu.ui \
     Canvas/MapCreationWidget.ui \
     Canvas/OpenMapWidget.ui \
-    GameObjects/GameObjectDialog.ui
+    GameObjects/GameObjectDialog.ui \
+    TurnMenu/TurnList.ui

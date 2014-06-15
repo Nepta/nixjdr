@@ -233,7 +233,7 @@ void MainWindow::setupMJ() {
 }
 
 void MainWindow::addPlayerToInterface(QString playerNickname){
-    ui->turnWidget->getTurnList()->addQStringAsItem(playerNickname);
+    ui->turnWidget->getTurnList()->addTurn(playerNickname);
     ui->tokenPage->addCustomToken(playerNickname);
 }
 
