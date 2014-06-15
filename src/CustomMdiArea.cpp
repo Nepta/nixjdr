@@ -15,6 +15,7 @@ CustomMdiArea::~CustomMdiArea() {
 QMdiSubWindow *CustomMdiArea::addSubWindow(QWidget *widget, Qt::WindowFlags flags) {
     QMdiSubWindow *subwindow = QMdiArea::addSubWindow(widget, flags);
 
+    subwindow->setWindowIcon(QIcon(""));
     subwindow->setOption(QMdiSubWindow::RubberBandResize, true);
     subwindow->setOption(QMdiSubWindow::RubberBandMove, true);
 

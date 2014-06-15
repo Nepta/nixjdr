@@ -75,6 +75,19 @@
             </property>
             <item>
              <widget class="QLabel" name="label">
+              <property name="lineWidth">
+               <number>0</number>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+              <property name="pixmap">
+               <pixmap>resource/TurnMenu/turn.png</pixmap>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="label_2">
               <property name="text">
                <string>Gestion des tours</string>
               </property>
@@ -176,7 +189,7 @@
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>266</width>
+               <width>306</width>
                <height>326</height>
               </rect>
              </property>
