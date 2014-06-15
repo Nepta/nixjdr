@@ -33,6 +33,16 @@ QStackedWidget#m_StackedTools > QWidget {
 	background: #F1F1F1;
 }
 
+/* OpenMapWidget */
+#OpenMapWidget {
+	background: #F1F1F1;
+}
+
+/* MapCreationWidget */
+#MapCreationWidget {
+	background: #F1F1F1;
+}
+
 /* Tooltip */
 #TooltipWidget {
 	border: 1px solid rgb(50, 50, 50);

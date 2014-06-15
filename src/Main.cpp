@@ -12,6 +12,7 @@
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
+
     QApplication::setStyle(QStyleFactory::create("Fusion"));
 
     // Translation
@@ -21,7 +22,7 @@ int main(int argc, char *argv[])
                     QLibraryInfo::location(QLibraryInfo::TranslationsPath));
     a.installTranslator(&translator);
 
-    // Load CSS
+    // Load QSS
     QFile File("resource/stylesheet.qss");
     File.open(QFile::ReadOnly);
     QString stylesheet = QLatin1String(File.readAll());
