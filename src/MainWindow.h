@@ -37,7 +37,7 @@ private slots:
     void on_actionCreateImage_triggered();
     void on_actionConnection_triggered();
     void on_collapseButtonRightMenu_clicked(bool checked);
-    void on_collapseButtonTurnMenu_clicked(bool checked);
+    void on_collapseButtonTurnMenu_clicked();
     void createMap(QString mapName, int mapStep);
     void addPlayerToInterface(QString playerNickname);
 

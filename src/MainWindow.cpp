@@ -41,7 +41,6 @@ MainWindow::MainWindow(User *user, QWidget *parent) :
 
     m_User = user;
 
-    initTableTurnSplitter();
     initConnects();
     initRole();
 
@@ -53,13 +52,6 @@ MainWindow::~MainWindow()
     delete ui;
     delete m_Server;
     delete m_Client;
-}
-
-void MainWindow::initTableTurnSplitter(){
-    QList<int> sizes;
-    sizes.push_back(1000);
-    sizes.push_back(100);
-    ui->tableTurnSplitter->setSizes(sizes);
 }
 
 void MainWindow::initConnects() {
@@ -275,10 +267,9 @@ void MainWindow::on_collapseButtonRightMenu_clicked(bool checked)
     collapseMenu(checked, ui->rightMenuWidget, ui->rightMenuSplitter, min, max);
 }
 
-void MainWindow::on_collapseButtonTurnMenu_clicked(bool checked) {
-    int min = ui->collapseButtonTurnMenu->minimumHeight();
-    int max = ui->turnWidget->minimumHeight() + ui->collapseButtonTurnMenu->minimumHeight();
-    collapseMenu(checked, ui->turnWidget, ui->tableTurnSplitter, min, max);
+void MainWindow::on_collapseButtonTurnMenu_clicked() {
+    bool isVisible = ui->turnWidget->isVisible();
+    ui->turnWidget->setVisible(!isVisible);
 }
 
 void MainWindow::collapseMenu(bool checked, QWidget *widget, QSplitter *splitter, int min, int max) {

@@ -15,7 +15,7 @@ TurnList::TurnList(QWidget *parent) :
 
 
     connect(itemDelegate(), SIGNAL(closeEditor(QWidget*)),
-            this, SLOT(updateTurnList()));
+            this, SLOT(turnItemChanged(QWidget*)));
 }
 
 TurnList::~TurnList() {
@@ -62,6 +62,10 @@ void TurnList::addTurn(QString text, bool update) {
 }
 
 void TurnList::turnItemChanged(QWidget*) {
+    if (currentItem()->text().isEmpty()) {
+        delete currentItem();
+    }
+
     updateTurnList();
 }
 
