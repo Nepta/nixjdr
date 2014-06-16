@@ -214,8 +214,8 @@
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>286</width>
-               <height>326</height>
+               <width>294</width>
+               <height>261</height>
               </rect>
              </property>
              <property name="minimumSize">
@@ -240,6 +240,22 @@
             </property>
             <property name="orientation">
              <enum>Qt::Horizontal</enum>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="LogGui" name="m_LogGui" native="true">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+              <horstretch>0</horstretch>
+              <verstretch>1</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>0</height>
+             </size>
             </property>
            </widget>
           </item>
@@ -318,7 +334,7 @@
      <x>0</x>
      <y>0</y>
      <width>1072</width>
-     <height>25</height>
+     <height>19</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuConnexion">
@@ -393,6 +409,11 @@
    <extends>QWidget</extends>
    <header>TurnMenu/TurnMenu.h</header>
    <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>LogGui</class>
+   <extends>QWidget</extends>
+   <header>Log/LogGui.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

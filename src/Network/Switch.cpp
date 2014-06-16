@@ -1,7 +1,11 @@
 #include "Switch.h"
 
 Receiver *Switch::getReceiver(TargetCode code) {
-    return m_Nodes.value(code);
+	return m_Nodes.value(code);
+}
+
+void Switch::insert(TargetCode code, Receiver *receiver){
+	m_Nodes.insert(code, receiver);
 }
 
 Receiver *Switch::switchNewMessage(Header header, QByteArray message) {

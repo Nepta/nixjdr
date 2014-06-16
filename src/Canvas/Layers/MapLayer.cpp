@@ -76,6 +76,11 @@ void MapLayer::initDragEvent(Sprite *watched, QGraphicsSceneMouseEvent *mouseEve
     if (dropAction == Qt::IgnoreAction) {
         watched->setTransparent(false);
     } else {
+
+		  QString spritePosition = QString("(%1,%2)");
+		  spritePosition = spritePosition.arg(QString::number(mouseEvent->scenePos().toPoint().x()/m_Step));
+		  spritePosition = spritePosition.arg(QString::number(mouseEvent->scenePos().toPoint().y()/m_Step));
+		  emit spriteMoved("[moved]:"+watched->getTokenItem()->text()+":"+spritePosition);
         removeSprite(watched);
     }
 }
@@ -129,6 +134,10 @@ void MapLayer::dropEvent(QGraphicsSceneDragDropEvent *event, Sprite *watched)
         int zValue = (watched ? watched->zValue() + 1 : 1);
         TokenItem *tokenItem = new TokenItem(tokenItemData);
         addSprite(tokenItem, event->scenePos().toPoint(), zValue);
+		  QString tokenItemPosition = QString("(%1,%2)")
+			  .arg(QString::number(event->scenePos().toPoint().x()/m_Step))
+			  .arg(QString::number(event->scenePos().toPoint().y()/m_Step));
+		  emit spriteAdded("[added]:"+tokenItem->text()+":"+tokenItemPosition);
 
         event->acceptProposedAction();
     }
@@ -156,6 +165,11 @@ void MapLayer::spriteMouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent, Spr
     if (mouseEvent->button() == Qt::LeftButton) {
         QPoint mouseScenePos = mouseEvent->scenePos().toPoint();
         addSprite(m_TokenItem, mouseScenePos, watched->zValue() + 1);
+		  QString tokenItemPosition = QString("(%1,%2)")
+			  .arg(QString::number(mouseScenePos.x()/m_Step))
+			  .arg(QString::number(mouseScenePos.y()/m_Step));
+		  //NOTE never used?
+		  emit spriteAdded("[added]:"+m_TokenItem->text()+":"+tokenItemPosition);
     }
 
     if(mouseEvent->button() == Qt::RightButton){
@@ -180,7 +194,11 @@ void MapLayer::ShowContextMenu(QGraphicsSceneMouseEvent *mouseEvent, Sprite *wat
 
     QAction* selectedItem = menu.exec(mouseEvent->screenPos());
     if(selectedItem == deleteAction){
-        removeSprite(watched);
+		  QString spritePosition = QString("(%1,%2)")
+			  .arg(QString::number(mouseEvent->scenePos().toPoint().x()/m_Step))
+			  .arg(QString::number(mouseEvent->scenePos().toPoint().y()/m_Step));
+		  emit spriteRemoved("[delete]:"+watched->getTokenItem()->text()+":"+spritePosition);
+		  removeSprite(watched);
     }
     else if(selectedItem == editCharacterAction) {
         GameObjectDialog gameObjectDlg(character);

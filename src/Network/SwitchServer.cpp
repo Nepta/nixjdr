@@ -11,10 +11,7 @@ SwitchServer::SwitchServer() {
     m_Nodes.insert(TargetCode::CHAT_SERVER, new ChatServer(&m_UsersList));
     m_Nodes.insert(TargetCode::TOKEN_MENU_SERVER, new TokenMenuServer(&m_UsersList));
     m_Nodes.insert(TargetCode::TURN_MENU_SERVER, new TurnMenuServer(&m_UsersList));
-
-    Logger *logger = new Logger();
-    m_Nodes.insert(TargetCode::MAP_SERVER, logger);
-    logger->insert(TargetCode::MAP_SERVER, new MapServer(&m_UsersList));
+	 m_Nodes.insert(TargetCode::MAP_SERVER, new MapServer(&m_UsersList));
 }
 
 SwitchServer::~SwitchServer() {
@@ -35,7 +32,12 @@ void SwitchServer::init() {
         emit sendMessageToChatUi(msg);
 
         connect(m_Server, SIGNAL(newConnection()), this, SLOT(newClientConnection()));
-    }
+	 }
+}
+
+QHash<QString, User *>* SwitchServer::getUserList()
+{
+	return &m_UsersList;
 }
 
 void SwitchServer::newClientConnection()

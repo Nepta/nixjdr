@@ -100,6 +100,9 @@ SOURCES += \
     Log/Logger.cpp \
     Log/Log.cpp \
     Log/MapLog.cpp \
+    Log/LogGui.cpp \
+    Log/LogServer.cpp \
+    Log/LogClient.cpp \
     Actions/AbstractAction.cpp \
     GameObjects/GameObject.cpp \
     GameObjects/Character.cpp \
@@ -197,7 +200,10 @@ HEADERS  += \
     TurnMenu/Network/TurnMenuCodes.h \
     Log/Logger.h \
     Log/Log.h \
+    Log/LogGui.h \
     Log/MapLog.h \
+    Log/LogServer.h \
+    Log/LogClient.h \
     Actions/AbstractAction.h \
     GameObjects/GameObject.h \
     GameObjects/GameObjectType.h \
@@ -215,6 +221,7 @@ FORMS    += \
     Chat/ChatWidget.ui \
     TurnMenu/TurnMenu.ui \
     TurnMenu/TurnList.ui \
+    Log/LogGui.ui \
     Canvas/Map.ui \
     Canvas/SideMenuWidgets/DrawingMenu.ui \
     Canvas/MapCreationWidget.ui \

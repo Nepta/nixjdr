@@ -191,6 +191,10 @@ void GridLayer::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent) {
     if (mouseEvent->button() == Qt::LeftButton) {
         QPoint mouseScenePos = mouseEvent->scenePos().toPoint();
         addSprite(m_TokenItem, mouseScenePos);
+		  QString tokenItemPosition = QString("(%1,%2)")
+			  .arg(QString::number(mouseScenePos.x()/m_Step))
+			  .arg(QString::number(mouseScenePos.y()/m_Step));
+		  emit spriteAdded("[added]:"+m_TokenItem->text()+":"+tokenItemPosition);
     }
 }
 
@@ -210,6 +214,10 @@ void GridLayer::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent) {
     if (mouseEvent->buttons() & Qt::LeftButton) {
         if (isInScene(mouseEvent) && layer) {
             addSprite(m_TokenItem, mouseScenePos, 1);
+				QString tokenItemPosition = QString("(%1,%2)")
+					.arg(QString::number(mouseScenePos.x()/m_Step))
+					.arg(QString::number(mouseScenePos.y()/m_Step));
+				emit spriteAdded("[added]:"+m_TokenItem->text()+":"+tokenItemPosition);
         }
     }
     else if (mouseEvent->buttons() & Qt::RightButton) {
@@ -221,7 +229,11 @@ void GridLayer::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent) {
 
         if (sprite && m_LastRemovedSpritePoint != sprite->scenePos()) {
             m_LastRemovedSpritePoint = sprite->scenePos();
-            removeSprite(sprite);
+				QString spritePosition = QString("(%1,%2)")
+					.arg(QString::number(mouseScenePos.x()/m_Step))
+					.arg(QString::number(mouseScenePos.y()/m_Step));
+				emit spriteRemoved("[removed]:"+sprite->getTokenItem()->text()+":"+spritePosition);
+				removeSprite(sprite);
         }
     }
 }

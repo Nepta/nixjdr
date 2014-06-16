@@ -55,6 +55,7 @@ signals:
     void pushInfoTooltip(QString info);
     void showMapTooltip();
     void hideMapTooltip();
+	 void spriteMoved(QString info);
 
 };
 

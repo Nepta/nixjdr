@@ -14,6 +14,10 @@
 #include "TurnMenu/Network/TurnMenuClient.h"
 #include "TurnMenu/Network/TurnMenuServer.h"
 
+#include "Log/Logger.h"
+#include "Log/LogClient.h"
+#include "Log/LogServer.h"
+
 #include "Canvas/OpenMapWidget.h"
 #include "Canvas/Network/MapClient.h"
 #include "Canvas/Network/MapServer.h"
@@ -43,6 +47,7 @@ MainWindow::MainWindow(User *user, QWidget *parent) :
 
     initConnects();
     initRole();
+	 initLogger();
 
     //showFullScreen();
 }
@@ -52,6 +57,18 @@ MainWindow::~MainWindow()
     delete ui;
     delete m_Server;
     delete m_Client;
+}
+
+void MainWindow::initLogger(){
+	//WARNING deficient by design ...
+	QHash<QString, User*> *userList = m_Server->getUserList();
+	Logger *logger = new Logger(ui->m_LogGui);
+	LogClient *logClient = new LogClient(m_User, nullptr, *logger);
+	LogServer *logServer = new LogServer(userList);
+	if(m_Server){
+		m_Server->insert(TargetCode::LOGGER_SERVER, logServer);
+	}
+	m_Client->insert(TargetCode::LOGGER_CLIENT, logClient);
 }
 
 void MainWindow::initConnects() {
@@ -112,6 +129,12 @@ void MainWindow::openMap(Map *map, bool notify) {
         QString msg = QString("%1").arg(map->id());
         mapClient->sendMessageToServer(msg, (quint16) MapCodes::OPEN_MAP);
     }
+
+	 // Connect to the LogClient
+	 TargetCode logClientCode(TargetCode::LOGGER_CLIENT);
+	 Receiver *logClientReceiver = m_Client->getReceiver(logClientCode);
+	 LogClient *logClient = dynamic_cast<LogClient*>(logClientReceiver);
+	 map->connectToLogger(logClient);
 }
 
 void MainWindow::createMap(QString mapName, int mapStep) {

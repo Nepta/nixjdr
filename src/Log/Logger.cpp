@@ -3,7 +3,15 @@
 #include "Network/Serializable/Message.h"
 #include "MapLog.h"
 
-void Logger::insert(TargetCode targetCode, Receiver *receiver){
+Logger::Logger(LogGui *gui){
+	setGui(gui);
+}
+
+void Logger::setGui(LogGui *gui){
+	gui_ = gui;
+}
+
+void Logger::insertRoute(TargetCode targetCode, Receiver *receiver){
 	m_Nodes.insert(targetCode, receiver);
 }
 
@@ -13,6 +21,11 @@ Log* Logger::pop(){
 
 void Logger::push(Log *log){
 	logStack_.push(log);
+	gui_->pushLog(log->toString());
+}
+
+LogGui *Logger::getGui(){
+	return gui_;
 }
 
 void Logger::processNewData(Header header, QByteArray &data){
