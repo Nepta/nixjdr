@@ -209,13 +209,19 @@
             <property name="currentIndex">
              <number>0</number>
             </property>
+            <widget class="LogGui" name="m_LogGui">
+             <attribute name="label">
+              <string>Historique</string>
+             </attribute>
+             <layout class="QVBoxLayout" name="verticalLayout_4"/>
+            </widget>
             <widget class="TokenMenu" name="tokenPage">
              <property name="geometry">
               <rect>
                <x>0</x>
                <y>0</y>
                <width>294</width>
-               <height>261</height>
+               <height>305</height>
               </rect>
              </property>
              <property name="minimumSize">
@@ -227,6 +233,7 @@
              <attribute name="label">
               <string>Liste de jetons</string>
              </attribute>
+             <zorder>m_LogGui</zorder>
             </widget>
            </widget>
           </item>
@@ -244,22 +251,6 @@
            </widget>
           </item>
           <item>
-           <widget class="LogGui" name="m_LogGui" native="true">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-              <horstretch>0</horstretch>
-              <verstretch>1</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="minimumSize">
-             <size>
-              <width>0</width>
-              <height>0</height>
-             </size>
-            </property>
-           </widget>
-          </item>
-          <item>
            <widget class="ChatWidget" name="m_ChatWidget" native="true">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
@@ -267,6 +258,7 @@
               <verstretch>2</verstretch>
              </sizepolicy>
             </property>
+            <zorder>m_LogGui</zorder>
            </widget>
           </item>
          </layout>
