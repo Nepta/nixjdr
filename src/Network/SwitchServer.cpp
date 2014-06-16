@@ -2,7 +2,6 @@
 #include "Chat/ChatServer.h"
 #include "Token/Network/TokenMenuServer.h"
 #include "TurnMenu/Network/TurnMenuServer.h"
-#include "Log/Logger.h"
 #include "SwitchServer.h"
 
 SwitchServer::SwitchServer() {
