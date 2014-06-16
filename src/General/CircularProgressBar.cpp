@@ -39,9 +39,18 @@ void CircularProgressBar::paint(QPainter *painter, const QStyleOptionGraphicsIte
     painter->drawEllipse(boundingRect().center(), m_Radius, m_Radius);
 
     // Inner ellipse
-    painter->setPen(QPen(QBrush(Qt::red), 2));
+    int value;
+    if(m_Value < 0){
+        value = -1*m_Value;
+        painter->setPen(QPen(QBrush(Qt::blue), 2));
+    }
+    else{
+        value = m_Value;
+        painter->setPen(QPen(QBrush(Qt::red), 2));
+    }
+
     int startAngle = 90 * 16;
-    int endAngle = (FULL_CIRCLE/m_MaxValue) * m_Value;
+    int endAngle = (FULL_CIRCLE/m_MaxValue) * value;
     painter->drawArc(boundingRect(), startAngle, endAngle);
 
     // text value/maxValue
