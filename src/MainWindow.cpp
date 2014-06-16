@@ -15,6 +15,8 @@
 #include "TurnMenu/Network/TurnMenuServer.h"
 
 #include "Log/Logger.h"
+#include "Log/LogClient.h"
+#include "Log/LogServer.h"
 
 #include "Canvas/OpenMapWidget.h"
 #include "Canvas/Network/MapClient.h"
@@ -63,11 +65,14 @@ void MainWindow::initTableTurnSplitter(){
 	 ui->tableTurnSplitter->setSizes(sizes);
 }
 
-void MainWindow::initLogger()
-{
-	Receiver *receiver = m_Server->getReceiver(TargetCode::MAP_SERVER);
-	Logger *logger = dynamic_cast<Logger*>(receiver);
-	logger->setGui(ui->m_LogGui);
+void MainWindow::initLogger(){
+	//WARNING deficient by design ...
+	QHash<QString, User*> *userList = m_Server->getUserList();
+	Logger *logger = new Logger(ui->m_LogGui);
+	LogClient *logClient = new LogClient(m_User, nullptr, *logger);
+	LogServer *logServer = new LogServer(userList);
+	m_Server->insert(TargetCode::LOGGER_CLIENT, logClient);
+	m_Client->insert(TargetCode::LOGGER_SERVER, logServer);
 }
 
 void MainWindow::initConnects(){
