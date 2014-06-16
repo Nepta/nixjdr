@@ -13,10 +13,12 @@ class Logger : public Switch, public Receiver {
 	LogGui *gui_;
 
 public:
+	Logger(LogGui *gui);
 	void setGui(LogGui *gui);
 	void insertRoute(TargetCode targetCode, Receiver *receiver);
 	Log* pop();
 	void push(Log *log);
+	LogGui* getGui();
 
 public slots:
 	void processNewData(Header header, QByteArray &data);
