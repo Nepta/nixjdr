@@ -54,7 +54,6 @@ private slots:
     void selectedDisplayLayer(QAbstractButton *button, bool checked);
     void on_collapseButton_clicked(bool checked);
     void showMapTooltip();
-	 void printLog(QString log);
 
 private:
     Ui::Map *ui;

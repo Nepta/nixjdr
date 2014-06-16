@@ -266,10 +266,6 @@ void Map::showMapTooltip() {
 	 m_Tooltip.showTooltip(position);
 }
 
-void Map::printLog(QString log){
-	qDebug() << log;
-}
-
 void Map::on_collapseButton_clicked(bool checked) {
     ui->scrollArea->setVisible(checked);
 }
