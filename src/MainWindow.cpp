@@ -30,6 +30,7 @@
 #include "ConnectionHelper.h"
 #include "MainWindow.h"
 #include "ui_MainWindow.h"
+#include <QDebug>
 
 MainWindow::MainWindow(User *user, QWidget *parent) :
     QMainWindow(parent),
@@ -71,8 +72,8 @@ void MainWindow::initLogger(){
 	Logger *logger = new Logger(ui->m_LogGui);
 	LogClient *logClient = new LogClient(m_User, nullptr, *logger);
 	LogServer *logServer = new LogServer(userList);
-	m_Server->insert(TargetCode::LOGGER_CLIENT, logClient);
-	m_Client->insert(TargetCode::LOGGER_SERVER, logServer);
+	m_Server->insert(TargetCode::LOGGER_SERVER, logServer);
+	m_Client->insert(TargetCode::LOGGER_CLIENT, logClient);
 }
 
 void MainWindow::initConnects(){
@@ -139,6 +140,12 @@ void MainWindow::openMap(Map *map, bool notify) {
         QString msg = QString("%1").arg(map->id());
         mapClient->sendMessageToServer(msg, (quint16) MapCodes::OPEN_MAP);
     }
+
+	 // Connect to the LogClient
+	 TargetCode logClientCode(TargetCode::LOGGER_CLIENT);
+	 Receiver *logClientReceiver = m_Client->getReceiver(logClientCode);
+	 LogClient *logClient = dynamic_cast<LogClient*>(logClientReceiver);
+	 map->connectToLogger(logClient);
 }
 
 void MainWindow::createMap(QString mapName, int mapStep) {

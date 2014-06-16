@@ -65,7 +65,7 @@ private:
     SwitchServer *m_Server;
     SwitchClient *m_Client;
     TurnMenu *m_turnMenu;
-    QString m_FilePath ;
+	 QString m_FilePath;
 };
 
 #endif // MAINWINDOW_H
