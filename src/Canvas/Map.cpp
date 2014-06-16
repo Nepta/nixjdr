@@ -317,7 +317,7 @@ DrawingLayer *Map::getDrawingLayer() {
 }
 
 void Map::connectToLogger(LogClient* client){
-	connect(getMapLayer(), SIGNAL(spriteMoved(QString)), client, SLOT(sendMessageToServer(QString&)));
-	connect(getMapLayer(), SIGNAL(spriteRemoved(QString)), client, SLOT(sendMessageToServer(QString&)));
-	connect(getMapLayer(), SIGNAL(spriteAdded(QString)), client, SLOT(sendMessageToServer(QString&)));
+	connect(getMapLayer(), SIGNAL(spriteMoved(QString)), client, SLOT(sendMessageToServer(QString)));
+	connect(getMapLayer(), SIGNAL(spriteRemoved(QString)), client, SLOT(sendMessageToServer(QString)));
+	connect(getMapLayer(), SIGNAL(spriteAdded(QString)), client, SLOT(sendMessageToServer(QString)));
 }

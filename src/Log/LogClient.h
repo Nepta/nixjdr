@@ -16,7 +16,8 @@ public:
 	void processNewData(Header header, QByteArray &data);
 
 public slots:
-	void sendMessageToServer(const QString &msg, quint16 code=0);
+	void sendMessageToServer(QString msg);
+	void sendMessageToServer(const QString &msg, quint16 code);
 };
 
 #endif // LOGCLIENT_H

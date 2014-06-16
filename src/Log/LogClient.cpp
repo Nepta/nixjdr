@@ -11,6 +11,10 @@ void LogClient::processNewData(Header header, QByteArray &data){
 	logger_.pushLog(log);
 }
 
+void LogClient::sendMessageToServer(QString msg){
+	sendMessageToServer(msg, 0);
+}
+
 void LogClient::sendMessageToServer(const QString &msg, quint16 code){
 	Message message(msg);
 	TargetCode target = TargetCode::LOGGER_SERVER;
