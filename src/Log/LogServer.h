@@ -8,7 +8,7 @@ class LogServer : public SenderServer, public Receiver{
 	Q_OBJECT
 
 public:
-	LogServer();
+	LogServer(QHash<QString, User *> *usersList);
 	void processNewData(Header header, QByteArray &data);
 };
 
