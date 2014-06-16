@@ -20,6 +20,7 @@ private:
     TokenMenu *m_TokenMenu;
 
     void addTokenAction(const QString& msg);
+    void updateTokenAction(const QString& msg);
 };
 
 #endif // TOKENMENUCLIENT_H

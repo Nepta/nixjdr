@@ -165,6 +165,10 @@ void TokenItem::toQByteArray(QDataStream *stream) {
     }
 }
 
+GameObject *TokenItem::getGameObject() {
+    return gameObject_;
+}
+
 void TokenItem::setGameObject(GameObject *gameObject) {
     gameObject_ = gameObject;
 }

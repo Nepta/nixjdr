@@ -14,7 +14,6 @@
 #include "TokenMenu.h"
 #include "ui_TokenMenu.h"
 
-
 TokenMenu::TokenMenu(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::TokenMenu)
@@ -115,4 +114,45 @@ void TokenMenu::addToken(QString text, QString filePath, int size, bool custom,
         // TODO display a notification that an item with the given text already exists.
         qDebug() << tr("Un jeton portant ce nom existe déjà.");
     }
+}
+
+void TokenMenu::editTokenCharacter(const QPoint &pos) {
+    QListWidgetItem *item = ui->m_tokenList->itemAt(pos);
+    TokenItem *tokenItem = dynamic_cast<TokenItem*>(item);
+
+    if (tokenItem == NULL) {
+        return;
+    }
+
+    GameObject *gameObject = tokenItem->getGameObject();
+    Character *character = dynamic_cast<Character*>(gameObject);
+
+    if (character != NULL) {
+        GameObjectDialog gameObjectDlg(character);
+        gameObjectDlg.exec();
+        gameObjectDlg.close();
+
+        // Update the Character in the database
+        RepositoryManager::s_CharacterRepository.updateCharacter(character);
+
+        // Update the character for all the clients
+        QString msg = QString("%1").arg(tokenItem->id());
+        m_SenderClient->sendMessageToServer(msg, (quint16) TokenMenuCodes::UPDATE_TOKEN);
+    }
+}
+
+void TokenMenu::on_m_tokenList_customContextMenuRequested(const QPoint &pos) {
+    QPoint globalPos = mapToGlobal(pos);
+    QMenu menu;
+
+    QAction *editAction = menu.addAction(tr("Editer l'élément de jeu"));
+
+    QAction *selectedAction = menu.exec(globalPos);
+    if (selectedAction == editAction) {
+        editTokenCharacter(pos);
+    }
+}
+
+TokenList *TokenMenu::getTokenList() {
+    return ui->m_tokenList;
 }

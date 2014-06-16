@@ -20,6 +20,9 @@ void TokenMenuClient::processNewData(Header header, QByteArray &data) {
     if (code == TokenMenuCodes::ADD_TOKEN) {
         addTokenAction(msg.getString());
     }
+    else if (code == TokenMenuCodes::UPDATE_TOKEN) {
+        updateTokenAction(msg.getString());
+    }
 }
 
 void TokenMenuClient::sendMessageToServer(const QString& msg, quint16 code) {
@@ -37,4 +40,21 @@ void TokenMenuClient::addTokenAction(const QString& msg) {
 
     // Add the TokenItem to the TokenList through the TokenMenu
     m_TokenMenu->addItem(tokenItem);
+}
+
+void TokenMenuClient::updateTokenAction(const QString& msg) {
+    int tokenId = msg.toInt();
+
+    TokenList *tokenList = m_TokenMenu->getTokenList();
+    TokenItem *tokenItem = tokenList->findTokenItemById(tokenId);
+
+    if (tokenItem != NULL) {
+        // Remove the old TokenItem which needs to be updated and save its row
+        int row = tokenList->row(tokenItem);
+        delete tokenItem;
+
+        // Retrieve updated tokenItem from the DB
+        TokenItem *tokenItemDB = RepositoryManager::s_TokenItemRepository.getTokenItemById(tokenId);
+        tokenList->insertItem(row, tokenItemDB);
+    }
 }

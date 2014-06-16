@@ -69,7 +69,14 @@
       </layout>
      </item>
      <item>
-      <widget class="TokenList" name="m_tokenList"/>
+      <widget class="TokenList" name="m_tokenList">
+       <property name="contextMenuPolicy">
+        <enum>Qt::CustomContextMenu</enum>
+       </property>
+       <property name="selectionMode">
+        <enum>QAbstractItemView::SingleSelection</enum>
+       </property>
+      </widget>
      </item>
     </layout>
    </item>

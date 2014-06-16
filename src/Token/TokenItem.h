@@ -40,6 +40,7 @@ public:
     bool isSpecial();
     GameObject *gameObject();
 
+    GameObject *getGameObject();
     void setCustomIcon(QString path, QString text);
     void setGameObject(GameObject *gameObject);
 };
