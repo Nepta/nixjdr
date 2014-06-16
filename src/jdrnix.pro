@@ -100,7 +100,6 @@ SOURCES += \
     Log/LogGui.cpp \
     Log/LogServer.cpp \
     Log/LogClient.cpp \
-    Actions/AbstractAction.cpp \
     GameObjects/GameObject.cpp \
     GameObjects/Character.cpp \
     GameObjects/GameObjectDialog.cpp \
@@ -198,7 +197,6 @@ HEADERS  += \
     Log/LogGui.h \
     Log/LogServer.h \
     Log/LogClient.h \
-    Actions/AbstractAction.h \
     GameObjects/GameObject.h \
     GameObjects/GameObjectType.h \
     GameObjects/Character.h \
