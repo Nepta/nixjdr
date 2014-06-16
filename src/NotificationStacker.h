@@ -14,11 +14,17 @@ public:
     NotificationStacker();
     ~NotificationStacker();
 
+    void setParent(QWidget* parent);
+
 private:
     QList<Tooltip*> m_Stack;
+    int m_Timer;
     int m_Size;
+    QWidget* m_Parent;
+    Tooltip* m_LastNotif;
 
     void timerEvent(QTimerEvent *event);
+    void updatePosition();
 
 public slots:
     void pushNotification();

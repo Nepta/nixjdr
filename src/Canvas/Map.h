@@ -57,7 +57,6 @@ private:
     Ui::Map *ui;
     CanvasScene *m_Scene;
     Tooltip m_Tooltip;
-    NotificationStacker m_NotifyStacker;
     AbstractLayer *m_SelectedLayer;
     Layers *m_Layers;
     QHash<LayerCodes, QWidget *> m_EditionMap;
@@ -80,9 +79,6 @@ private:
     void hideAllToolBoxes();
     void keyPressEvent(QKeyEvent *keyEvent);
     void keyReleaseEvent(QKeyEvent *keyEvent);
-
-signals:
-    void notify();
 };
 
 #endif // MAP_H

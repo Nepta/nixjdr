@@ -44,6 +44,7 @@ private slots:
 signals:
     void initMainWindow();
     void sendMessageToChatUi(const QString &msg);
+    void notify();
 
 private:
     void setupMJ();
@@ -55,6 +56,7 @@ private:
     void initConnects();
     void initRole();
     void initTableTurnSplitter();
+    void keyPressEvent(QKeyEvent *keyEvent);
 
 
     void collapseMenu(bool checked, QWidget *widget, QSplitter *splitter, int min, int max);
@@ -65,6 +67,7 @@ private:
     SwitchClient *m_Client;
     TurnMenu *m_turnMenu;
     QString m_FilePath ;
+    NotificationStacker m_NotifyStacker;
 };
 
 #endif // MAINWINDOW_H

@@ -15,12 +15,14 @@ class Tooltip : public QWidget
 
 public:
     static const int TOOLTIP_OFFSET = 20;
+    static const int NOTIFICATION_OFFSET_X = 30;
+    static const int NOTIFICATION_OFFSET_Y = 50;
 
     explicit Tooltip(QWidget *parent = 0);
     ~Tooltip();
     void showTooltip(QPoint position);
 
-private slots:
+public slots:
     void hideTooltip();
     void pushInfo(QString info);
 

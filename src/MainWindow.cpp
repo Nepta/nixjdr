@@ -26,6 +26,7 @@
 #include "ConnectionHelper.h"
 #include "MainWindow.h"
 #include "ui_MainWindow.h"
+#include "NotificationStacker.h"
 
 MainWindow::MainWindow(User *user, QWidget *parent) :
     QMainWindow(parent),
@@ -42,6 +43,8 @@ MainWindow::MainWindow(User *user, QWidget *parent) :
     initTableTurnSplitter();
     initConnects();
     initRole();
+
+    m_NotifyStacker.setParent(this);
 
     //showFullScreen();
 }
@@ -60,6 +63,11 @@ void MainWindow::initTableTurnSplitter(){
     ui->tableTurnSplitter->setSizes(sizes);
 }
 
+void MainWindow::keyPressEvent(QKeyEvent *keyEvent)
+{
+    emit notify();
+}
+
 void MainWindow::initConnects(){
     // Connect chat & dice menus
     connect(ui->turnWidget->getDiceWidget(), SIGNAL(rollDice(QString, bool)),
@@ -70,6 +78,8 @@ void MainWindow::initConnects(){
     // Top menu
     connect(ui->tableArea, SIGNAL(subWindowActivated(QMdiSubWindow*)),
                  this, SLOT(updateMenu()));
+
+    connect(this, SIGNAL(notify()), &m_NotifyStacker, SLOT(pushNotification()));
 }
 
 void MainWindow::initRole(){

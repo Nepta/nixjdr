@@ -17,7 +17,6 @@ Map::Map(QString mapName, QString bgFilename, TokenItem *tokenItem, int tileStep
     initLayers();
     initDisplay();
     initTooltip();
-    connect(this, SIGNAL(notify()), &m_NotifyStacker, SLOT(pushNotification()));
 }
 
 Map::Map(DBItem item, BackgroundLayer *bgLayer, MapLayer *mapLayer, FoWLayer *fowLayer,
@@ -42,9 +41,6 @@ Map::Map(DBItem item, BackgroundLayer *bgLayer, MapLayer *mapLayer, FoWLayer *fo
     initLayers(false);
     initDisplay();
     initTooltip();
-
-    connect(this, SIGNAL(notify()), &m_NotifyStacker, SLOT(pushNotification()));
-
 }
 
 Map::~Map() {
@@ -280,7 +276,6 @@ void Map::on_collapseButton_clicked(bool checked) {
  */
 void Map::keyPressEvent(QKeyEvent *keyEvent){
     m_Scene->sendEvent(m_SelectedLayer, keyEvent);
-    emit notify();
 }
 
 /**
