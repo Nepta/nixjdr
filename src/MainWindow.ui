@@ -213,7 +213,6 @@
              <attribute name="label">
               <string>Historique</string>
              </attribute>
-             <layout class="QVBoxLayout" name="verticalLayout_4"/>
             </widget>
             <widget class="TokenMenu" name="tokenPage">
              <property name="geometry">
