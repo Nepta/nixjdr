@@ -19,6 +19,7 @@ public:
      * if the connection went as expected.
      */
     void init();
+	 QHash<QString, User *>* getUserList();
 //TODO Receiver *Switch::getReceiver(TargetCode code) overloading (for transparent logger)
 private:
     QTcpServer *m_Server;

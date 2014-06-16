@@ -32,7 +32,12 @@ void SwitchServer::init() {
         emit sendMessageToChatUi(msg);
 
         connect(m_Server, SIGNAL(newConnection()), this, SLOT(newClientConnection()));
-    }
+	 }
+}
+
+QHash<QString, User *>* SwitchServer::getUserList()
+{
+	return &m_UsersList;
 }
 
 void SwitchServer::newClientConnection()
