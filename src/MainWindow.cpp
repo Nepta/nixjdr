@@ -14,7 +14,6 @@
 #include "TurnMenu/Network/TurnMenuClient.h"
 #include "TurnMenu/Network/TurnMenuServer.h"
 
-#include "Log/Logger.h"
 #include "Log/LogClient.h"
 #include "Log/LogServer.h"
 
@@ -62,8 +61,7 @@ MainWindow::~MainWindow()
 void MainWindow::initLogger(){
 	//WARNING deficient by design ...
 	QHash<QString, User*> *userList = m_Server->getUserList();
-	Logger *logger = new Logger(ui->m_LogGui);
-	LogClient *logClient = new LogClient(m_User, nullptr, *logger);
+	LogClient *logClient = new LogClient(m_User, nullptr, *ui->m_LogGui);
 	LogServer *logServer = new LogServer(userList);
 	if(m_Server){
 		m_Server->insert(TargetCode::LOGGER_SERVER, logServer);

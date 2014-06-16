@@ -1,8 +1,9 @@
 #include "LogClient.h"
 #include "Network/Serializable/Message.h"
+#include "Network/Switch.h"
 
-LogClient::LogClient(User *user, QHash<QString, User *> *usersList, Logger& logger) :
-	SenderClient(user,usersList), logger_(*logger.getGui()){
+LogClient::LogClient(User *user, QHash<QString, User *> *usersList, LogGui& logger) :
+	SenderClient(user,usersList), logger_(logger){
 }
 
 void LogClient::processNewData(Header header, QByteArray &data){

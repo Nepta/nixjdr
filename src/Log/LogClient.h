@@ -3,7 +3,6 @@
 
 #include "Network/SenderClient.h"
 #include "Network/Receiver.h"
-#include "Log/Logger.h"
 #include "Log/LogGui.h"
 
 class LogClient : public SenderClient, public Receiver{
@@ -12,7 +11,7 @@ class LogClient : public SenderClient, public Receiver{
 	LogGui& logger_;
 
 public:
-	LogClient(User *user, QHash<QString, User *> *usersList, Logger& logger);
+	LogClient(User *user, QHash<QString, User *> *usersList, LogGui& logger);
 	void processNewData(Header header, QByteArray &data);
 
 public slots:

@@ -97,9 +97,6 @@ SOURCES += \
     TurnMenu/TurnMenu.cpp \
     TurnMenu/Network/TurnMenuClient.cpp \
     TurnMenu/Network/TurnMenuServer.cpp \
-    Log/Logger.cpp \
-    Log/Log.cpp \
-    Log/MapLog.cpp \
     Log/LogGui.cpp \
     Log/LogServer.cpp \
     Log/LogClient.cpp \
@@ -198,10 +195,7 @@ HEADERS  += \
     TurnMenu/Network/TurnMenuClient.h \
     TurnMenu/Network/TurnMenuServer.h \
     TurnMenu/Network/TurnMenuCodes.h \
-    Log/Logger.h \
-    Log/Log.h \
     Log/LogGui.h \
-    Log/MapLog.h \
     Log/LogServer.h \
     Log/LogClient.h \
     Actions/AbstractAction.h \
