@@ -171,9 +171,6 @@ void Map::initMapLayer(bool addToDb) {
         // Add MapLayer to the database
         RepositoryManager::s_MapLayerRepository.insertMapLayer(mapLayer);
     }
-	 connect(mapLayer, SIGNAL(spriteMoved(QString)), this, SLOT(printLog(QString)));
-	 connect(mapLayer, SIGNAL(spriteRemoved(QString)), this, SLOT(printLog(QString)));
-	 connect(mapLayer, SIGNAL(spriteAdded(QString)), this, SLOT(printLog(QString)));
 }
 
 /**
@@ -316,5 +313,11 @@ FoWLayer *Map::getFoWLayer() {
 }
 
 DrawingLayer *Map::getDrawingLayer() {
-    return dynamic_cast<DrawingLayer *>(m_Layers->getLayer(LayerCodes::LAYER_DRAW));
+	return dynamic_cast<DrawingLayer *>(m_Layers->getLayer(LayerCodes::LAYER_DRAW));
+}
+
+void Map::connectToLogger(LogClient* client){
+	connect(getMapLayer(), SIGNAL(spriteMoved(QString)), client, SLOT(sendMessageToServer(QString&)));
+	connect(getMapLayer(), SIGNAL(spriteRemoved(QString)), client, SLOT(sendMessageToServer(QString&)));
+	connect(getMapLayer(), SIGNAL(spriteAdded(QString)), client, SLOT(sendMessageToServer(QString&)));
 }

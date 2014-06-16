@@ -15,6 +15,8 @@
 
 #include "Database/DBItem.h"
 
+#include "Log/LogClient.h"
+
 #include "Tooltip.h"
 #include "CanvasView.h"
 #include "CanvasScene.h"
@@ -45,6 +47,7 @@ public:
     MapLayer *getMapLayer();
     FoWLayer *getFoWLayer();
     DrawingLayer *getDrawingLayer();
+	 void connectToLogger(LogClient* client);
 
 private slots:
     void selectedEditionLayer(QAbstractButton *button, bool checked);
