@@ -209,11 +209,6 @@
             <property name="currentIndex">
              <number>0</number>
             </property>
-            <widget class="LogGui" name="m_LogGui">
-             <attribute name="label">
-              <string>Historique</string>
-             </attribute>
-            </widget>
             <widget class="TokenMenu" name="tokenPage">
              <property name="geometry">
               <rect>
@@ -232,7 +227,19 @@
              <attribute name="label">
               <string>Liste de jetons</string>
              </attribute>
-             <zorder>m_LogGui</zorder>
+            </widget>
+            <widget class="LogGui" name="m_LogGui">
+             <property name="geometry">
+              <rect>
+               <x>0</x>
+               <y>0</y>
+               <width>294</width>
+               <height>305</height>
+              </rect>
+             </property>
+             <attribute name="label">
+              <string>Historique</string>
+             </attribute>
             </widget>
            </widget>
           </item>
@@ -257,7 +264,6 @@
               <verstretch>2</verstretch>
              </sizepolicy>
             </property>
-            <zorder>m_LogGui</zorder>
            </widget>
           </item>
          </layout>
