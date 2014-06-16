@@ -72,7 +72,9 @@ void MainWindow::initLogger(){
 	Logger *logger = new Logger(ui->m_LogGui);
 	LogClient *logClient = new LogClient(m_User, nullptr, *logger);
 	LogServer *logServer = new LogServer(userList);
-	m_Server->insert(TargetCode::LOGGER_SERVER, logServer);
+	if(m_Server){
+		m_Server->insert(TargetCode::LOGGER_SERVER, logServer);
+	}
 	m_Client->insert(TargetCode::LOGGER_CLIENT, logClient);
 }
 
