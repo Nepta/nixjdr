@@ -3,29 +3,26 @@
 #include <QDebug>
 
 NotificationStacker::NotificationStacker(){
-//    m_Stack.clear();
     m_Size = 0;
-//    this->startTimer(2000);
 }
 
-NotificationStacker::~NotificationStacker(){
-    //    m_Stack.clear();
-}
+NotificationStacker::~NotificationStacker(){}
 
 void NotificationStacker::setParent(QWidget *parent){
     m_Parent = parent;
 }
 
-void NotificationStacker::pushNotification(){
+void NotificationStacker::pushNotification(QString text){
     m_Size++;
     Tooltip* notif = new Tooltip();
     notif->setParent(m_Parent);
-    notif->pushInfo(QString::number(m_Size));
+    notif->pushInfo(text);
     notif->showTooltip(QPoint(Tooltip::NOTIFICATION_OFFSET_X,
                               Tooltip::NOTIFICATION_OFFSET_Y + (m_Size-1)*30));
+    notif->raise();
     m_Stack << notif;
     if(m_Size == 1){
-        m_Timer = this->startTimer(2000);
+        m_Timer = this->startTimer(TIMER_INTERVAL);
     }
 }
 
@@ -38,9 +35,6 @@ void NotificationStacker::timerEvent(QTimerEvent *event){
         if(m_Size == 0){
             this->killTimer(m_Timer);
         }
-    }
-    else{
-        qDebug() << "empty";
     }
 }
 

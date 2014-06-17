@@ -13,6 +13,7 @@
 #include "Chat/ChatWidget.h"
 #include "DiceMenu/DiceMenu.h"
 #include "Canvas/MapCreationWidget.h"
+#include "NotificationStacker.h"
 
 #include "ui_TokenMenu.h"
 #include "ui_DiceMenu.h"
@@ -44,7 +45,6 @@ private slots:
 signals:
     void initMainWindow();
     void sendMessageToChatUi(const QString &msg);
-    void notify();
 
 private:
     void setupMJ();
@@ -66,6 +66,7 @@ private:
     SwitchClient *m_Client;
     TurnMenu *m_turnMenu;
     QString m_FilePath ;
+    NotificationStacker m_NotificationStacker;
 };
 
 #endif // MAINWINDOW_H

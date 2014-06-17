@@ -6,6 +6,8 @@
 
 #include "Tooltip.h"
 
+#define TIMER_INTERVAL 3500
+
 class NotificationStacker : public QObject
 {
     Q_OBJECT
@@ -15,6 +17,7 @@ public:
     ~NotificationStacker();
 
     void setParent(QWidget* parent);
+    void pushNotification(QString text);
 
 private:
     QList<Tooltip*> m_Stack;
@@ -25,9 +28,6 @@ private:
 
     void timerEvent(QTimerEvent *event);
     void updatePosition();
-
-public slots:
-    void pushNotification();
 };
 
 #endif // NOTIFICATIONSTACKER_H
