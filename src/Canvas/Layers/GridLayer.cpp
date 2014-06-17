@@ -1,11 +1,14 @@
 #include <QGraphicsScene>
 
 #include "Database/Repository/RepositoryManager.h"
+#include "Database/Repository/GameObjectRepository.h"
 #include "Canvas/Network/MapCodes.h"
 #include "GridLayer.h"
 
 GridLayer::GridLayer(int step)
 {
+    m_LayerType = LayerType::UNDEFINED;
+
     m_Step = step;
     m_ActiveMouseMoveEvent = false;
     m_LastRemovedSpritePoint = QPointF(-1,-1);
@@ -20,10 +23,22 @@ GridLayer::GridLayer(int step)
  * @return The newly created and added Sprite.
  */
 Sprite *GridLayer::addSpriteToLayer(TokenItem *tokenItem, QPoint position, int zValue) {
+    Sprite *sprite = new Sprite(tokenItem, this, zValue);
+    addSpriteToLayer(sprite, position);
+
+    return sprite;
+}
+
+/**
+ * @brief GridLayer::addSpriteToLayer Adds a Sprite to this layer at the specified position.
+ * @param sprite
+ * @param position
+ * @return The added Sprite.
+ */
+Sprite *GridLayer::addSpriteToLayer(Sprite* sprite, QPoint position) {
     QPoint spritePos(position.x()/m_Step, position.y()/m_Step);
     spritePos *= m_Step;
 
-    Sprite *sprite = new Sprite(tokenItem, this, zValue);
     sprite->setPos(spritePos);
 
     addSpriteToLayer(sprite);
@@ -50,7 +65,15 @@ Sprite *GridLayer::addSpriteToLayer(Sprite* sprite) {
  */
 void GridLayer::addSprite(TokenItem *tokenItem, QPoint position, int zValue) {
     Sprite *sprite = addSpriteToLayer(tokenItem, position, zValue);
+    addSpriteRemote(sprite);
+}
 
+void GridLayer::addSprite(Sprite *sprite, QPoint position) {
+    addSpriteToLayer(sprite, position);
+    addSpriteRemote(sprite);
+}
+
+void GridLayer::addSpriteRemote(Sprite *sprite) {
     // Insert the sprite in the database
     RepositoryManager::s_SpriteRepository.insertSprite(sprite);
 
@@ -63,14 +86,28 @@ void GridLayer::addSprite(TokenItem *tokenItem, QPoint position, int zValue) {
  * @brief GridLayer::removeSpriteToDb Notifies to all the clients that a sprite need to be
  * removed and delete it locally on the layer.
  * @param sprite
+ * @param localDelete Bool specifying whether the Sprite should also be deleted locally or not.
  */
-void GridLayer::removeSprite(Sprite *sprite) {
+void GridLayer::removeSprite(Sprite *sprite, bool localDelete) {
     // Notifies all the clients that a Sprite needs to be removed
-    QString msg = QString("%1").arg(sprite->id());
+    QString msg = QString("%1 %2 %3")
+        .arg(sprite->id())
+        .arg(id_)
+        .arg((int) m_LayerType);
     m_SenderClient->sendMessageToServer(msg, (quint16) MapCodes::REMOVE_SPRITE);
 
+    // Delete the sprite from the database
+    RepositoryManager::s_SpriteRepository.deleteById(sprite->id());
+
     // Delete the sprite from the layer
-    delete sprite;
+    if (localDelete) {
+        delete sprite;
+    }
+}
+
+void GridLayer::updateSprite(Sprite *sprite) {
+    removeSprite(sprite, false);
+    addSprite(sprite, sprite->pos().toPoint());
 }
 
 /**
@@ -81,7 +118,7 @@ void GridLayer::removeSpriteById(int id) {
     for (QGraphicsItem *item : childItems()) {
         Sprite *sprite = dynamic_cast<Sprite*>(item);
 
-        if (sprite->id() == id) {
+        if (sprite != NULL && sprite->id() == id) {
             delete sprite;
             break;
         }
@@ -154,6 +191,10 @@ void GridLayer::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent) {
     if (mouseEvent->button() == Qt::LeftButton) {
         QPoint mouseScenePos = mouseEvent->scenePos().toPoint();
         addSprite(m_TokenItem, mouseScenePos);
+		  QString tokenItemPosition = QString("(%1,%2)")
+			  .arg(QString::number(mouseScenePos.x()/m_Step))
+			  .arg(QString::number(mouseScenePos.y()/m_Step));
+		  emit spriteAdded("[added]:"+m_TokenItem->text()+":"+tokenItemPosition);
     }
 }
 
@@ -173,6 +214,10 @@ void GridLayer::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent) {
     if (mouseEvent->buttons() & Qt::LeftButton) {
         if (isInScene(mouseEvent) && layer) {
             addSprite(m_TokenItem, mouseScenePos, 1);
+				QString tokenItemPosition = QString("(%1,%2)")
+					.arg(QString::number(mouseScenePos.x()/m_Step))
+					.arg(QString::number(mouseScenePos.y()/m_Step));
+				emit spriteAdded("[added]:"+m_TokenItem->text()+":"+tokenItemPosition);
         }
     }
     else if (mouseEvent->buttons() & Qt::RightButton) {
@@ -184,7 +229,11 @@ void GridLayer::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent) {
 
         if (sprite && m_LastRemovedSpritePoint != sprite->scenePos()) {
             m_LastRemovedSpritePoint = sprite->scenePos();
-            removeSprite(sprite);
+				QString spritePosition = QString("(%1,%2)")
+					.arg(QString::number(mouseScenePos.x()/m_Step))
+					.arg(QString::number(mouseScenePos.y()/m_Step));
+				emit spriteRemoved("[removed]:"+sprite->getTokenItem()->text()+":"+spritePosition);
+				removeSprite(sprite);
         }
     }
 }

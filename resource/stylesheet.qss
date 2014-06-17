@@ -1,0 +1,237 @@
+/* General */
+QMainWindow#MainWindow, QScrollArea, QPushButton, QWidget:first-child {
+    background: #F1F1F1;
+}
+
+QToolBox {
+	background: #F1F1F1;
+}
+
+QToolBox:tab {
+	border-top: 1px solid #DDDDDD;
+	border-bottom: 1px solid #DDDDDD;
+}
+
+QMenuBar {
+	background: #F1F1F1;
+	border-bottom: 1px solid #CACACA;
+}
+
+/* Scrollbar */
+QScrollBar:horizontal {
+	border: none;
+	background: #F1F1F1;
+	height: 15px;
+	margin: 0px 15px 0 15px;
+}
+
+QScrollBar::handle:horizontal {
+	background: #DDDDDD;
+	border: 1px solid #BBBBBB;
+	min-width: 20px;
+}
+
+QScrollBar::add-line:horizontal {
+	border: none;
+	background: #F1F1F1;
+	width: 15px;
+	subcontrol-position: right;
+	subcontrol-origin: margin;
+}
+
+QScrollBar::sub-line:horizontal {
+	border: none;
+	background: #F1F1F1;
+	width: 15px;
+	subcontrol-position: left;
+	subcontrol-origin: margin;
+}
+
+QScrollBar:left-arrow:horizontal {
+	border: none;
+	background: #F1F1F1;
+	image: url(resource/General/scroll-left.png);
+}
+
+QScrollBar::right-arrow:horizontal {
+	border: none;
+	background: #F1F1F1;
+	image: url(resource/General/scroll-right.png);
+}
+
+QScrollBar:vertical {
+	border: none;
+	background: #F1F1F1;
+	width: 15px;
+	margin: 15px 0 15px 0;
+}
+
+QScrollBar::handle:vertical {
+	background: #DDDDDD;
+	border: 1px solid #BBBBBB;
+	min-height: 20px;
+}
+
+QScrollBar::add-line:vertical {
+	border: none;
+	background: #F1F1F1;
+	height: 15px;
+	subcontrol-position: bottom;
+	subcontrol-origin: margin;
+}
+
+QScrollBar::sub-line:vertical {
+	border: none;
+	background: #F1F1F1;
+	height: 15px;
+	subcontrol-position: top;
+	subcontrol-origin: margin;
+}
+
+QScrollBar::up-arrow:vertical {
+	border: none;
+	background: #F1F1F1;
+	image: url(resource/General/scroll-up.png);
+}
+
+QScrollBar::down-arrow:vertical {
+	border: none;
+	background: #F1F1F1;
+	image: url(resource/General/scroll-down.png);
+}
+
+QScrollBar::add-page:horizontal, 
+QScrollBar::sub-page:horizontal,
+QScrollBar::add-page:vertical,
+QScrollBar::sub-page:vertical
+{
+     background: none;
+}
+
+/* TokenMenu */
+#tokenPage, #TokenMenu {
+	background: #F1F1F1;
+}
+
+/* Map */
+#Map, #collapsibleWidget {
+    background: #F1F1F1;
+}
+
+QPushButton#collapseButton {
+	border-left: 1px solid #8f8f91;
+	border-right: 1px solid #8f8f91;
+	border-radius: 0px;
+	background-color: #F1F1F1;
+}
+
+QPushButton:pressed#collapseButton {
+     background-color: #8f8f91;
+}
+
+QStackedWidget#m_StackedTools > QWidget {
+	background: #F1F1F1;
+}
+
+/* OpenMapWidget */
+#OpenMapWidget {
+	background: #F1F1F1;
+}
+
+/* MapCreationWidget */
+#MapCreationWidget {
+	background: #F1F1F1;
+}
+
+/* Tooltip */
+#TooltipWidget {
+	border: 1px solid rgb(50, 50, 50);
+	background: rgba(200, 200, 200, 0.85);
+}
+
+/* ConnectionHelper */
+#ConnectionHelper {
+	background: #F1F1F1;
+}
+
+/* DiceMenu */
+QWidget#DiceMenu {
+	background-color: rgba(255, 255, 255, 0.95);
+	border: 1px solid #DDDDDD;
+}
+
+/* GameObjectDialog */
+QWidget#GameObjectDialog {
+	background: #F1F1F1;
+}
+
+/* TurnMenu */
+#turnHeader {
+	border-top: 1px solid #DCDCDC;
+	border-bottom: 1px solid #CACACA;
+	background: #E5E5E5;
+}
+
+QPushButton#collapseButtonTurnMenu {
+	border: none;
+	background: #E5E5E5;
+}
+
+QPushButton#collapseButtonTurnMenu:pressed {
+	border: 1px solid #8f8f91;
+	background: #dddddd;
+}
+
+QListWidget#m_TurnList:item {
+	background: #F5F5F5;
+	border-right: 1px solid #DDDDDD;
+	selection-background-color: #F5F5F5;
+	selection-color: black;
+}
+
+QListWidget#m_TurnList::item:hover, 
+QListWidget#m_TurnList::item:selected
+{
+    background: #DDDDDD;
+    color: #000000;
+}
+
+QPushButton#addButton
+{
+	border: 1px solid #BBBBBB;
+	border-left: 0px;
+	border-radius: 0px;
+}
+
+QPushButton#deleteButton {
+	border: 1px solid #BBBBBB;
+	border-top: 0px;
+	border-left: 0px;
+	border-radius: 0px;
+}
+
+QPushButton#addButton:pressed, 
+QPushButton#deleteButton:pressed 
+{
+	background: #AAAAAA;
+}
+
+/* Sidebar */
+QWidget#rightMenuWidget {
+	border-left: 1px solid #CACACA;
+}
+
+QPushButton#collapseButtonRightMenu {
+	border: none;
+}
+
+QPushButton#collapseButtonRightMenu:pressed {
+	border: 1px solid #8f8f91;
+	background-color: #dddddd;
+}
+
+/* Footer */
+QWidget#footer {
+	background: #F1F1F1;
+	border-top: 1px solid #CACACA;
+}

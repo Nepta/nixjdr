@@ -3,6 +3,7 @@
 
 #include <QWidget>
 
+#include "GameObjects/GameObject.h"
 #include "Network/SenderHandler.h"
 #include "TokenList.h"
 
@@ -20,10 +21,15 @@ public:
     Ui::TokenMenu *getUi();
     void initTokenMenu();
     void addItem(QListWidgetItem *item);
-    void addCustomToken(QString text);
+    void addToken(QString text, QString filePath, int size, bool custom, GameObject *gameObject = NULL);
+    void addCustomToken(QString text, GameObject *gameObject = NULL);
+    void editTokenCharacter(const QPoint &pos);
+    TokenList *getTokenList();
 
 private slots:
     void on_tokenButton_clicked();
+
+    void on_m_tokenList_customContextMenuRequested(const QPoint &pos);
 
 private:
     Ui::TokenMenu *ui;

@@ -2,7 +2,6 @@
 #include "Network/Serializable/Message.h"
 #include "Network/Switch.h"
 #include "MapServer.h"
-#include "Log/MapLog.h"
 
 MapServer::MapServer(QHash<QString, User *> *usersList) :
     SenderServer(usersList)

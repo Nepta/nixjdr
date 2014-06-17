@@ -7,3 +7,5 @@ BackgroundLayerRepository RepositoryManager::s_BgLayerRepository;
 MapLayerRepository RepositoryManager::s_MapLayerRepository;
 FoWLayerRepository RepositoryManager::s_FoWLayerRepository;
 DrawingLayerRepository RepositoryManager::s_DrawingLayerRepository;
+GameObjectRepository RepositoryManager::s_GameObjectRepository;
+CharacterRepository RepositoryManager::s_CharacterRepository;

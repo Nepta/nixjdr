@@ -20,7 +20,10 @@ enum class TargetCode {
     TOKEN_MENU_CLIENT,
 
     TURN_MENU_SERVER,
-    TURN_MENU_CLIENT,
+	 TURN_MENU_CLIENT,
+
+	 LOGGER_SERVER,
+	 LOGGER_CLIENT,
 
     UNDEFINED
 };
@@ -34,6 +37,7 @@ public:
     virtual ~Switch() {}
 
     Receiver *getReceiver(TargetCode code);
+	 void insert(TargetCode code, Receiver *receiver);
 
 protected:
     QHash<TargetCode, Receiver*> m_Nodes;

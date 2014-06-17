@@ -37,7 +37,7 @@ private slots:
     void on_actionCreateImage_triggered();
     void on_actionConnection_triggered();
     void on_collapseButtonRightMenu_clicked(bool checked);
-    void on_collapseButtonTurnMenu_clicked(bool checked);
+    void on_collapseButtonTurnMenu_clicked();
     void createMap(QString mapName, int mapStep);
     void addPlayerToInterface(QString playerNickname);
 
@@ -56,8 +56,7 @@ private:
     void initConnects();
     void initRole();
     void initTableTurnSplitter();
-    void keyPressEvent(QKeyEvent *keyEvent);
-
+	void initLogger();
 
     void collapseMenu(bool checked, QWidget *widget, QSplitter *splitter, int min, int max);
 
@@ -67,7 +66,6 @@ private:
     SwitchClient *m_Client;
     TurnMenu *m_turnMenu;
     QString m_FilePath ;
-    NotificationStacker m_NotifyStacker;
 };
 
 #endif // MAINWINDOW_H

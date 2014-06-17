@@ -1,56 +1,78 @@
 #include <QMenu>
 #include <QAction>
-
 #include "TurnList.h"
-TurnList::TurnList(QWidget *parent)
-    : QListWidget(parent)
+#include "ui_TurnList.h"
+
+TurnList::TurnList(QWidget *parent) :
+    QListWidget(parent),
+    ui(new Ui::TurnList)
 {
-    //orientation & navigation
-    this->setFlow(QListView::LeftToRight);
-    this->setHorizontalScrollMode(QAbstractItemView::ScrollPerPixel);
-    this->setMovement(QListView::Static);
-    this->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-
-    //style
-    this->setStyleSheet("\
-        QListWidget::item { \
-            background: lightgray; border: 1px solid black; \
-            selection-background-color: blue;\
-        }\
-        QListWidget::item:hover {\
-            background: #CCCCF5;\
-        }\
-    ");
-
-    // selection & drag / drop
-    this->setSelectionMode(QAbstractItemView::ExtendedSelection);
-    this->setDragDropMode(QAbstractItemView::InternalMove);
+    ui->setupUi(this);
 
     this->setContextMenuPolicy(Qt::CustomContextMenu);
     connect(this, SIGNAL(customContextMenuRequested(const QPoint&)),
         SLOT(showContextMenu(const QPoint&)));
+
+
+    connect(itemDelegate(), SIGNAL(closeEditor(QWidget*)),
+            this, SLOT(turnItemChanged(QWidget*)));
 }
 
-TurnList::~TurnList()
-{
-
+TurnList::~TurnList() {
+    delete ui;
 }
 
 /**
- * @brief TurnList::addQStringAsItem Adds an item to the TurnList with the given QString. Sets the
- * selected item to the one inserted in order to scroll to the end of the list.
- * @param p_string QString to insert in the TurnList.
+ * @brief TurnList::addTurn Adds a turn to the TurnList and starts editing the added item. The
+ * added item is then selected in order to scroll to the end of the list. Once the turn is added,
+ * sends a notification that the TurnList has been updated.
+ */
+void TurnList::addTurn() {
+    setFocus();
+
+    QListWidgetItem *listWidgetItem = new QListWidgetItem(this);
+    listWidgetItem->setTextAlignment(Qt::AlignCenter);
+    listWidgetItem->setFlags(listWidgetItem->flags () | Qt::ItemIsEditable);
+
+    editItem(listWidgetItem);
+
+    unselectItems();
+    setCurrentItem(listWidgetItem);
+}
+
+/**
+ * @brief TurnList::addTurn Adds an item to the TurnList with the given QString. Sets the selected
+ * item to the one inserted in order to scroll to the end of the list.
+ * @param text QString to insert in the TurnList.
  * @param update Sends a notification that the TurnList has been updated if true, false otherwise.
  */
-void TurnList::addQStringAsItem(QString p_string, bool update) {
-    this->setFocus();
-    this->addItem(new QListWidgetItem(p_string));
-    this->setCurrentRow(this->count()-1);
-    this->item(this->count()-1)->setSelected(false);
+void TurnList::addTurn(QString text, bool update) {
+    setFocus();
+
+    QListWidgetItem *listWidgetItem = new QListWidgetItem(text, this);
+    listWidgetItem->setTextAlignment(Qt::AlignCenter);
+    listWidgetItem->setFlags(listWidgetItem->flags () | Qt::ItemIsEditable);
+
+    unselectItems();
+    setCurrentItem(listWidgetItem);
 
     if (update) {
         updateTurnList();
     }
+}
+
+void TurnList::turnItemChanged(QWidget*) {
+    if (currentItem()->text().isEmpty()) {
+        delete currentItem();
+    }
+
+    updateTurnList();
+}
+
+void TurnList::deleteTurn(QListWidgetItem *item) {
+    unselectItems();
+    setCurrentItem(item);
+    deleteCurrentItems();
 }
 
 void TurnList::deleteCurrentItems(){
@@ -139,10 +161,15 @@ int TurnList::directionToInt(bool direction){
     return intToReturn;
 }
 
-void TurnList::unselectItems(){
-    foreach (QListWidgetItem* itemToUnselect, this->selectedItems()) {
+void TurnList::unselectItems() {
+    if (selectedItems().empty()) {
+        return;
+    }
+
+    foreach (QListWidgetItem* itemToUnselect, selectedItems()) {
         itemToUnselect->setSelected(false);
     }
+
     this->currentItem()->setSelected(true);
 }
 
@@ -187,7 +214,6 @@ void TurnList::dropEvent(QDropEvent *event) {
 
 void TurnList::showContextMenu(const QPoint& pos){
     QPoint globalPos = this->mapToGlobal(pos);
-    QString msg;
     QMenu menu;
 
     QAction* deleteAction = menu.addAction(tr("Supprimer"));

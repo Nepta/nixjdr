@@ -2,6 +2,7 @@
 #include "Network/Serializable/Message.h"
 #include "Network/Switch.h"
 #include "Canvas/Tools/ToolPing.h"
+#include "Canvas/Layers/LayerType.h"
 #include "MapClient.h"
 #include "Common.h"
 
@@ -52,8 +53,18 @@ void MapClient::removeMapFromList(Map *map) {
     m_MapsList.removeOne(map);
 }
 
+/**
+ * @brief MapClient::openMapAction Opens a map with the given id.
+ * @param msg QString containing the id of the map to open.
+ */
 void MapClient::openMapAction(const QString& msg) {
     int mapId = msg.toInt();
+
+    // If the map has already been opened, don't open it again
+    if (containsMap(mapId)) {
+        return;
+    }
+
     Map *map = RepositoryManager::s_MapRepository.findMapById(mapId, m_TokenList);
     map->getMapLayer()->setTokenItem(m_TokenList->currentItem());
 
@@ -96,24 +107,23 @@ void MapClient::addSpriteAction(const QString& msg) {
 }
 
 void MapClient::removeSpriteAction(const QString& msg) {
-    int id = msg.toInt();
-    DBItem dbItem = RepositoryManager::s_SpriteRepository.findById(id);
+    QString temp = msg;
+    int spriteId = Common::extractFirstWord(temp).toInt();
+    int layerId = Common::extractFirstWord(temp).toInt();
+    LayerType layerType = (LayerType) Common::extractFirstWord(temp).toInt();
 
     // Retrieve the map and the layer on which the sprite should be deleted
     Map *map = NULL;
     GridLayer *layer = NULL;
 
-    int mapLayerId = dbItem.getHashMap().value("maplayerid").toInt();
-    int fowLayerId = dbItem.getHashMap().value("fowlayerid").toInt();
-
-    if (mapLayerId != 0) {
-        map = getMapByMapLayerId(mapLayerId);
+    if (layerType == LayerType::MAP_LAYER) {
+        map = getMapByMapLayerId(layerId);
         if (map != NULL) {
             layer = dynamic_cast<GridLayer*>(map->getMapLayer());
         }
     }
-    else if (fowLayerId != 0) {
-        map = getMapByFoWLayerId(fowLayerId);
+    else if (layerType == LayerType::FOW_LAYER) {
+        map = getMapByFoWLayerId(layerId);
         if (map != NULL) {
             layer = dynamic_cast<GridLayer*>(map->getFoWLayer());
         }
@@ -121,11 +131,8 @@ void MapClient::removeSpriteAction(const QString& msg) {
 
     // Delete the sprite
     if (map != NULL) {
-        // Delete the sprite from the database
-        RepositoryManager::s_SpriteRepository.deleteById(id);
-
         // Delete the sprite from the correct layer
-        layer->removeSpriteById(id);
+        layer->removeSpriteById(spriteId);
     }
 }
 
@@ -180,6 +187,21 @@ Map *MapClient::getMapById(int mapId) {
     }
 
     return result;
+}
+
+/**
+ * @brief MapClient::containsMap Returns whether the list of maps contains the map specified
+ * in parameter (id of the map).
+ * @param mapId Id of the map to verify.
+ * @return true if the map is contained in the list, false otherwise.
+ */
+bool MapClient::containsMap(int mapId) {
+    if (getMapById(mapId) != NULL) {
+        return true;
+    }
+    else {
+        return false;
+    }
 }
 
 Map *MapClient::getMapByMapLayerId(int mapLayerId) {

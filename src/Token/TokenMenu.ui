@@ -26,17 +26,22 @@
    <string>Form</string>
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout_2">
+   <property name="leftMargin">
+    <number>0</number>
+   </property>
+   <property name="topMargin">
+    <number>0</number>
+   </property>
+   <property name="rightMargin">
+    <number>0</number>
+   </property>
+   <property name="bottomMargin">
+    <number>0</number>
+   </property>
    <item>
     <layout class="QVBoxLayout" name="verticalLayout">
      <item>
       <layout class="QHBoxLayout" name="horizontalLayout">
-       <item>
-        <widget class="QLabel" name="label">
-         <property name="text">
-          <string>Recherche</string>
-         </property>
-        </widget>
-       </item>
        <item>
         <widget class="QLineEdit" name="inputSearchField">
          <property name="minimumSize">
@@ -44,6 +49,9 @@
            <width>0</width>
            <height>0</height>
           </size>
+         </property>
+         <property name="placeholderText">
+          <string>Rechercher...</string>
          </property>
         </widget>
        </item>
@@ -61,7 +69,14 @@
       </layout>
      </item>
      <item>
-      <widget class="TokenList" name="m_tokenList"/>
+      <widget class="TokenList" name="m_tokenList">
+       <property name="contextMenuPolicy">
+        <enum>Qt::CustomContextMenu</enum>
+       </property>
+       <property name="selectionMode">
+        <enum>QAbstractItemView::SingleSelection</enum>
+       </property>
+      </widget>
      </item>
     </layout>
    </item>

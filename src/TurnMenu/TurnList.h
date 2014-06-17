@@ -6,24 +6,34 @@
 #include <QKeyEvent>
 #include <QContextMenuEvent>
 
+namespace Ui {
+    class TurnList;
+}
+
 class TurnList : public QListWidget
 {
     Q_OBJECT
 
 public:
-    explicit TurnList(QWidget *parent =0);
+    explicit TurnList(QWidget *parent = 0);
     ~TurnList();
     static const bool RIGHT = true;
     static const bool LEFT = false;
 
     void selectNextItem();
     void deleteCurrentItems();
-    void addQStringAsItem(QString p_string, bool update = true);
+    void addTurn();
+    void addTurn(QString text, bool update = true);
 
 private slots:
     void showContextMenu(const QPoint& pos);
+    void deleteTurn(QListWidgetItem *item);
+    void turnItemChanged(QWidget*);
+    void updateTurnList();
 
 private:
+    Ui::TurnList *ui;
+
     void keyPressEvent(QKeyEvent *event);
     void dropEvent(QDropEvent *event);
     void moveItemList(QList<QListWidgetItem*> itemsToMove, bool direction);
@@ -31,7 +41,6 @@ private:
     void moveToItemInDirection(bool direction);
     int directionToInt(bool direction);
     void unselectItems();
-    void updateTurnList();
 
 signals:
     void updatedTurnList(QString items);

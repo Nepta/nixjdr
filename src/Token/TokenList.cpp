@@ -18,6 +18,8 @@ QListWidgetItem TokenList::getCurrentItem(){
 
 
 void TokenList::mousePressEvent(QMouseEvent *mouseEvent) {
+    QListWidget::mousePressEvent(mouseEvent);
+
     if (mouseEvent->button() == Qt::LeftButton) {
         m_dragStartPosition = mouseEvent->pos();
         this->setCurrentItem(this->itemAt(mouseEvent->pos()));

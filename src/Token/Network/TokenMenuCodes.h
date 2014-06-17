@@ -7,7 +7,8 @@
 enum class TokenMenuCodes : quint16 {
     UNDEFINED = Receiver::UNDEFINED_CODE,
 
-    ADD_TOKEN
+    ADD_TOKEN,
+    UPDATE_TOKEN
 };
 
 #endif // TOKENMENUCODES_H

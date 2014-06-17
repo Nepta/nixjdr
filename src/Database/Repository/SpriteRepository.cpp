@@ -18,8 +18,12 @@ int SpriteRepository::insertSprite(Sprite *sprite) {
         {"posx", sprite->pos().x()},
         {"posy", sprite->pos().y()},
         {"zvalue", sprite->zValue()},
-        {"tokenitemid", sprite->getTokenItem()->id()},
+        {"tokenitemid", sprite->getTokenItem()->id()}
     };
+
+    if (sprite->getGameObject() != NULL) {
+        args.insert("gameobjectid", sprite->getGameObject()->id());
+    }
 
     QGraphicsItem* item = sprite->parentItem();
     MapLayer *mapLayer = dynamic_cast<MapLayer*>(item);
@@ -84,8 +88,7 @@ QList<Sprite*> SpriteRepository::getMapSprites(TokenList *tokenList, MapLayer *m
     return getSprites(qb, tokenList, mapLayer);
 }
 
-QList<Sprite*> SpriteRepository::getSprites(QueryBuilder qb, TokenList *tokenList,
-    AbstractLayer *layer)
+QList<Sprite*> SpriteRepository::getSprites(QueryBuilder qb, TokenList *tokenList, GridLayer *layer)
 {
     DBItemList<Sprite> dbItemList(Database::instance()->pull(qb.getQuery()));
     QList<DBItem> dbItems = dbItemList.getList();
@@ -96,6 +99,7 @@ QList<Sprite*> SpriteRepository::getSprites(QueryBuilder qb, TokenList *tokenLis
         TokenItem *tokenItem = tokenList->findTokenItemById(tokenItemId);
         Sprite *sprite = new Sprite(dbItem, tokenItem, layer);
         sprites.append(sprite);
+        layer->addSpriteToLayer(sprite);
     }
 
     return sprites;

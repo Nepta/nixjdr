@@ -14,6 +14,9 @@
 #include "TurnMenu/Network/TurnMenuClient.h"
 #include "TurnMenu/Network/TurnMenuServer.h"
 
+#include "Log/LogClient.h"
+#include "Log/LogServer.h"
+
 #include "Canvas/OpenMapWidget.h"
 #include "Canvas/Network/MapClient.h"
 #include "Canvas/Network/MapServer.h"
@@ -22,17 +25,18 @@
 #include "Canvas/CanvasView.h"
 #include "Canvas/ImageWidget.h"
 
+#include "StyleSheet.h"
 #include "CustomMdiArea.h"
 #include "ConnectionHelper.h"
 #include "MainWindow.h"
 #include "ui_MainWindow.h"
-#include "NotificationStacker.h"
 
 MainWindow::MainWindow(User *user, QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    setStyleSheet(StyleSheet::s_StyleSheet);
 
     // Sets Null pointer for later deletion if m_Server and/or m_Client are not used
     m_Server = NULL;
@@ -40,11 +44,9 @@ MainWindow::MainWindow(User *user, QWidget *parent) :
 
     m_User = user;
 
-    initTableTurnSplitter();
     initConnects();
     initRole();
-
-    m_NotifyStacker.setParent(this);
+	initLogger();
 
     //showFullScreen();
 }
@@ -56,30 +58,21 @@ MainWindow::~MainWindow()
     delete m_Client;
 }
 
-void MainWindow::initTableTurnSplitter(){
-    QList<int> sizes;
-    sizes.push_back(1000);
-    sizes.push_back(100);
-    ui->tableTurnSplitter->setSizes(sizes);
+void MainWindow::initLogger(){
+	//WARNING deficient by design ...
+	QHash<QString, User*> *userList = m_Server->getUserList();
+	LogClient *logClient = new LogClient(m_User, nullptr, *ui->m_LogGui);
+	LogServer *logServer = new LogServer(userList);
+	if(m_Server){
+		m_Server->insert(TargetCode::LOGGER_SERVER, logServer);
+	}
+	m_Client->insert(TargetCode::LOGGER_CLIENT, logClient);
 }
 
-void MainWindow::keyPressEvent(QKeyEvent *keyEvent)
-{
-    emit notify();
-}
-
-void MainWindow::initConnects(){
-    // Connect chat & dice menus
-    connect(ui->turnWidget->getDiceWidget(), SIGNAL(rollDice(QString, bool)),
-            ui->m_ChatWidget, SLOT(rollDice(QString, bool)));
-    connect(ui->m_ChatWidget, SIGNAL(requestDice(QString&)),
-            ui->turnWidget->getDiceWidget(), SLOT(requestRoll(QString&)));
-
+void MainWindow::initConnects() {
     // Top menu
     connect(ui->tableArea, SIGNAL(subWindowActivated(QMdiSubWindow*)),
                  this, SLOT(updateMenu()));
-
-    connect(this, SIGNAL(notify()), &m_NotifyStacker, SLOT(pushNotification()));
 }
 
 void MainWindow::initRole(){
@@ -134,6 +127,12 @@ void MainWindow::openMap(Map *map, bool notify) {
         QString msg = QString("%1").arg(map->id());
         mapClient->sendMessageToServer(msg, (quint16) MapCodes::OPEN_MAP);
     }
+
+	 // Connect to the LogClient
+	 TargetCode logClientCode(TargetCode::LOGGER_CLIENT);
+	 Receiver *logClientReceiver = m_Client->getReceiver(logClientCode);
+	 LogClient *logClient = dynamic_cast<LogClient*>(logClientReceiver);
+	 map->connectToLogger(logClient);
 }
 
 void MainWindow::createMap(QString mapName, int mapStep) {
@@ -165,6 +164,13 @@ void MainWindow::on_actionOpenMap_triggered() {
     int mapId = 0;
     OpenMapWidget openMapWidget(&mapId);
     openMapWidget.exec();
+
+    // If the map has already been opened, don't open it again
+    Receiver *mapClientReceiver = m_Client->getReceiver(TargetCode::MAP_CLIENT);
+    MapClient *mapClient = dynamic_cast<MapClient*>(mapClientReceiver);
+    if (mapClient->containsMap(mapId)) {
+        return;
+    }
 
     if (mapId != 0) {
         TokenList *tokenList = ui->tokenPage->getUi()->m_tokenList;
@@ -240,7 +246,7 @@ void MainWindow::setupMJ() {
 }
 
 void MainWindow::addPlayerToInterface(QString playerNickname){
-    ui->turnWidget->getTurnList()->addQStringAsItem(playerNickname);
+    ui->turnWidget->getTurnList()->addTurn(playerNickname);
     ui->tokenPage->addCustomToken(playerNickname);
 }
 
@@ -273,12 +279,6 @@ void MainWindow::setupPlayer() {
     Receiver *turnMenuClientReceiver = m_Client->getReceiver(TargetCode::TURN_MENU_CLIENT);
     TurnMenuClient *turnMenuClient = dynamic_cast<TurnMenuClient*>(turnMenuClientReceiver);
     ui->turnWidget->setSenderClient(turnMenuClient);
-
-    /* The dice menu is able to send system messages to the Chat in order to display error messages
-     * or warnings */
-    connect(ui->turnWidget->getDiceWidget(), SIGNAL(sendMessageToChatUi(QString)),
-            ui->m_ChatWidget, SLOT(receivedMessage(QString))
-    );
 }
 
 void MainWindow::on_collapseButtonRightMenu_clicked(bool checked)
@@ -288,11 +288,9 @@ void MainWindow::on_collapseButtonRightMenu_clicked(bool checked)
     collapseMenu(checked, ui->rightMenuWidget, ui->rightMenuSplitter, min, max);
 }
 
-void MainWindow::on_collapseButtonTurnMenu_clicked(bool checked)
-{
-    int min = ui->collapseButtonTurnMenu->minimumHeight();
-    int max = ui->turnWidget->minimumHeight() + ui->collapseButtonTurnMenu->minimumHeight();
-    collapseMenu(checked, ui->turnWidget, ui->tableTurnSplitter, min, max);
+void MainWindow::on_collapseButtonTurnMenu_clicked() {
+    bool isVisible = ui->turnWidget->isVisible();
+    ui->turnWidget->setVisible(!isVisible);
 }
 
 void MainWindow::collapseMenu(bool checked, QWidget *widget, QSplitter *splitter, int min, int max) {

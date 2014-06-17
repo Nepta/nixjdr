@@ -1,5 +1,6 @@
 #include "Tooltip.h"
 #include "ui_Tooltip.h"
+#include "StyleSheet.h"
 #include "Canvas/Sprite.h"
 
 Tooltip::Tooltip(QWidget *parent) :
@@ -7,6 +8,7 @@ Tooltip::Tooltip(QWidget *parent) :
     ui(new Ui::Tooltip)
 {
     ui->setupUi(this);
+    setStyleSheet(StyleSheet::s_StyleSheet);
 }
 
 Tooltip::~Tooltip()

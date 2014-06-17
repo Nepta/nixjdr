@@ -23,6 +23,8 @@ SOURCES += \
     ConnectionHelper.cpp \
     Common.cpp \
     Tooltip.cpp \
+    NotificationStacker.cpp \
+    StyleSheet.cpp \
     Chat/ChatWidget.cpp \
     Chat/ChatServer.cpp \
     Chat/ChatClient.cpp \
@@ -61,6 +63,8 @@ SOURCES += \
     Canvas/Tools/ToolPing.cpp \
     Canvas/Tools/Tools.cpp \
     Canvas/SideMenuWidgets/DrawingMenu.cpp \
+    Canvas/MapCreationWidget.cpp \
+    Canvas/OpenMapWidget.cpp \
     Network/Header.cpp \
     Network/SwitchServer.cpp \
     Network/SwitchClient.cpp \
@@ -70,6 +74,7 @@ SOURCES += \
     Network/Sender.cpp \
     Network/SenderClient.cpp \
     Network/SenderServer.cpp \
+    Network/Receiver.cpp \
     Database/Database.cpp \
     Database/DBItem.cpp \
     Database/QueryBuilder.cpp \
@@ -82,6 +87,8 @@ SOURCES += \
     Database/Repository/FoWLayerRepository.cpp \
     Database/Repository/BackgroundLayerRepository.cpp \
     Database/Repository/DrawingLayerRepository.cpp \
+    Database/Repository/GameObjectRepository.cpp \
+    Database/Repository/CharacterRepository.cpp \
     Token/TokenMenu.cpp \
     Token/TokenList.cpp \
     Token/TokenItem.cpp \
@@ -91,14 +98,13 @@ SOURCES += \
     TurnMenu/TurnMenu.cpp \
     TurnMenu/Network/TurnMenuClient.cpp \
     TurnMenu/Network/TurnMenuServer.cpp \
-    Log/Logger.cpp \
-    Log/Log.cpp \
-    Log/MapLog.cpp \
-    Network/Receiver.cpp \
-    Actions/AbstractAction.cpp \
-    Canvas/MapCreationWidget.cpp \
-    Canvas/OpenMapWidget.cpp \
-    NotificationStacker.cpp
+    Log/LogGui.cpp \
+    Log/LogServer.cpp \
+    Log/LogClient.cpp \
+    GameObjects/GameObject.cpp \
+    GameObjects/Character.cpp \
+    GameObjects/GameObjectDialog.cpp \
+    General/CircularProgressBar.cpp
 
 HEADERS  += \
     MainWindow.h \
@@ -107,6 +113,8 @@ HEADERS  += \
     CustomMdiArea.h \
     Common.h \
     Tooltip.h \
+    NotificationStacker.h \
+    StyleSheet.h \
     DiceMenu/DiceMenu.h \
     Chat/ChatWidget.h \
     Chat/ChatServer.h \
@@ -137,15 +145,19 @@ HEADERS  += \
     Canvas/Layers/DrawingLayer.h \
     Canvas/Layers/AbstractLayer.h \
     Canvas/Layers/Layers.h \
+    Canvas/Layers/LayerType.h \
     Canvas/Tools/AbstractTool.h \
     Canvas/Tools/ToolPen.h \
     Canvas/Tools/ToolEraser.h \
     Canvas/Tools/Tools.h \
+    Canvas/Tools/ToolPing.h \
     Canvas/ImageWidget.h \
     Canvas/SideMenuWidgets/DrawingMenu.h \
     Canvas/Network/MapClient.h \
     Canvas/Network/MapServer.h \
     Canvas/Network/MapCodes.h \
+    Canvas/MapCreationWidget.h \
+    Canvas/OpenMapWidget.h \
     Network/Switch.h \
     Network/SwitchServer.h \
     Network/SwitchClient.h \
@@ -170,6 +182,9 @@ HEADERS  += \
     Database/Repository/FoWLayerRepository.h \
     Database/Repository/BackgroundLayerRepository.h \
     Database/Repository/DrawingLayerRepository.h \
+    Database/Repository/GameObjectRepository.h \
+    Database/Repository/CharacterRepository.h \
+    Database/Repository/GameObjectSubRepository.h \
     Token/TokenMenu.h \
     Token/TokenList.h \
     Token/TokenItem.h \
@@ -181,24 +196,28 @@ HEADERS  += \
     TurnMenu/Network/TurnMenuClient.h \
     TurnMenu/Network/TurnMenuServer.h \
     TurnMenu/Network/TurnMenuCodes.h \
-    Canvas/Tools/ToolPing.h \
-    Log/Logger.h \
-    Log/Log.h \
-    Log/MapLog.h \
-    Actions/AbstractAction.h \
-    Canvas/MapCreationWidget.h \
-    Canvas/OpenMapWidget.h \
-    NotificationStacker.h
+    Log/LogGui.h \
+    Log/LogServer.h \
+    Log/LogClient.h \
+    GameObjects/GameObject.h \
+    GameObjects/GameObjectType.h \
+    GameObjects/Character.h \
+    GameObjects/GameObjectDialog.h \
+    General/CircularProgressBar.h
 
 FORMS    += \
-    Tooltip.ui \
     MainWindow.ui \
+    Tooltip.ui \
     ConnectionHelper.ui \
+    CustomMdiArea.ui \
     Token/TokenMenu.ui \
     DiceMenu/DiceMenu.ui \
     Chat/ChatWidget.ui \
     TurnMenu/TurnMenu.ui \
+    TurnMenu/TurnList.ui \
+    Log/LogGui.ui \
     Canvas/Map.ui \
     Canvas/SideMenuWidgets/DrawingMenu.ui \
     Canvas/MapCreationWidget.ui \
-    Canvas/OpenMapWidget.ui
+    Canvas/OpenMapWidget.ui \
+    GameObjects/GameObjectDialog.ui

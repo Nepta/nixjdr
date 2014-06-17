@@ -3,6 +3,7 @@
 #include "Map.h"
 #include "ui_Map.h"
 #include "ui_DrawingMenu.h"
+#include <QDebug>
 
 Map::Map(QString mapName, QString bgFilename, TokenItem *tokenItem, int tileStep, QWidget *parent) :
     QWidget(parent),
@@ -262,7 +263,7 @@ void Map::showMapTooltip() {
         ui->m_View->size().height() - m_Tooltip.size().height() - Tooltip::TOOLTIP_OFFSET
     );
 
-    m_Tooltip.showTooltip(position);
+	 m_Tooltip.showTooltip(position);
 }
 
 void Map::on_collapseButton_clicked(bool checked) {
@@ -308,5 +309,11 @@ FoWLayer *Map::getFoWLayer() {
 }
 
 DrawingLayer *Map::getDrawingLayer() {
-    return dynamic_cast<DrawingLayer *>(m_Layers->getLayer(LayerCodes::LAYER_DRAW));
+	return dynamic_cast<DrawingLayer *>(m_Layers->getLayer(LayerCodes::LAYER_DRAW));
+}
+
+void Map::connectToLogger(LogClient* client){
+	connect(getMapLayer(), SIGNAL(spriteMoved(QString)), client, SLOT(sendMessageToServer(QString)));
+	connect(getMapLayer(), SIGNAL(spriteRemoved(QString)), client, SLOT(sendMessageToServer(QString)));
+	connect(getMapLayer(), SIGNAL(spriteAdded(QString)), client, SLOT(sendMessageToServer(QString)));
 }

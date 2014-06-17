@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>985</width>
+    <width>1072</width>
     <height>772</height>
    </rect>
   </property>
@@ -14,211 +14,313 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <layout class="QHBoxLayout" name="horizontalLayout_2">
+   <layout class="QVBoxLayout" name="verticalLayout_3" stretch="97,3">
+    <property name="spacing">
+     <number>0</number>
+    </property>
+    <property name="leftMargin">
+     <number>0</number>
+    </property>
+    <property name="topMargin">
+     <number>0</number>
+    </property>
+    <property name="rightMargin">
+     <number>0</number>
+    </property>
+    <property name="bottomMargin">
+     <number>0</number>
+    </property>
     <item>
      <widget class="QSplitter" name="rightMenuSplitter">
       <property name="orientation">
        <enum>Qt::Horizontal</enum>
       </property>
-      <widget class="QSplitter" name="tableTurnSplitter">
-       <property name="orientation">
-        <enum>Qt::Vertical</enum>
+      <property name="handleWidth">
+       <number>1</number>
+      </property>
+      <widget class="QWidget" name="bodyWidget" native="true">
+       <property name="minimumSize">
+        <size>
+         <width>500</width>
+         <height>0</height>
+        </size>
        </property>
-       <widget class="CustomMdiArea" name="tableArea">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-          <horstretch>0</horstretch>
-          <verstretch>4</verstretch>
-         </sizepolicy>
+       <layout class="QVBoxLayout" name="verticalLayout_2" stretch="95,5">
+        <property name="spacing">
+         <number>0</number>
         </property>
-        <property name="frameShape">
-         <enum>QFrame::StyledPanel</enum>
+        <property name="leftMargin">
+         <number>0</number>
         </property>
-        <property name="frameShadow">
-         <enum>QFrame::Raised</enum>
+        <property name="topMargin">
+         <number>0</number>
         </property>
-       </widget>
-       <widget class="QWidget" name="layoutWidget">
-        <layout class="QVBoxLayout" name="verticalLayout_2">
-         <item>
-          <widget class="QPushButton" name="collapseButtonTurnMenu">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="minimumSize">
-            <size>
-             <width>0</width>
-             <height>16</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>16777215</width>
-             <height>16</height>
-            </size>
-           </property>
-           <property name="styleSheet">
-            <string notr="true"> QPushButton {
-    border-left: 1px solid #8f8f91;
-    border-right: 1px solid #8f8f91;
-    border-top: 1px solid #8f8f91;
-    border-bottom: 1px solid #8f8f91;
-    border-radius: 0px;
- }
-
- QPushButton:pressed {
-     background-color: #8f8f91;
- }</string>
-           </property>
-           <property name="text">
-            <string/>
-           </property>
-           <property name="icon">
-            <iconset>
-             <normaloff>resource/CollapsibleWidget/collapseUp.png</normaloff>
-             <normalon>resource/CollapsibleWidget/collapseDown.png</normalon>resource/CollapsibleWidget/collapseUp.png</iconset>
-           </property>
-           <property name="checkable">
-            <bool>true</bool>
-           </property>
-           <property name="checked">
-            <bool>true</bool>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="TurnMenu" name="turnWidget" native="true"/>
-         </item>
-        </layout>
-       </widget>
-      </widget>
-      <widget class="QWidget" name="layoutWidget1">
-       <layout class="QHBoxLayout" name="horizontalLayout">
+        <property name="rightMargin">
+         <number>0</number>
+        </property>
+        <property name="bottomMargin">
+         <number>0</number>
+        </property>
         <item>
-         <widget class="QPushButton" name="collapseButtonRightMenu">
+         <widget class="CustomMdiArea" name="tableArea">
           <property name="sizePolicy">
-           <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+           <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
             <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
+            <verstretch>4</verstretch>
            </sizepolicy>
           </property>
-          <property name="minimumSize">
-           <size>
-            <width>16</width>
-            <height>0</height>
-           </size>
-          </property>
-          <property name="maximumSize">
-           <size>
-            <width>16</width>
-            <height>16777215</height>
-           </size>
-          </property>
-          <property name="styleSheet">
-           <string notr="true"> QPushButton {
-    border-left: 1px solid #8f8f91;
-    border-right: 1px solid #8f8f91;
-    border-top: 1px solid #8f8f91;
-    border-bottom: 1px solid #8f8f91;
-    border-radius: 0px;
- }
-
- QPushButton:pressed {
-     background-color: #8f8f91;
- }</string>
-          </property>
-          <property name="text">
-           <string/>
-          </property>
-          <property name="icon">
-           <iconset>
-            <normaloff>resource/CollapsibleWidget/uncollapse.png</normaloff>
-            <normalon>resource/CollapsibleWidget/collapse.png</normalon>resource/CollapsibleWidget/uncollapse.png</iconset>
-          </property>
-          <property name="checkable">
-           <bool>true</bool>
-          </property>
-          <property name="checked">
-           <bool>true</bool>
+          <property name="lineWidth">
+           <number>0</number>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QWidget" name="rightMenuWidget" native="true">
-          <layout class="QVBoxLayout" name="verticalLayout">
-           <item>
-            <layout class="QVBoxLayout" name="rightMenuLayout">
+         <layout class="QVBoxLayout" name="turnLayout">
+          <property name="spacing">
+           <number>0</number>
+          </property>
+          <item>
+           <widget class="QWidget" name="turnHeader" native="true">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <layout class="QHBoxLayout" name="horizontalLayout_3">
+             <property name="spacing">
+              <number>6</number>
+             </property>
+             <property name="topMargin">
+              <number>0</number>
+             </property>
+             <property name="bottomMargin">
+              <number>0</number>
+             </property>
              <item>
-              <widget class="QToolBox" name="actionMenu">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                 <horstretch>0</horstretch>
-                 <verstretch>2</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="minimumSize">
-                <size>
-                 <width>200</width>
-                 <height>0</height>
-                </size>
-               </property>
-               <property name="currentIndex">
+              <widget class="QLabel" name="label">
+               <property name="lineWidth">
                 <number>0</number>
                </property>
-               <widget class="TokenMenu" name="tokenPage">
-                <property name="geometry">
-                 <rect>
-                  <x>0</x>
-                  <y>0</y>
-                  <width>833</width>
-                  <height>321</height>
-                 </rect>
-                </property>
-                <property name="minimumSize">
-                 <size>
-                  <width>0</width>
-                  <height>0</height>
-                 </size>
-                </property>
-                <attribute name="label">
-                 <string>Liste de jetons</string>
-                </attribute>
-               </widget>
+               <property name="text">
+                <string/>
+               </property>
+               <property name="pixmap">
+                <pixmap>resource/TurnMenu/turn.png</pixmap>
+               </property>
               </widget>
              </item>
              <item>
-              <widget class="Line" name="line">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-                 <horstretch>1</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
+              <widget class="QLabel" name="label_2">
+               <property name="text">
+                <string>Gestion des tours</string>
                </property>
+              </widget>
+             </item>
+             <item>
+              <spacer name="horizontalSpacer">
                <property name="orientation">
                 <enum>Qt::Horizontal</enum>
                </property>
-              </widget>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>363</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
              </item>
              <item>
-              <widget class="ChatWidget" name="m_ChatWidget" native="true">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                 <horstretch>0</horstretch>
-                 <verstretch>2</verstretch>
-                </sizepolicy>
+              <widget class="QPushButton" name="collapseButtonTurnMenu">
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>16</height>
+                </size>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+               <property name="icon">
+                <iconset>
+                 <normaloff>resource/CollapsibleWidget/up.png</normaloff>
+                 <normalon>resource/CollapsibleWidget/down.png</normalon>resource/CollapsibleWidget/up.png</iconset>
+               </property>
+               <property name="checkable">
+                <bool>true</bool>
+               </property>
+               <property name="checked">
+                <bool>true</bool>
+               </property>
+               <property name="flat">
+                <bool>true</bool>
                </property>
               </widget>
              </item>
             </layout>
-           </item>
-          </layout>
-         </widget>
+           </widget>
+          </item>
+          <item>
+           <widget class="TurnMenu" name="turnWidget" native="true"/>
+          </item>
+         </layout>
         </item>
        </layout>
       </widget>
+      <widget class="QWidget" name="rightMenuWidget" native="true">
+       <layout class="QVBoxLayout" name="verticalLayout">
+        <property name="spacing">
+         <number>0</number>
+        </property>
+        <property name="leftMargin">
+         <number>3</number>
+        </property>
+        <property name="topMargin">
+         <number>0</number>
+        </property>
+        <property name="rightMargin">
+         <number>3</number>
+        </property>
+        <property name="bottomMargin">
+         <number>0</number>
+        </property>
+        <item>
+         <layout class="QVBoxLayout" name="rightMenuLayout">
+          <property name="spacing">
+           <number>0</number>
+          </property>
+          <property name="bottomMargin">
+           <number>3</number>
+          </property>
+          <item>
+           <widget class="QToolBox" name="actionMenu">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+              <horstretch>0</horstretch>
+              <verstretch>2</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>200</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="currentIndex">
+             <number>0</number>
+            </property>
+            <widget class="TokenMenu" name="tokenPage">
+             <property name="geometry">
+              <rect>
+               <x>0</x>
+               <y>0</y>
+               <width>294</width>
+               <height>305</height>
+              </rect>
+             </property>
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>0</height>
+              </size>
+             </property>
+             <attribute name="label">
+              <string>Liste de jetons</string>
+             </attribute>
+            </widget>
+            <widget class="LogGui" name="m_LogGui">
+             <property name="geometry">
+              <rect>
+               <x>0</x>
+               <y>0</y>
+               <width>294</width>
+               <height>305</height>
+              </rect>
+             </property>
+             <attribute name="label">
+              <string>Historique</string>
+             </attribute>
+            </widget>
+           </widget>
+          </item>
+          <item>
+           <widget class="Line" name="line">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+              <horstretch>1</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="ChatWidget" name="m_ChatWidget" native="true">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+              <horstretch>0</horstretch>
+              <verstretch>2</verstretch>
+             </sizepolicy>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </widget>
+     </widget>
+    </item>
+    <item>
+     <widget class="QWidget" name="footer" native="true">
+      <layout class="QHBoxLayout" name="horizontalLayout_2">
+       <property name="leftMargin">
+        <number>0</number>
+       </property>
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <property name="rightMargin">
+        <number>0</number>
+       </property>
+       <property name="bottomMargin">
+        <number>0</number>
+       </property>
+       <item>
+        <spacer name="horizontalSpacer_2">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>0</width>
+           <height>0</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QPushButton" name="collapseButtonRightMenu">
+         <property name="text">
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset>
+           <normaloff>resource/CollapsibleWidget/sidebar.png</normaloff>resource/CollapsibleWidget/sidebar.png</iconset>
+         </property>
+         <property name="checkable">
+          <bool>true</bool>
+         </property>
+         <property name="checked">
+          <bool>true</bool>
+         </property>
+         <property name="flat">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+      </layout>
      </widget>
     </item>
    </layout>
@@ -228,21 +330,27 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>985</width>
+     <width>1072</width>
      <height>19</height>
     </rect>
    </property>
-   <widget class="QMenu" name="menuFile">
+   <widget class="QMenu" name="menuConnexion">
     <property name="title">
-     <string>File</string>
+     <string>Connexion</string>
     </property>
     <addaction name="actionConnection"/>
-    <addaction name="separator"/>
+   </widget>
+   <widget class="QMenu" name="menuPartie">
+    <property name="title">
+     <string>Partie</string>
+    </property>
     <addaction name="actionCreateMap"/>
     <addaction name="actionOpenMap"/>
+    <addaction name="separator"/>
     <addaction name="actionCreateImage"/>
    </widget>
-   <addaction name="menuFile"/>
+   <addaction name="menuConnexion"/>
+   <addaction name="menuPartie"/>
   </widget>
   <action name="actionCreateMap">
    <property name="text">
@@ -254,7 +362,7 @@
   </action>
   <action name="actionConnection">
    <property name="text">
-    <string>Connexion</string>
+    <string>Connexion...</string>
    </property>
   </action>
   <action name="actionCreateImage">
@@ -265,6 +373,11 @@
   <action name="actionOpenMap">
    <property name="text">
     <string>Ouvrir une carte...</string>
+   </property>
+  </action>
+  <action name="actionConnexion">
+   <property name="text">
+    <string>Connexion...</string>
    </property>
   </action>
  </widget>
@@ -293,6 +406,11 @@
    <extends>QWidget</extends>
    <header>TurnMenu/TurnMenu.h</header>
    <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>LogGui</class>
+   <extends>QWidget</extends>
+   <header>Log/LogGui.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

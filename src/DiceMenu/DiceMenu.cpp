@@ -3,10 +3,11 @@
 #include "ui_DiceMenu.h"
 
 DiceMenu::DiceMenu(QWidget *parent) :
-    QWidget(parent),
+    QFrame(parent),
     ui(new Ui::DiceMenu)
 {
     ui->setupUi(this);
+
     DiceMenu::fillDiceButtonList();
     foreach(QPushButton* button, m_DiceButtonList) {
         button->setMinimumSize(40,20);
@@ -41,7 +42,7 @@ bool DiceMenu::eventFilter(QObject *obj, QEvent *event){
 }
 
 void DiceMenu::fillDiceButtonList(){
-    QHBoxLayout *layout = ui->diceButtonLayout;
+    QGridLayout *layout = ui->diceButtonLayout;
     QPushButton *currentButton;
 
     for(int i=0; i<layout->count(); i++){
@@ -121,4 +122,8 @@ void DiceMenu::modifyButton(QPushButton *buttonToModify, bool actionToExecute){
 
 void DiceMenu::requestRoll(QString &msg){
     msg = QString("/roll %1").arg(diceToRoll());
+}
+
+void DiceMenu::on_closeButton_clicked() {
+    this->hide();
 }
