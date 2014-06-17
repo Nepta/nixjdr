@@ -63,7 +63,7 @@ CREATE TABLE map (
 	windowtitle       character varying(150),
 	sceneheight       integer,
 	scenewidth        integer,
-	ismap             boolean,
+	isimage           boolean,
 	backgroundlayerid integer REFERENCES backgroundlayer(id) NOT NULL,
 	maplayerid        integer REFERENCES maplayer(id) NOT NULL,
 	foWlayerid        integer REFERENCES fowlayer(id) NOT NULL,

@@ -23,7 +23,6 @@
 #include "Canvas/Layers/MapLayer.h"
 #include "Canvas/CanvasScene.h"
 #include "Canvas/CanvasView.h"
-#include "Canvas/ImageWidget.h"
 
 #include "StyleSheet.h"
 #include "CustomMdiArea.h"
@@ -154,8 +153,9 @@ void MainWindow::on_actionCreateMap_triggered(){
                                                     "Images (*.png *.xpm *.jpg)");
 
     if(m_FilePath != ""){
-        MapCreationWidget mapCreationWidget;
-        connect(&mapCreationWidget, SIGNAL(createMap(QString,int)), this, SLOT(createMap(QString,int)));
+        MapCreationWidget mapCreationWidget(false);
+        connect(&mapCreationWidget, SIGNAL(createMap(QString, int, bool)),
+                this, SLOT(createMap(QString, int, bool)));
         mapCreationWidget.exec();
     }
 }
@@ -187,16 +187,11 @@ void MainWindow::on_actionCreateImage_triggered(){
                                                     "Images (*.png *.xpm *.jpg)");
 
     if(m_FilePath != ""){
-        createMap("Image", 1, true);
+        MapCreationWidget mapCreationWidget(true);
+        connect(&mapCreationWidget, SIGNAL(createMap(QString, int, bool)),
+                this, SLOT(createMap(QString, int, bool)));
+        mapCreationWidget.exec();
     }
-}
-
-void MainWindow::createImage(QString filename) {
-    // TODO should be able to choose the step value in a message box
-    ImageWidget *image = new ImageWidget(filename);
-    QMdiSubWindow *subwindow = ui->tableArea->addSubWindow(image);
-    subwindow->show();
-    subwindow->move(0, 0);
 }
 
 void MainWindow::on_actionConnection_triggered(){

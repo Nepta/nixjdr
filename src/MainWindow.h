@@ -48,14 +48,13 @@ signals:
 private:
     void setupMJ();
     void setupPlayer();
-    void createImage(QString filename);
 
     // inits
     void initDiceMenu();
     void initConnects();
     void initRole();
     void initTableTurnSplitter();
-	 void initLogger();
+    void initLogger();
 
     void collapseMenu(bool checked, QWidget *widget, QSplitter *splitter, int min, int max);
 
@@ -64,7 +63,7 @@ private:
     SwitchServer *m_Server;
     SwitchClient *m_Client;
     TurnMenu *m_turnMenu;
-	 QString m_FilePath;
+    QString m_FilePath;
 };
 
 #endif // MAINWINDOW_H

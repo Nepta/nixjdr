@@ -70,21 +70,20 @@ void Map::closeEvent(QCloseEvent *closeEvent) {
 
 void Map::initScene(int tileStep) {
     int sceneHeight, sceneWidth;
+
     BackgroundLayer *bgLayer = dynamic_cast<BackgroundLayer *>(
         m_Layers->getLayer(LayerCodes::LAYER_BACKGROUND)
     );
-    if(tileStep > 5){
-        sceneHeight = bgLayer->getBackground()->rect().height()
-                + BG_OFFSET * tileStep;
-        sceneWidth = bgLayer->getBackground()->rect().width()
-                + BG_OFFSET * tileStep;
+
+    if (tileStep < 5) {
+       tileStep = 5;
     }
-    else{
-        sceneHeight = bgLayer->getBackground()->rect().height()
-                + BG_OFFSET * 5;
-        sceneWidth = bgLayer->getBackground()->rect().width()
-                + BG_OFFSET * 5;
-    }
+
+    sceneHeight = bgLayer->getBackground()->rect().height()
+            + BG_OFFSET * tileStep;
+    sceneWidth = bgLayer->getBackground()->rect().width()
+            + BG_OFFSET * tileStep;
+
     initScene(sceneWidth, sceneHeight);
 }
 
