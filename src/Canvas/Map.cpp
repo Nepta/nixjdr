@@ -20,7 +20,7 @@ Map::Map(bool isImage, QString mapName, QString bgFilename, TokenItem *tokenItem
 
     m_IsImage = isImage;
     if(isImage){
-        initAsImage(true);
+        initAsImage();
     }
 }
 
@@ -50,7 +50,7 @@ Map::Map(DBItem item, BackgroundLayer *bgLayer, MapLayer *mapLayer, FoWLayer *fo
 
     m_IsImage = isImage;
     if(isImage){
-        initAsImage(false);
+        initAsImage();
     }
 }
 
@@ -338,7 +338,7 @@ void Map::connectToLogger(LogClient* client){
 	connect(getMapLayer(), SIGNAL(spriteAdded(QString)), client, SLOT(sendMessageToServer(QString)));
 }
 
-void Map::initAsImage(bool addToDb){
+void Map::initAsImage() {
     // Hide toolboxes
     ui->m_StackedTools->show();
     ui->groupBox->hide();
@@ -350,8 +350,4 @@ void Map::initAsImage(bool addToDb){
 
     m_Layers->getLayer(LayerCodes::LAYER_MAP)->hide();
     m_Layers->getLayer(LayerCodes::LAYER_FOW)->hide();
-
-    if(addToDb){
-        RepositoryManager::s_MapRepository.insertMap(this);
-    }
 }

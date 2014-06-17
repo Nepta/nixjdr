@@ -78,7 +78,7 @@ private:
     void initMapLayer(bool addToDb);
     void initFoWLayer(bool addToDb);
     void initDrawingLayer(bool addToDb);
-    void initAsImage(bool addToDb);
+    void initAsImage();
 
     void showMapTooltip(QString tooltip);
     void hideAllToolBoxes();

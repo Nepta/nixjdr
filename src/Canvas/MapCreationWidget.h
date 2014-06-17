@@ -12,7 +12,7 @@ class MapCreationWidget : public QDialog
     Q_OBJECT
 
 public:
-    explicit MapCreationWidget(bool image, QWidget *parent = 0);
+    explicit MapCreationWidget(bool isImage, QWidget *parent = 0);
     ~MapCreationWidget();
 
 signals:
