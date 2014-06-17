@@ -47,7 +47,6 @@ SOURCES += \
     Canvas/CanvasScene.cpp \
     Canvas/Sprite.cpp \
     Canvas/Map.cpp \
-    Canvas/ImageWidget.cpp \
     Canvas/Layers/GridLayer.cpp \
     Canvas/Layers/MapLayer.cpp \
     Canvas/Layers/FoWLayer.cpp \
@@ -151,7 +150,6 @@ HEADERS  += \
     Canvas/Tools/ToolEraser.h \
     Canvas/Tools/Tools.h \
     Canvas/Tools/ToolPing.h \
-    Canvas/ImageWidget.h \
     Canvas/SideMenuWidgets/DrawingMenu.h \
     Canvas/Network/MapClient.h \
     Canvas/Network/MapServer.h \

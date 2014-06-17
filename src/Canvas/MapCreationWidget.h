@@ -12,17 +12,18 @@ class MapCreationWidget : public QDialog
     Q_OBJECT
 
 public:
-    explicit MapCreationWidget(QWidget *parent = 0);
+    explicit MapCreationWidget(bool isImage, QWidget *parent = 0);
     ~MapCreationWidget();
 
 signals:
-    void createMap(QString mapName, int mapStepValue);
+    void createMap(QString mapName, int mapStepValue, bool isImage);
 
 private slots:
     void on_m_MapCreationButton_clicked();
 
 private:
     Ui::MapCreationWidget *ui;
+    bool m_IsImage;
 };
 
 #endif // MAPCREATIONWIDGET_H

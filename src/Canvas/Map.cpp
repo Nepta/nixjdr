@@ -3,9 +3,8 @@
 #include "Map.h"
 #include "ui_Map.h"
 #include "ui_DrawingMenu.h"
-#include <QDebug>
 
-Map::Map(QString mapName, QString bgFilename, TokenItem *tokenItem, int tileStep, QWidget *parent) :
+Map::Map(bool isImage, QString mapName, QString bgFilename, TokenItem *tokenItem, int tileStep, QWidget *parent) :
     QWidget(parent),
     DBItem(),
     ui(new Ui::Map)
@@ -18,6 +17,11 @@ Map::Map(QString mapName, QString bgFilename, TokenItem *tokenItem, int tileStep
     initLayers();
     initDisplay();
     initTooltip();
+
+    m_IsImage = isImage;
+    if(isImage){
+        initAsImage();
+    }
 }
 
 Map::Map(DBItem item, BackgroundLayer *bgLayer, MapLayer *mapLayer, FoWLayer *fowLayer,
@@ -34,6 +38,7 @@ Map::Map(DBItem item, BackgroundLayer *bgLayer, MapLayer *mapLayer, FoWLayer *fo
     QString windowtitle = itemHashMap.value("windowtitle").toString();
     int sceneHeight = itemHashMap.value("sceneheight").toInt();
     int sceneWidth = itemHashMap.value("scenewidth").toInt();
+    bool isImage = itemHashMap.value("isimage").toBool();
 
     id_ = id;
     setWindowTitle(windowtitle);
@@ -42,6 +47,11 @@ Map::Map(DBItem item, BackgroundLayer *bgLayer, MapLayer *mapLayer, FoWLayer *fo
     initLayers(false);
     initDisplay();
     initTooltip();
+
+    m_IsImage = isImage;
+    if(isImage){
+        initAsImage();
+    }
 }
 
 Map::~Map() {
@@ -59,13 +69,19 @@ void Map::closeEvent(QCloseEvent *closeEvent) {
 }
 
 void Map::initScene(int tileStep) {
+    int sceneHeight, sceneWidth;
+
     BackgroundLayer *bgLayer = dynamic_cast<BackgroundLayer *>(
         m_Layers->getLayer(LayerCodes::LAYER_BACKGROUND)
     );
 
-    int sceneHeight = bgLayer->getBackground()->rect().height()
+    if (tileStep < 5) {
+       tileStep = 5;
+    }
+
+    sceneHeight = bgLayer->getBackground()->rect().height()
             + BG_OFFSET * tileStep;
-    int sceneWidth = bgLayer->getBackground()->rect().width()
+    sceneWidth = bgLayer->getBackground()->rect().width()
             + BG_OFFSET * tileStep;
 
     initScene(sceneWidth, sceneHeight);
@@ -318,8 +334,26 @@ DrawingLayer *Map::getDrawingLayer() {
 	return dynamic_cast<DrawingLayer *>(m_Layers->getLayer(LayerCodes::LAYER_DRAW));
 }
 
+bool Map::getIsImage(){
+    return m_IsImage;
+}
+
 void Map::connectToLogger(LogClient* client){
 	connect(getMapLayer(), SIGNAL(spriteMoved(QString)), client, SLOT(sendMessageToServer(QString)));
 	connect(getMapLayer(), SIGNAL(spriteRemoved(QString)), client, SLOT(sendMessageToServer(QString)));
 	connect(getMapLayer(), SIGNAL(spriteAdded(QString)), client, SLOT(sendMessageToServer(QString)));
+}
+
+void Map::initAsImage() {
+    // Hide toolboxes
+    ui->m_StackedTools->show();
+    ui->groupBox->hide();
+    ui->groupBox_2->hide();
+    ui->m_StackedTools->setCurrentWidget(ui->m_PageDrawingTools);
+
+    m_Layers->setCurrentLayerCode("m_DrawingEdit");
+    m_Layers->getLayer(LayerCodes::LAYER_DRAW)->setEnabled(true);
+
+    m_Layers->getLayer(LayerCodes::LAYER_MAP)->hide();
+    m_Layers->getLayer(LayerCodes::LAYER_FOW)->hide();
 }

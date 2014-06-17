@@ -12,7 +12,7 @@ class LogClient : public SenderClient, public Receiver{
 
 public:
 	LogClient(User *user, QHash<QString, User *> *usersList, LogGui& logger);
-	void processNewData(Header header, QByteArray &data);
+    void processNewData(Header, QByteArray &data);
 
 public slots:
 	void sendMessageToServer(QString msg);

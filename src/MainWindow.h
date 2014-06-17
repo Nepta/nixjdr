@@ -39,7 +39,7 @@ private slots:
     void on_actionConnection_triggered();
     void on_collapseButtonRightMenu_clicked(bool checked);
     void on_collapseButtonTurnMenu_clicked();
-    void createMap(QString mapName, int mapStep);
+    void createMap(QString mapName, int mapStep, bool isMap = false);
     void addPlayerToInterface(QString playerNickname);
 
 signals:
@@ -49,7 +49,6 @@ signals:
 private:
     void setupMJ();
     void setupPlayer();
-    void createImage(QString filename);
 
     // inits
     void initDiceMenu();

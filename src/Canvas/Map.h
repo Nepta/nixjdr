@@ -33,7 +33,7 @@ class Map : public QWidget, public DBItem, public SenderHandler
 public:
     static const int BG_OFFSET = 2*4;
 
-    explicit Map(QString mapName, QString bgFilename, TokenItem *tokenItem, int tileStep, QWidget *parent = 0);
+    explicit Map(bool isImage, QString mapName, QString bgFilename, TokenItem *tokenItem, int tileStep, QWidget *parent = 0);
     Map(DBItem item, BackgroundLayer *bgLayer, MapLayer *mapLayer, FoWLayer *fowLayer,
         DrawingLayer *drawingLayer);
     ~Map();
@@ -48,6 +48,7 @@ public:
     MapLayer *getMapLayer();
     FoWLayer *getFoWLayer();
     DrawingLayer *getDrawingLayer();
+    bool getIsImage();
 	 void connectToLogger(LogClient* client);
 
 private slots:
@@ -63,6 +64,7 @@ private:
     AbstractLayer *m_SelectedLayer;
     Layers *m_Layers;
     QHash<LayerCodes, QWidget *> m_EditionMap;
+    bool m_IsImage;
 
     void initScene(int tileStep);
     void initScene(int sceneWidth, int sceneHeight);
@@ -77,6 +79,7 @@ private:
     void initMapLayer(bool addToDb);
     void initFoWLayer(bool addToDb);
     void initDrawingLayer(bool addToDb);
+    void initAsImage();
 
     void showMapTooltip(QString tooltip);
     void hideAllToolBoxes();

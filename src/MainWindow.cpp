@@ -23,7 +23,6 @@
 #include "Canvas/Layers/MapLayer.h"
 #include "Canvas/CanvasScene.h"
 #include "Canvas/CanvasView.h"
-#include "Canvas/ImageWidget.h"
 
 #include "StyleSheet.h"
 #include "CustomMdiArea.h"
@@ -138,11 +137,11 @@ void MainWindow::openMap(Map *map, bool notify) {
     map->connectToLogger(logClient);
 }
 
-void MainWindow::createMap(QString mapName, int mapStep) {
+void MainWindow::createMap(QString mapName, int mapStep, bool isMap) {
     QListWidget *tokenList = ui->tokenPage->getUi()->m_tokenList;
     TokenItem *currentTokenItem = dynamic_cast<TokenItem*>(tokenList->currentItem());
 
-    Map *map = new Map(mapName, m_FilePath , currentTokenItem, mapStep);
+    Map *map = new Map(isMap, mapName, m_FilePath , currentTokenItem, mapStep);
 
     // Add Map to the database
     RepositoryManager::s_MapRepository.insertMap(map);
@@ -157,8 +156,9 @@ void MainWindow::on_actionCreateMap_triggered(){
                                                     "Images (*.png *.xpm *.jpg)");
 
     if(m_FilePath != ""){
-        MapCreationWidget mapCreationWidget;
-        connect(&mapCreationWidget, SIGNAL(createMap(QString,int)), this, SLOT(createMap(QString,int)));
+        MapCreationWidget mapCreationWidget(false);
+        connect(&mapCreationWidget, SIGNAL(createMap(QString, int, bool)),
+                this, SLOT(createMap(QString, int, bool)));
         mapCreationWidget.exec();
     }
 }
@@ -185,20 +185,16 @@ void MainWindow::on_actionOpenMap_triggered() {
 }
 
 void MainWindow::on_actionCreateImage_triggered(){
-    QString filename = QFileDialog::getOpenFileName(this, "Ouvrir un fichier", "resource",
+    m_FilePath = "";
+    m_FilePath = QFileDialog::getOpenFileName(this, "Ouvrir un fichier", "resource",
                                                     "Images (*.png *.xpm *.jpg)");
 
-    if (filename != NULL) {
-        createImage(filename);
+    if(m_FilePath != ""){
+        MapCreationWidget mapCreationWidget(true);
+        connect(&mapCreationWidget, SIGNAL(createMap(QString, int, bool)),
+                this, SLOT(createMap(QString, int, bool)));
+        mapCreationWidget.exec();
     }
-}
-
-void MainWindow::createImage(QString filename) {
-    // TODO should be able to choose the step value in a message box
-    ImageWidget *image = new ImageWidget(filename);
-    QMdiSubWindow *subwindow = ui->tableArea->addSubWindow(image);
-    subwindow->show();
-    subwindow->move(0, 0);
 }
 
 void MainWindow::on_actionConnection_triggered(){

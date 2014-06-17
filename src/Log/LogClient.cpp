@@ -6,7 +6,7 @@ LogClient::LogClient(User *user, QHash<QString, User *> *usersList, LogGui& logg
 	SenderClient(user,usersList), logger_(logger){
 }
 
-void LogClient::processNewData(Header header, QByteArray &data){
+void LogClient::processNewData(Header, QByteArray &data){
 	Message message(data);
 	QString log = message.getString();
 	logger_.pushLog(log);
