@@ -266,6 +266,18 @@
                 </item>
                 <item>
                  <widget class="QLabel" name="labelScale">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="minimumSize">
+                   <size>
+                    <width>20</width>
+                    <height>0</height>
+                   </size>
+                  </property>
                   <property name="text">
                    <string>1</string>
                   </property>
@@ -273,14 +285,29 @@
                 </item>
                 <item>
                  <widget class="QSlider" name="m_MapScaler">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="minimumSize">
+                   <size>
+                    <width>110</width>
+                    <height>0</height>
+                   </size>
+                  </property>
                   <property name="minimum">
                    <number>1</number>
                   </property>
                   <property name="maximum">
-                   <number>5</number>
+                   <number>10</number>
                   </property>
                   <property name="pageStep">
                    <number>1</number>
+                  </property>
+                  <property name="sliderPosition">
+                   <number>5</number>
                   </property>
                   <property name="orientation">
                    <enum>Qt::Horizontal</enum>
@@ -362,30 +389,13 @@
   </customwidget>
  </customwidgets>
  <resources/>
- <connections>
-  <connection>
-   <sender>m_MapScaler</sender>
-   <signal>valueChanged(int)</signal>
-   <receiver>labelScale</receiver>
-   <slot>setNum(int)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>531</x>
-     <y>391</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>523</x>
-     <y>385</y>
-    </hint>
-   </hints>
-  </connection>
- </connections>
+ <connections/>
  <buttongroups>
+  <buttongroup name="m_EditGroup"/>
   <buttongroup name="m_DisplayGroup">
    <property name="exclusive">
     <bool>false</bool>
    </property>
   </buttongroup>
-  <buttongroup name="m_EditGroup"/>
  </buttongroups>
 </ui>

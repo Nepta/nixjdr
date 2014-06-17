@@ -17,6 +17,9 @@ private:
 
 private slots:
     void zoom(int value);
+
+signals:
+    void changeLabelScale(double);
 };
 
 #endif // CANVASVIEW_H

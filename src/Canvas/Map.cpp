@@ -113,6 +113,7 @@ void Map::initDisplay(){
 void Map::initMapTools() {
     connect(ui->m_MapScaler, SIGNAL(valueChanged(int)),
             ui->m_View, SLOT(zoom(int)));
+    connect(ui->m_View, SIGNAL(changeLabelScale(double)), ui->labelScale, SLOT(setNum(double)));
 }
 
 void Map::initFoWTools(){
