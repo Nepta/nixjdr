@@ -141,7 +141,7 @@ void MainWindow::createMap(QString mapName, int mapStep, bool isMap) {
     QListWidget *tokenList = ui->tokenPage->getUi()->m_tokenList;
     TokenItem *currentTokenItem = dynamic_cast<TokenItem*>(tokenList->currentItem());
 
-    Map *map = new Map(isMap, mapName, m_FilePath , currentTokenItem, mapStep);
+    Map *map = new Map(isMap, mapName, m_FilePath , currentTokenItem, mapStep, m_IsMj);
 
     // Add Map to the database
     RepositoryManager::s_MapRepository.insertMap(map);
@@ -210,6 +210,7 @@ void MainWindow::on_actionConnection_triggered(){
 }
 
 void MainWindow::setupMJ() {
+    m_IsMj = true;
     m_Server = new SwitchServer();
 
     /* Connect sendMessageToChatUi from m_Server to m_ChatWidget in order to display system messages
@@ -251,6 +252,8 @@ void MainWindow::addPlayerToInterface(QString playerNickname){
 
 
 void MainWindow::setupPlayer() {
+    m_IsMj = false;
+
     TokenMenu *tokenMenu = ui->tokenPage;
     TurnMenu *turnMenu = ui->turnWidget;
     m_Client = new SwitchClient(m_User, tokenMenu, turnMenu);

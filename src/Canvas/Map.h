@@ -33,7 +33,8 @@ class Map : public QWidget, public DBItem, public SenderHandler
 public:
     static const int BG_OFFSET = 2*4;
 
-    explicit Map(bool isImage, QString mapName, QString bgFilename, TokenItem *tokenItem, int tileStep, QWidget *parent = 0);
+    explicit Map(bool isImage, QString mapName, QString bgFilename, TokenItem *tokenItem,
+                 int tileStep, bool isMj, QWidget *parent = 0);
     Map(DBItem item, BackgroundLayer *bgLayer, MapLayer *mapLayer, FoWLayer *fowLayer,
         DrawingLayer *drawingLayer);
     ~Map();
@@ -65,6 +66,11 @@ private:
     Layers *m_Layers;
     QHash<LayerCodes, QWidget *> m_EditionMap;
     bool m_IsImage;
+    bool m_IsMj;
+
+    void initRole(bool isMj);
+    void initMj();
+    void initPlayer();
 
     void initScene(int tileStep);
     void initScene(int sceneWidth, int sceneHeight);

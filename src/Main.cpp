@@ -32,7 +32,7 @@ int main(int argc, char *argv[])
     ConnectionHelper connectionHelper(user);
     connectionHelper.exec();
 
-    Database::instantiate("jdrdb", "127.0.0.1", 5432);
+    Database::instantiate("jdrdb", user->getServerIpAddress(), 5432);
 
     MainWindow mainWindow(user);
     mainWindow.show();

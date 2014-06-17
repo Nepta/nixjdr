@@ -66,6 +66,7 @@ private:
     TurnMenu *m_turnMenu;
     QString m_FilePath ;
     NotificationStacker m_NotificationStacker;
+    bool m_IsMj;
 };
 
 #endif // MAINWINDOW_H

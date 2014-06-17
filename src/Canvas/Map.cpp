@@ -4,14 +4,16 @@
 #include "ui_Map.h"
 #include "ui_DrawingMenu.h"
 
-Map::Map(bool isImage, QString mapName, QString bgFilename, TokenItem *tokenItem, int tileStep, QWidget *parent) :
+Map::Map(bool isImage, QString mapName, QString bgFilename, TokenItem *tokenItem, int tileStep, bool isMj, QWidget *parent) :
     QWidget(parent),
     DBItem(),
     ui(new Ui::Map)
 {
     ui->setupUi(this);
     this->setWindowTitle(mapName);
-    m_Layers = new Layers(bgFilename, 2, 2, Qt::black, tileStep, tokenItem);
+    initRole(isMj);
+
+    m_Layers = new Layers(bgFilename, 2, 2, Qt::black, tileStep, tokenItem, isMj);
 
     initScene(tileStep);
     initLayers();
@@ -67,6 +69,24 @@ void Map::closeEvent(QCloseEvent *closeEvent) {
         mapClient->removeMapFromList(this);
     }
 }
+
+void Map::initRole(bool isMj){
+    if(isMj){
+        initMj();
+    }
+    else{
+        initPlayer();
+    }
+}
+
+void Map::initMj(){
+}
+
+void Map::initPlayer(){
+    ui->m_FowEdit->hide();
+    ui->m_FowDisplay->hide();
+}
+
 
 void Map::initScene(int tileStep) {
     int sceneHeight, sceneWidth;
