@@ -46,7 +46,8 @@ MainWindow::MainWindow(User *user, QWidget *parent) :
 
     initConnects();
     initRole();
-	 initLogger();
+	initLogger();
+    m_NotificationStacker.setParent(this);
 
     //showFullScreen();
 }
@@ -128,11 +129,13 @@ void MainWindow::openMap(Map *map, bool notify) {
         mapClient->sendMessageToServer(msg, (quint16) MapCodes::OPEN_MAP);
     }
 
-	 // Connect to the LogClient
-	 TargetCode logClientCode(TargetCode::LOGGER_CLIENT);
-	 Receiver *logClientReceiver = m_Client->getReceiver(logClientCode);
-	 LogClient *logClient = dynamic_cast<LogClient*>(logClientReceiver);
-	 map->connectToLogger(logClient);
+    m_NotificationStacker.pushNotification("Une carte a été ouverte");
+
+    // Connect to the LogClient
+    TargetCode logClientCode(TargetCode::LOGGER_CLIENT);
+    Receiver *logClientReceiver = m_Client->getReceiver(logClientCode);
+    LogClient *logClient = dynamic_cast<LogClient*>(logClientReceiver);
+    map->connectToLogger(logClient);
 }
 
 void MainWindow::createMap(QString mapName, int mapStep) {

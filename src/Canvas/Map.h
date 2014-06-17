@@ -20,6 +20,7 @@
 #include "Tooltip.h"
 #include "CanvasView.h"
 #include "CanvasScene.h"
+#include "NotificationStacker.h"
 
 namespace Ui {
     class Map;
@@ -81,6 +82,7 @@ private:
     void hideAllToolBoxes();
     void keyPressEvent(QKeyEvent *keyEvent);
     void keyReleaseEvent(QKeyEvent *keyEvent);
+    void wheelEvent(QWheelEvent *event);
 };
 
 #endif // MAP_H

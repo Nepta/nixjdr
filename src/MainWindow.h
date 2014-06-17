@@ -13,6 +13,7 @@
 #include "Chat/ChatWidget.h"
 #include "DiceMenu/DiceMenu.h"
 #include "Canvas/MapCreationWidget.h"
+#include "NotificationStacker.h"
 
 #include "ui_TokenMenu.h"
 #include "ui_DiceMenu.h"
@@ -55,7 +56,7 @@ private:
     void initConnects();
     void initRole();
     void initTableTurnSplitter();
-	 void initLogger();
+	void initLogger();
 
     void collapseMenu(bool checked, QWidget *widget, QSplitter *splitter, int min, int max);
 
@@ -64,7 +65,8 @@ private:
     SwitchServer *m_Server;
     SwitchClient *m_Client;
     TurnMenu *m_turnMenu;
-	 QString m_FilePath;
+    QString m_FilePath ;
+    NotificationStacker m_NotificationStacker;
 };
 
 #endif // MAINWINDOW_H

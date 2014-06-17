@@ -23,6 +23,7 @@ SOURCES += \
     ConnectionHelper.cpp \
     Common.cpp \
     Tooltip.cpp \
+    NotificationStacker.cpp \
     StyleSheet.cpp \
     Chat/ChatWidget.cpp \
     Chat/ChatServer.cpp \
@@ -112,6 +113,7 @@ HEADERS  += \
     CustomMdiArea.h \
     Common.h \
     Tooltip.h \
+    NotificationStacker.h \
     StyleSheet.h \
     DiceMenu/DiceMenu.h \
     Chat/ChatWidget.h \
