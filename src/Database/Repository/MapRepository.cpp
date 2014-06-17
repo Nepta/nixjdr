@@ -13,6 +13,7 @@ int MapRepository::insertMap(Map *map) {
         {"windowtitle", map->windowTitle()},
         {"sceneheight", map->getSceneHeight()},
         {"scenewidth", map->getSceneWidth()},
+        {"isImage", map->getIsImage()},
         {"backgroundlayerid", map->getBgLayer()->id()},
         {"maplayerid", map->getMapLayer()->id()},
         {"fowlayerid", map->getFoWLayer()->id()},
