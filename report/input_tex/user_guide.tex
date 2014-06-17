@@ -1,7 +1,8 @@
 \section{Manuel d'utilisation}
 
-Cette application débute avec une boîte de dialogue qui laisse le choix entre deux rôles : Maître de Jeu (MJ) ou Joueur. Si "MJ" est choisi, l'application se lance en tant que serveur pour accueillir les joueurs. Si "Joueur" est choisi, un assistant ce connexion apparaît pour choisir à quel serveur se connecter. Dans les deux cas, un pseudonyme est demandé; si le champs n'est pas rempli la personne se nommera "guest" \\
+Cette application débute avec une boîte de dialogue qui laisse le choix entre deux rôles : Maître de Jeu (MJ) ou Joueur. Si "MJ" est choisi, l'application se lance en tant que serveur pour accueillir les joueurs. Si "Joueur" est choisi, un assistant ce connexion apparaît pour choisir à quel serveur se connecter. Dans les deux cas, un pseudonyme est demandé; si le champs n'est pas rempli la personne se nommera "guest".
 
+\subsection{Chat}
 L'interface qui se présente comporte un Chat, un gestionnaire de tours et le lanceur de dés. Le Chat contient la liste des utilisateurs et permet aux joueurs et au MJ de communiquer. De plus, le chat possède des commandes qui s'introduisent par un /. Les commandes implémentées sont :
 
 \begin{description}
@@ -34,10 +35,10 @@ La première action prépare un message privé à un ou plusieurs utilisateurs, 
 	\includegraphics[scale=0.5]{img/chat_userlist_2.png}
 	\caption{Liste d'utilisateurs (à gauche) et menu contextuel proposant des actions sur les utilisateurs sélectionnés (à droite)}
 \end{figure}
-
 \newpage
 
-Le lanceur de dés propose les dés les plus utilisés et permet de choisir pour chaque type de dé, le nombre de fois que celui-ci doit être lancé. Initialement, les compteurs sont à zéro. Pour augmenter le nombre dés à lancer, il faut clicker gauche sur le bouton correspondant ou utiliser la molette de la souris pour faire varier le nombre en étant sur le bouton. De même, pour décrémenter les dés il suffit de clicker droit ou de scroll vers le bas sur un bouton. On peut ensuite décider de lancer les dés sur le chat (lancé public) ou de lancer les dés en privé (lancé caché). Un lancé privé n'est visible que par celui qui l'effectue, et est principalement utilisé par le MJ. Il est possible de réinitialiser tous les compteurs.
+\subsection{Lanceur de dés}
+Le lanceur de dés propose les dés les plus utilisés et permet de choisir pour chaque type de dé, le nombre de fois que celui-ci doit être lancé. Initialement, les compteurs sont à zéro. Pour augmenter le nombre dés à lancer, il faut effectuer un clic gauche sur le bouton correspondant ou utiliser la molette de la souris pour faire varier le nombre en étant sur le bouton. De même, pour décrémenter les dés il suffit de cliquer droit ou de faire défiler la molette vers le bas sur un bouton. On peut ensuite décider de lancer les dés sur le chat (lancé public) ou de lancer les dés en privé (lancé caché). Un lancé privé n'est visible que par celui qui l'effectue, et est principalement utilisé par le MJ. Il est également possible de réinitialiser tous les compteurs.
 
 \begin{figure}[h!]
 	\centering
@@ -45,11 +46,43 @@ Le lanceur de dés propose les dés les plus utilisés et permet de choisir pour
 	\caption{Lanceur de dés}
 \end{figure}
 
-Le gestionnaire de tours est un outil qui permet au MJ de gérer ses combats. Les icônes sur la droite du gestionnaire permettent d'ajouter et de retirer des tours à la liste (voir figure \ref{fig:turnManager}). Ceux-ci peuvent par exemple représenter les tours des personnages joueurs, non joueurs et/ou des lancers de sorts. Le MJ peut également réordonner les tours à l'aide du glisser-déposer. Toutes les actions effectuables à la souris disposent également d'un équivalent en raccourcis clavier, il est par exemple possible de naviguer entre les tours et de les réarranger à l'aide des flèches du clavier. Pour sélectionner plusieurs éléments à l'aide du clavier, il suffit de maintenir la touche Maj enfoncée et d'apuyer sur les flêches. Pour en déplacer, il suffit d'en sélectionner puis de mainternir Ctrl enfoncée et d'appuyer sur les flêches. Enfin, lorsque des utilisateurs se connectent ils sont automatiquement ajoutés dans le gestionnaire de tour.
+\subsection{Gestionnaire de tours}
+Le gestionnaire de tours est un outil qui permet au MJ de gérer ses combats. Les icônes sur la droite du gestionnaire permettent d'ajouter et de retirer des tours à la liste (voir figure \ref{fig:turnManager}). Ceux-ci peuvent par exemple représenter les tours des personnages joueurs, non joueurs et/ou des lancers de sorts. Le MJ peut également réordonner les tours à l'aide du glisser-déposer. Toutes les actions effectuables à la souris disposent également d'un équivalent en raccourcis clavier, il est par exemple possible de naviguer entre les tours et de les réarranger à l'aide des flèches du clavier. Pour sélectionner plusieurs éléments à l'aide du clavier, il suffit de maintenir la touche Maj enfoncée et d'appuyer sur les flèches. Pour en déplacer, il suffit d'en sélectionner puis de mainternir la touche Ctrl enfoncée et d'appuyer sur les flèches. Enfin, lorsque des utilisateurs se connectent ils sont automatiquement ajoutés dans le gestionnaire de tour.
 
 \begin{figure}[h!]
 	\centering
 	\includegraphics[width=0.7\textwidth]{img/turn_manager.png}
 	\caption{Gestionnaire de tour}
 	\label{fig:turnManager}
+\end{figure}
+\newpage
+
+\subsection{Liste de jetons}
+La liste des jetons (figure \ref{fig:tokenmenu}) répertorie les jetons qui peuvent être posés sur une carte. Il est possible d'ajouter des jetons personnalisés, c'est à dire des jetons avec un texte indiqué dessus. Des jetons possédant un élément de jeu peuvent également être ajoutés via une fenêtre d'édition d'élément de jeu (figure \ref{fig:gameobject_edit}). Les seuls éléments de jeu disponibles à l'heure actuelle sont les personnages (qui sont caractérisés par des points de vie).
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=0.5\textwidth]{img/tokenmenu.png}
+	\caption{Liste de jetons et options d'ajout de jetons}
+	\label{fig:tokenmenu}
+\end{figure}
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=0.5\textwidth]{img/gameobject_edit.png}
+	\caption{Fenêtre d'édition d'un élément de jeu}
+	\label{fig:gameobject_edit}
+\end{figure}
+\newpage
+
+\subsection{Carte}
+% TODO décrire la carte
+
+Comme décrit précédemment, l'interface graphique permet de créer des jetons possédant un personnage, ces jetons peuvent être ensuite posés sur une carte. Un personnage possède des points de vie qui sont affichés sous forme d'une barre de vie (voir figure \ref{fig:lifebar}) au passage de la souris sur un sprite posé sur la carte.
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[scale=0.9]{img/gameobject_lifebar.png}
+	\caption{Barre de vie d'un sprite posé sur la carte}
+    \label{fig:lifebar}
 \end{figure}
