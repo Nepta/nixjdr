@@ -69,6 +69,11 @@ bool FoWLayer::sceneEventFilter(QGraphicsItem *watched, QEvent *event) {
     if (event->type() == QEvent::GraphicsSceneMouseRelease) {
         spriteMouseReleaseEvent(mouseEvent, sprite);
     }
+    else if (event->type() == QEvent::GraphicsSceneWheel) {
+        if (!isEnabled()) {
+            event->ignore();
+        }
+    }
 
     return eventHandled;
 }

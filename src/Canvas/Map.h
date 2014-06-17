@@ -85,7 +85,6 @@ private:
     void hideAllToolBoxes();
     void keyPressEvent(QKeyEvent *keyEvent);
     void keyReleaseEvent(QKeyEvent *keyEvent);
-    void wheelEvent(QWheelEvent *event);
 };
 
 #endif // MAP_H

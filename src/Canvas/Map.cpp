@@ -304,12 +304,6 @@ void Map::keyReleaseEvent(QKeyEvent *keyEvent){
     m_Scene->sendEvent(m_SelectedLayer, keyEvent);
 }
 
-void Map::wheelEvent(QWheelEvent *event)
-{
-    event->ignore();
-    qDebug() << "prout";
-}
-
 MapLayer *Map::getMapLayer() {
     return dynamic_cast<MapLayer *>(m_Layers->getLayer(LayerCodes::LAYER_MAP));
 }
