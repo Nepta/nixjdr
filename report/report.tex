@@ -38,6 +38,7 @@
 % Colors
 \usepackage[usenames,dvipsnames]{xcolor}
 \definecolor{session_bg}{RGB}{25,25,25}
+\definecolor{grey}{rgb}{0.96,0.96,0.96}
 \definecolor{grey2}{rgb}{0.3,0.3,0.3}
 \definecolor{dkgreen}{rgb}{0,0.6,0}
 \definecolor{gray}{rgb}{0.5,0.5,0.5}
@@ -67,32 +68,21 @@
 }
 
 \usepackage{listings}
-\lstloadlanguages{C,sh}
-\lstdefinestyle{session}{
-	numbers=left,	
-	tabsize=4,
-	frame=single, % cadre autour du code
-	basicstyle=\small\ttfamily\color{white},
-	numberstyle=\scriptsize\ttfamily,
-	backgroundcolor=\color{session_bg},
-	showstringspaces=false,
-	keywordstyle=\color{OliveGreen},
-	stringstyle=\color{BrickRed},
-	commentstyle=\color{grey2}\it,
-	stepnumber=1
-}
-\lstdefinestyle{C++}{
-	basicstyle=\scriptsize,
+\lstset{
 	numbers=left,                   % where to put the line-numbers
-  	numberstyle=\tiny\color{gray},
-	commentstyle=\color{dkgreen},
+    language=C++,
+	tabsize=4,
 	frame=single,                   % adds a frame around the code
- 	rulecolor=\color{black},
-	emph={},
+	breaklines=true,				% text wrapping
+    basicstyle=\scriptsize\ttfamily,
+    numberstyle=\scriptsize\ttfamily,
+    backgroundcolor=\color{grey},
+    showstringspaces=false,
+    keywordstyle=\color{OliveGreen},
+    stringstyle=\color{BrickRed},
+    commentstyle=\color{grey2}\it,
 	emphstyle=\color{mauve},
-	morekeywords={},
-	keywordstyle={\color{blue}},
-	showstringspaces=false
+    stepnumber=1
 }
 
 % Title page
