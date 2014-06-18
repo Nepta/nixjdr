@@ -79,8 +79,10 @@ void MainWindow::initRole(){
 
     if (m_User->getRole() == Role::ROLE_MJ) {
         setupMJ();
+        m_IsMj = true;
     } else {
         setupPlayer();
+        m_IsMj = false;
     }
 }
 
@@ -210,7 +212,6 @@ void MainWindow::on_actionConnection_triggered(){
 }
 
 void MainWindow::setupMJ() {
-    m_IsMj = true;
     m_Server = new SwitchServer();
 
     /* Connect sendMessageToChatUi from m_Server to m_ChatWidget in order to display system messages
@@ -252,7 +253,6 @@ void MainWindow::addPlayerToInterface(QString playerNickname){
 
 
 void MainWindow::setupPlayer() {
-    m_IsMj = false;
 
     TokenMenu *tokenMenu = ui->tokenPage;
     TurnMenu *turnMenu = ui->turnWidget;

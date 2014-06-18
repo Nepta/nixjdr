@@ -31,7 +31,7 @@ int MapRepository::insertMap(Map *map) {
  * @param id Map's id
  * @return Map
  */
-Map *MapRepository::findMapById(int id, TokenList *tokenList) {
+Map *MapRepository::findMapById(int id, TokenList *tokenList, Role userRole) {
     DBItem mapItem = RepositoryManager::s_MapRepository.findById(id);
 
     // Retrieve & construct BackgroundLayer
@@ -54,8 +54,11 @@ Map *MapRepository::findMapById(int id, TokenList *tokenList) {
     DBItem drawingLayerItem = RepositoryManager::s_DrawingLayerRepository.findById(drawingLayerId);
     DrawingLayer *drawingLayer = new DrawingLayer(drawingLayerItem);
 
+    // Define wether the user is Mj or not
+    bool isMj = (userRole == Role::ROLE_MJ);
+
     // Construct map
-    Map *map = new Map(mapItem, bgLayer, mapLayer, fowLayer, drawingLayer);
+    Map *map = new Map(mapItem, bgLayer, mapLayer, fowLayer, drawingLayer, isMj);
 
     // Retrieve Sprites
     RepositoryManager::s_SpriteRepository.getMapSprites(tokenList, mapLayer);

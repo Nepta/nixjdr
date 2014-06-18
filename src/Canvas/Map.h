@@ -36,7 +36,7 @@ public:
     explicit Map(bool isImage, QString mapName, QString bgFilename, TokenItem *tokenItem,
                  int tileStep, bool isMj, QWidget *parent = 0);
     Map(DBItem item, BackgroundLayer *bgLayer, MapLayer *mapLayer, FoWLayer *fowLayer,
-        DrawingLayer *drawingLayer);
+        DrawingLayer *drawingLayer, bool isMj);
     ~Map();
 
     void closeEvent(QCloseEvent *closeEvent);

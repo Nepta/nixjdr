@@ -27,7 +27,7 @@ Map::Map(bool isImage, QString mapName, QString bgFilename, TokenItem *tokenItem
 }
 
 Map::Map(DBItem item, BackgroundLayer *bgLayer, MapLayer *mapLayer, FoWLayer *fowLayer,
-    DrawingLayer *drawingLayer) :
+    DrawingLayer *drawingLayer, bool isMj) :
     DBItem(),
     ui(new Ui::Map)
 {
@@ -44,6 +44,7 @@ Map::Map(DBItem item, BackgroundLayer *bgLayer, MapLayer *mapLayer, FoWLayer *fo
 
     id_ = id;
     setWindowTitle(windowtitle);
+    initRole(isMj);
     m_Layers = new Layers(bgLayer, mapLayer, fowLayer, drawingLayer);
     initScene(sceneWidth, sceneHeight);
     initLayers(false);

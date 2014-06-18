@@ -65,7 +65,8 @@ void MapClient::openMapAction(const QString& msg) {
         return;
     }
 
-    Map *map = RepositoryManager::s_MapRepository.findMapById(mapId, m_TokenList);
+    Map *map = RepositoryManager::s_MapRepository.findMapById(mapId, m_TokenList,
+                                                              this->m_User->getRole());
     map->getMapLayer()->setTokenItem(m_TokenList->currentItem());
 
     emit openMap(map);

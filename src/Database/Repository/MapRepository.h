@@ -14,7 +14,7 @@ public:
     const QString getTableName();
 
     int insertMap(Map *map);
-    Map *findMapById(int id, TokenList *tokenList);
+    Map *findMapById(int id, TokenList *tokenList, Role userRole = Role::ROLE_PLAYER);
 };
 
 #endif // MAPREPOSITORY_H
