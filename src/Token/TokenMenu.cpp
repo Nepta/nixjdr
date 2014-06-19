@@ -116,14 +116,7 @@ void TokenMenu::addToken(QString text, QString filePath, int size, bool custom,
     }
 }
 
-void TokenMenu::editTokenCharacter(const QPoint &pos) {
-    QListWidgetItem *item = ui->m_tokenList->itemAt(pos);
-    TokenItem *tokenItem = dynamic_cast<TokenItem*>(item);
-
-    if (tokenItem == NULL) {
-        return;
-    }
-
+void TokenMenu::editTokenCharacter(TokenItem *tokenItem) {
     GameObject *gameObject = tokenItem->getGameObject();
     Character *character = dynamic_cast<Character*>(gameObject);
 
@@ -146,10 +139,16 @@ void TokenMenu::on_m_tokenList_customContextMenuRequested(const QPoint &pos) {
     QMenu menu;
 
     QAction *editAction = menu.addAction(tr("Editer l'élément de jeu"));
+    QListWidgetItem *item = ui->m_tokenList->itemAt(pos);
+    TokenItem *tokenItem = dynamic_cast<TokenItem*>(item);
+
+    if (tokenItem == NULL || tokenItem->getGameObject() == NULL) {
+        editAction->setEnabled(false);
+    }
 
     QAction *selectedAction = menu.exec(globalPos);
     if (selectedAction == editAction) {
-        editTokenCharacter(pos);
+        editTokenCharacter(tokenItem);
     }
 }
 

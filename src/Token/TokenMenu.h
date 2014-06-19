@@ -23,7 +23,7 @@ public:
     void addItem(QListWidgetItem *item);
     void addToken(QString text, QString filePath, int size, bool custom, GameObject *gameObject = NULL);
     void addCustomToken(QString text, GameObject *gameObject = NULL);
-    void editTokenCharacter(const QPoint &pos);
+    void editTokenCharacter(TokenItem *tokenItem);
     TokenList *getTokenList();
 
 private slots:

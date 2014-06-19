@@ -24,7 +24,7 @@ void NotificationStacker::pushNotification(QString text){
     }
 }
 
-void NotificationStacker::timerEvent(QTimerEvent *event){
+void NotificationStacker::timerEvent(QTimerEvent *) {
     if(!m_Stack.isEmpty()){
         m_LastNotif = m_Stack.takeFirst();
         m_Size--;
