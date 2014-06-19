@@ -112,7 +112,7 @@ void TokenMenu::addToken(QString text, QString filePath, int size, bool custom,
     }
     else {
         // TODO display a notification that an item with the given text already exists.
-        qDebug() << tr("Un jeton portant ce nom existe déjà.");
+        emit sendNotification(QString("Un jeton portant ce nom existe déjà."));
     }
 }
 

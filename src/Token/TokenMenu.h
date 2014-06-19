@@ -31,6 +31,9 @@ private slots:
 
     void on_m_tokenList_customContextMenuRequested(const QPoint &pos);
 
+signals:
+    void sendNotification(QString str);
+
 private:
     Ui::TokenMenu *ui;
 };

@@ -73,6 +73,10 @@ void MainWindow::initConnects() {
     // Top menu
     connect(ui->tableArea, SIGNAL(subWindowActivated(QMdiSubWindow*)),
                  this, SLOT(updateMenu()));
+
+    // Notification Stacker
+    connect(this->ui->tokenPage, SIGNAL(sendNotification(QString)),
+            &m_NotificationStacker, SLOT(pushNotification(QString)));
 }
 
 void MainWindow::initRole(){

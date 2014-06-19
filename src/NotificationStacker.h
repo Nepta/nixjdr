@@ -17,6 +17,8 @@ public:
     ~NotificationStacker();
 
     void setParent(QWidget* parent);
+
+public slots:
     void pushNotification(QString text);
 
 private:

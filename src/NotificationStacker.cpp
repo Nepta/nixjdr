@@ -1,7 +1,5 @@
 #include "NotificationStacker.h"
 
-#include <QDebug>
-
 NotificationStacker::NotificationStacker(){
     m_Size = 0;
 }
