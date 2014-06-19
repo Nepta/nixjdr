@@ -1,0 +1,7 @@
+\subsection{Cartes et images}
+
+Une image est une carte dont les layers de brouillard de guerre et de personnages sont dissimulés, ainsi que les menus qui leurs sont associés.\\
+Une Map hérite de QWidget, afin d'être mise dans une fenêtre, ainsi que de DBItem et SenderHandler pour la mise en réseau. Elle comporte une QGraphicsView, qui sert à afficher une QGraphicsScene comportant différents Layers. Les Layers sont des couches empilées et indépendantes les unes des autres.\\
+La classe Map se contente de créer la carte et d'interragir avec la base de données. La création des différents Layers est laissée à la classe Layer, qui possède une QHash associant les layers aux éléments de l'interface utilisateur.\\
+Afin d'être placés sur une QGraphicsscene, les Layers sont des QGraphicsObject. Il existe quatre types de layers: BackgroundLayer, DrawingLayer, FoWLayer et MapLayer. Ces deux derniers sont des GridLayers, et peuvent ainsi posséder des TokenItems.\\
+Afin de gérer les évnèmenents, les GridLayers réimplémentent les méthodes de Qt mouseReleaseEvent et mouseMoveEvent. Le DrawingLayer quant à lui installe l'eventFilter de l'outil sélectionné par l'utilisateur. Les différents Tools (Eraser, Pen, Ping) sont des QGraphicsObject possédant un sceneEventFilter. Afin de pouvoir dessiner, DrawingLayer possède une QPixMap dont le pointeur est indiqué aux Tools.
