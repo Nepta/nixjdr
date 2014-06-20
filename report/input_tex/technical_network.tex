@@ -41,14 +41,16 @@ Ces actions sont de simples méthodes dans la classe MapClient, une évolution p
 	\item ces actions auraient pu être réversibles (une liste au niveau de MapServer garderait une trace des actions effectuées);
 	\item logger les actions aurait été plus simple qu'à l'heure actuelle.
 \end{itemize}
-\newpage
+\bigskip
 
-De plus, l'ordre dans lequel les étapes sont effectuées pour ces actions est difficilement exploitables, notamment pour des fonctionnalités de modérations. Prenons l'exemple de l'ajout d'un Sprite sur une carte décrit sur le schéma ci-dessous.
+De plus, l'ordre dans lequel les étapes sont effectuées pour ces actions est difficilement exploitables, notamment pour des fonctionnalités de modérations. Prenons l'exemple de l'ajout d'un Sprite sur une carte décrit sur la figure \ref{fig:network_addsprite}.
+\newpage
 
 \begin{figure}[h!]
 	\centering
 	\includegraphics[width=1.0\textwidth]{img/network_addsprite.png}
 	\caption{Etapes pour l'ajout d'un Sprite}
+	\label{fig:network_addsprite}
 \end{figure}
 
 Dans le cas actuel décrit ci-dessus, sur un clic gauche de la souris sur la carte, un sprite est ajouté sur la carte localement et en base de données. Cependant, si nous voulons effectuer de la modération du côté du serveur, cela complique la tâche : en effet le sprite a déjà été ajouté à un client et en base de données. Il faudrait que les étapes s'effectuent comme sur le schéma ci-dessous :
