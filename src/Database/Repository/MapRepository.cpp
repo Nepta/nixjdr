@@ -34,6 +34,9 @@ int MapRepository::insertMap(Map *map) {
 Map *MapRepository::findMapById(int id, TokenList *tokenList, Role userRole) {
     DBItem mapItem = RepositoryManager::s_MapRepository.findById(id);
 
+    // Define whether the user is Mj or not
+    bool isMj = (userRole == Role::ROLE_MJ);
+
     // Retrieve & construct BackgroundLayer
     int bgLayerId = mapItem.getHashMap().value("backgroundlayerid").toInt();
     DBItem bgLayerItem = RepositoryManager::s_BgLayerRepository.findById(bgLayerId);
@@ -47,15 +50,12 @@ Map *MapRepository::findMapById(int id, TokenList *tokenList, Role userRole) {
     // Retrieve & construct FoWLayer
     int fowLayerId = mapItem.getHashMap().value("fowlayerid").toInt();
     DBItem fowLayerItem = RepositoryManager::s_FoWLayerRepository.findById(fowLayerId);
-    FoWLayer *fowLayer = new FoWLayer(fowLayerItem);
+    FoWLayer *fowLayer = new FoWLayer(fowLayerItem, isMj);
 
     // Retrieve & construct DrawingLayer
     int drawingLayerId = mapItem.getHashMap().value("drawinglayerid").toInt();
     DBItem drawingLayerItem = RepositoryManager::s_DrawingLayerRepository.findById(drawingLayerId);
     DrawingLayer *drawingLayer = new DrawingLayer(drawingLayerItem);
-
-    // Define wether the user is Mj or not
-    bool isMj = (userRole == Role::ROLE_MJ);
 
     // Construct map
     Map *map = new Map(mapItem, bgLayer, mapLayer, fowLayer, drawingLayer, isMj);
