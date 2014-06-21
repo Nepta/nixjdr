@@ -14,12 +14,6 @@ MapServer::~MapServer() {}
 void MapServer::processNewData(Header header, QByteArray& data) {
     Message message(data);
 
-    /*MapCodes code = (MapCodes) header.getCode();
-
-    if (code == MapCodes::REMOVE_ALL_FOW) {
-        removeAllFoWAction(message.getString());
-    }*/
-
     // TODO permission system : action accepted -> sendPacketToList,
     //                          action refused -> sendPacketToOne
 
@@ -30,14 +24,3 @@ void MapServer::processNewData(Header header, QByteArray& data) {
 
     sendPacketToList((quint16) TargetCode::MAP_CLIENT, header.getCode(), message, recipients);
 }
-
-/* TODO use this action, it was commented and moved in FoWLayer::removeFoW for the moment due to
- * a concurrency problem in FoWLayer::fillFoW (removeFoW -> send notif to server -> fill fow ->
- * the server receive the notif and remove the fow).
- */
-/*void MapServer::removeAllFoWAction(const QString& msg) {
-    int fowLayerId = msg.toInt();
-
-    // Remove all the FoW Sprites for this layer from the db
-    RepositoryManager::s_SpriteRepository.removeAllSpritesFromFoWLayer(fowLayerId);
-}*/

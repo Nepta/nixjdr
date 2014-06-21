@@ -24,6 +24,7 @@ public:
     QListWidgetItem getCurrentItem();
 
     TokenItem *findTokenItemById(int id);
+    TokenItem *findTokenItemByName(QString name);
 
 private:
     void dragMoveEvent(QDragMoveEvent * event);

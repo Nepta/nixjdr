@@ -13,9 +13,6 @@ public:
     MapServer(QHash<QString, User *> *usersList);
     ~MapServer();
     void processNewData(Header header, QByteArray& data);
-
-/*private:
-    void removeAllFoWAction(const QString& msg);*/
 };
 
 #endif // MAPSERVER_H

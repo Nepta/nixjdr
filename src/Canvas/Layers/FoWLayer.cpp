@@ -36,7 +36,7 @@ void FoWLayer::construct(int step, bool transparentSprites) {
 }
 
 /**
- * @brief FoWLayer::addSpriteFromDb Reimplemented from GridLayer to add transparency to the new
+ * @brief FoWLayer::addSpriteToLayer Reimplemented from GridLayer to add transparency to the new
  * Sprite if m_TransparentSprites is true.
  * @param sprite
  */
@@ -84,13 +84,31 @@ bool FoWLayer::sceneEventFilter(QGraphicsItem *watched, QEvent *event) {
 void FoWLayer::fillFoW() {
     removeFoW();
 
+    int firstId;
+    int lastId;
+
     Database::instance()->begin();
     for(int i = 0 ; i < boundingRect().width() ; i += m_Step) {
-        for(int j = 0 ; j < boundingRect().height() ; j += m_Step) {
-            GridLayer::addSprite(m_TokenItem, QPoint(i, j));
+        for(int j = 0 ; j < boundingRect().height() ; j += m_Step) {            
+            int id = GridLayer::addSprite(m_TokenItem, QPoint(i, j), 1, false);
+
+            if (i == 0 && j == 0) {
+                firstId = id;
+                lastId = id;
+            }
+            else {
+                lastId++;
+            }
         }
     }
     Database::instance()->commit();
+
+    // Notifies all the clients that FoW sprites in the range [firstId;lastId] were added
+    QString msg = QString("%1 %2 %3")
+        .arg(this->id())
+        .arg(firstId)
+        .arg(lastId);
+    m_SenderClient->sendMessageToServer(msg, (quint16) MapCodes::ADD_ALL_FOW);
 }
 
 /**

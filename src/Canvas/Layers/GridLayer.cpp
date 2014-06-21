@@ -63,21 +63,43 @@ Sprite *GridLayer::addSpriteToLayer(Sprite* sprite) {
  * @param position Sprite's position
  * @param zValue Indicates the position of the sprite in the stack.
  */
-void GridLayer::addSprite(TokenItem *tokenItem, QPoint position, int zValue) {
+int GridLayer::addSprite(TokenItem *tokenItem, QPoint position, int zValue, bool notify) {
+    int id;
+
     Sprite *sprite = addSpriteToLayer(tokenItem, position, zValue);
-    addSpriteRemote(sprite);
+    id = addSpriteRemoteDb(sprite);
+
+    if (notify) {
+        addSpriteRemoteClients(sprite);
+    }
+
+    return id;
 }
 
-void GridLayer::addSprite(Sprite *sprite, QPoint position) {
+int GridLayer::addSprite(Sprite *sprite, QPoint position) {
+    int id;
+
     addSpriteToLayer(sprite, position);
-    addSpriteRemote(sprite);
+    id = addSpriteRemoteDb(sprite);
+    addSpriteRemoteClients(sprite);
+
+    return id;
 }
 
-void GridLayer::addSpriteRemote(Sprite *sprite) {
-    // Insert the sprite in the database
-    RepositoryManager::s_SpriteRepository.insertSprite(sprite);
+/**
+ * @brief GridLayer::addSpriteRemoteDb Inserts the Sprite in the database.
+ * @param sprite
+ */
+int GridLayer::addSpriteRemoteDb(Sprite *sprite) {
+    return RepositoryManager::s_SpriteRepository.insertSprite(sprite);
+}
 
-    // Notifies every client that a new sprite has been added
+/**
+ * @brief GridLayer::addSpriteRemoteClients Notifies every client through the server hat a new
+ * Sprite has been added.
+ * @param sprite
+ */
+void GridLayer::addSpriteRemoteClients(Sprite *sprite) {
     QString msg = QString("%1").arg(sprite->id());
     m_SenderClient->sendMessageToServer(msg, (quint16) MapCodes::ADD_SPRITE);
 }

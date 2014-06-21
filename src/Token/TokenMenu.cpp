@@ -1,5 +1,4 @@
 #include <QList>
-#include <QDebug>
 #include <QMenu>
 #include <QAction>
 

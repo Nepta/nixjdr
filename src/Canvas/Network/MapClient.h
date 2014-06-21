@@ -31,6 +31,7 @@ private:
     void addSpriteAction(const QString& msg);
     void removeSpriteAction(const QString& msg);
     void removeAllFoWAction(const QString& msg);
+    void addAllFoWAction(const QString& msg);
     void updateDrawingLayerPixmapAction(const QString& msg);
     void pingAction(const QString& msg);
 

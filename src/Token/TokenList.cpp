@@ -75,3 +75,18 @@ TokenItem *TokenList::findTokenItemById(int id) {
 
     return result;
 }
+
+TokenItem *TokenList::findTokenItemByName(QString name) {
+    TokenItem *result = NULL;
+
+    for (int i = 0 ; i < count() ; i++) {
+        QListWidgetItem *listWidgetItem = item(i);
+
+        if (listWidgetItem->text() == name) {
+            result = dynamic_cast<TokenItem*>(listWidgetItem);
+            break;
+        }
+    }
+
+    return result;
+}

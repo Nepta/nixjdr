@@ -30,6 +30,9 @@ void MapClient::processNewData(Header header, QByteArray& data) {
     else if (code == MapCodes::REMOVE_ALL_FOW) {
         removeAllFoWAction(msg.getString());
     }
+    else if (code == MapCodes::ADD_ALL_FOW) {
+        addAllFoWAction(msg.getString());
+    }
     else if (code == MapCodes::UPDATE_DRAWING_LAYER_PIXMAP) {
         updateDrawingLayerPixmapAction(msg.getString());
     }
@@ -143,6 +146,32 @@ void MapClient::removeAllFoWAction(const QString& msg) {
 
     if (map != NULL) {
         map->getFoWLayer()->removeAllSprites();
+    }
+}
+
+void MapClient::addAllFoWAction(const QString& msg) {
+    QString temp = msg;
+    int fowLayerId = Common::extractFirstWord(temp).toInt();
+    int firstId = Common::extractFirstWord(temp).toInt();
+    int lastId = Common::extractFirstWord(temp).toInt();
+
+    // Retrieves the FoW TokenItem from its name
+    TokenItem *tokenItem = m_TokenList->findTokenItemByName("fow");
+
+    Map *map = getMapByFoWLayerId(fowLayerId);
+
+    if (map != NULL) {
+        for (int i = firstId ; i <= lastId ; i++) {
+            if (map != NULL) {
+                DBItem dbItem = RepositoryManager::s_SpriteRepository.findById(i);
+
+                FoWLayer *layer = map->getFoWLayer();
+
+                // Creates the Sprite and adds it to the intended map and layer
+                Sprite *sprite = new Sprite(dbItem, tokenItem, layer);
+                layer->addSpriteToLayer(sprite);
+            }
+        }
     }
 }
 

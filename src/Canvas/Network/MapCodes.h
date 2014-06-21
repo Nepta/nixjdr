@@ -11,6 +11,7 @@ enum class MapCodes : quint16 {
     ADD_SPRITE,
     REMOVE_SPRITE,
     REMOVE_ALL_FOW,
+    ADD_ALL_FOW,
     UPDATE_DRAWING_LAYER_PIXMAP,
     PING
 };

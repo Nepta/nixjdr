@@ -31,9 +31,10 @@ public:
     virtual Sprite *addSpriteToLayer(Sprite* sprite);
     Sprite *addSpriteToLayer(Sprite* sprite, QPoint position);
     Sprite *addSpriteToLayer(TokenItem *tokenItem, QPoint position, int zValue);
-    virtual void addSprite(TokenItem *tokenItem, QPoint position, int zValue = 1);
-    void addSprite(Sprite *sprite, QPoint position);
-    void addSpriteRemote(Sprite *sprite);
+    virtual int addSprite(TokenItem *tokenItem, QPoint position, int zValue = 1, bool notify = true);
+    int addSprite(Sprite *sprite, QPoint position);
+    int addSpriteRemoteDb(Sprite *sprite);
+    void addSpriteRemoteClients(Sprite *sprite);
 
     virtual void removeSprite(Sprite *sprite, bool localDelete = true);
     void removeSpriteById(int id);
