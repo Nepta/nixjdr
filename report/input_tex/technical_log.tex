@@ -9,10 +9,4 @@ Lorsque qu'un joueur effectue une action (ajout, déplacement ou suppression d'u
 Celui ci permet, avec le \textit{LogServer} la communication des différentes interface de jeu.
 Le \textit{LogServer} reçoit les information des différents \textit{LogClient} et les réexpédies à tous les clients.
 Une fois cela fait, les \textit{LogClient} qui reçoivent maintenant l'information de tous les joueurs peuvent, par le biais du \textit{LogGui} afficher les differentes action dans un widget prévue à cet effet.
-
-\begin{figure}[h!]
-    \centering
-    \includegraphics[scale=0.7]{img/log.png}
-    \caption{historique}
-    \label{fig:log}
-\end{figure}
+A terme nous aurions pû utiliser cet historique a des fins de contrôle plus poussé, en permettant directement l'annulation des actions depuis ce menu ou encore un affichage pour la gestion de permission (essayer pour un joueur de déplacer son jeton si il n'a plus de vie afficherait un message d'erreur dans les logs).
