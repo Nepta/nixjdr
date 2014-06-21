@@ -83,10 +83,8 @@ void MainWindow::initRole(){
 
     if (m_User->getRole() == Role::ROLE_MJ) {
         setupMJ();
-        m_IsMj = true;
     } else {
         setupPlayer();
-        m_IsMj = false;
     }
 }
 
@@ -147,7 +145,8 @@ void MainWindow::createMap(QString mapName, int mapStep, bool isMap) {
     QListWidget *tokenList = ui->tokenPage->getUi()->m_tokenList;
     TokenItem *currentTokenItem = dynamic_cast<TokenItem*>(tokenList->currentItem());
 
-    Map *map = new Map(isMap, mapName, m_FilePath , currentTokenItem, mapStep, m_IsMj);
+    bool isMj = (m_User->getRole() == Role::ROLE_MJ);
+    Map *map = new Map(isMap, mapName, m_FilePath , currentTokenItem, mapStep, isMj);
 
     // Add Map to the database
     RepositoryManager::s_MapRepository.insertMap(map);
@@ -183,7 +182,7 @@ void MainWindow::on_actionOpenMap_triggered() {
 
     if (mapId != 0) {
         TokenList *tokenList = ui->tokenPage->getUi()->m_tokenList;
-        Map *map = RepositoryManager::s_MapRepository.findMapById(mapId, tokenList);
+        Map *map = RepositoryManager::s_MapRepository.findMapById(mapId, tokenList, m_User->getRole());
         map->getMapLayer()->setTokenItem(tokenList->currentItem());
 
         openMap(map, true);
@@ -244,10 +243,11 @@ void MainWindow::setupMJ() {
 
     setupPlayer();
 
-    connect(dynamic_cast<CmdNickname *>(chatServer->getCommands()->getUserCommand(ChatCodes::USERCMD_NICK)),
-            SIGNAL(addPlayerToInterface(QString)),
-            this,
-            SLOT(addPlayerToInterface(QString)));
+    CmdNickname *cmdNickname = dynamic_cast<CmdNickname *>(
+        chatServer->getCommands()->getUserCommand(ChatCodes::USERCMD_NICK)
+    );
+    connect(cmdNickname, SIGNAL(addPlayerToInterface(QString)),
+            this, SLOT(addPlayerToInterface(QString)));
 }
 
 void MainWindow::addPlayerToInterface(QString playerNickname){

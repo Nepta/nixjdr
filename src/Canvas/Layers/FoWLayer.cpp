@@ -11,7 +11,7 @@ FoWLayer::FoWLayer(int step, bool transparentSprites) :
     construct(step, transparentSprites);
 }
 
-FoWLayer::FoWLayer(DBItem item) : GridLayer()
+FoWLayer::FoWLayer(DBItem item, bool transparentSprites) : GridLayer()
 {
     QHash<QString, QVariant> itemHashMap = item.getHashMap();
     columnsValues_ = item.getHashMap();
@@ -20,7 +20,7 @@ FoWLayer::FoWLayer(DBItem item) : GridLayer()
     int step = itemHashMap.value("step").toInt();
 
     id_ = id;
-    construct(step, true);
+    construct(step, transparentSprites);
 }
 
 FoWLayer::~FoWLayer() {}
