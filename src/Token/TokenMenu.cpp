@@ -111,8 +111,7 @@ void TokenMenu::addToken(QString text, QString filePath, int size, bool custom,
         m_SenderClient->sendMessageToServer(msg, (quint16) TokenMenuCodes::ADD_TOKEN);
     }
     else {
-        // TODO display a notification that an item with the given text already exists.
-        emit sendNotification(QString("Un jeton portant ce nom existe déjà."));
+        emit sendNotification(QString("Un jeton nommé %1 existe déjà.").arg(text));
     }
 }
 

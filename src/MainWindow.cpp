@@ -244,10 +244,11 @@ void MainWindow::setupMJ() {
 
     setupPlayer();
 
-    connect(dynamic_cast<CmdNickname *>(chatServer->getCommands()->getUserCommand(ChatCodes::USERCMD_NICK)),
-            SIGNAL(addPlayerToInterface(QString)),
-            this,
-            SLOT(addPlayerToInterface(QString)));
+    CmdNickname *cmdNickname = dynamic_cast<CmdNickname *>(
+        chatServer->getCommands()->getUserCommand(ChatCodes::USERCMD_NICK
+    );
+    connect(cmdNickname, SIGNAL(addPlayerToInterface(QString)),
+            this, SLOT(addPlayerToInterface(QString)));
 }
 
 void MainWindow::addPlayerToInterface(QString playerNickname){

@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>Jdrnix</string>
   </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QVBoxLayout" name="verticalLayout_3" stretch="97,3">
@@ -214,8 +214,8 @@
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>286</width>
-               <height>297</height>
+               <width>294</width>
+               <height>305</height>
               </rect>
              </property>
              <property name="minimumSize">
@@ -233,8 +233,8 @@
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>96</width>
-               <height>26</height>
+               <width>98</width>
+               <height>28</height>
               </rect>
              </property>
              <attribute name="label">
@@ -331,7 +331,7 @@
      <x>0</x>
      <y>0</y>
      <width>1072</width>
-     <height>25</height>
+     <height>19</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuConnexion">
