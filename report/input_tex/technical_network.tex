@@ -1,6 +1,10 @@
 \subsection{Réseau}
 
-% TODO insérer schéma UML
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=\textwidth]{img/network_uml.png}
+	\caption{Diagramme UML de la partie réseau (les modules ne sont pas représentés)}
+\end{figure}
 
 Lorsque l'application ne possédait qu'un chat, toutes les opérations nécessitant une mise en réseau se faisaient dans les classes gérant le Chat. Nous avons par la suite fait une refonte pour gérer plusieurs modules réseau en évitant de la duplication de code.\\
 
@@ -44,7 +48,6 @@ Ces actions sont de simples méthodes dans la classe MapClient, une évolution p
 \bigskip
 
 De plus, l'ordre dans lequel les étapes sont effectuées pour ces actions est difficilement exploitable, notamment pour des fonctionnalités de modérations. Prenons l'exemple de l'ajout d'un Sprite sur une carte décrit sur la figure \ref{fig:network_addsprite}.
-\newpage
 
 \begin{figure}[h!]
 	\centering

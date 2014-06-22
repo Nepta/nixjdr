@@ -1,11 +1,5 @@
 \subsection{Éléments de jeu}
 
-% TODO insérer schéma UML
-% 	- GameObject hérite de DBItem
-%	- Sprite & Character utilisent GameObject
-%	- GameObjectRepository
-%	- GameObjectSubRepository <- CharacterRepository
-
 \begin{figure}[h!]
         \centering
         \includegraphics[width=\textwidth]{img/gameobject_uml.png}
@@ -18,7 +12,6 @@ Un Character est un GameObject et représente un personnage dans le jeu. Un Char
 
 Les éléments de jeu sont utilisés dans les TokenItems et les Sprites. A la création d'un Sprite (lors d'un ajout sur la carte) le GameObject possédé par le TokenItem associé au Sprite est copié dans ce dernier.\\
 
-% TODO fait doublon avec bdd_MLD plus haut
 \begin{figure}[h!]
         \centering
         \begin{subfigure}[h!]{0.7\textwidth}
