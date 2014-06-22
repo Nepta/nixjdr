@@ -9,8 +9,12 @@
 
 Une base de données PostgreSQL doit être installée avec l'application pour que celle-ci fonctionne correctement. Un script présent dans \textbf{resource/Queries/init.sh} permet d'exécuter les requêtes présentes dans les fichiers initTables.sql et initRows.sql qui, respectivement, permettent de créer les tables et de peupler la base de données. Les tables créées sont modélisées plus haut sur la figure \ref{fig:bddmld}.\\
 
-
-% TODO insérer schéma UML
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=\textwidth]{img/bdd_uml.png}
+    \caption{Diagramme UML de la partie BDD (Les classes héritant de Repository ne sont pas représentées pour éviter de surcharger le schéma.)}
+    \label{fig:bdduml}
+\end{figure}
 
 La base de donnéees est représentée dans l'application par la classe Database qui a été conçue selon le patron de conception Singleton : Database ne peut être instanciée qu'une seule fois. De plus cette instance est accessible à l'ensemble de l'application ce qui évite de devoir passer cette dépendance à un nombre important de classes. Cette classe permet d'effectuer plusieurs opérations sur la bdd PostgreSQL telles que la récupération d'une seule ligne (\emph{pullFirst}), de plusieurs lignes (\emph{pull}), l'exécution d'une requête ne renvoyant pas de résultat (\emph{push}), et l'exécution d'une requête effectuant une opération d'insertion et renvoyant l'id de la ligne insérée (\emph{pushWithId}).\\
 
