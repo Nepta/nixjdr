@@ -7,6 +7,10 @@
 
 enum class ToolCodes : quint16;
 
+/**
+ * @brief The AbstractTool class Reimplemented from QGraphicsObject. The boundingRect returns 0 width
+ * / height so that it will not intercept mouse events occuring on the layer.
+ */
 class AbstractTool : public QGraphicsObject
 {
     Q_OBJECT

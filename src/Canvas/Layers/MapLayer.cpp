@@ -179,7 +179,12 @@ void MapLayer::spriteMouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent, Spr
     emit hideMapTooltip();
 }
 
-
+/**
+ * @brief MapLayer::ShowContextMenu shows a menu containing two actions: delete a token, or edit a
+ * character
+ * @param mouseEvent determines where the menu should be displayed from the event's position
+ * @param watched sprite on which the event occured
+ */
 void MapLayer::ShowContextMenu(QGraphicsSceneMouseEvent *mouseEvent, Sprite *watched){
     QMenu menu;
 
@@ -335,6 +340,10 @@ void MapLayer::addMoveInfoTooltip(QPoint currentMousePos) {
     emit pushInfoTooltip(moveInfo);
 }
 
+/**
+ * @brief MapLayer::showLifeBar displays a sprite's lifebar as a circle around it
+ * @param sprite sprite of which you want to display the lifebar
+ */
 void MapLayer::showLifeBar(Sprite *sprite) {
     GameObject *gameObject = sprite->getGameObject();
     Character *character = dynamic_cast<Character*>(gameObject);

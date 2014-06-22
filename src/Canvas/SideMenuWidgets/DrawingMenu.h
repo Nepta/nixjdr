@@ -7,6 +7,10 @@ namespace Ui {
 class DrawingMenu;
 }
 
+/**
+ * @brief The DrawingMenu class represents a widget containing the necessary buttons to use a
+ * drawingLayer
+ */
 class DrawingMenu : public QWidget
 {
     Q_OBJECT

@@ -3,6 +3,9 @@
 
 #include "AbstractLayer.h"
 
+/**
+ * @brief The BackgroundLayer class represents a layer with a centered background
+ */
 class BackgroundLayer : public AbstractLayer
 {
 public:

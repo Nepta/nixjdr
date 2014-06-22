@@ -15,6 +15,13 @@ void ToolPen::setSize(int size){
     m_PenSize = size;
 }
 
+/**
+ * @brief ToolPen::paintOnPixmap creates a QPainter with the specified QColor, and calls to
+ * paintOnPixmap(QPainter, QPointF, QPointf) to draw on the QPixmap
+ * @param oldPos position to start drawin from
+ * @param pos position to end drawing at
+ * @param color color to draw with
+ */
 void ToolPen::paintOnPixmap(const QPointF &oldPos, const QPointF &pos, QColor color) {
     QPainter painter(AbstractTool::getPixmap());
     painter.setPen(QPen(color, m_PenSize, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
@@ -22,6 +29,12 @@ void ToolPen::paintOnPixmap(const QPointF &oldPos, const QPointF &pos, QColor co
     paintOnPixmap(painter, oldPos, pos);
 }
 
+/**
+ * @brief ToolPen::paintOnPixmap paints from one point to another
+ * @param painter painter to paint with
+ * @param oldPos point to start drawing from
+ * @param pos point to end drawing at
+ */
 void ToolPen::paintOnPixmap(QPainter &painter, const QPointF &oldPos, const QPointF &pos) {
     if (oldPos == pos) {
         painter.drawPoint(pos);
@@ -31,6 +44,12 @@ void ToolPen::paintOnPixmap(QPainter &painter, const QPointF &oldPos, const QPoi
     }
 }
 
+/**
+ * @brief ToolPen::sceneEventFilter draws when the mouse is pressed; may draw a line if shift is
+ * pressed in the process.
+ * @param event event to handle
+ * @return
+ */
 bool ToolPen::sceneEventFilter(QGraphicsItem *, QEvent *event){
     bool eventFiltered = false;
 
@@ -74,6 +93,10 @@ bool ToolPen::sceneEventFilter(QGraphicsItem *, QEvent *event){
     return eventFiltered;
 }
 
+/**
+ * @brief ToolPen::pressMouse paints at the cursor's position, and resets the m_LineItem
+ * @param mouseEvent
+ */
 void ToolPen::pressMouse(QGraphicsSceneMouseEvent *mouseEvent){
     if(mouseEvent->button() == Qt::LeftButton){
         m_DrawStartPosition = mouseEvent->pos();
@@ -84,6 +107,11 @@ void ToolPen::pressMouse(QGraphicsSceneMouseEvent *mouseEvent){
     }
 }
 
+/**
+ * @brief ToolPen::moveMouse if shift is not being pressed, draws at the cursor's position, else
+ * previews a line ending at the cursor's position
+ * @param mouseEvent
+ */
 void ToolPen::moveMouse(QGraphicsSceneMouseEvent *mouseEvent){
     if(mouseEvent->modifiers() != Qt::ShiftModifier){
         paintOnPixmap(mouseEvent->lastScenePos(), mouseEvent->scenePos(), m_Color);
@@ -96,6 +124,10 @@ void ToolPen::moveMouse(QGraphicsSceneMouseEvent *mouseEvent){
     m_DrawLastPosition = mouseEvent->pos();
 }
 
+/**
+ * @brief ToolPen::releaseMouse hides and draws the preview line if it was being used
+ * @param mouseEvent
+ */
 void ToolPen::releaseMouse(QGraphicsSceneMouseEvent *mouseEvent){
     m_LineItem.hide();
     if(mouseEvent->button() == Qt::LeftButton && mouseEvent->modifiers() == Qt::ShiftModifier){
@@ -103,6 +135,11 @@ void ToolPen::releaseMouse(QGraphicsSceneMouseEvent *mouseEvent){
     }
 }
 
+/**
+ * @brief ToolPen::pressKey if shift is pressed, sets the preview line's beginning position at the
+ * current cursor's position; if it is maintained pressed, updates the preview line
+ * @param keyEvent
+ */
 void ToolPen::pressKey(QKeyEvent *keyEvent){
     if(keyEvent->key() == Qt::Key_Shift){
         m_DrawStartPosition = m_DrawLastPosition;
@@ -119,6 +156,10 @@ void ToolPen::pressKey(QKeyEvent *keyEvent){
     }
 }
 
+/**
+ * @brief ToolPen::releaseKey draws the preview line if shift is released
+ * @param keyEvent
+ */
 void ToolPen::releaseKey(QKeyEvent *keyEvent){
     if (keyEvent->key() == Qt::Key_Shift && m_LineItem.isVisible()) {
         m_LineItem.hide();

@@ -14,7 +14,6 @@ public:
 private:
     int m_EraserSize;
 
-    void paintOnPixmap(const QPointF &oldPos, const QPointF &pos, QColor color);
     void paintOnPixmap(QPainter &painter, const QPointF &oldPos, const QPointF &pos);
 
     void pressMouse(QGraphicsSceneMouseEvent *mouseEvent);

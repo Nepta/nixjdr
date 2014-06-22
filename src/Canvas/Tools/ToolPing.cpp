@@ -20,6 +20,10 @@ ToolPing::~ToolPing(){
 
 void ToolPing::setSize(int){}
 
+/**
+ * @brief ToolPing::ping plays the ping animation at the given position
+ * @param pos position to play the animation at
+ */
 void ToolPing::ping(QPointF pos){
     if(!m_Pinging){
         emit sendPing(pos);
@@ -35,6 +39,11 @@ void ToolPing::ping(QPointF pos){
     }
 }
 
+/**
+ * @brief ToolPing::timerEvent when a timer event occurs, kills the timer and hides the ping's
+ * animation
+ * @param timerEvent
+ */
 void ToolPing::timerEvent(QTimerEvent *timerEvent){
     m_Proxy->hide();
     killTimer(timerEvent->timerId());
@@ -42,6 +51,11 @@ void ToolPing::timerEvent(QTimerEvent *timerEvent){
     m_Pinging = false;
 }
 
+/**
+ * @brief ToolPing::sceneEventFilter when a left click occurs, pings at the cursor's position
+ * @param event
+ * @return
+ */
 bool ToolPing::sceneEventFilter(QGraphicsItem *, QEvent *event){
     bool eventFiltered = false;
     switch (event->type()) {
@@ -59,7 +73,10 @@ bool ToolPing::sceneEventFilter(QGraphicsItem *, QEvent *event){
     return eventFiltered;
 }
 
-
+/**
+ * @brief ToolPing::pressMouse pings at the cursor's position
+ * @param mouseEvent
+ */
 void ToolPing::pressMouse(QGraphicsSceneMouseEvent *mouseEvent){
     if(mouseEvent->button() == Qt::LeftButton){
         ping(mouseEvent->pos());

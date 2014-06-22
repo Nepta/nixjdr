@@ -34,6 +34,10 @@ AbstractTool *Tools::getTool(ToolCodes code){
     return m_ToolsMap.value(code);
 }
 
+/**
+ * @brief Tools::setCurrentToolCode sets the currents toolCode to the code associated with the
+ * sender's name by ToolCodesMap
+ */
 void Tools::setCurrentToolCode(){
     if(qobject_cast<QPushButton*>(sender()) != NULL){
         m_CurrentToolCode = s_ToolCodesMap.value(sender()->objectName());

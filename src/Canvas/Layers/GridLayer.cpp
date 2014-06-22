@@ -260,6 +260,11 @@ void GridLayer::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent) {
     }
 }
 
+/**
+ * @brief GridLayer::isInScene checks wether the mouseEvent occured in the scene or not
+ * @param mouseEvent Event to check
+ * @return true if the mouseEvent occured over the scene
+ */
 bool GridLayer::isInScene(QGraphicsSceneMouseEvent *mouseEvent){
     int x = mouseEvent->pos().x();
     int y = mouseEvent->pos().y();

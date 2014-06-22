@@ -7,6 +7,12 @@ ToolEraser::ToolEraser(int eraserSize):
 {
 }
 
+/**
+ * @brief ToolEraser::eraseOnPixmap uses paintOnPixmap(QPainter, QPointF, QPointF) to draw with a
+ * transparent pen
+ * @param oldPos old cursor position
+ * @param pos current cursor position
+ */
 void ToolEraser::eraseOnPixmap(const QPointF &oldPos, const QPointF &pos) {
     QPainter painter(AbstractTool::getPixmap());
     painter.setPen(QPen(Qt::transparent, m_EraserSize, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
@@ -19,14 +25,12 @@ void ToolEraser::setSize(int size){
     m_EraserSize = size;
 }
 
-
-void ToolEraser::paintOnPixmap(const QPointF &oldPos, const QPointF &pos, QColor color) {
-    QPainter painter(AbstractTool::getPixmap());
-    painter.setPen(QPen(color, m_EraserSize, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
-
-    paintOnPixmap(painter, oldPos, pos);
-}
-
+/**
+ * @brief ToolEraser::paintOnPixmap paints between two positions
+ * @param painter Qpainter to paint with
+ * @param oldPos position to begin painting at
+ * @param pos position to end painting at
+ */
 void ToolEraser::paintOnPixmap(QPainter &painter, const QPointF &oldPos, const QPointF &pos) {
     if (oldPos == pos) {
         painter.drawPoint(pos);
@@ -36,7 +40,11 @@ void ToolEraser::paintOnPixmap(QPainter &painter, const QPointF &oldPos, const Q
     }
 }
 
-
+/**
+ * @brief ToolEraser::sceneEventFilter erases when the user clicks or clicks & moves the mouse
+ * @param event
+ * @return
+ */
 bool ToolEraser::sceneEventFilter(QGraphicsItem *, QEvent *event){
     bool eventFiltered = false;
 
@@ -63,7 +71,10 @@ bool ToolEraser::sceneEventFilter(QGraphicsItem *, QEvent *event){
     return eventFiltered;
 }
 
-
+/**
+ * @brief ToolEraser::moveMouse erases the pixmap at the mouse's position
+ * @param mouseEvent
+ */
 void ToolEraser::moveMouse(QGraphicsSceneMouseEvent *mouseEvent){
     if (mouseEvent->buttons() & Qt::LeftButton) {
         eraseOnPixmap(mouseEvent->lastScenePos(), mouseEvent->scenePos());

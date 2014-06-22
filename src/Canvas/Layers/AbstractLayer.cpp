@@ -38,6 +38,14 @@ void AbstractLayer::setSenderClient(SenderClient *senderClient) {
     m_SenderClient = senderClient;
 }
 
+/**
+ * @brief AbstractLayer::keyPressEvent Reimplemented from QObject; required since the QGraphicsScene
+ * forwards all events
+ */
 void AbstractLayer::keyPressEvent(QKeyEvent *) {}
 
+/**
+ * @brief AbstractLayer::keyReleaseEvent Reimplemented from QObject; required since the QGraphicsScene
+ * forwards all events
+ */
 void AbstractLayer::keyReleaseEvent(QKeyEvent *) {}

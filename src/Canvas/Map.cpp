@@ -62,6 +62,11 @@ Map::~Map() {
     delete m_Scene;
 }
 
+/**
+ * @brief Map::closeEvent reimplemented from QWidget. When the map is closed, it is removed from
+ * the client's map list
+ * @param closeEvent
+ */
 void Map::closeEvent(QCloseEvent *closeEvent) {
     QWidget::closeEvent(closeEvent);
 
@@ -71,6 +76,10 @@ void Map::closeEvent(QCloseEvent *closeEvent) {
     }
 }
 
+/**
+ * @brief Map::initRole calls for the functions needed to initiate a map as Mj or Player
+ * @param isMj
+ */
 void Map::initRole(bool isMj){
     if(isMj){
         initMj();
@@ -83,12 +92,19 @@ void Map::initRole(bool isMj){
 void Map::initMj(){
 }
 
+/**
+ * @brief Map::initPlayer hides the buttons that the player shouldn't be able to use
+ */
 void Map::initPlayer(){
     ui->m_FowEdit->hide();
     ui->m_FowDisplay->hide();
 }
 
-
+/**
+ * @brief Map::initScene creates the scene with a margin around the background image. Requires
+ * BackgroundLayer to be initiated
+ * @param tileStep
+ */
 void Map::initScene(int tileStep) {
     int sceneHeight, sceneWidth;
 
@@ -108,11 +124,21 @@ void Map::initScene(int tileStep) {
     initScene(sceneWidth, sceneHeight);
 }
 
+/**
+ * @brief Map::initScene creates a scene with the specified width and height
+ * @param sceneWidth
+ * @param sceneHeight
+ */
 void Map::initScene(int sceneWidth, int sceneHeight) {
     m_Scene = new CanvasScene(sceneWidth, sceneHeight);
     ui->m_View->setScene(m_Scene);
 }
 
+/**
+ * @brief Map::initLayers calls for every init<Layername> function; the calling order determines
+ * the layers' superposition order
+ * @param addToDb wether the layer should be added to the Db or not
+ */
 void Map::initLayers(bool addToDb) {
     initBgLayer(addToDb);
     initMapLayer(addToDb);
@@ -120,6 +146,9 @@ void Map::initLayers(bool addToDb) {
     initDrawingLayer(addToDb);
 }
 
+/**
+ * @brief Map::initDisplay connects the buttons with the layers
+ */
 void Map::initDisplay(){
     connect(ui->m_EditGroup, SIGNAL(buttonToggled(QAbstractButton*, bool)),
             this, SLOT(selectedEditionLayer(QAbstractButton*, bool)));
@@ -131,12 +160,18 @@ void Map::initDisplay(){
     m_EditionMap.insert(LayerCodes::LAYER_DRAW, ui->m_PageDrawingTools);
 }
 
+/**
+ * @brief Map::initMapTools connects the view tools with the view
+ */
 void Map::initMapTools() {
     connect(ui->m_MapScaler, SIGNAL(valueChanged(int)),
             ui->m_View, SLOT(zoom(int)));
     connect(ui->m_View, SIGNAL(changeLabelScale(double)), ui->labelScale, SLOT(setNum(double)));
 }
 
+/**
+ * @brief Map::initFoWTools connects the FoW tools with the FoWLayer
+ */
 void Map::initFoWTools(){
     FoWLayer *fowLayer = dynamic_cast<FoWLayer *>(
         m_Layers->getLayer(LayerCodes::LAYER_FOW)
@@ -148,6 +183,9 @@ void Map::initFoWTools(){
             fowLayer, SLOT(removeFoW()));
 }
 
+/**
+ * @brief Map::initDrawingTools connects the drawing Tools with the DrawingLayer
+ */
 void Map::initDrawingTools() {
     Ui::DrawingMenu *drawingUi = ui->m_PageDrawingTools->getUi();
     DrawingLayer *drawingLayer = dynamic_cast<DrawingLayer*>(
@@ -171,6 +209,10 @@ void Map::initDrawingTools() {
     }
 }
 
+/**
+ * @brief Map::setSenderClient sets the sender client for every layers
+ * @param senderClient
+ */
 void Map::setSenderClient(SenderClient *senderClient) {
     SenderHandler::setSenderClient(senderClient);
 
@@ -179,6 +221,11 @@ void Map::setSenderClient(SenderClient *senderClient) {
     }
 }
 
+/**
+ * @brief Map::initBgLayer adds the bgLayer to the scene, not enabled, and can add it to the Db and
+ * connects the signals and slots.
+ * @param addToDb
+ */
 void Map::initBgLayer(bool addToDb) {
     BackgroundLayer *bgLayer = dynamic_cast<BackgroundLayer *>(
         m_Layers->getLayer(LayerCodes::LAYER_BACKGROUND)
@@ -193,6 +240,11 @@ void Map::initBgLayer(bool addToDb) {
     }
 }
 
+/**
+ * @brief Map::initMapLayer adds the mapLayer to the scene, enabled, and can add it to the Db and
+ * connects the signals and slots.
+ * @param addToDb
+ */
 void Map::initMapLayer(bool addToDb) {
     MapLayer *mapLayer = dynamic_cast<MapLayer *>(
         m_Layers->getLayer(LayerCodes::LAYER_MAP)
@@ -212,8 +264,8 @@ void Map::initMapLayer(bool addToDb) {
 }
 
 /**
- * @brief Map::initFoWLayer Initializes the Fog of War Layer. If the tilestep is equal to 1, the
- * layer will be an instance of DrawingLayer, else it will be an instance of FoWLayer.
+ * @brief Map::initFoWLayer adds the bgLayer to the scene, not enabled, and can add it to the Db and
+ * connects the signals and slots.
  * @param tileStep
  */
 void Map::initFoWLayer(bool addToDb) {
@@ -259,6 +311,10 @@ void Map::initDrawingLayer(bool addToDb) {
     }
 }
 
+/**
+ * @brief Map::initTooltip associates a tooltip with the map and connects the information slots to
+ * the tooltip
+ */
 void Map::initTooltip() {
     m_Tooltip.setParent(this);
     m_Tooltip.hide();
@@ -272,6 +328,11 @@ void Map::initTooltip() {
             &m_Tooltip, SLOT(hide()));
 }
 
+/**
+ * @brief Map::selectedEditionLayer changes the selected layer according to the button selected
+ * @param button
+ * @param checked
+ */
 void Map::selectedEditionLayer(QAbstractButton *button, bool checked) {
     m_Layers->setCurrentLayerCode(button->objectName());
 
@@ -282,6 +343,11 @@ void Map::selectedEditionLayer(QAbstractButton *button, bool checked) {
     ui->m_StackedTools->setCurrentWidget(m_EditionMap.value(buttonCode));
 }
 
+/**
+ * @brief Map::selectedDisplayLayer changes the visible layers according to the buttons selected
+ * @param button
+ * @param checked
+ */
 void Map::selectedDisplayLayer(QAbstractButton *button, bool checked) {
     AbstractLayer *selectedLayer;
     selectedLayer = m_Layers->getLayer(m_Layers->s_ButtonCodesMap.value(button->objectName()));
@@ -360,6 +426,10 @@ void Map::connectToLogger(LogClient* client){
 	connect(getMapLayer(), SIGNAL(spriteAdded(QString)), client, SLOT(sendMessageToServer(QString)));
 }
 
+/**
+ * @brief Map::initAsImage initializes the map but hides the FoWLayer and map Layer as well as the
+ * associated buttons
+ */
 void Map::initAsImage() {
     // Hide toolboxes
     ui->m_StackedTools->show();

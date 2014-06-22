@@ -9,6 +9,10 @@ CanvasView::CanvasView(QWidget *parent) :
 
 CanvasView::~CanvasView() {}
 
+/**
+ * @brief CanvasView::zoom scales the view to the given value
+ * @param value
+ */
 void CanvasView::zoom(int value)
 {
     qreal newValue = value/5.0;

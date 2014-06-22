@@ -62,6 +62,10 @@ void DrawingLayer::setEraserSize(int size) {
     m_Tools->getTool(ToolCodes::TOOL_ERASER)->setSize(size);
 }
 
+/**
+ * @brief DrawingLayer::initDrawingZone initializes the pixmap, drawing zone and tools
+ * @param newPixmap determines wether or not a new pixmap should be created
+ */
 void DrawingLayer::initDrawingZone(bool newPixmap) {
     if (newPixmap) {
         m_Pixmap = new QPixmap(scene()->sceneRect().size().toSize());
@@ -90,19 +94,30 @@ void DrawingLayer::initDrawingZone(bool newPixmap) {
     connect(m_Tools, SIGNAL(changeTool()), this, SLOT(changeTool()));
 }
 
+/**
+ * @brief DrawingLayer::changeTool changes the sceneEventFilter for the current Tool's
+ */
 void DrawingLayer::changeTool(){
     this->removeSceneEventFilter(m_OldTool);
     m_OldTool = m_Tools->getCurrentTool();
     this->installSceneEventFilter(m_Tools->getCurrentTool());
 }
 
-
+/**
+ * @brief DrawingLayer::erasePixmapContent erases the whole pixmap
+ */
 void DrawingLayer::erasePixmapContent() {
     m_Pixmap->fill(Qt::transparent);
     updateDisplay();
 }
 
-
+/**
+ * @brief DrawingLayer::sceneEventFilter ensures the correct pixmap is updated when several maps are
+ * opened at the same time
+ * @param watched QGraphicsItem that is currently being considered
+ * @param event Event that occured
+ * @return
+ */
 bool DrawingLayer::sceneEventFilter(QGraphicsItem *watched, QEvent *event){
     AbstractTool::setPixmap(m_Pixmap);
     return AbstractLayer::sceneEventFilter(watched, event);

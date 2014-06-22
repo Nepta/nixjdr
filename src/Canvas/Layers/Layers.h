@@ -10,6 +10,9 @@
 #include "Canvas/Layers/MapLayer.h"
 #include "Token/TokenItem.h"
 
+/**
+ * @brief The LayerCodes enum lists the codes attributed to each layer
+ */
 enum class LayerCodes : quint16 {
     LAYER_BACKGROUND,
     LAYER_DRAW,
@@ -18,6 +21,9 @@ enum class LayerCodes : quint16 {
 };
 inline uint qHash(const LayerCodes &key) { return qHash((quint16) key); }
 
+/**
+ * @brief The Layers class represents a list of layers associated to ui buttons
+ */
 class Layers : public QObject
 {
     Q_OBJECT

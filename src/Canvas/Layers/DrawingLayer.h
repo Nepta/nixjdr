@@ -11,6 +11,9 @@
 #include "AbstractLayer.h"
 #include "Canvas/Tools/Tools.h"
 
+/**
+ * @brief The DrawingLayer class represents a Layer on which the user can draw
+ */
 class DrawingLayer : public AbstractLayer
 {
     Q_OBJECT

@@ -14,6 +14,11 @@ MapClient::MapClient(User *user, QHash<QString, User *> *usersList, TokenList *t
 
 MapClient::~MapClient() {}
 
+/**
+ * @brief MapClient::processNewData calls the function associated to the given message's code
+ * @param header message's header
+ * @param data message's data
+ */
 void MapClient::processNewData(Header header, QByteArray& data) {
     Message msg(data);
     MapCodes code = (MapCodes) header.getCode();
@@ -41,6 +46,12 @@ void MapClient::processNewData(Header header, QByteArray& data) {
     }
 }
 
+/**
+ * @brief MapClient::sendMessageToServer sends a message to the server containing the action to
+ * execute
+ * @param msg message to be sent
+ * @param code action associated to the message
+ */
 void MapClient::sendMessageToServer(const QString& msg, quint16 code) {
     Message message(msg);
     TargetCode target = TargetCode::MAP_SERVER;
@@ -75,6 +86,12 @@ void MapClient::openMapAction(const QString& msg) {
     emit openMap(map);
 }
 
+/**
+ * @brief MapClient::addSpriteAction retreives the TokenItem from its id in the TokenList, retrieves
+ * the map and layer on which the sprite should be added, creates the sprite, and adds it to the
+ * intended map and layer
+ * @param msg message to be interpreted
+ */
 void MapClient::addSpriteAction(const QString& msg) {
     int id = msg.toInt();
     DBItem dbItem = RepositoryManager::s_SpriteRepository.findById(id);
@@ -110,6 +127,11 @@ void MapClient::addSpriteAction(const QString& msg) {
     }
 }
 
+/**
+ * @brief MapClient::removeSpriteAction Retrieves the map and the layer on which the sprite should
+ * be deleted, and deletes it
+ * @param msg message to be interpreted
+ */
 void MapClient::removeSpriteAction(const QString& msg) {
     QString temp = msg;
     int spriteId = Common::extractFirstWord(temp).toInt();
@@ -140,6 +162,11 @@ void MapClient::removeSpriteAction(const QString& msg) {
     }
 }
 
+/**
+ * @brief MapClient::removeAllFoWAction Retrieves the correct layer and map, and removes all fog of
+ * war on it
+ * @param msg message to be interpreted
+ */
 void MapClient::removeAllFoWAction(const QString& msg) {
     int fowLayerId = msg.toInt();
     Map *map = getMapByFoWLayerId(fowLayerId);
@@ -149,6 +176,11 @@ void MapClient::removeAllFoWAction(const QString& msg) {
     }
 }
 
+/**
+ * @brief MapClient::addAllFoWAction If the wanted map is opened create the correct FoW Sprite and
+ *  adds it to the intended map and layer
+ * @param msg
+ */
 void MapClient::addAllFoWAction(const QString& msg) {
     QString temp = msg;
     int fowLayerId = Common::extractFirstWord(temp).toInt();
@@ -175,6 +207,11 @@ void MapClient::addAllFoWAction(const QString& msg) {
     }
 }
 
+/**
+ * @brief MapClient::updateDrawingLayerPixmapAction retrieves the layer and map of which the QPixmap
+ * should be updated, and updates it
+ * @param msg
+ */
 void MapClient::updateDrawingLayerPixmapAction(const QString& msg) {
     int drawingLayerId = msg.toInt();
     Map *map = getMapByDrawingLayerId(drawingLayerId);
@@ -192,6 +229,11 @@ void MapClient::updateDrawingLayerPixmapAction(const QString& msg) {
     }
 }
 
+/**
+ * @brief MapClient::pingAction Retrieves the correct layer and map and pings at the specified
+ * coordinates
+ * @param msg
+ */
 void MapClient::pingAction(const QString& msg) {
     QString temp = msg;
     int drawingLayerId = Common::extractFirstWord(temp).toInt();

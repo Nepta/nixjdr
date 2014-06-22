@@ -46,6 +46,10 @@ OpenMapWidget::~OpenMapWidget()
     delete ui;
 }
 
+/**
+ * @brief OpenMapWidget::on_openButton_clicked when the openButton is clicked, creates a map with
+ * the selected options
+ */
 void OpenMapWidget::on_openButton_clicked()
 {
     QModelIndexList selectedIndexes = ui->m_MapTableView->selectionModel()->selectedIndexes();
