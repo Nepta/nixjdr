@@ -10,6 +10,10 @@ void NotificationStacker::setParent(QWidget *parent){
     m_Parent = parent;
 }
 
+/**
+ * @brief NotificationStacker::pushNotification Adds a notification to the stacker
+ * @param text
+ */
 void NotificationStacker::pushNotification(QString text){
     m_Size++;
     Tooltip* notif = new Tooltip();
@@ -24,6 +28,9 @@ void NotificationStacker::pushNotification(QString text){
     }
 }
 
+/**
+ * @brief NotificationStacker::timerEvent Remove the first notification of the stack at each tick time
+ */
 void NotificationStacker::timerEvent(QTimerEvent *) {
     if(!m_Stack.isEmpty()){
         m_LastNotif = m_Stack.takeFirst();
@@ -36,6 +43,9 @@ void NotificationStacker::timerEvent(QTimerEvent *) {
     }
 }
 
+/**
+ * @brief NotificationStacker::updatePosition Moves back up the notification to the top
+ */
 void NotificationStacker::updatePosition()
 {
     for(int i = 0; i < m_Size; i++){
