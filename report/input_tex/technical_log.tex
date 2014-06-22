@@ -1,12 +1,11 @@
 \subsection{Les logs}
 
-Le système de log est un module  connecté au réseau, chaque joueur doit donc recevoir les action effectué par les autre joueurs.
-Pour ce faire, ce système est décomposé en 3 partis,
-le \textit{LogClient}, le \textit{LogServer} et le \textit{LogGui},
+Le système de log est un module  connecté au réseau, chaque joueur doit donc recevoir les action effectuées par les autre joueurs.
+Pour ce faire, ce système est décomposé en 3 parties,  \textit{LogClient}, \textit{LogServer} et \textit{LogGui},
 cette dernière partie ne s'occupant que de l'affichage.
 
-Lorsque qu'un joueur effectue une action (ajout, déplacement ou suppression d'un sprite), le gestionnaire de carte informe le gestionnaire de log a travers le \textit{LogClient}.
-Celui ci permet, avec le \textit{LogServer} la communication des différentes interface de jeu.
-Le \textit{LogServer} reçoit les information des différents \textit{LogClient} et les réexpédies à tous les clients.
-Une fois cela fait, les \textit{LogClient} qui reçoivent maintenant l'information de tous les joueurs peuvent, par le biais du \textit{LogGui} afficher les differentes action dans un widget prévue à cet effet.
-A terme nous aurions pû utiliser cet historique a des fins de contrôle plus poussé, en permettant directement l'annulation des actions depuis ce menu ou encore un affichage pour la gestion de permission (essayer pour un joueur de déplacer son jeton si il n'a plus de vie afficherait un message d'erreur dans les logs).
+Lorsqu'un joueur effectue une action (ajout, déplacement ou suppression d'un sprite), le gestionnaire de cartes informe le gestionnaire de logs à travers le \textit{LogClient}.
+Celui ci permet, avec le \textit{LogServer} la communication des différentes interfaces de jeu.
+Le \textit{LogServer} reçoit les information des différents \textit{LogClient} et les réexpédie à tous les clients.
+Une fois cela fait, les \textit{LogClient} qui reçoivent maintenant des informations de tous les joueurs peuvent, par le biais du \textit{LogGui} afficher les différentes actions dans un widget prévu à cet effet.
+A terme nous aurions pû utiliser cet historique à des fins de contrôle plus poussé, en permettant directement l'annulation des actions depuis ce menu ou encore un affichage pour la gestion de permission (essayer pour un joueur de déplacer son jeton si il n'a plus de vie afficherait un message d'erreur dans les logs).

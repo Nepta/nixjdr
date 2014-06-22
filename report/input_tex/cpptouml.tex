@@ -1,11 +1,11 @@
 \subsection{Cpp2UML}
 
-Afin d'avoir un rapide aperçu du projet ainsi qu'une vision globale des différentes classes réalisé et leurs dépendance,
+Afin d'avoir un rapide aperçu du projet ainsi qu'une vision globale des différentes classes réalisées et de leurs dépendance,
 nous avons tenté de générer un diagramme \textit{UML} de notre projet.
 
-Un diagramme \textit{UML} est un façon de représenter le code de manière graphique.
-Ce diagramme est composé d'une bulle, représentant une classe dans laquelle y est inscrit la liste des membres et attribut de cette classe avec des information de portée (privé, publique ...).
-Chacune de ces bulles sont ensuite relié entre elles par différente flèche symbolisant les relation entre deux classe, on peut avoir des information filial, d'utilisation ou encore de contenance.
+Un diagramme \textit{UML} est une façon de représenter le code de manière graphique.
+Ce diagramme est composé d'une bulle, représentant une classe dans laquelle y est inscrite la liste des membres et attributs de cette classe avec des information de portée (privé, publique ...).
+Chacune de ces bulles sont ensuite reliées entre elles par différentes flèches symbolisant les relations entre deux classes. Il est possible d'obtenir les information filiales, d'utilisation ou encore de contenance.
 
 \begin{figure}[h!]
 	\centering
@@ -17,4 +17,4 @@ Dans le cadre de notre projet, nous avons réalisé un script en \textit{Lua},
 permettant de générer automatiquement ce genre de graphique par le biais d'un autre outil:
 \href{http://plantuml.sourceforge.net/}{PlantUML}.
 
-Ce script annalyse les en tête de nos source afin d'écrire un autre fichier de description comprehensible par PlantUML. Une fois ceci fait, il ne reste qu'a lancer plantUML qui, en utilisant graphviz, crée une image, notre diagramme uml.
+Ce script annalyse les en-têtes de nos sources afin d'écrire un autre fichier de description compréhensible par PlantUML. Une fois ceci fait,  plantUML, en utilisant graphviz, crée une image de notre diagramme UML.
