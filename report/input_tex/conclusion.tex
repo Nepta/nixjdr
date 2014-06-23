@@ -1,1 +1,24 @@
 \section{Conclusion}
+
+Nous avons implémenté l'ensemble des fonctionnalités qui nous avaient été demandées, à savoir:
+\begin{description}
+	\item[Création de la partie par le MJ]: chargement des cartes, placement des ennemis sur chaque carte, chargement des documents
+	\item[Geston de la partie]: placements et déplacements des personnages, découverte de la carte en cours gérée par le MJ, gestion du temps, génération de lancés de dés
+	\item[Mise en réseau du projet]
+\end{description}
+\hfill
+
+De plus, nous avons ajouté quelques fonctionnalités, telles que:
+\begin{description}
+	\item[Chat]: mise en place d'un système de messagerie adapté aux besoins du jeu de rôle
+	\item[Logs]: afin d'assurer un meilleur suivi de la partie par le MJ
+	\item[Éléments de jeu]: afin de rendre plus pratique le suivi des personnages par le MJ
+	\item[Possibilité de dessiner]: pour que les utilisateurs retrouvent toutes les possibilités offertes par les cartes papier
+\end{description}
+\hfill
+
+Cependant, nous avons aussi pensé à ajouter quelques fonctionnalités, et ne sommes pas satisfaits par la généricité de certains éléments de code:
+\begin{description}
+	\item[Code]: nous aurions préféré utiliser le pattern Builder pour créer les différentes Map, plutôt que d'avoir de multiples constructeurs. De plus, nous aurions souhaité avoir des Actions génériques communes à tous les modules réseau, comme précisé dans la partie Réseau. Enfin, nous aurions souhaité que l'identification ne se fasse pas par le Chat.
+	\item[Fonctionnalités]: nous avons souhaité implémenter des curseurs différents pour le mode de dessin des cartes, pouvoir revenir en arrière à l'aide des logs et d'une refonte pour avoir des Actions, et avoir un système de modération pour limiter les actions des joueurs selon l'envie du MJ. De plus, nous aurions pu ajouter des commandes supplémentaires dans le chat, un historique des commandes du chat et faire un paquet pour l'application.
+\end{description}
