@@ -30,6 +30,10 @@ GameObjectDialog::GameObjectDialog(GameObject *gameObject, QWidget *parent) :
 
     Character *character = dynamic_cast<Character*>(gameObject);
     m_Object = character;
+
+    ui->m_ImageEdit->setEnabled(false);
+    ui->m_SearchButton->setEnabled(false);
+
     ui->m_HpMaxEdit->setValue(character->getMaxHp());
     ui->m_HpEdit->setValue(character->getHp());
 

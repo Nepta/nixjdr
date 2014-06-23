@@ -157,7 +157,9 @@ void TokenMenu::on_inputSearchField_textChanged(const QString &arg1)
 {
     for(int i=0; i<ui->m_tokenList->count(); i++){
         QListWidgetItem *item = ui->m_tokenList->item(i);
-        if(item->text().left(arg1.length()) == arg1){
+        TokenItem *tokenItem = dynamic_cast<TokenItem*>(item);
+
+        if(item->text().left(arg1.length()) == arg1 && !tokenItem->isSpecial()){
             item->setHidden(false);
         }
         else{
