@@ -12,13 +12,13 @@ private:
     QString path_;
     int size_;
     bool custom_;
+    bool pixLoaded_;
 
     /**
      * @brief special_ A special TokenItem is used for specific cases (e.g. FoWLayer sprites).
      * It should not be displayed in the TokenMenu's list.
      */
     bool special_;
-
     GameObject *gameObject_;
 
     void construct(int id, QString path, QString text, int size, bool custom, bool special);
@@ -38,10 +38,12 @@ public:
     int size();
     bool isCustom();
     bool isSpecial();
+    bool isPixLoaded();
     GameObject *gameObject();
 
     GameObject *getGameObject();
     void setCustomIcon(QString path, QString text);
+    void setIcon(QString path);
     void setGameObject(GameObject *gameObject);
 };
 

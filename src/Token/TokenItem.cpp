@@ -77,7 +77,7 @@ void TokenItem::construct(QString path, QString text, int size, bool custom, boo
     if (custom) {
         setCustomIcon(path, text);
     } else {
-        setIcon(QIcon(path));
+        setIcon(path);
     }
 }
 
@@ -105,10 +105,14 @@ void TokenItem::setCustomIcon(QString path, QString text) {
     QPixmap pix;
     if(!pix.load(path)){
         pix.load("resource/TokenMenu/keroro.png");
+        pixLoaded_ = false;
+    }
+    else {
+        pixLoaded_ = true;
     }
 
     QPainter painter(&pix);
-    painter.setRenderHint(QPainter::Antialiasing); // TODO test
+    painter.setRenderHint(QPainter::Antialiasing);
     QPainterPath painterPath;
 
     painterPath.addText(QPointF(1, pix.height()), QFont("Arial", 15, QFont::Bold), text);
@@ -116,7 +120,29 @@ void TokenItem::setCustomIcon(QString path, QString text) {
     painter.setBrush(Qt::white);
     painter.drawPath(painterPath);
 
-    setIcon(QIcon(pix));
+    QListWidgetItem::setIcon(QIcon(pix));
+}
+
+/**
+ * @brief setIcon Overloaded method. Sets the icon to the image specified by its path and sets
+ * m_PixLoaded accordingly (true if the image was loaded successfully, false otherwise).
+ * @param path
+ */
+void TokenItem::setIcon(QString path) {
+    QPixmap pix;
+
+    if (!pix.load(path)) {
+        pixLoaded_ = false;
+    }
+    else {
+        pixLoaded_ = true;
+    }
+
+    QListWidgetItem::setIcon(QIcon(pix));
+}
+
+bool TokenItem::isPixLoaded() {
+    return pixLoaded_;
 }
 
 QString TokenItem::path() {

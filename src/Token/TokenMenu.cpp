@@ -95,6 +95,12 @@ void TokenMenu::addToken(QString text, QString filePath, int size, bool custom,
     QList<QListWidgetItem*> items = ui->m_tokenList->findItems(text, Qt::MatchExactly);
     if (items.empty()) {
         TokenItem *item = new TokenItem(filePath, text, size, custom);
+
+        if (!item->isPixLoaded()) {
+            emit sendNotification(QString("L'image spécifiée par le chemin %1 n'a pas pu être chargée.")
+                .arg(filePath));
+        }
+
         item->setGameObject(gameObject);
 
         // push the item into the database
