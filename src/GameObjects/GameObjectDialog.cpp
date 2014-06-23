@@ -17,6 +17,7 @@ GameObjectDialog::GameObjectDialog(QWidget *parent) :
     ui->setupUi(this);
     setStyleSheet(StyleSheet::s_StyleSheet);
     m_EditMode = false;
+    m_Object = NULL;
 }
 
 /**
