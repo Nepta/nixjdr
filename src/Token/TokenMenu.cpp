@@ -70,20 +70,19 @@ void TokenMenu::on_tokenButton_clicked()
         GameObjectDialog gameObjectDlg;
         gameObjectDlg.exec();
         GameObject *gameObject = gameObjectDlg.getGameObject();
+        QString path = gameObjectDlg.getPath();
         gameObjectDlg.close();
 
         if (gameObject != NULL) {
             // Push the game object into the database
             RepositoryManager::s_GameObjectRepository.insertGameObject(gameObject);
 
-            addCustomToken(gameObject->getName(), gameObject);
+            addCustomToken(gameObject->getName(), path, gameObject);
         }
     }
 }
 
-void TokenMenu::addCustomToken(QString text, GameObject *gameObject) {
-    // TODO filePath and size are hard-coded
-    QString filePath("resource/TokenMenu/keroro.png");
+void TokenMenu::addCustomToken(QString text, QString filePath, GameObject *gameObject) {
     int size = 32;
 
     addToken(text, filePath, size, true, gameObject);

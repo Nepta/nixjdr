@@ -103,7 +103,9 @@ void TokenItem::construct(QDataStream *stream) {
  */
 void TokenItem::setCustomIcon(QString path, QString text) {
     QPixmap pix;
-    pix.load(path);
+    if(!pix.load(path)){
+        pix.load("resource/TokenMenu/keroro.png");
+    }
 
     QPainter painter(&pix);
     painter.setRenderHint(QPainter::Antialiasing); // TODO test

@@ -1,3 +1,5 @@
+#include <QFileDialog>
+
 #include "Character.h"
 #include "StyleSheet.h"
 #include "GameObjectDialog.h"
@@ -54,6 +56,7 @@ void GameObjectDialog::on_createButton_clicked() {
     }
     else {
         m_Object = new Character(name, maxHp, hp);
+        m_Path = ui->m_ImageEdit->text();
     }
 
     accept();
@@ -61,4 +64,15 @@ void GameObjectDialog::on_createButton_clicked() {
 
 GameObject *GameObjectDialog::getGameObject() {
     return m_Object;
+}
+
+QString GameObjectDialog::getPath(){
+    return m_Path;
+}
+
+void GameObjectDialog::on_m_SearchButton_clicked()
+{
+    QString path = QFileDialog::getOpenFileName(this, "Ouvrir un fichier", "resource",
+                                                "Images (*.png *.xpm *.jpg)");
+    ui->m_ImageEdit->setText(path);
 }

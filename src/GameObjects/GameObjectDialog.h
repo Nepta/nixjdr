@@ -19,13 +19,17 @@ public:
     ~GameObjectDialog();
 
     GameObject *getGameObject();
+    QString getPath();
 
 private slots:
     void on_createButton_clicked();
 
+    void on_m_SearchButton_clicked();
+
 private:
     Ui::GameObjectDialog *ui;
     GameObject *m_Object;
+    QString m_Path;
     bool m_EditMode;
 };
 
