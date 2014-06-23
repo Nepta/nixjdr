@@ -31,6 +31,8 @@ private slots:
 
     void on_m_tokenList_customContextMenuRequested(const QPoint &pos);
 
+    void on_inputSearchField_textChanged(const QString &arg1);
+
 signals:
     void sendNotification(QString str);
 

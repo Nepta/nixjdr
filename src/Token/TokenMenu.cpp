@@ -153,3 +153,16 @@ void TokenMenu::on_m_tokenList_customContextMenuRequested(const QPoint &pos) {
 TokenList *TokenMenu::getTokenList() {
     return ui->m_tokenList;
 }
+
+void TokenMenu::on_inputSearchField_textChanged(const QString &arg1)
+{
+    for(int i=0; i<ui->m_tokenList->count(); i++){
+        QListWidgetItem *item = ui->m_tokenList->item(i);
+        if(item->text().left(arg1.length()) == arg1){
+            item->setHidden(false);
+        }
+        else{
+            item->setHidden(true);
+        }
+    }
+}
