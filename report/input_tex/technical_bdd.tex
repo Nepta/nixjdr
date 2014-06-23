@@ -16,9 +16,9 @@ Une base de données PostgreSQL doit être installée avec l'application pour qu
     \label{fig:bdduml}
 \end{figure}
 
-La base de donnéees est représentée dans l'application par la classe Database qui a été conçue selon le patron de conception Singleton : Database ne peut être instanciée qu'une seule fois. De plus cette instance est accessible à l'ensemble de l'application ce qui évite de devoir passer cette dépendance à un nombre important de classes. Cette classe permet d'effectuer plusieurs opérations sur la bdd PostgreSQL telles que la récupération d'une seule ligne (\emph{pullFirst}), de plusieurs lignes (\emph{pull}), l'exécution d'une requête ne renvoyant pas de résultat (\emph{push}), et l'exécution d'une requête effectuant une opération d'insertion et renvoyant l'id de la ligne insérée (\emph{pushWithId}).\\
+La base de données est représentée dans l'application par la classe Database qui a été conçue selon le patron de conception Singleton : Database ne peut être instanciée qu'une seule fois. De plus cette instance est accessible à l'ensemble de l'application ce qui évite de devoir passer cette dépendance à un nombre important de classes. Cette classe permet d'effectuer plusieurs opérations sur la bdd PostgreSQL telles que la récupération d'une seule ligne (\emph{pullFirst}), de plusieurs lignes (\emph{pull}), l'exécution d'une requête ne renvoyant pas de résultat (\emph{push}), et l'exécution d'une requête effectuant une opération d'insertion et renvoyant l'id de la ligne insérée (\emph{pushWithId}).\\
 
-Une classe QueryBuilder a été créée afin de faciliter la création de requêtes. Elle permet de chaîner plusieurs chaînes de caractères afin de former une requête complète. Ainsi, des parties de requêtes peuvent facilement être réutilisées et ainsi éviter de la duplication de code.
+Une classe QueryBuilder a été créée afin de faciliter la création de requêtes. Elle permet de concaténer plusieurs chaînes de caractères afin de former une requête complète. Ainsi, des parties de requêtes peuvent facilement être réutilisées et ainsi éviter de la duplication de code.
 
 \begin{lstlisting}[caption=Exemple d'utilisation de QueryBuilder]
 QueryBuilder Repository::findByIdQB(int id) {
