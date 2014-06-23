@@ -31,7 +31,7 @@ Les cartes font partie des éléments mis en réseau dans l'application. La clas
 Les actions disponibles sont les suivantes :
 \begin{description}
 	\item[Ouverture d'une carte] Le message reçu pour cette action contient l'id de la carte à ouvrir. Cette carte est récupérée de la base de données grâce à son id et est envoyée à la fenêtre principale pour que les initialisations nécessaires soit effectuées.
-	\item[Ajout d'un sprite] L'action d'ajout d'un sprite récupère tout d'abord le sprite à ajouter de la base de données grâce à son id, récupère le jeton associé parmi les jetons déjà chargés dans l'applications et récupère la couche sur laquelle le sprite doit être posé avant de l'y ajouter.
+	\item[Ajout d'un sprite] L'action d'ajout d'un sprite récupère tout d'abord le sprite à ajouter de la base de données grâce à son id, récupère le jeton associé parmi les jetons déjà chargés dans l'application et récupère la couche sur laquelle le sprite doit être posé avant de l'y ajouter.
 	\item[Suppression d'un sprite] Le message de cette action contient l'id du sprite à supprimer et l'id de la couche sur laquelle celui-ci se situe. Cette couche est tout d'abord récupérée parmi les couches déjà chargées par l'application, puis nous récupérons le jeton posé sur cette couche grâce à son id. Une fois le pointeur vers ce jeton récupéré, celui-ci est supprimé.
 	\item[Suppression de tous le FoW] Cette action fonctionne sur le même principe que la suppression d'un sprite, la couche de brouillard de guerre est tout d'abord récupérée grâce à son id, puis tous les sprites de cette couche sont supprimés.
 	\item[Mise à jour de la couche de dessin] La couche de dessin ayant été mise à jour est tout d'abord récupérée de la base de données, puis la pixmap (image) en est extraite. Cette pixmap est remplacée dans la couche de dessin concernée.
@@ -61,10 +61,10 @@ Dans le cas actuel décrit ci-dessus, sur un clic gauche de la souris sur la car
 \begin{figure}[h!]
 	\centering
 	\includegraphics[width=1.0\textwidth]{img/network_addsprite_better.png}
-	\caption{Etapes pour l'ajout d'un Sprite (amélioré)}
+	\caption{Étapes pour l'ajout d'un Sprite (amélioré)}
 \end{figure}
 
 \textbf{N.B.} TokenMenuClient, TokenMenuServer, TurnMenuClient et TurnMenuServer reprennent le même principe que MapClient et MapServer et ne sont donc pas détaillés.
 
 \subsubsection{ChatClient \& ChatServer}
-Les classes ChatClient et ChatServer récupèrent le code présent dans le header d'un paquet reçu et récupèrent la commande associée. Une commande est représentée par un objet d'une classe héritant de AbstractCmd. Le principe du Chat ainsi que les différentes commandes sont détaillés dans la sous-section concernant le Chat dans la section aspects techniques. Nous pouvons cependant noter que ChatClient et ChatServer utilisent des commandes, tandis que MapClient, MapServer et les autres modules utilisent des actions sous forme de méthode. Comme détaillé précédémment, il aurait été judicieux de créer des classes héritant d'une classe de base Action qui soit générique afin d'être réutilisable dans toute l'application, contrairement aux commandes qui sont fortement liées au chat.
+Les classes ChatClient et ChatServer récupèrent le code présent dans le header d'un paquet reçu et récupèrent la commande associée. Une commande est représentée par un objet d'une classe héritant de AbstractCmd. Le principe du Chat ainsi que les différentes commandes sont détaillés dans la sous-section concernant le Chat dans la section aspects techniques. Nous pouvons cependant noter que ChatClient et ChatServer utilisent des commandes, tandis que MapClient, MapServer et les autres modules utilisent des actions sous forme de méthode. Comme détaillé précédemment, il aurait été judicieux de créer des classes héritant d'une classe de base Action qui soit générique afin d'être réutilisable dans toute l'application, contrairement aux commandes qui sont fortement liées au chat.

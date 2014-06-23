@@ -83,9 +83,9 @@ Leurs utilisations réelles étant relativement proches l'une de l'autre, nous a
 \subsubsection{Création et ouverture d'une carte ou d'une image}
 
 Dans le menu principal, section "Partie", choisir "Créer une carte" ou "Créer une image". Une fenêtre apparaît alors, demandant de choisir un fichier d'image qui servira d'arrière-plan. \\
-Il faut ensuite nommer la carte (ce nom servira à nommer la fenêtre de la carte et à sauvegarder la carte) et choisir une tailler pour le cadrillage. Si l'utilisateur choisit une taille de 1, alors les cases ne seront pas dessinées.\\
+Il faut ensuite nommer la carte (ce nom servira à nommer la fenêtre de la carte et à sauvegarder la carte) et choisir une tailler pour le quadrillage. Si l'utilisateur choisit une taille de 1, alors les cases ne seront pas dessinées.\\
 
-Toutes les modifications que l'utilisateur peut effectuer sur une carte ou une iage sont directement sauvegardées dans la base de données. Ainsi, après la fermeture d'une fenêtre ou de l'application, l'utilisateur peut retrouver sa carte dans le même état (jetons et dessins compris) en allant dans le menu "Partie"/"Ouvrir une carte/image".
+Toutes les modifications que l'utilisateur peut effectuer sur une carte ou une image sont directement sauvegardées dans la base de données. Ainsi, après la fermeture d'une fenêtre ou de l'application, l'utilisateur peut retrouver sa carte dans le même état (jetons et dessins compris) en allant dans le menu "Partie"/"Ouvrir une carte/image".
 
 \subsubsection{Présentation rapide de la fenêtre}
 
@@ -112,11 +112,11 @@ Le menu de droite contient trois section principales:
 Afin d'accéder à la gestion des jetons, il faut cocher la case "Carte" dans le sélecteur de couche. Lorsque cette couche est sélectionnée, l'utilisateur peut: 
 \begin{description}
 	\item[Changer l'échelle]: dans le menu outil, utiliser le slider pour zoomer ou dézoomer.
-	\item[Ajouter un jeton]: au relâchement du click gauche sur un emplacement quelconque de la carte, le jeton sélectionné dans la liste de jetons sera ajouté à la carte et aligné avec la grille. Il est aussi possible de drag and drop un jeton depuis la liste de jetons. Il est aussi possible d'ajouter des jetons en continu sur les cases n'en possédant pas encore en clickant sur une case libre puis en déplaçant le curseur.
-	\item[Supprimer un jeton]: lors du click droit sur un jeton, un menu apparait proposant de supprimer ledit jeton. Il est aussi possible de les supprimer en continu de la même manière que pour l'ajout en continu, mais en clickant droit.
-	\item[Déplacer un jeton]: il est possible de drag and drop les jetons avec un click gauche. Lors du déplacement, la distance la plus courte à parcourir est affichée dans le coin inférieur droit. Cette distance est calculée selon les règles officielles de Pathfinder.
-	\item[Modifier les points de vie d'un jeton]: faire un click droit sur un jeton, choisir "Editer le personnage", et modifier les points de vie. Il est possible de choisir un montant de points de vie négatif.
-	\item[Consulter les informations sur une case]: lorsque l'on passe sur une case, un tooltip s'affiche dans le coin inférieur droit indiquant le nombre de jetons présents sur la case. De plus, si le jeton supérieur a des points de vie, alors ils sont affichés sous la forme d'un cercle autour de la case (voir figure \ref{fig:lifebar}). Les points de vie sont rouges s'ils sont positifs et bleus s'ils sont négatifs.
+	\item[Ajouter un jeton]: au relâchement du clic gauche sur un emplacement quelconque de la carte, le jeton sélectionné dans la liste de jetons sera ajouté à la carte et aligné avec la grille. Il est aussi possible de drag and drop un jeton depuis la liste de jetons. Il est aussi possible d'ajouter des jetons en continu sur les cases n'en possédant pas encore en cliquant sur une case libre puis en déplaçant le curseur.
+	\item[Supprimer un jeton]: lors du clic droit sur un jeton, un menu apparaît proposant de supprimer ledit jeton. Il est aussi possible de les supprimer en continu de la même manière que pour l'ajout en continu, mais en cliquant droit.
+	\item[Déplacer un jeton]: il est possible de drag and drop les jetons avec un clic gauche. Lors du déplacement, la distance la plus courte à parcourir est affichée dans le coin inférieur droit. Cette distance est calculée selon les règles officielles de Pathfinder.
+	\item[Modifier les points de vie d'un jeton]: faire un clic droit sur un jeton, choisir "Editer le personnage", et modifier les points de vie. Il est possible de choisir un montant de points de vie négatif.
+	\item[Consulter les informations sur une case]: lorsque l'on passe sur une case, une info-bulle s'affiche dans le coin inférieur droit indiquant le nombre de jetons présents sur la case. De plus, si le jeton supérieur a des points de vie, alors ils sont affichés sous la forme d'un cercle autour de la case (voir figure \ref{fig:lifebar}). Les points de vie sont rouges s'ils sont positifs et bleus s'ils sont négatifs.
 \end{description}
 
 \begin{figure}[h!]
@@ -144,11 +144,11 @@ Lors d'une séance de jeu de rôle, il est indispensable que le maître du jeu p
 Lors d'une partie de jeu de rôle papier, il est possible de dessiner sur les cartes pour ajouter des éléments imprévus (un mur effondré, un piège,...). De plus, il est possible pour les joueurs de désigner des éléments, ce qui est compliqué à distance. C'est pour cela que nous avons créé cette couche.
 
 \begin{description}
-	\item[Dessiner]: Cette option est séléctionnée par défaut. Il faut clicker sur le bouton "Crayon", puis clicker gauche sur la carte. tant que le bouton gauche de la souris est maintenu, on continue à dessiner. Il est possible de dessiner des lignes en mantenant la touche Shift. Une ligne peut alors être prévisualisée, et est dessinée lors du relâchement de la touche Shift ou de la souris.
-	\item[Effacer]: Appuyer sur le bouton "Gomme", puis clicker droit sur la carte. Pour effacer tous les dessins, appuyer sur le bouton "Effacer dessins".
+	\item[Dessiner]: Cette option est sélectionnée par défaut. Il faut cliquer sur le bouton "Crayon", puis cliquer gauche sur la carte. tant que le bouton gauche de la souris est maintenu, on continue à dessiner. Il est possible de dessiner des lignes en maintenant la touche Shift. Une ligne peut alors être prévisualisée, et est dessinée lors du relâchement de la touche Shift ou de la souris.
+	\item[Effacer]: Appuyer sur le bouton "Gomme", puis cliquer droit sur la carte. Pour effacer tous les dessins, appuyer sur le bouton "Effacer dessins".
 	\item[Modifier l'épaisseur des traits]: respectivement pour la gomme et la souris, utiliser les champs "Crayon" et "Gomme".
-	\item[Partager les dessins]: les dessins ne sont partagés avec les autres joueurs qu'une fois le bouton "Envoyer" clické.
-	\item[Envoyer un signal]: choisir l'outil "ping", puis clicker sur la carte. Une animation est alors jouée à cet emplacement pour tous les joueurs. Il n'est pas nécessaire d'envoyer les dessins pour partager le ping. Cet élément s'inspire des jeux de stratégie en équipe, et sert aux utilisateurs à désigner les objectifs.
+	\item[Partager les dessins]: les dessins ne sont partagés avec les autres joueurs qu'une fois le bouton "Envoyer" cliqué.
+	\item[Envoyer un signal]: choisir l'outil "ping", puis cliquer sur la carte. Une animation est alors jouée à cet emplacement pour tous les joueurs. Il n'est pas nécessaire d'envoyer les dessins pour partager le ping. Cet élément s'inspire des jeux de stratégie en équipe, et sert aux utilisateurs à désigner les objectifs.
 \end{description}
 
 \input{input_tex/log.tex}
