@@ -23,6 +23,7 @@ private:
 
     void construct(int id, QString path, QString text, int size, bool custom, bool special);
     void construct(QString path, QString text, int size, bool custom, bool special);
+    void construct(int id, QByteArray iconData, QString text, int size, bool custom, bool special);
     void construct(QDataStream *stream);
 
 public:
@@ -35,6 +36,7 @@ public:
     void toQByteArray(QDataStream *stream);
 
     QString path();
+    QByteArray iconPixmapData();
     int size();
     bool isCustom();
     bool isSpecial();

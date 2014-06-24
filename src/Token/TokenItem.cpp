@@ -45,7 +45,7 @@ TokenItem::TokenItem(DBItem item) :
 
     int id = columnsValues_.value("id").toInt();
     QString text = columnsValues_.value("text").toString();
-    QString path =  columnsValues_.value("path").toString();
+    QByteArray iconData = columnsValues_.value("pixmap").toByteArray();
     int size = columnsValues_.value("size").toInt();
     bool custom = columnsValues_.value("custom").toBool();
     bool special = columnsValues_.value("special").toBool();
@@ -59,7 +59,7 @@ TokenItem::TokenItem(DBItem item) :
         gameObject_ = NULL;
     }
 
-    construct(id, path, text, size, custom, special);
+    construct(id, iconData, text, size, custom, special);
 }
 
 void TokenItem::construct(int id, QString path, QString text, int size, bool custom, bool special) {
@@ -79,6 +79,20 @@ void TokenItem::construct(QString path, QString text, int size, bool custom, boo
     } else {
         setIcon(path);
     }
+}
+
+void TokenItem::construct(int id, QByteArray iconData, QString text, int size, bool custom, bool special) {
+    id_ = id;
+    path_ = ""; // TODO remove (only here for legacy purpose)
+    setText(text);
+    size_ = size;
+    custom_ = custom;
+    special_ = special;
+
+    QIcon icon;
+    QDataStream stream(&iconData, QIODevice::ReadOnly);
+    stream >> icon;
+    QListWidgetItem::setIcon(icon);
 }
 
 void TokenItem::construct(QDataStream *stream) {
@@ -139,6 +153,14 @@ void TokenItem::setIcon(QString path) {
     }
 
     QListWidgetItem::setIcon(QIcon(pix));
+}
+
+QByteArray TokenItem::iconPixmapData() {
+    QByteArray data;
+    QDataStream stream(&data, QIODevice::WriteOnly);
+    stream << icon();
+
+    return data;
 }
 
 bool TokenItem::isPixLoaded() {

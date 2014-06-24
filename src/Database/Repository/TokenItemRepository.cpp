@@ -70,7 +70,7 @@ TokenItem* TokenItemRepository::getTokenItemById(int id) {
 int TokenItemRepository::insertTokenItem(TokenItem *tokenItem) {
     QHash<QString, QVariant> args {
         {"text", tokenItem->text()},
-        {"path", tokenItem->path()},
+        {"pixmap", tokenItem->iconPixmapData()},
         {"size", tokenItem->size()},
         {"custom", tokenItem->isCustom()},
         {"special", tokenItem->isSpecial()}
