@@ -24,7 +24,7 @@ public:
     void initTokenMenuPull();
     void addItem(QListWidgetItem *item);
     TokenItem* addToken(QString text, QString filePath, int size, bool custom, bool special, GameObject *gameObject = NULL);
-    TokenItem* addCustomToken(QString text, QString filePath = "resource/TokenMenu/keroro.png", GameObject *gameObject = NULL);
+    TokenItem* addCustomToken(QString text, QString filePath = TokenItem::DEFAULT_ICON_PATH, GameObject *gameObject = NULL);
     void editTokenCharacter(TokenItem *tokenItem);
     TokenList *getTokenList();
 

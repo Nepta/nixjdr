@@ -8,6 +8,8 @@
 #include "Database/Repository/GameObjectRepository.h"
 #include "TokenItem.h"
 
+const QString TokenItem::DEFAULT_ICON_PATH = "resource/TokenMenu/keroro.png";
+
 TokenItem::TokenItem(QString path, QString text, int size, bool custom, bool special) :
     DBItem()
 {
@@ -117,7 +119,7 @@ void TokenItem::construct(QDataStream *stream) {
 void TokenItem::setCustomIcon(QString path, QString text) {
     QPixmap pix;
     if(!pix.load(path)){
-        pix.load("resource/TokenMenu/keroro.png");
+        pix.load(DEFAULT_ICON_PATH);
         pixLoaded_ = false;
     }
     else {

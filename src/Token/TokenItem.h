@@ -26,6 +26,8 @@ private:
     void construct(QDataStream *stream);
 
 public:
+    static const QString DEFAULT_ICON_PATH;
+
     TokenItem(QString path, QString text, int size, bool custom = false, bool special = false);
     TokenItem(const QByteArray& data);
     TokenItem(DBItem item);
