@@ -1,5 +1,4 @@
 #include <QFileDialog>
-#include <QRegExp>
 
 #include "Character.h"
 #include "StyleSheet.h"
@@ -81,9 +80,5 @@ void GameObjectDialog::on_m_SearchButton_clicked()
     QString path = QFileDialog::getOpenFileName(this, "Ouvrir un fichier", "resource",
                                                 "Images (*.png *.xpm *.jpg)");
 
-    QRegExp rx("resource.*");
-    rx.indexIn(path);
-    QString relativePath = rx.capturedTexts().at(0);
-
-    ui->m_ImageEdit->setText(relativePath);
+    ui->m_ImageEdit->setText(path);
 }

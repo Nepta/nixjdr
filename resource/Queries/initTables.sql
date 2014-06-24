@@ -26,7 +26,7 @@ CREATE TABLE character (
 CREATE TABLE tokenitem (
 	id           serial not NULL,
 	text         character varying(20) UNIQUE,
-	pixmap       bytea,
+	icon       bytea,
 	size         integer,
 	custom       bool,
 	special      bool,

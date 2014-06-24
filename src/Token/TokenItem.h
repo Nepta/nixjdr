@@ -9,7 +9,6 @@
 
 class TokenItem : public QListWidgetItem, public DBItem {
 private:
-    QString path_;
     int size_;
     bool custom_;
     bool pixLoaded_;
@@ -23,7 +22,7 @@ private:
 
     void construct(int id, QString path, QString text, int size, bool custom, bool special);
     void construct(QString path, QString text, int size, bool custom, bool special);
-    void construct(int id, QByteArray iconData, QString text, int size, bool custom, bool special);
+    void construct(int id, QIcon icon, QString text, int size, bool custom, bool special);
     void construct(QDataStream *stream);
 
 public:
