@@ -153,3 +153,19 @@ void Repository::bindValues(QSqlQuery *query, QHash<QString, QVariant> bindValue
 void Repository::bindValue(QSqlQuery *query, const QString& placeholder, const QVariant& val) {
     query->bindValue(":" + placeholder, val);
 }
+
+/**
+ * @brief Repository::isEmpty Verifies if the table is empty.
+ * @return Return whether the table associated with the inherithing Repository is empty or not.
+ */
+bool Repository::isEmpty() {
+    QueryBuilder qb;
+    qb.select("count(*) AS rows")
+      ->from(getTableName());
+
+    DBItem dbItem = Database::instance()->pullFirst(qb.getQuery());
+
+    int rowCount = dbItem.getHashMap().value("rows").toInt();
+
+    return (rowCount == 0);
+}

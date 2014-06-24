@@ -1,6 +1,7 @@
 #include <QList>
 #include <QMenu>
 #include <QAction>
+#include <QDirIterator>
 
 #include "Database/Repository/RepositoryManager.h"
 #include "Database/QueryBuilder.h"
@@ -18,8 +19,6 @@ TokenMenu::TokenMenu(QWidget *parent) :
     ui(new Ui::TokenMenu)
 {
     ui->setupUi(this);
-
-    initTokenMenu();
 }
 
 TokenMenu::~TokenMenu()
@@ -27,7 +26,45 @@ TokenMenu::~TokenMenu()
     delete ui;
 }
 
+/**
+ * @brief TokenMenu::initTokenMenu Initializes the TokenMenu.
+ * @remarks Must only be called after the SenderClient has been initialized.
+ */
 void TokenMenu::initTokenMenu() {
+    if (RepositoryManager::s_TokenItemRepository.isEmpty()) {
+        initTokenMenuPush();
+    }
+    else {
+        initTokenMenuPull();
+    }
+}
+
+/**
+ * @brief TokenMenu::initTokenMenuPush Initializes the TokenMenu and the database with resources
+ * coming from the "resource/TokenMenu/" folder.
+ */
+void TokenMenu::initTokenMenuPush() {
+    QDirIterator dirIt("resource/TokenMenu", QDirIterator::Subdirectories);
+
+    while(dirIt.hasNext()) {
+        QString filePath = dirIt.next();
+        QString suffix = dirIt.fileInfo().suffix();
+
+        if (!suffix.isEmpty()) {
+            QString name = dirIt.fileInfo().baseName();
+            bool special = filePath.contains("Special");
+
+            // TODO hard coded size
+            TokenItem *item = addToken(name, filePath, 32, false, special);
+            item->setHidden(special);
+        }
+    }
+}
+
+/**
+ * @brief TokenMenu::initTokenMenuPull Initializes the TokenMenu with data coming from the database.
+ */
+void TokenMenu::initTokenMenuPull() {
     // Retrieve TokenItems from the database
     QList<TokenItem*> tokenItems = RepositoryManager::s_TokenItemRepository.getTokenItems();
     for (TokenItem *tokenItem : tokenItems) {
@@ -82,19 +119,19 @@ void TokenMenu::on_tokenButton_clicked()
     }
 }
 
-void TokenMenu::addCustomToken(QString text, QString filePath, GameObject *gameObject) {
+TokenItem *TokenMenu::addCustomToken(QString text, QString filePath, GameObject *gameObject) {
     int size = 32;
 
-    addToken(text, filePath, size, true, gameObject);
+    return addToken(text, filePath, size, true, false, gameObject);
 }
 
-void TokenMenu::addToken(QString text, QString filePath, int size, bool custom,
+TokenItem* TokenMenu::addToken(QString text, QString filePath, int size, bool custom, bool special,
     GameObject *gameObject)
 {
     // Check if the list already contains a token with the same text before insertion.
     QList<QListWidgetItem*> items = ui->m_tokenList->findItems(text, Qt::MatchExactly);
     if (items.empty()) {
-        TokenItem *item = new TokenItem(filePath, text, size, custom);
+        TokenItem *item = new TokenItem(filePath, text, size, custom, special);
 
         if (!item->isPixLoaded()) {
             emit sendNotification(QString("L'image spécifiée par le chemin %1 n'a pas pu être chargée.")
@@ -113,9 +150,13 @@ void TokenMenu::addToken(QString text, QString filePath, int size, bool custom,
         // Notifies everyone that an item has been added
         QString msg = QString("%1").arg(item->id());
         m_SenderClient->sendMessageToServer(msg, (quint16) TokenMenuCodes::ADD_TOKEN);
+
+        return item;
     }
     else {
         emit sendNotification(QString("Un jeton nommé %1 existe déjà.").arg(text));
+
+        return NULL;
     }
 }
 

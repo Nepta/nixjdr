@@ -20,9 +20,11 @@ public:
     ~TokenMenu();
     Ui::TokenMenu *getUi();
     void initTokenMenu();
+    void initTokenMenuPush();
+    void initTokenMenuPull();
     void addItem(QListWidgetItem *item);
-    void addToken(QString text, QString filePath, int size, bool custom, GameObject *gameObject = NULL);
-    void addCustomToken(QString text, QString filePath = "resource/TokenMenu/keroro.png", GameObject *gameObject = NULL);
+    TokenItem* addToken(QString text, QString filePath, int size, bool custom, bool special, GameObject *gameObject = NULL);
+    TokenItem* addCustomToken(QString text, QString filePath = "resource/TokenMenu/keroro.png", GameObject *gameObject = NULL);
     void editTokenCharacter(TokenItem *tokenItem);
     TokenList *getTokenList();
 

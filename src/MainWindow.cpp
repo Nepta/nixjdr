@@ -276,10 +276,11 @@ void MainWindow::setupPlayer() {
     MapClient *mapClient = dynamic_cast<MapClient*>(mapClientReceiver);
     connect(mapClient, SIGNAL(openMap(Map*)), this, SLOT(openMap(Map*)));
 
-    // Initialize TokenMenu with the TokenMenuClient
+    // Initialize TokenMenu
     Receiver *tokenMenuClientReceiver = m_Client->getReceiver(TargetCode::TOKEN_MENU_CLIENT);
     TokenMenuClient *tokenMenuClient = dynamic_cast<TokenMenuClient*>(tokenMenuClientReceiver);
     ui->tokenPage->setSenderClient(tokenMenuClient);
+    ui->tokenPage->initTokenMenu();
 
     // Initialize TurnMenu with the TurnMenuClient
     Receiver *turnMenuClientReceiver = m_Client->getReceiver(TargetCode::TURN_MENU_CLIENT);

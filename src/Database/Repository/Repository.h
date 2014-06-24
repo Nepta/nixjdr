@@ -31,6 +31,7 @@ public:
     int insert(DBItem *item, QueryBuilder qb, QHash<QString, QVariant> pBindValues);
     int insertIntoDefault(DBItem *item);
     void deleteById(int id);
+    bool isEmpty();
 
     void bindValues(QSqlQuery *query, QHash<QString, QVariant> bindValues);
     void bindValue(QSqlQuery *query, const QString& placeholder, const QVariant& val);
