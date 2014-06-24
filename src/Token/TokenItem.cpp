@@ -68,11 +68,6 @@ TokenItem::TokenItem(DBItem item) :
     construct(id, icon, text, size, custom, special);
 }
 
-void TokenItem::construct(int id, QString path, QString text, int size, bool custom, bool special) {
-    id_ = id;
-    construct(path, text, size, custom, special);
-}
-
 void TokenItem::construct(QString path, QString text, int size, bool custom, bool special) {
     setText(text);
     size_ = size;

@@ -20,7 +20,6 @@ private:
     bool special_;
     GameObject *gameObject_;
 
-    void construct(int id, QString path, QString text, int size, bool custom, bool special);
     void construct(QString path, QString text, int size, bool custom, bool special);
     void construct(int id, QIcon icon, QString text, int size, bool custom, bool special);
     void construct(QDataStream *stream);
