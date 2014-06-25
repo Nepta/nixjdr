@@ -105,7 +105,7 @@ void MainWindow::openMap(Map *map, bool notify) {
 
     // Initialize Map with the MapServer
     if (m_Server != NULL) {
-        Receiver *mapServerReceiver = m_Client->getReceiver(TargetCode::MAP_SERVER);
+        Receiver *mapServerReceiver = m_Server->getReceiver(TargetCode::MAP_SERVER);
         MapServer *mapServer = dynamic_cast<MapServer*>(mapServerReceiver);
         map->setSenderServer(mapServer);
     }
