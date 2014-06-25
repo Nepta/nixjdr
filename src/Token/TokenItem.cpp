@@ -107,6 +107,7 @@ void TokenItem::setIcon(QString path) {
     QPixmap pix;
 
     if (!pix.load(path)) {
+        pix.load(DEFAULT_ICON_PATH);
         pixLoaded_ = false;
     }
     else {
