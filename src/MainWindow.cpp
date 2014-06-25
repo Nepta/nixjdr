@@ -48,7 +48,7 @@ MainWindow::MainWindow(User *user, QWidget *parent) :
 	initLogger();
     m_NotificationStacker.setParent(this);
 
-    //showFullScreen();
+    // TODO full screen button -> showFullScreen();
 }
 
 MainWindow::~MainWindow()

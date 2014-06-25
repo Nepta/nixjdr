@@ -41,6 +41,7 @@ private:
     int getShorterDistance(QPoint currentMousePos);
 
     void addCharacterInfoTooltip(GameObject *gameObject);
+    void addNameInfoTooltip(Sprite *sprite);
 
     bool sceneEventFilter(QGraphicsItem *watched, QEvent *event);
 
@@ -67,7 +68,7 @@ signals:
     void pushInfoTooltip(QString info);
     void showMapTooltip();
     void hideMapTooltip();
-	 void spriteMoved(QString info);
+    void spriteMoved(QString info);
 
 };
 

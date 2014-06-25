@@ -283,6 +283,7 @@ bool MapLayer::sceneEventFilter(QGraphicsItem *watched, QEvent *event) {
 
             addSpriteInfoTooltip(sprite);
             addMoveInfoTooltip(pos);
+            addNameInfoTooltip(sprite);
             emit showMapTooltip();
         } break;
 
@@ -301,6 +302,7 @@ bool MapLayer::sceneEventFilter(QGraphicsItem *watched, QEvent *event) {
         case QEvent::GraphicsSceneHoverMove: {
             addSpriteInfoTooltip(sprite);
             addCharacterInfoTooltip(sprite->getGameObject());
+            addNameInfoTooltip(sprite);
 
             emit showMapTooltip();
         } break;
@@ -351,9 +353,18 @@ void MapLayer::addCharacterInfoTooltip(GameObject *gameObject) {
  * @param currentMousePos
  */
 void MapLayer::addMoveInfoTooltip(QPoint currentMousePos) {
-    QString moveInfo = QString(tr("Distance la plus courte: %1"))
+    QString moveInfo = tr("Distance la plus courte: %1")
             .arg(getShorterDistance(currentMousePos));
     emit pushInfoTooltip(moveInfo);
+}
+
+/**
+ * @brief MapLayer::addNameInfoTooltip Adds the sprite's name to the map tooltip.
+ * @param sprite
+ */
+void MapLayer::addNameInfoTooltip(Sprite *sprite) {
+    QString nameInfo = tr("Nom: %1").arg(sprite->getTokenItem()->text());
+    emit pushInfoTooltip(nameInfo);
 }
 
 int MapLayer::getShorterDistance(QPoint currentMousePos){
