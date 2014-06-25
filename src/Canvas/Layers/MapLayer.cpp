@@ -76,11 +76,6 @@ void MapLayer::initDragEvent(Sprite *watched, QGraphicsSceneMouseEvent *mouseEve
     if (dropAction == Qt::IgnoreAction) {
         watched->setTransparent(false);
     } else {
-
-		  QString spritePosition = QString("(%1,%2)");
-		  spritePosition = spritePosition.arg(QString::number(mouseEvent->scenePos().toPoint().x()/m_Step));
-		  spritePosition = spritePosition.arg(QString::number(mouseEvent->scenePos().toPoint().y()/m_Step));
-		  emit spriteMoved("[moved]:"+watched->getTokenItem()->text()+":"+spritePosition);
         removeSprite(watched);
     }
 }
@@ -134,10 +129,7 @@ void MapLayer::dropEvent(QGraphicsSceneDragDropEvent *event, Sprite *watched)
         int zValue = (watched ? watched->zValue() + 1 : 1);
         TokenItem *tokenItem = new TokenItem(tokenItemData);
         addSprite(tokenItem, event->scenePos().toPoint(), zValue);
-		  QString tokenItemPosition = QString("(%1,%2)")
-			  .arg(QString::number(event->scenePos().toPoint().x()/m_Step))
-			  .arg(QString::number(event->scenePos().toPoint().y()/m_Step));
-		  emit spriteAdded("[added]:"+tokenItem->text()+":"+tokenItemPosition);
+        prepareSpriteAdded(event->scenePos().toPoint(), tokenItem->text());
 
         event->acceptProposedAction();
     }
@@ -145,9 +137,36 @@ void MapLayer::dropEvent(QGraphicsSceneDragDropEvent *event, Sprite *watched)
         int zValue = (watched ? watched->zValue() + 1 : 1);
         Sprite *sprite = new Sprite(spriteData, this, zValue);
         addSprite(sprite, event->scenePos().toPoint());
+        prepareSpriteMoved(event->scenePos().toPoint(), sprite->getTokenItem()->text());
 
         event->acceptProposedAction();
     }
+}
+
+
+void MapLayer::prepareSpriteAdded(QPoint eventPosition, QString tokenName){
+    QString tokenItemPosition = QString("(%1,%2)")
+        .arg(QString::number(eventPosition.x()/m_Step))
+        .arg(QString::number(eventPosition.y()/m_Step));
+    emit spriteAdded("[added]:"+tokenName+":"+tokenItemPosition);
+}
+
+
+void MapLayer::prepareSpriteMoved(QPoint eventPosition, QString tokenName){
+    QString oldSpritePosition = QString("(%1,%2)")
+            .arg(QString::number(m_dragStartPosition.x()/m_Step))
+            .arg(QString::number(m_dragStartPosition.y()/m_Step));
+
+    QString spritePosition = QString("(%1,%2)")
+            .arg(QString::number(eventPosition.x()/m_Step))
+            .arg(QString::number(eventPosition.y()/m_Step));
+
+    QString wholeString = QString("[moved]: %1: %2->%3. Distance: %4")
+            .arg(tokenName)
+            .arg(oldSpritePosition)
+            .arg(spritePosition)
+            .arg(getShorterDistance(eventPosition));
+    emit spriteMoved(wholeString);
 }
 
 /**
@@ -202,7 +221,7 @@ void MapLayer::ShowContextMenu(QGraphicsSceneMouseEvent *mouseEvent, Sprite *wat
 		  QString spritePosition = QString("(%1,%2)")
 			  .arg(QString::number(mouseEvent->scenePos().toPoint().x()/m_Step))
 			  .arg(QString::number(mouseEvent->scenePos().toPoint().y()/m_Step));
-		  emit spriteRemoved("[delete]:"+watched->getTokenItem()->text()+":"+spritePosition);
+          emit spriteRemoved("[delete]:"+watched->getTokenItem()->text()+":"+spritePosition);
 		  removeSprite(watched);
     }
     else if(selectedItem == editCharacterAction) {
@@ -322,6 +341,12 @@ void MapLayer::addCharacterInfoTooltip(GameObject *gameObject) {
  * @param currentMousePos
  */
 void MapLayer::addMoveInfoTooltip(QPoint currentMousePos) {
+    QString moveInfo = QString(tr("Distance la plus courte: %1"))
+            .arg(getShorterDistance(currentMousePos));
+    emit pushInfoTooltip(moveInfo);
+}
+
+int MapLayer::getShorterDistance(QPoint currentMousePos){
     QPoint oldPos(
         m_dragStartPosition.x() / m_Step,
         m_dragStartPosition.y() /m_Step
@@ -335,9 +360,7 @@ void MapLayer::addMoveInfoTooltip(QPoint currentMousePos) {
     int diffX = qAbs(oldPos.x() - currentPos.x());
     int diffY = qAbs(oldPos.y() - currentPos.y());
     int shorterDistance = std::max(diffX, diffY) + std::min(diffX,diffY)/2;
-
-    QString moveInfo = QString(tr("Distance la plus courte: %1")).arg(shorterDistance);
-    emit pushInfoTooltip(moveInfo);
+    return shorterDistance;
 }
 
 /**

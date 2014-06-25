@@ -34,7 +34,10 @@ private:
 
     void initDragEvent(Sprite *watched, QGraphicsSceneMouseEvent *mouseEvent);
     void addSpriteInfoTooltip(Sprite *sprite);
-    void addMoveInfoTooltip(QPoint currentMousePoss);
+
+    void addMoveInfoTooltip(QPoint currentMousePos);
+    int getShorterDistance(QPoint currentMousePos);
+
     void addCharacterInfoTooltip(GameObject *gameObject);
 
     bool sceneEventFilter(QGraphicsItem *watched, QEvent *event);
@@ -42,6 +45,10 @@ private:
     void mousePressEvent(QGraphicsSceneMouseEvent *);
     void dropEvent(QGraphicsSceneDragDropEvent *event);
     void dropEvent(QGraphicsSceneDragDropEvent *event, Sprite *watched);
+
+    void prepareSpriteAdded(QPoint eventPosition, QString tokenName);
+    void prepareSpriteMoved(QPoint eventPosition, QString tokenName);
+
     void dragMoveEvent(QGraphicsSceneDragDropEvent * event);
     void dragEnterEvent(QGraphicsSceneDragDropEvent *event);
     void dragLeaveEvent(QGraphicsSceneDragDropEvent * event);
