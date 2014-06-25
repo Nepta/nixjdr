@@ -115,7 +115,7 @@ void TokenMenu::on_tokenButton_clicked()
             RepositoryManager::s_GameObjectRepository.insertGameObject(gameObject);
 
             int size = 32; // TODO hard-coded size
-            addToken(gameObject->getName(), path, size, gameObject);
+            addToken(gameObject->getName(), path, size, false, gameObject);
         }
     }
 }
