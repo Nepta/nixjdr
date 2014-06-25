@@ -72,7 +72,6 @@ int TokenItemRepository::insertTokenItem(TokenItem *tokenItem) {
         {"text", tokenItem->text()},
         {"icon", tokenItem->iconPixmapData()},
         {"size", tokenItem->size()},
-        {"custom", tokenItem->isCustom()},
         {"special", tokenItem->isSpecial()}
     };
 

@@ -4,6 +4,7 @@
 #include <QListWidgetItem>
 #include <QPainter>
 
+#include "General/TextPixmap.h"
 #include "General/CircularProgressBar.h"
 #include "GridLayer.h"
 
@@ -31,6 +32,7 @@ private:
     QPoint m_dragStartPosition;
 
     CircularProgressBar m_LifeBar;
+    TextPixmap m_SpriteName;
 
     void initDragEvent(Sprite *watched, QGraphicsSceneMouseEvent *mouseEvent);
     void addSpriteInfoTooltip(Sprite *sprite);
@@ -57,6 +59,9 @@ private:
 
     void showLifeBar(Sprite *sprite);
     void hideLifeBar();
+
+    void showSpriteName(Sprite *sprite);
+    void hideSpriteName();
 
 signals:
     void pushInfoTooltip(QString info);

@@ -10,12 +10,12 @@
 
 const QString TokenItem::DEFAULT_ICON_PATH = "resource/TokenMenu/keroro.png";
 
-TokenItem::TokenItem(QString path, QString text, int size, bool custom, bool special) :
+TokenItem::TokenItem(QString path, QString text, int size, bool special) :
     DBItem()
 {
     gameObject_ = NULL;
 
-    construct(path, text, size, custom, special);
+    construct(path, text, size, special);
 }
 
 /**
@@ -49,7 +49,6 @@ TokenItem::TokenItem(DBItem item) :
     QString text = columnsValues_.value("text").toString();
     QByteArray iconData = columnsValues_.value("icon").toByteArray();
     int size = columnsValues_.value("size").toInt();
-    bool custom = columnsValues_.value("custom").toBool();
     bool special = columnsValues_.value("special").toBool();
 
     QIcon icon;
@@ -65,27 +64,21 @@ TokenItem::TokenItem(DBItem item) :
         gameObject_ = NULL;
     }
 
-    construct(id, icon, text, size, custom, special);
+    construct(id, icon, text, size, special);
 }
 
-void TokenItem::construct(QString path, QString text, int size, bool custom, bool special) {
+void TokenItem::construct(QString path, QString text, int size, bool special) {
     setText(text);
     size_ = size;
-    custom_ = custom;
     special_ = special;
 
-    if (custom) {
-        setCustomIcon(path, text);
-    } else {
-        setIcon(path);
-    }
+    setIcon(path);
 }
 
-void TokenItem::construct(int id, QIcon icon, QString text, int size, bool custom, bool special) {
+void TokenItem::construct(int id, QIcon icon, QString text, int size, bool special) {
     id_ = id;
     setText(text);
     size_ = size;
-    custom_ = custom;
     special_ = special;
     QListWidgetItem::setIcon(icon);
 }
@@ -94,43 +87,15 @@ void TokenItem::construct(QDataStream *stream) {
     int id, size, gameObjectId;
     QString text;
     QIcon icon;
-    bool custom, special;
+    bool special;
 
-    *stream >> id >> text >> icon >> size >> custom >> special >> gameObjectId;
+    *stream >> id >> text >> icon >> size >> special >> gameObjectId;
 
     if (gameObjectId != 0) {
         gameObject_ = RepositoryManager::s_CharacterRepository.getFullGameObject(gameObjectId);
     }
 
-    construct(id, icon, text, size, custom, special);
-}
-
-/**
- * @brief TokenItem::setCustomIcon Sets the QIcon of this TokenItem to the image pointed by path
- * and a text added in front of it.
- * @param path Filepath pointing to the image to use for the icon.
- * @param text Text to add in front of the image.
- */
-void TokenItem::setCustomIcon(QString path, QString text) {
-    QPixmap pix;
-    if(!pix.load(path)){
-        pix.load(DEFAULT_ICON_PATH);
-        pixLoaded_ = false;
-    }
-    else {
-        pixLoaded_ = true;
-    }
-
-    QPainter painter(&pix);
-    painter.setRenderHint(QPainter::Antialiasing);
-    QPainterPath painterPath;
-
-    painterPath.addText(QPointF(1, pix.height()), QFont("Arial", 15, QFont::Bold), text);
-    painter.setPen(Qt::black);
-    painter.setBrush(Qt::white);
-    painter.drawPath(painterPath);
-
-    QListWidgetItem::setIcon(QIcon(pix));
+    construct(id, icon, text, size, special);
 }
 
 /**
@@ -167,10 +132,6 @@ int TokenItem::size() {
     return size_;
 }
 
-bool TokenItem::isCustom() {
-    return custom_;
-}
-
 bool TokenItem::isSpecial() {
     return special_;
 }
@@ -194,7 +155,7 @@ QByteArray TokenItem::toQByteArray() {
 }
 
 void TokenItem::toQByteArray(QDataStream *stream) {
-    *stream << id_ << text() << icon() << size_ << custom_ << special_;
+    *stream << id_ << text() << icon() << size_ << special_;
 
     // If this TokenItem possess a GameObject, adds its Id to the QByteArray, otherwise adds the id
     // 0 which does not correspond to any GameObject

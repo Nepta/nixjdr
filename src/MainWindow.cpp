@@ -70,10 +70,6 @@ void MainWindow::initLogger(){
 }
 
 void MainWindow::initConnects() {
-    // Top menu
-    connect(ui->tableArea, SIGNAL(subWindowActivated(QMdiSubWindow*)),
-                 this, SLOT(updateMenu()));
-
     // Notification Stacker
     connect(this->ui->tokenPage, SIGNAL(sendNotification(QString)),
             &m_NotificationStacker, SLOT(pushNotification(QString)));
@@ -86,13 +82,6 @@ void MainWindow::initRole(){
     } else {
         setupPlayer();
     }
-}
-
-/**
- * @brief MainWindow::updateMenu Update the top menu available functions.
- */
-void MainWindow::updateMenu() {
-    // TODO update menu
 }
 
 /**
@@ -252,7 +241,7 @@ void MainWindow::setupMJ() {
 
 void MainWindow::addPlayerToInterface(QString playerNickname){
     ui->turnWidget->getTurnList()->addTurn(playerNickname);
-    ui->tokenPage->addCustomToken(playerNickname);
+    ui->tokenPage->addToken(playerNickname);
 }
 
 

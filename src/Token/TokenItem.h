@@ -10,7 +10,6 @@
 class TokenItem : public QListWidgetItem, public DBItem {
 private:
     int size_;
-    bool custom_;
     bool pixLoaded_;
 
     /**
@@ -20,14 +19,14 @@ private:
     bool special_;
     GameObject *gameObject_;
 
-    void construct(QString path, QString text, int size, bool custom, bool special);
-    void construct(int id, QIcon icon, QString text, int size, bool custom, bool special);
+    void construct(QString path, QString text, int size, bool special);
+    void construct(int id, QIcon icon, QString text, int size, bool special);
     void construct(QDataStream *stream);
 
 public:
     static const QString DEFAULT_ICON_PATH;
 
-    TokenItem(QString path, QString text, int size, bool custom = false, bool special = false);
+    TokenItem(QString path, QString text, int size, bool special = false);
     TokenItem(const QByteArray& data);
     TokenItem(DBItem item);
     TokenItem(QDataStream *stream);
@@ -38,13 +37,11 @@ public:
     QString path();
     QByteArray iconPixmapData();
     int size();
-    bool isCustom();
     bool isSpecial();
     bool isPixLoaded();
     GameObject *gameObject();
 
     GameObject *getGameObject();
-    void setCustomIcon(QString path, QString text);
     void setIcon(QString path);
     void setGameObject(GameObject *gameObject);
 };

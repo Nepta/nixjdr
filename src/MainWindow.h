@@ -32,7 +32,6 @@ public:
 
 private slots:
     void openMap(Map *map, bool notify = false);
-    void updateMenu();
     void on_actionCreateMap_triggered();
     void on_actionOpenMap_triggered();
     void on_actionCreateImage_triggered();

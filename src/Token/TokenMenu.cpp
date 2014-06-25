@@ -55,7 +55,7 @@ void TokenMenu::initTokenMenuPush() {
             bool special = filePath.contains("Special");
 
             // TODO hard coded size
-            TokenItem *item = addToken(name, filePath, 32, false, special);
+            TokenItem *item = addToken(name, filePath, 32, special);
             item->setHidden(special);
         }
     }
@@ -101,7 +101,7 @@ void TokenMenu::on_tokenButton_clicked()
     QAction* selectedItem = menu.exec(QCursor::pos());
     if (selectedItem == createCustomToken) {
         QString text = ui->inputSearchField->text();
-        addCustomToken(text);
+        addToken(text);
     }
     else if (selectedItem == createGameObject) {
         GameObjectDialog gameObjectDlg;
@@ -114,24 +114,18 @@ void TokenMenu::on_tokenButton_clicked()
             // Push the game object into the database
             RepositoryManager::s_GameObjectRepository.insertGameObject(gameObject);
 
-            addCustomToken(gameObject->getName(), path, gameObject);
+            int size = 32; // TODO hard-coded size
+            addToken(gameObject->getName(), path, size, gameObject);
         }
     }
 }
 
-TokenItem *TokenMenu::addCustomToken(QString text, QString filePath, GameObject *gameObject) {
-    int size = 32;
-
-    return addToken(text, filePath, size, true, false, gameObject);
-}
-
-TokenItem* TokenMenu::addToken(QString text, QString filePath, int size, bool custom, bool special,
-    GameObject *gameObject)
+TokenItem* TokenMenu::addToken(QString text, QString filePath, int size, bool special, GameObject *gameObject)
 {
     // Check if the list already contains a token with the same text before insertion.
     QList<QListWidgetItem*> items = ui->m_tokenList->findItems(text, Qt::MatchExactly);
     if (items.empty()) {
-        TokenItem *item = new TokenItem(filePath, text, size, custom, special);
+        TokenItem *item = new TokenItem(filePath, text, size, special);
 
         if (!item->isPixLoaded()) {
             emit sendNotification(QString("L'image spécifiée par le chemin %1 n'a pas pu être chargée.")

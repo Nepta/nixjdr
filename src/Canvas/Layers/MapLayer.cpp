@@ -16,6 +16,9 @@ MapLayer::MapLayer(TokenItem *tokenItem, int step) :
 {
     m_LayerType = LayerType::MAP_LAYER;
 
+    m_SpriteName.setParentItem(this);
+    m_SpriteName.hide();
+
     m_LifeBar.setParentItem(this);
     m_LifeBar.hide();
 
@@ -26,6 +29,9 @@ MapLayer::MapLayer(TokenItem *tokenItem, int step) :
 MapLayer::MapLayer(DBItem item) : GridLayer()
 {
     m_LayerType = LayerType::MAP_LAYER;
+
+    m_SpriteName.setParentItem(this);
+    m_SpriteName.hide();
 
     m_LifeBar.setParentItem(this);
     m_LifeBar.hide();
@@ -111,6 +117,7 @@ void MapLayer::dragMoveEvent(QGraphicsSceneDragDropEvent *event) {
 void MapLayer::dropEvent(QGraphicsSceneDragDropEvent *event)
 {
     hideLifeBar();
+    hideSpriteName();
     dropEvent(event, NULL);
 }
 
@@ -281,12 +288,14 @@ bool MapLayer::sceneEventFilter(QGraphicsItem *watched, QEvent *event) {
 
         case QEvent::GraphicsSceneDrop: {
             hideLifeBar();
+            hideSpriteName();
             dropEvent(dragDropEvent, sprite);
             emit hideMapTooltip();
         }
 
         case QEvent::GraphicsSceneHoverEnter: {
             showLifeBar(sprite);
+            showSpriteName(sprite);
         }
 
         case QEvent::GraphicsSceneHoverMove: {
@@ -298,6 +307,7 @@ bool MapLayer::sceneEventFilter(QGraphicsItem *watched, QEvent *event) {
 
         case QEvent::GraphicsSceneHoverLeave: {
             hideLifeBar();
+            hideSpriteName();
             emit hideMapTooltip();
         } break;
 
@@ -383,4 +393,15 @@ void MapLayer::showLifeBar(Sprite *sprite) {
 
 void MapLayer::hideLifeBar() {
     m_LifeBar.hide();
+}
+
+void MapLayer::showSpriteName(Sprite *sprite) {
+    m_SpriteName.setText(sprite->getTokenItem()->text());
+    m_SpriteName.setPosCenterItem(sprite);
+    m_SpriteName.setZValue(sprite->zValue() + 1);
+    m_SpriteName.show();
+}
+
+void MapLayer::hideSpriteName() {
+    m_SpriteName.hide();
 }

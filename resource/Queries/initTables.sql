@@ -28,7 +28,6 @@ CREATE TABLE tokenitem (
 	text         character varying(20) UNIQUE,
 	icon       bytea,
 	size         integer,
-	custom       bool,
 	special      bool,
 	gameobjectid integer REFERENCES gameobject(id),
 	CONSTRAINT tokenitem_pkey PRIMARY KEY (id)

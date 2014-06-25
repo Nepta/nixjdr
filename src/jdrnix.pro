@@ -103,7 +103,8 @@ SOURCES += \
     GameObjects/GameObject.cpp \
     GameObjects/Character.cpp \
     GameObjects/GameObjectDialog.cpp \
-    General/CircularProgressBar.cpp
+    General/CircularProgressBar.cpp \
+    General/TextPixmap.cpp
 
 HEADERS  += \
     MainWindow.h \
@@ -201,7 +202,8 @@ HEADERS  += \
     GameObjects/GameObjectType.h \
     GameObjects/Character.h \
     GameObjects/GameObjectDialog.h \
-    General/CircularProgressBar.h
+    General/CircularProgressBar.h \
+    General/TextPixmap.h
 
 FORMS    += \
     MainWindow.ui \
