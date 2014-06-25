@@ -144,8 +144,9 @@ void DrawingLayer::updateDisplayRemote() {
 }
 
 void DrawingLayer::setPixmap(QPixmap *pixmap) {
-    delete m_Pixmap;
-    m_Pixmap = pixmap;
+    *m_Pixmap = pixmap->copy();
+//    QPainter pixmapPainter(m_Pixmap);
+//    pixmapPainter.drawPixmap(m_Pixmap->rect(), *pixmap, pixmap->rect());
 }
 
 /**
