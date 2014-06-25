@@ -397,8 +397,8 @@ void MapLayer::hideLifeBar() {
 
 void MapLayer::showSpriteName(Sprite *sprite) {
     m_SpriteName.setText(sprite->getTokenItem()->text());
-    m_SpriteName.setPosCenterItem(sprite);
-    m_SpriteName.setZValue(sprite->zValue() + 1);
+    m_SpriteName.setPosCenterItem(sprite, TextPixmap::SPRITE_OFFSET);
+    m_SpriteName.setZValue(sprite->zValue() + 100);
     m_SpriteName.show();
 }
 
