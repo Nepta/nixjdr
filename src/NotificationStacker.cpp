@@ -19,8 +19,8 @@ void NotificationStacker::pushNotification(QString text){
     Tooltip* notif = new Tooltip();
     notif->setParent(m_Parent);
     notif->pushInfo(text);
-    notif->showTooltip(QPoint(Tooltip::NOTIFICATION_OFFSET_X,
-                              Tooltip::NOTIFICATION_OFFSET_Y + (m_Size-1)*30));
+    notif->show(QPoint(Tooltip::NOTIFICATION_OFFSET_X,
+                       Tooltip::NOTIFICATION_OFFSET_Y + (m_Size-1)*30));
     notif->raise();
     m_Stack << notif;
     if(m_Size == 1){

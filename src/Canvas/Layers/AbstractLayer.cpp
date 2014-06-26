@@ -49,3 +49,7 @@ void AbstractLayer::keyPressEvent(QKeyEvent *) {}
  * forwards all events
  */
 void AbstractLayer::keyReleaseEvent(QKeyEvent *) {}
+
+void AbstractLayer::setTooltip(MapTooltip *tooltip) {
+    m_Tooltip = tooltip;
+}

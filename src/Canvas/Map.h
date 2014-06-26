@@ -17,7 +17,7 @@
 
 #include "Log/LogClient.h"
 
-#include "Tooltip.h"
+#include "MapTooltip.h"
 #include "CanvasView.h"
 #include "CanvasScene.h"
 #include "NotificationStacker.h"
@@ -56,15 +56,14 @@ private slots:
     void selectedEditionLayer(QAbstractButton *button, bool checked);
     void selectedDisplayLayer(QAbstractButton *button, bool checked);
     void on_collapseButton_clicked(bool checked);
-    void showMapTooltip();
 
 private:
     Ui::Map *ui;
     CanvasScene *m_Scene;
-    Tooltip m_Tooltip;
     AbstractLayer *m_SelectedLayer;
     Layers *m_Layers;
     QHash<LayerCodes, QWidget *> m_EditionMap;
+    MapTooltip *m_Tooltip;
     bool m_IsImage;
     bool m_IsMj;
 
@@ -87,7 +86,6 @@ private:
     void initDrawingLayer(bool addToDb);
     void initAsImage();
 
-    void showMapTooltip(QString tooltip);
     void hideAllToolBoxes();
     void keyPressEvent(QKeyEvent *keyEvent);
     void keyReleaseEvent(QKeyEvent *keyEvent);

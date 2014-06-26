@@ -35,12 +35,8 @@ private:
     TextPixmap m_SpriteName;
 
     void initDragEvent(Sprite *watched, QGraphicsSceneMouseEvent *mouseEvent);
-    void addSpriteInfoTooltip(Sprite *sprite);
 
-    void addMoveInfoTooltip(QPoint currentMousePos);
     int getShorterDistance(QPoint currentMousePos);
-
-    void addCharacterInfoTooltip(GameObject *gameObject);
 
     bool sceneEventFilter(QGraphicsItem *watched, QEvent *event);
 
@@ -64,10 +60,7 @@ private:
     void hideSpriteName();
 
 signals:
-    void pushInfoTooltip(QString info);
-    void showMapTooltip();
-    void hideMapTooltip();
-	 void spriteMoved(QString info);
+    void spriteMoved(QString info);
 
 };
 

@@ -4,7 +4,8 @@
 #include "ui_Map.h"
 #include "ui_DrawingMenu.h"
 
-Map::Map(bool isImage, QString mapName, QString bgFilename, TokenItem *tokenItem, int tileStep, bool isMj, QWidget *parent) :
+Map::Map(bool isImage, QString mapName, QString bgFilename, TokenItem *tokenItem, int tileStep,
+         bool isMj, QWidget *parent) :
     QWidget(parent),
     DBItem(),
     ui(new Ui::Map)
@@ -27,7 +28,7 @@ Map::Map(bool isImage, QString mapName, QString bgFilename, TokenItem *tokenItem
 }
 
 Map::Map(DBItem item, BackgroundLayer *bgLayer, MapLayer *mapLayer, FoWLayer *fowLayer,
-    DrawingLayer *drawingLayer, bool isMj) :
+         DrawingLayer *drawingLayer, bool isMj) :
     DBItem(),
     ui(new Ui::Map)
 {
@@ -60,6 +61,7 @@ Map::Map(DBItem item, BackgroundLayer *bgLayer, MapLayer *mapLayer, FoWLayer *fo
 Map::~Map() {
     delete ui;
     delete m_Scene;
+    delete m_Tooltip;
 }
 
 /**
@@ -312,20 +314,15 @@ void Map::initDrawingLayer(bool addToDb) {
 }
 
 /**
- * @brief Map::initTooltip associates a tooltip with the map and connects the information slots to
- * the tooltip
+ * @brief Map::initTooltip associates a tooltip with the map and set the tooltip for the layers which
+ * need it.
  */
 void Map::initTooltip() {
-    m_Tooltip.setParent(this);
-    m_Tooltip.hide();
-    MapLayer *mapLayer = static_cast<MapLayer *>(m_Layers->getLayer(LayerCodes::LAYER_MAP));
+    m_Tooltip = new MapTooltip(ui->m_View, this);
+    m_Tooltip->hide();
 
-    connect(mapLayer, SIGNAL(pushInfoTooltip(QString)),
-            &m_Tooltip, SLOT(pushInfo(QString)));
-    connect(mapLayer, SIGNAL(showMapTooltip()),
-            this, SLOT(showMapTooltip()));
-    connect(mapLayer, SIGNAL(hideMapTooltip()),
-            &m_Tooltip, SLOT(hide()));
+    MapLayer *mapLayer = static_cast<MapLayer *>(m_Layers->getLayer(LayerCodes::LAYER_MAP));
+    mapLayer->setTooltip(m_Tooltip);
 }
 
 /**
@@ -356,18 +353,6 @@ void Map::selectedDisplayLayer(QAbstractButton *button, bool checked) {
         selectedLayer->setVisible(checked);
         ui->m_View->scene()->update(); // update the background part of the Scene
     }
-}
-
-/**
- * @brief Map::showMapTooltip Displays the tooltip at the bottom right of the map.
- */
-void Map::showMapTooltip() {
-    QPoint position(
-        ui->m_View->size().width() - m_Tooltip.size().width() - Tooltip::TOOLTIP_OFFSET,
-        ui->m_View->size().height() - m_Tooltip.size().height() - Tooltip::TOOLTIP_OFFSET
-    );
-
-	 m_Tooltip.showTooltip(position);
 }
 
 void Map::on_collapseButton_clicked(bool checked) {

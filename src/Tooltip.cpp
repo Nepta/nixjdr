@@ -34,11 +34,11 @@ void Tooltip::setTooltipText(QString text) {
 }
 
 /**
- * @brief MapTooltip::showTooltip Displays the tooltip with the information stored in m_InfoStack
- * at the specified position.
+ * @brief MapTooltip::showTooltip Overloaded from QWidget. Displays the tooltip with the information
+ * stored in m_InfoStack at the specified position.
  * @param position
  */
-void Tooltip::showTooltip(QPoint position) {
+void Tooltip::show(QPoint position) {
     QString tip;
 
     while (!m_InfoStack.isEmpty()) {
@@ -51,13 +51,14 @@ void Tooltip::showTooltip(QPoint position) {
     setTooltipText(tip);
 
     move(position);
-    show();
+    QWidget::show();
 }
 
 /**
- * @brief Tooltip::hideTooltip Clear the information stack before hiding the tooltip.
+ * @brief Tooltip::hideTooltip Reimplemented from QWidget.Clear the information stack before hiding
+ * the tooltip.
  */
-void Tooltip::hideTooltip() {
+void Tooltip::hide() {
     m_InfoStack.clear();
-    hide();
+    QWidget::hide();
 }

@@ -9,7 +9,7 @@
 #include <QRectF>
 
 #include "Network/SenderClient.h"
-
+#include "Canvas/MapTooltip.h"
 #include "Database/Database.h"
 #include "Database/DBItem.h"
 #include <QHash>
@@ -34,9 +34,11 @@ public:
     void paint(QPainter *, const QStyleOptionGraphicsItem *, QWidget *);
     void setEnabled(bool enabled);
     void setSenderClient(SenderClient *senderClient);
+    void setTooltip(MapTooltip *tooltip);
 
 protected:
     SenderClient *m_SenderClient;
+    MapTooltip *m_Tooltip;
 
     virtual void keyPressEvent(QKeyEvent *);
     virtual void keyReleaseEvent(QKeyEvent *);
