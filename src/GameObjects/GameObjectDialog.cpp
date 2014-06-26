@@ -75,6 +75,11 @@ QString GameObjectDialog::getPath(){
     return m_Path;
 }
 
+void GameObjectDialog::setNameToken(QString name)
+{
+    ui->m_NameEdit->setText(name);
+}
+
 void GameObjectDialog::on_m_SearchButton_clicked()
 {
     QString path = QFileDialog::getOpenFileName(this, "Ouvrir un fichier", "resource",

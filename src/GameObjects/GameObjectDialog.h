@@ -20,6 +20,7 @@ public:
 
     GameObject *getGameObject();
     QString getPath();
+    void setNameToken(QString name);
 
 private slots:
     void on_createButton_clicked();

@@ -104,7 +104,9 @@ void TokenMenu::on_tokenButton_clicked()
         addToken(text);
     }
     else if (selectedItem == createGameObject) {
+        QString text = ui->inputSearchField->text();
         GameObjectDialog gameObjectDlg;
+        gameObjectDlg.setNameToken(text);
         gameObjectDlg.exec();
         GameObject *gameObject = gameObjectDlg.getGameObject();
         QString path = gameObjectDlg.getPath();
