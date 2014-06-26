@@ -200,6 +200,7 @@ void MainWindow::on_actionConnection_triggered(){
     delete m_User;
     delete m_Server;
     delete m_Client;
+    delete m_PlayerGameObject;
     this->destroy();
 }
 
@@ -240,8 +241,10 @@ void MainWindow::setupMJ() {
 }
 
 void MainWindow::addPlayerToInterface(QString playerNickname){
+    m_PlayerGameObject = new Character(playerNickname,1,1);
+    RepositoryManager::s_GameObjectRepository.insertGameObject(m_PlayerGameObject);
     ui->turnWidget->getTurnList()->addTurn(playerNickname);
-    ui->tokenPage->addToken(playerNickname);
+    ui->tokenPage->addToken(playerNickname, TokenItem::DEFAULT_ICON_PATH, 32, false, m_PlayerGameObject);
 }
 
 

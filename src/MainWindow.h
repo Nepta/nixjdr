@@ -65,6 +65,7 @@ private:
     TurnMenu *m_turnMenu;
     QString m_FilePath ;
     NotificationStacker m_NotificationStacker;
+    GameObject *m_PlayerGameObject;
 };
 
 #endif // MAINWINDOW_H
