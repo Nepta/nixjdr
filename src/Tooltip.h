@@ -20,10 +20,10 @@ public:
 
     explicit Tooltip(QWidget *parent = 0);
     ~Tooltip();
-    void showTooltip(QPoint position);
+    void show(QPoint position);
 
 public slots:
-    void hideTooltip();
+    void hide();
     void pushInfo(QString info);
 
 private:

@@ -47,6 +47,7 @@ SOURCES += \
     Canvas/CanvasScene.cpp \
     Canvas/Sprite.cpp \
     Canvas/Map.cpp \
+    Canvas/MapTooltip.cpp \
     Canvas/Layers/GridLayer.cpp \
     Canvas/Layers/MapLayer.cpp \
     Canvas/Layers/FoWLayer.cpp \
@@ -157,6 +158,7 @@ HEADERS  += \
     Canvas/Network/MapCodes.h \
     Canvas/MapCreationWidget.h \
     Canvas/OpenMapWidget.h \
+    Canvas/MapTooltip.h \
     Network/Switch.h \
     Network/SwitchServer.h \
     Network/SwitchClient.h \
