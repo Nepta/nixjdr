@@ -33,8 +33,8 @@ class Map : public QWidget, public DBItem, public SenderHandler
 public:
     static const int BG_OFFSET = 2*4;
 
-    explicit Map(bool isImage, QString mapName, QString bgFilename, TokenItem *tokenItem,
-                 int tileStep, bool isMj, QWidget *parent = 0);
+    explicit Map(bool isImage, QString mapName, QString bgFilename, int bgWidth, int bgHeight,
+                 TokenItem *tokenItem, int tileStep, bool isMj, QWidget *parent = 0);
     Map(DBItem item, BackgroundLayer *bgLayer, MapLayer *mapLayer, FoWLayer *fowLayer,
         DrawingLayer *drawingLayer, bool isMj);
     ~Map();
@@ -50,7 +50,7 @@ public:
     FoWLayer *getFoWLayer();
     DrawingLayer *getDrawingLayer();
     bool getIsImage();
-	 void connectToLogger(LogClient* client);
+    void connectToLogger(LogClient* client);
 
 private slots:
     void selectedEditionLayer(QAbstractButton *button, bool checked);
@@ -70,6 +70,8 @@ private:
     void initRole(bool isMj);
     void initMj();
     void initPlayer();
+
+    QPixmap createBgPixmap(QString filename, int bgWidth, int bgHeight, int tileStep);
 
     void initScene(int tileStep);
     void initScene(int sceneWidth, int sceneHeight);

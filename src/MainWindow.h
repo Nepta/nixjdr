@@ -32,13 +32,20 @@ public:
 
 private slots:
     void openMap(Map *map, bool notify = false);
+
+//Map functions
     void on_actionCreateMap_triggered();
-    void on_actionOpenMap_triggered();
     void on_actionCreateImage_triggered();
+    void on_actionOpenMap_triggered();
+
+//Main menu functions
     void on_actionConnection_triggered();
+
+//Ui functions
     void on_collapseButtonRightMenu_clicked(bool checked);
     void on_collapseButtonTurnMenu_clicked();
-    void createMap(QString mapName, int mapStep, bool isMap = false);
+
+//User creation functions
     void addPlayerToInterface(QString playerNickname);
 
 signals:
@@ -49,14 +56,19 @@ private:
     void setupMJ();
     void setupPlayer();
 
-    // inits
+// inits
     void initDiceMenu();
     void initConnects();
     void initRole();
     void initTableTurnSplitter();
 	void initLogger();
 
+//Ui functions
     void collapseMenu(bool checked, QWidget *widget, QSplitter *splitter, int min, int max);
+
+//Map functions
+    void openMapCreationWidget(bool isImage);
+    void createMap(QString path, int bgWidth, int bgHeight, QString mapName, int mapStep, bool isImage = false);
 
     Ui::MainWindow *ui;
     User *m_User;

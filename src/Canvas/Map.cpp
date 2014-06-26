@@ -4,8 +4,8 @@
 #include "ui_Map.h"
 #include "ui_DrawingMenu.h"
 
-Map::Map(bool isImage, QString mapName, QString bgFilename, TokenItem *tokenItem, int tileStep,
-         bool isMj, QWidget *parent) :
+Map::Map(bool isImage, QString mapName, QString bgFilename, int bgWidth, int bgHeight
+         , TokenItem *tokenItem, int tileStep, bool isMj, QWidget *parent) :
     QWidget(parent),
     DBItem(),
     ui(new Ui::Map)
@@ -13,8 +13,9 @@ Map::Map(bool isImage, QString mapName, QString bgFilename, TokenItem *tokenItem
     ui->setupUi(this);
     this->setWindowTitle(mapName);
     initRole(isMj);
+    QPixmap bgPixmap = createBgPixmap(bgFilename, bgWidth, bgHeight, tileStep);
 
-    m_Layers = new Layers(bgFilename, 2, 2, Qt::black, tileStep, tokenItem, isMj);
+    m_Layers = new Layers(bgPixmap, 2, 2, Qt::black, tileStep, tokenItem, isMj);
 
     initScene(tileStep);
     initLayers();
@@ -100,6 +101,28 @@ void Map::initMj(){
 void Map::initPlayer(){
     ui->m_FowEdit->hide();
     ui->m_FowDisplay->hide();
+}
+
+/**
+ * @brief Map::createBgPixmap generates a pixmap from the given file. If it is null, generates a
+ * white QPixmap of bgX x bgY
+ * @param filename
+ * @param bgX
+ * @param bgY
+ * @return
+ */
+QPixmap Map::createBgPixmap(QString filename, int bgWidth, int bgHeight, int tileStep){
+    QPixmap pixMapToReturn;
+    if(!filename.isNull()){
+        pixMapToReturn =QPixmap(filename);
+    }
+    else{
+        int pixMapToReturnWidht = (bgWidth - BG_OFFSET) * tileStep;
+        int pixMapToReturnHeight = (bgHeight - BG_OFFSET) * tileStep;
+        pixMapToReturn = QPixmap(pixMapToReturnWidht, pixMapToReturnHeight);
+        pixMapToReturn.fill(Qt::white);
+    }
+    return pixMapToReturn;
 }
 
 /**

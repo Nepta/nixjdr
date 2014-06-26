@@ -9,7 +9,7 @@
 class BackgroundLayer : public AbstractLayer
 {
 public:
-    BackgroundLayer(QString filename);
+    BackgroundLayer(QPixmap bgPixmap);
     BackgroundLayer(DBItem item);
     ~BackgroundLayer();
 

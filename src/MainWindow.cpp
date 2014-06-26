@@ -1,5 +1,4 @@
 #include <QString>
-#include <QFileDialog>
 #include <QApplication>
 #include <QDesktopWidget>
 #include <QToolBox>
@@ -130,31 +129,49 @@ void MainWindow::openMap(Map *map, bool notify) {
     map->connectToLogger(logClient);
 }
 
-void MainWindow::createMap(QString mapName, int mapStep, bool isMap) {
+void MainWindow::on_actionCreateMap_triggered(){
+    openMapCreationWidget(false);
+}
+
+void MainWindow::on_actionCreateImage_triggered(){
+    openMapCreationWidget(true);
+}
+
+void MainWindow::openMapCreationWidget(bool isImage){
+    MapCreationWidget mapCreationWidget(isImage);
+
+    mapCreationWidget.exec();
+    QString path = mapCreationWidget.getImagePath();
+    QString mapName = mapCreationWidget.getMapName();
+    int mapStep = mapCreationWidget.getStep();
+    int bgWidth = mapCreationWidget.getBgWidht();
+    int bgHeight = mapCreationWidget.getBgHeight();
+    bool bgIsWhite = mapCreationWidget.getIsWhite();
+    mapCreationWidget.close();
+
+    if(!bgIsWhite && QFile(path).exists()){
+        createMap(path, 0, 0, mapName, mapStep, isImage);
+    }
+    else if(bgIsWhite){
+        createMap(NULL, bgWidth, bgHeight, mapName, mapStep, isImage);
+    }
+    else{
+        m_NotificationStacker.pushNotification(tr("Chemin de l'image incorrect"));
+    }
+}
+
+void MainWindow::createMap(QString path, int bgWidth, int bgHeight, QString mapName, int mapStep, bool isImage) {
     QListWidget *tokenList = ui->tokenPage->getUi()->m_tokenList;
     TokenItem *currentTokenItem = dynamic_cast<TokenItem*>(tokenList->currentItem());
 
     bool isMj = (m_User->getRole() == Role::ROLE_MJ);
-    Map *map = new Map(isMap, mapName, m_FilePath , currentTokenItem, mapStep, isMj);
+    Map *map = new Map(isImage, mapName, path, bgWidth, bgHeight, currentTokenItem, mapStep, isMj);
 
     // Add Map to the database
     RepositoryManager::s_MapRepository.insertMap(map);
 
     // Initialize and open map
     openMap(map, true);
-}
-
-void MainWindow::on_actionCreateMap_triggered(){
-    m_FilePath = "";
-    m_FilePath = QFileDialog::getOpenFileName(this, "Ouvrir un fichier", "resource",
-                                                    "Images (*.png *.xpm *.jpg)");
-
-    if(m_FilePath != ""){
-        MapCreationWidget mapCreationWidget(false);
-        connect(&mapCreationWidget, SIGNAL(createMap(QString, int, bool)),
-                this, SLOT(createMap(QString, int, bool)));
-        mapCreationWidget.exec();
-    }
 }
 
 void MainWindow::on_actionOpenMap_triggered() {
@@ -175,19 +192,6 @@ void MainWindow::on_actionOpenMap_triggered() {
         map->getMapLayer()->setTokenItem(tokenList->currentItem());
 
         openMap(map, true);
-    }
-}
-
-void MainWindow::on_actionCreateImage_triggered(){
-    m_FilePath = "";
-    m_FilePath = QFileDialog::getOpenFileName(this, "Ouvrir un fichier", "resource",
-                                                    "Images (*.png *.xpm *.jpg)");
-
-    if(m_FilePath != ""){
-        MapCreationWidget mapCreationWidget(true);
-        connect(&mapCreationWidget, SIGNAL(createMap(QString, int, bool)),
-                this, SLOT(createMap(QString, int, bool)));
-        mapCreationWidget.exec();
     }
 }
 

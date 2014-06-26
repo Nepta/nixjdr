@@ -13,10 +13,10 @@ const QHash<QString, LayerCodes> Layers::s_ButtonCodesMap = {
     {"m_MapEdit", LayerCodes::LAYER_MAP}
 };
 
-Layers::Layers(QString filename, int penSize, int eraserSize, QColor color, int step,
+Layers::Layers(QPixmap bgPixmap, int penSize, int eraserSize, QColor color, int step,
                TokenItem *tokenItem, bool transparentFoW){
 
-    m_LayersMap.insert(LayerCodes::LAYER_BACKGROUND, new BackgroundLayer(filename));
+    m_LayersMap.insert(LayerCodes::LAYER_BACKGROUND, new BackgroundLayer(bgPixmap));
     m_LayersMap.insert(LayerCodes::LAYER_DRAW, new DrawingLayer(penSize, eraserSize, color));
     m_LayersMap.insert(LayerCodes::LAYER_FOW, new FoWLayer(step, transparentFoW));
     m_LayersMap.insert(LayerCodes::LAYER_MAP, new MapLayer(tokenItem, step));

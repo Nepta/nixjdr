@@ -3,9 +3,10 @@
 #include <QByteArray>
 #include <QBuffer>
 
-BackgroundLayer::BackgroundLayer(QString filename) :
-    m_Background(filename)
-{}
+BackgroundLayer::BackgroundLayer(QPixmap bgPixmap)
+{
+    m_Background = bgPixmap;
+}
 
 BackgroundLayer::BackgroundLayer(DBItem item) {
     QHash<QString, QVariant> itemHashMap = item.getHashMap();

@@ -31,7 +31,7 @@ class Layers : public QObject
 public:
     const static QHash<QString, LayerCodes> s_ButtonCodesMap;
 
-    Layers(QString filename, int penSize, int eraserSize, QColor color, int step,
+    Layers(QPixmap bgPixmap, int penSize, int eraserSize, QColor color, int step,
            TokenItem *tokenItem, bool transparentFoW);
     Layers(BackgroundLayer *bgLayer, MapLayer *mapLayer, FoWLayer *fowLayer,
         DrawingLayer *drawingLayer);
