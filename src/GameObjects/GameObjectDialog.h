@@ -4,6 +4,7 @@
 #include <QDialog>
 
 #include "GameObject.h"
+#include "Token/TokenItem.h"
 
 namespace Ui {
 class GameObjectDialog;
@@ -15,11 +16,12 @@ class GameObjectDialog : public QDialog
 
 public:
     GameObjectDialog(QWidget *parent = 0);
-    GameObjectDialog(GameObject *gameObject, QWidget *parent = 0);
+    GameObjectDialog(GameObject *gameObject, TokenItem *tokenItem, QWidget *parent = 0);
     ~GameObjectDialog();
 
     GameObject *getGameObject();
     QString getPath();
+    int getSize();
     void setNameToken(QString name);
 
 private slots:
@@ -30,6 +32,7 @@ private slots:
 private:
     Ui::GameObjectDialog *ui;
     GameObject *m_Object;
+    TokenItem *m_TokenItem;
     QString m_Path;
     bool m_EditMode;
 };

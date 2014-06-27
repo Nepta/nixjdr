@@ -84,3 +84,14 @@ int TokenItemRepository::insertTokenItem(TokenItem *tokenItem) {
 
     return id;
 }
+
+void TokenItemRepository::updateTokenItem(TokenItem *tokenItem){
+    QHash<QString, QVariant> args {
+        {"text", tokenItem->text()},
+        {"icon", tokenItem->iconPixmapData()},
+        {"size", tokenItem->size()},
+        {"special", tokenItem->isSpecial()}
+    };
+
+    updateById(tokenItem->id(), args);
+}

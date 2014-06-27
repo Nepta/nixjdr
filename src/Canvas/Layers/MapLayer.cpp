@@ -220,6 +220,7 @@ void MapLayer::ShowContextMenu(QGraphicsSceneMouseEvent *mouseEvent, Sprite *wat
     QAction* deleteAction = menu.addAction(tr("Supprimer"));
     QAction* editCharacterAction = menu.addAction(tr("Editer le personnage"));
 
+    TokenItem *tokenItem = watched->getTokenItem();
     GameObject *gameObject = watched->getGameObject();
     Character *character = dynamic_cast<Character*>(gameObject);
     if (character == NULL) {
@@ -235,7 +236,7 @@ void MapLayer::ShowContextMenu(QGraphicsSceneMouseEvent *mouseEvent, Sprite *wat
 		  removeSprite(watched);
     }
     else if(selectedItem == editCharacterAction) {
-        GameObjectDialog gameObjectDlg(character);
+        GameObjectDialog gameObjectDlg(character, tokenItem);
         gameObjectDlg.exec();
         gameObjectDlg.close();
 

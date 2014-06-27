@@ -46,6 +46,7 @@ public:
     void setIcon(QString path);
     int getPixmapSize();
     void setGameObject(GameObject *gameObject);
+    TokenItem *setSize(int size);
 };
 
 #endif // TOKENITEM_H

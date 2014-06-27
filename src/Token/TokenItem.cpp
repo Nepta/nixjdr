@@ -181,3 +181,8 @@ void TokenItem::setGameObject(GameObject *gameObject) {
     gameObject_ = gameObject;
 }
 
+TokenItem *TokenItem::setSize(int size){
+    size_ = size;
+    return this;
+}
+

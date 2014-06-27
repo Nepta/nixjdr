@@ -56,6 +56,7 @@ void TokenMenu::initTokenMenuPush() {
 
             // TODO hard coded size
             TokenItem *item = addToken(name, filePath, 1, special);
+
             item->setHidden(special);
         }
     }
@@ -109,6 +110,7 @@ void TokenMenu::on_tokenButton_clicked()
         gameObjectDlg.setNameToken(text);
         gameObjectDlg.exec();
         GameObject *gameObject = gameObjectDlg.getGameObject();
+        int size = gameObjectDlg.getSize();
         QString path = gameObjectDlg.getPath();
         gameObjectDlg.close();
 
@@ -116,7 +118,6 @@ void TokenMenu::on_tokenButton_clicked()
             // Push the game object into the database
             RepositoryManager::s_GameObjectRepository.insertGameObject(gameObject);
 
-            int size = 32; // TODO hard-coded size
             addToken(gameObject->getName(), path, size, false, gameObject);
         }
     }
@@ -161,12 +162,13 @@ void TokenMenu::editTokenCharacter(TokenItem *tokenItem) {
     Character *character = dynamic_cast<Character*>(gameObject);
 
     if (character != NULL) {
-        GameObjectDialog gameObjectDlg(character);
+        GameObjectDialog gameObjectDlg(character, tokenItem);
         gameObjectDlg.exec();
         gameObjectDlg.close();
 
         // Update the Character in the database
         RepositoryManager::s_CharacterRepository.updateCharacter(character);
+        RepositoryManager::s_TokenItemRepository.updateTokenItem(tokenItem);
 
         // Update the character for all the clients
         QString msg = QString("%1").arg(tokenItem->id());

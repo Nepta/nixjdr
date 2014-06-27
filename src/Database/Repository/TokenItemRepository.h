@@ -20,6 +20,8 @@ public:
     TokenItem* getFowTokenItem();
     TokenItem* getTokenItemById(int id);
     int insertTokenItem(TokenItem *tokenItem);
+
+    void updateTokenItem(TokenItem *tokenItem);
 };
 
 #endif // TOKENITEMREPOSITORY_H
