@@ -12,7 +12,7 @@ class MapCreationWidget : public QDialog
     Q_OBJECT
 
 public:
-    explicit MapCreationWidget(bool isMap, QWidget *parent = 0);
+    explicit MapCreationWidget(bool isImage, QWidget *parent = 0);
     ~MapCreationWidget();
 
     QString getMapName();
@@ -29,7 +29,7 @@ private slots:
 
 private:
     Ui::MapCreationWidget *ui;
-    bool m_IsMap;
+    bool m_IsImage;
 };
 
 #endif // MAPCREATIONWIDGET_H

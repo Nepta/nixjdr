@@ -4,16 +4,16 @@
 #include "ui_MapCreationWidget.h"
 #include "StyleSheet.h"
 
-MapCreationWidget::MapCreationWidget(bool isMap, QWidget *parent) :
+MapCreationWidget::MapCreationWidget(bool isImage, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::MapCreationWidget)
 {
     ui->setupUi(this);
     setStyleSheet(StyleSheet::s_StyleSheet);
 
-    m_IsMap = isMap;
+    m_IsImage = isImage;
 
-    if (!isMap) {
+    if (isImage) {
         ui->stepWidget->hide();
     }
 }
