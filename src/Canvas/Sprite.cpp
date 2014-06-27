@@ -135,6 +135,9 @@ GameObject *Sprite::getGameObject() {
 }
 
 void Sprite::setBoundingRect(int size){
+    QPixmap scaledPixmap = this->pixmap().scaled(size, size);
+    this->setPixmap(scaledPixmap);
+
     prepareGeometryChange();
     m_BoundingRectSize = size;
 }
