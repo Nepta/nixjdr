@@ -352,7 +352,7 @@ void MapLayer::showLifeBar(Sprite *sprite) {
     Character *character = dynamic_cast<Character*>(gameObject);
 
     if (character != NULL) {
-        m_LifeBar.setRadius(sprite->getTokenItem()->size());
+        m_LifeBar.setRadius(sprite->getTokenItem()->size()*m_Step);
         m_LifeBar.setPos(sprite->pos());
         m_LifeBar.setMaxValue(character->getMaxHp());
         m_LifeBar.setValue(character->getHp());
