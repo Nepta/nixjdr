@@ -52,6 +52,7 @@ Sprite *GridLayer::addSpriteToLayer(Sprite* sprite, QPoint position) {
  * @return The added Sprite.
  */
 Sprite *GridLayer::addSpriteToLayer(Sprite* sprite) {
+    sprite->setBoundingRect(m_Step);
     sprite->installSceneEventFilter(this);
 
     return sprite;

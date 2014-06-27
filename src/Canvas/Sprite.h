@@ -24,11 +24,13 @@ public:
     QByteArray toQByteArray();
     GameObject *getGameObject();
 
+    void setBoundingRect(int size);
     QRectF boundingRect() const;
     QPainterPath shape() const;
 
 private:
     TokenItem *m_TokenItem;
+    int m_BoundingRectSize;
     bool m_Transparent;
     GameObject *m_GameObject;
 

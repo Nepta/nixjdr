@@ -60,6 +60,7 @@ Sprite::Sprite(const QByteArray& data, QGraphicsItem *parent, int zValue) :
 
 void Sprite::construct(TokenItem *tokenItem, QGraphicsItem *parent, int zValue) {
     m_TokenItem = tokenItem;
+    m_BoundingRectSize = tokenItem->size();
 
     int tokenSize = tokenItem->size();
     QPixmap spritePixmap = tokenItem->icon().pixmap(QSize(tokenSize, tokenSize));
@@ -133,14 +134,18 @@ GameObject *Sprite::getGameObject() {
     return m_GameObject;
 }
 
+void Sprite::setBoundingRect(int size){
+    prepareGeometryChange();
+    m_BoundingRectSize = size;
+}
+
 /**
  * @brief Sprite::boundingRect Reimplemented from QGraphicsPixmapItem. Use the TokenItem's size to
  * avoid problems with pixmaps having a size inferior to the TokenItem's one.
  * @return bounding rectangle (QRectF)
  */
 QRectF Sprite::boundingRect() const {
-    int tokenItemSize = m_TokenItem->size();
-    return QRectF(offset(), QSize(tokenItemSize, tokenItemSize));
+    return QRectF(offset(), QSize(m_BoundingRectSize, m_BoundingRectSize));
 }
 
 /**

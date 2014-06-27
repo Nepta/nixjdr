@@ -34,6 +34,7 @@ public:
     QByteArray toQByteArray();
     void toQByteArray(QDataStream *stream);
 
+
     QString path();
     QByteArray iconPixmapData();
     int size();
