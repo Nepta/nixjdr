@@ -60,9 +60,8 @@ Sprite::Sprite(const QByteArray& data, QGraphicsItem *parent, int zValue) :
 
 void Sprite::construct(TokenItem *tokenItem, QGraphicsItem *parent, int zValue) {
     m_TokenItem = tokenItem;
-    m_BoundingRectSize = tokenItem->size();
 
-    int tokenSize = tokenItem->size();
+    int tokenSize = tokenItem->getPixmapSize();
     QPixmap spritePixmap = tokenItem->icon().pixmap(QSize(tokenSize, tokenSize));
     setPixmap(spritePixmap);
 
@@ -135,11 +134,12 @@ GameObject *Sprite::getGameObject() {
 }
 
 void Sprite::setBoundingRect(int size){
-    QPixmap scaledPixmap = this->pixmap().scaled(size, size);
+    int scaledSize = m_TokenItem->size()*size;
+    QPixmap scaledPixmap = this->pixmap().scaled(scaledSize, scaledSize);
     this->setPixmap(scaledPixmap);
 
     prepareGeometryChange();
-    m_BoundingRectSize = size;
+    m_BoundingRectSize = scaledSize;
 }
 
 /**

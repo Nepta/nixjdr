@@ -55,7 +55,7 @@ void TokenMenu::initTokenMenuPush() {
             bool special = filePath.contains("Special");
 
             // TODO hard coded size
-            TokenItem *item = addToken(name, filePath, 32, special);
+            TokenItem *item = addToken(name, filePath, 1, special);
             item->setHidden(special);
         }
     }

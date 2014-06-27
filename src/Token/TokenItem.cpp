@@ -173,6 +173,11 @@ GameObject *TokenItem::getGameObject() {
     return gameObject_;
 }
 
+int TokenItem::getPixmapSize(){
+    return icon().availableSizes().first().width();
+}
+
 void TokenItem::setGameObject(GameObject *gameObject) {
     gameObject_ = gameObject;
 }
+

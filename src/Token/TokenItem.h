@@ -44,6 +44,7 @@ public:
 
     GameObject *getGameObject();
     void setIcon(QString path);
+    int getPixmapSize();
     void setGameObject(GameObject *gameObject);
 };
 
