@@ -7,6 +7,16 @@ ColorSelectionWidget::ColorSelectionWidget(QWidget *parent) :
     ui(new Ui::ColorSelectionWidget)
 {
     ui->setupUi(this);
+
+    int firstWidth = ui->m_FirstColorButton->minimumWidth();
+    int firstHeight = ui->m_FirstColorButton->minimumHeight();
+    int secondWidth = ui->m_SecondColorButton->minimumWidth();
+    int secondHeight = ui->m_SecondColorButton->minimumHeight();
+
+    ui->m_FirstColorButton->setGeometry(0,0,firstWidth,firstHeight);
+    ui->m_SecondColorButton->setGeometry(width()-secondWidth,height()-secondHeight,secondWidth,secondHeight);
+    ui->m_DefaultColorButton->setGeometry(0,firstHeight,width()-secondWidth,height()-firstHeight);
+    ui->m_SwapButton->setGeometry(firstWidth,0,width()-firstWidth,height()-secondHeight);
 }
 
 ColorSelectionWidget::~ColorSelectionWidget()
@@ -32,6 +42,11 @@ void ColorSelectionWidget::setButtonColor(QPushButton *button, QColor color){
     }
 }
 
+void ColorSelectionWidget::setDefaultColors(){
+    setButtonColor(ui->m_FirstColorButton, Qt::black);
+    setButtonColor(ui->m_SecondColorButton, Qt::white);
+}
+
 void ColorSelectionWidget::on_m_FirstColorButton_clicked()
 {
     selectButtonColor(ui->m_FirstColorButton);
@@ -44,8 +59,7 @@ void ColorSelectionWidget::on_m_SecondColorButton_clicked()
 
 void ColorSelectionWidget::on_m_DefaultColorButton_clicked()
 {
-    setButtonColor(ui->m_FirstColorButton, Qt::black);
-    setButtonColor(ui->m_SecondColorButton, Qt::white);
+    setDefaultColors();
 }
 
 void ColorSelectionWidget::on_m_SwapButton_clicked()

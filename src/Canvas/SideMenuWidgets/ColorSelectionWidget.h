@@ -16,6 +16,7 @@ public:
     explicit ColorSelectionWidget(QWidget *parent = 0);
     ~ColorSelectionWidget();
     QColor getCurrentColor();
+    void setDefaultColors();
 
 private:
     void selectButtonColor(QPushButton *Button);
