@@ -55,7 +55,10 @@ public:
 private slots:
     void selectedEditionLayer(QAbstractButton *button, bool checked);
     void selectedDisplayLayer(QAbstractButton *button, bool checked);
+
     void on_collapseButton_clicked(bool checked);
+    void on_m_DisplayCheckBox_clicked(bool checked);
+    void on_m_EditCheckBox_clicked(bool checked);
 
 private:
     Ui::Map *ui;
@@ -88,7 +91,6 @@ private:
     void initDrawingLayer(bool addToDb);
     void initAsImage();
 
-    void hideAllToolBoxes();
     void keyPressEvent(QKeyEvent *keyEvent);
     void keyReleaseEvent(QKeyEvent *keyEvent);
 };

@@ -3,6 +3,8 @@
 #include "Map.h"
 #include "ui_Map.h"
 #include "ui_DrawingMenu.h"
+#include "ui_DisplaySelectionWidget.h"
+#include "ui_EditSelectionWidget.h"
 
 Map::Map(bool isImage, QString mapName, QString bgFilename, int bgWidth, int bgHeight
          , TokenItem *tokenItem, int tileStep, bool isMj, QWidget *parent) :
@@ -11,6 +13,7 @@ Map::Map(bool isImage, QString mapName, QString bgFilename, int bgWidth, int bgH
     ui(new Ui::Map)
 {
     ui->setupUi(this);
+
     this->setWindowTitle(mapName);
     initRole(isMj);
     QPixmap bgPixmap = createBgPixmap(bgFilename, bgWidth, bgHeight, tileStep);
@@ -99,8 +102,8 @@ void Map::initMj(){
  * @brief Map::initPlayer hides the buttons that the player shouldn't be able to use
  */
 void Map::initPlayer(){
-    ui->m_FowEdit->hide();
-    ui->m_FowDisplay->hide();
+    ui->m_EditSelectionWidget->getUi()->m_FowEdit->hide();
+    ui->m_DisplaySelectionWidget->getUi()->m_FowDisplay->hide();
 }
 
 /**
@@ -175,9 +178,14 @@ void Map::initLayers(bool addToDb) {
  * @brief Map::initDisplay connects the buttons with the layers
  */
 void Map::initDisplay(){
-    connect(ui->m_EditGroup, SIGNAL(buttonToggled(QAbstractButton*, bool)),
+    Ui::DisplaySelectionWidget *displaySelectionUi =ui->m_DisplaySelectionWidget->getUi();
+    Ui::EditSelectionWidget *editSelectionUi = ui->m_EditSelectionWidget->getUi();
+    ui->m_DisplayMenu->hide();
+    ui->m_EditMenu->hide();
+
+    connect(editSelectionUi->m_EditGroup, SIGNAL(buttonToggled(QAbstractButton*, bool)),
             this, SLOT(selectedEditionLayer(QAbstractButton*, bool)));
-    connect(ui->m_DisplayGroup, SIGNAL(buttonToggled(QAbstractButton*, bool)),
+    connect(displaySelectionUi->m_DisplayGroup, SIGNAL(buttonToggled(QAbstractButton*, bool)),
             this, SLOT(selectedDisplayLayer(QAbstractButton*, bool)));
 
     m_EditionMap.insert(LayerCodes::LAYER_MAP, ui->m_PageMapTools);
@@ -214,8 +222,7 @@ void Map::initFoWTools(){
 void Map::initDrawingTools() {
     Ui::DrawingMenu *drawingUi = ui->m_PageDrawingTools->getUi();
     DrawingLayer *drawingLayer = dynamic_cast<DrawingLayer*>(
-        m_Layers->getLayer(LayerCodes::LAYER_DRAW)
-    );
+                                 m_Layers->getLayer(LayerCodes::LAYER_DRAW));
 
     connect(drawingUi->m_PenSpinBox, SIGNAL(valueChanged(int)),
             drawingLayer, SLOT(setPenSize(int)));
@@ -442,9 +449,11 @@ void Map::connectToLogger(LogClient* client){
  */
 void Map::initAsImage() {
     // Hide toolboxes
+    ui->m_DisplayCheckBox->hide();
+    ui->m_EditCheckBox->hide();
     ui->m_StackedTools->show();
-    ui->groupBox->hide();
-    ui->groupBox_2->hide();
+    ui->m_EditMenu->hide();
+    ui->m_DisplayMenu->hide();
     ui->m_StackedTools->setCurrentWidget(ui->m_PageDrawingTools);
 
     m_Layers->setCurrentLayerCode("m_DrawingEdit");
@@ -452,4 +461,25 @@ void Map::initAsImage() {
 
     m_Layers->getLayer(LayerCodes::LAYER_MAP)->hide();
     m_Layers->getLayer(LayerCodes::LAYER_FOW)->hide();
+}
+
+
+void Map::on_m_DisplayCheckBox_clicked(bool checked)
+{
+    if(checked){
+        ui->m_DisplayMenu->show();
+    }
+    else{
+        ui->m_DisplayMenu->hide();
+    }
+}
+
+void Map::on_m_EditCheckBox_clicked(bool checked)
+{
+    if(checked){
+        ui->m_EditMenu->show();
+    }
+    else{
+        ui->m_EditMenu->hide();
+    }
 }
