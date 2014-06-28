@@ -11,6 +11,7 @@ public:
 
     bool sceneEventFilter(QGraphicsItem *obj, QEvent *event);
     void setSize(int size);
+    void setColor(QColor color);
 
 private:
     int m_PenSize;

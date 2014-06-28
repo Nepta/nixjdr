@@ -31,6 +31,7 @@ public:
 public slots:
     void setPenSize(int size);
     void setEraserSize(int size);
+    void setColor(QColor color);
     void erasePixmapContent();
     void changeTool();
     void updateDisplay();

@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>400</width>
-    <height>300</height>
+    <height>350</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -16,16 +16,16 @@
     <verstretch>0</verstretch>
    </sizepolicy>
   </property>
+  <property name="minimumSize">
+   <size>
+    <width>0</width>
+    <height>350</height>
+   </size>
+  </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <layout class="QHBoxLayout" name="horizontalLayout_4">
-   <property name="leftMargin">
-    <number>0</number>
-   </property>
-   <property name="rightMargin">
-    <number>0</number>
-   </property>
+  <layout class="QHBoxLayout" name="horizontalLayout">
    <item>
     <widget class="QGroupBox" name="m_DrawingTools">
      <property name="enabled">
@@ -34,109 +34,109 @@
      <property name="title">
       <string>Outils de dessin</string>
      </property>
-     <layout class="QVBoxLayout" name="verticalLayout_2">
+     <layout class="QVBoxLayout" name="verticalLayout">
       <item>
-       <layout class="QVBoxLayout" name="verticalLayout">
-        <item>
-         <layout class="QGridLayout" name="m_ToolLayout">
-          <item row="0" column="1">
-           <widget class="QPushButton" name="m_PenButton">
+       <layout class="QGridLayout" name="m_ToolLayout">
+        <item row="0" column="1">
+         <widget class="QPushButton" name="m_PenButton">
+          <property name="text">
+           <string>Crayon</string>
+          </property>
+          <property name="checkable">
+           <bool>true</bool>
+          </property>
+          <property name="checked">
+           <bool>true</bool>
+          </property>
+          <attribute name="buttonGroup">
+           <string notr="true">buttonGroup</string>
+          </attribute>
+         </widget>
+        </item>
+        <item row="0" column="2">
+         <widget class="QPushButton" name="m_EraserButton">
+          <property name="text">
+           <string>Gomme</string>
+          </property>
+          <property name="checkable">
+           <bool>true</bool>
+          </property>
+          <attribute name="buttonGroup">
+           <string notr="true">buttonGroup</string>
+          </attribute>
+         </widget>
+        </item>
+        <item row="1" column="1">
+         <widget class="QPushButton" name="m_PingButton">
+          <property name="text">
+           <string>Ping</string>
+          </property>
+          <property name="checkable">
+           <bool>true</bool>
+          </property>
+          <attribute name="buttonGroup">
+           <string notr="true">buttonGroup</string>
+          </attribute>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <widget class="QStackedWidget" name="m_OptionWidget">
+        <property name="currentIndex">
+         <number>0</number>
+        </property>
+        <widget class="QWidget" name="m_PenPage">
+         <layout class="QGridLayout" name="gridLayout">
+          <item row="0" column="0">
+           <widget class="QLabel" name="label">
             <property name="text">
-             <string>Crayon</string>
+             <string>Taile</string>
             </property>
-            <property name="checkable">
-             <bool>true</bool>
-            </property>
-            <property name="checked">
-             <bool>true</bool>
-            </property>
-            <attribute name="buttonGroup">
-             <string notr="true">buttonGroup</string>
-            </attribute>
            </widget>
           </item>
-          <item row="0" column="2">
-           <widget class="QPushButton" name="m_EraserButton">
+          <item row="0" column="1">
+           <widget class="QSpinBox" name="m_PenSpinBox">
+            <property name="value">
+             <number>2</number>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="label_3">
             <property name="text">
-             <string>Gomme</string>
+             <string>Couleur</string>
             </property>
-            <property name="checkable">
-             <bool>true</bool>
-            </property>
-            <attribute name="buttonGroup">
-             <string notr="true">buttonGroup</string>
-            </attribute>
            </widget>
           </item>
           <item row="1" column="1">
-           <widget class="QPushButton" name="m_PingButton">
+           <widget class="ColorSelectionWidget" name="m_ColorSelectionWidget" native="true"/>
+          </item>
+         </layout>
+        </widget>
+        <widget class="QWidget" name="m_EraserPage">
+         <layout class="QFormLayout" name="formLayout_2">
+          <item row="0" column="0">
+           <widget class="QLabel" name="label_2">
             <property name="text">
-             <string>Ping</string>
+             <string>Taille</string>
             </property>
-            <property name="checkable">
-             <bool>true</bool>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QSpinBox" name="m_EraserSpinBox">
+            <property name="value">
+             <number>2</number>
             </property>
-            <attribute name="buttonGroup">
-             <string notr="true">buttonGroup</string>
-            </attribute>
            </widget>
           </item>
          </layout>
-        </item>
-        <item>
-         <widget class="QWidget" name="sizeWidget" native="true">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="minimumSize">
-           <size>
-            <width>0</width>
-            <height>60</height>
-           </size>
-          </property>
-          <layout class="QVBoxLayout" name="verticalLayout_5">
-           <item>
-            <layout class="QHBoxLayout" name="horizontalLayout">
-             <item>
-              <widget class="QLabel" name="label">
-               <property name="text">
-                <string>Crayon</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QSpinBox" name="m_PenSpinBox">
-               <property name="value">
-                <number>2</number>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </item>
-           <item>
-            <layout class="QHBoxLayout" name="horizontalLayout_2">
-             <item>
-              <widget class="QLabel" name="label_2">
-               <property name="text">
-                <string>Gomme</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QSpinBox" name="m_EraserSpinBox">
-               <property name="value">
-                <number>2</number>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </item>
-          </layout>
-         </widget>
-        </item>
+        </widget>
+        <widget class="QWidget" name="m_PingPage"/>
+       </widget>
+      </item>
+      <item>
+       <layout class="QVBoxLayout" name="finalLayout">
         <item>
          <widget class="Line" name="line">
           <property name="orientation">
@@ -160,11 +160,32 @@
         </item>
        </layout>
       </item>
+      <item>
+       <spacer name="verticalSpacer">
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>20</width>
+          <height>40</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
      </layout>
     </widget>
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>ColorSelectionWidget</class>
+   <extends>QWidget</extends>
+   <header location="global">Canvas/SideMenuWidgets/ColorSelectionWidget.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
  <buttongroups>

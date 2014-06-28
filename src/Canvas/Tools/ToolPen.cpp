@@ -172,3 +172,7 @@ void ToolPen::releaseKey(QKeyEvent *keyEvent){
         keyEvent->ignore();
     }
 }
+
+void ToolPen::setColor(QColor color){
+    m_Color = color;
+}

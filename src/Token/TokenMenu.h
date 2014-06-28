@@ -24,6 +24,7 @@ public:
     void initTokenMenuPull();
     void addItem(QListWidgetItem *item);
     TokenItem* addToken(QString text, QString filePath = TokenItem::DEFAULT_ICON_PATH, int size = 32, bool special = false, GameObject *gameObject = NULL);
+    TokenItem* addToken(QString text, QPixmap pixmap, int size, bool special, GameObject *gameObject);
     void editTokenCharacter(TokenItem *tokenItem);
     TokenList *getTokenList();
 

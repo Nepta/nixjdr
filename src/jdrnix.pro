@@ -105,7 +105,8 @@ SOURCES += \
     GameObjects/Character.cpp \
     GameObjects/GameObjectDialog.cpp \
     General/CircularProgressBar.cpp \
-    General/TextPixmap.cpp
+    General/TextPixmap.cpp \
+    Canvas/SideMenuWidgets/ColorSelectionWidget.cpp
 
 HEADERS  += \
     MainWindow.h \
@@ -205,7 +206,8 @@ HEADERS  += \
     GameObjects/Character.h \
     GameObjects/GameObjectDialog.h \
     General/CircularProgressBar.h \
-    General/TextPixmap.h
+    General/TextPixmap.h \
+    Canvas/SideMenuWidgets/ColorSelectionWidget.h
 
 FORMS    += \
     MainWindow.ui \
@@ -222,4 +224,5 @@ FORMS    += \
     Canvas/SideMenuWidgets/DrawingMenu.ui \
     Canvas/MapCreationWidget.ui \
     Canvas/OpenMapWidget.ui \
-    GameObjects/GameObjectDialog.ui
+    GameObjects/GameObjectDialog.ui \
+    Canvas/SideMenuWidgets/ColorSelectionWidget.ui

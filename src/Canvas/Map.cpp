@@ -225,6 +225,8 @@ void Map::initDrawingTools() {
             drawingLayer, SLOT(erasePixmapContent()));
     connect(drawingUi->m_SendButton, SIGNAL(clicked(bool)),
             drawingLayer, SLOT(updateDisplayRemote()));
+    connect(drawingUi->m_ColorSelectionWidget, SIGNAL(mainColorChanged(QColor)),
+            drawingLayer, SLOT(setColor(QColor)));
 
     for(int i=0; i < drawingUi->m_ToolLayout->count(); i++){
         QPushButton *currentButton = dynamic_cast<QPushButton*>(

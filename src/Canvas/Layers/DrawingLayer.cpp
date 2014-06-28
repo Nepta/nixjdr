@@ -4,6 +4,7 @@
 #include "Database/Repository/RepositoryManager.h"
 #include "Canvas/Tools/AbstractTool.h"
 #include "Canvas/Tools/ToolPing.h"
+#include "Canvas/Tools/ToolPen.h"
 #include "Canvas/Network/MapCodes.h"
 #include "DrawingLayer.h"
 
@@ -60,6 +61,11 @@ void DrawingLayer::setPenSize(int size) {
 void DrawingLayer::setEraserSize(int size) {
     m_EraserSize = size;
     m_Tools->getTool(ToolCodes::TOOL_ERASER)->setSize(size);
+}
+
+void DrawingLayer::setColor(QColor color){
+    ToolPen *toolPen = dynamic_cast<ToolPen*>(m_Tools->getTool(ToolCodes::TOOL_PEN));
+    toolPen->setColor(color);
 }
 
 /**

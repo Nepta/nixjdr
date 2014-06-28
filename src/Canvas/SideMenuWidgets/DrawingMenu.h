@@ -20,6 +20,13 @@ public:
     ~DrawingMenu();
     Ui::DrawingMenu *getUi();
 
+private slots:
+    void on_m_PenButton_clicked();
+
+    void on_m_EraserButton_clicked();
+
+    void on_m_PingButton_clicked();
+
 private:
     Ui::DrawingMenu *ui;
 };
