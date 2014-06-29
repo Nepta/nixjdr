@@ -19,6 +19,7 @@ public:
     void setDefaultColors();
 
 private:
+    void initLayout();
     void selectButtonColor(QPushButton *Button);
     void setButtonColor(QPushButton *Button, QColor color);
 

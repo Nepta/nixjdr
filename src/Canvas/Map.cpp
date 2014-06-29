@@ -175,7 +175,7 @@ void Map::initLayers(bool addToDb) {
 }
 
 /**
- * @brief Map::initDisplay connects the buttons with the layers
+ * @brief Map::initDisplay connects the buttons with the layers and hides the QGroupBoxes
  */
 void Map::initDisplay(){
     Ui::DisplaySelectionWidget *displaySelectionUi =ui->m_DisplaySelectionWidget->getUi();

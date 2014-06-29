@@ -8,6 +8,20 @@ ColorSelectionWidget::ColorSelectionWidget(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    initLayout();
+}
+
+ColorSelectionWidget::~ColorSelectionWidget()
+{
+    delete ui;
+}
+
+/**
+ * @brief ColorSelectionWidget::initLayout positions and resizes the buttons so that they look like
+ * Gimp's Ui. Positioning is made based on minimum values for the display buttons and the widget
+ * itself
+ */
+void ColorSelectionWidget::initLayout(){
     int firstWidth = ui->m_FirstColorButton->minimumWidth();
     int firstHeight = ui->m_FirstColorButton->minimumHeight();
     int secondWidth = ui->m_SecondColorButton->minimumWidth();
@@ -19,17 +33,23 @@ ColorSelectionWidget::ColorSelectionWidget(QWidget *parent) :
     ui->m_SwapButton->setGeometry(firstWidth,0,width()-firstWidth,height()-secondHeight);
 }
 
-ColorSelectionWidget::~ColorSelectionWidget()
-{
-    delete ui;
-}
-
+/**
+ * @brief ColorSelectionWidget::selectButtonColor opens a dialog window and changes the button's
+ * background to the chosen color
+ * @param button
+ */
 void ColorSelectionWidget::selectButtonColor(QPushButton *button){
     QColorDialog colorDlg;
     QColor color = colorDlg.getColor();
     setButtonColor(button, color);
 }
 
+/**
+ * @brief ColorSelectionWidget::setButtonColor sets the specified button's background to the given
+ * color
+ * @param button
+ * @param color
+ */
 void ColorSelectionWidget::setButtonColor(QPushButton *button, QColor color){
     QPalette palette = button->palette();
     palette.setColor(button->backgroundRole(), color);
@@ -42,6 +62,9 @@ void ColorSelectionWidget::setButtonColor(QPushButton *button, QColor color){
     }
 }
 
+/**
+ * @brief ColorSelectionWidget::setDefaultColors resets the display button's colors to black & white
+ */
 void ColorSelectionWidget::setDefaultColors(){
     setButtonColor(ui->m_FirstColorButton, Qt::black);
     setButtonColor(ui->m_SecondColorButton, Qt::white);
@@ -62,6 +85,9 @@ void ColorSelectionWidget::on_m_DefaultColorButton_clicked()
     setDefaultColors();
 }
 
+/**
+ * @brief ColorSelectionWidget::on_m_SwapButton_clicked swaps the display button's color
+ */
 void ColorSelectionWidget::on_m_SwapButton_clicked()
 {
     QColor oldFirstButtonColor = ui->m_FirstColorButton->palette().color(ui->m_FirstColorButton->backgroundRole());
