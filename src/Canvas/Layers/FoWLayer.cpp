@@ -148,6 +148,6 @@ void FoWLayer::removeFoW() {
     RepositoryManager::s_SpriteRepository.removeAllSpritesFromFoWLayer(this->id());
 
     // Removes the FoW locally
-    qDeleteAll(childItems());
+    removeAllSprites();
     usePixmapAsBackgroundGrid();
 }

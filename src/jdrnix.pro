@@ -108,7 +108,9 @@ SOURCES += \
     General/TextPixmap.cpp \
     Canvas/SideMenuWidgets/ColorSelectionWidget.cpp \
     Canvas/SideMenuWidgets/DisplaySelectionWidget.cpp \
-    Canvas/SideMenuWidgets/EditSelectionWidget.cpp
+    Canvas/SideMenuWidgets/EditSelectionWidget.cpp \
+    Music/MusicMenu.cpp \
+    Music/MusicPlayer.cpp
 
 HEADERS  += \
     MainWindow.h \
@@ -211,7 +213,9 @@ HEADERS  += \
     General/TextPixmap.h \
     Canvas/SideMenuWidgets/ColorSelectionWidget.h \
     Canvas/SideMenuWidgets/DisplaySelectionWidget.h \
-    Canvas/SideMenuWidgets/EditSelectionWidget.h
+    Canvas/SideMenuWidgets/EditSelectionWidget.h \
+    Music/MusicMenu.h \
+    Music/MusicPlayer.h
 
 FORMS    += \
     MainWindow.ui \
@@ -231,4 +235,6 @@ FORMS    += \
     GameObjects/GameObjectDialog.ui \
     Canvas/SideMenuWidgets/ColorSelectionWidget.ui \
     Canvas/SideMenuWidgets/DisplaySelectionWidget.ui \
-    Canvas/SideMenuWidgets/EditSelectionWidget.ui
+    Canvas/SideMenuWidgets/EditSelectionWidget.ui \
+    Music/MusicMenu.ui \
+    Music/MusicPlayer.ui

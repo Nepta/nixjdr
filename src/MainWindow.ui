@@ -202,7 +202,7 @@
             </property>
             <property name="minimumSize">
              <size>
-              <width>200</width>
+              <width>283</width>
               <height>0</height>
              </size>
             </property>
@@ -214,8 +214,8 @@
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>294</width>
-               <height>305</height>
+               <width>295</width>
+               <height>277</height>
               </rect>
              </property>
              <property name="minimumSize">
@@ -233,12 +233,17 @@
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>98</width>
-               <height>28</height>
+               <width>295</width>
+               <height>277</height>
               </rect>
              </property>
              <attribute name="label">
               <string>Historique</string>
+             </attribute>
+            </widget>
+            <widget class="MusicMenu" name="m_MusicMenu">
+             <attribute name="label">
+              <string>Page</string>
              </attribute>
             </widget>
            </widget>
@@ -410,6 +415,12 @@
    <class>LogGui</class>
    <extends>QWidget</extends>
    <header>Log/LogGui.h</header>
+  </customwidget>
+  <customwidget>
+   <class>MusicMenu</class>
+   <extends>QWidget</extends>
+   <header location="global">Music/MusicMenu.h</header>
+   <container>1</container>
   </customwidget>
  </customwidgets>
  <resources/>
