@@ -37,6 +37,9 @@ void FoWLayer::construct(int step, bool transparentSprites) {
     setTokenItem(fowItem);
 }
 
+/**
+ * @brief FoWLayer::usePixmapAsBackgroundGrid ensures that the grid is drawn over the precedent layers
+ */
 void FoWLayer::usePixmapAsBackgroundGrid(){
     m_GridPixmap = new QPixmap(scene()->sceneRect().size().toSize());
     m_DrawingZone = new QGraphicsPixmapItem(this);
@@ -46,6 +49,10 @@ void FoWLayer::usePixmapAsBackgroundGrid(){
     m_DrawingZone->setPixmap(*m_GridPixmap);
 }
 
+/**
+ * @brief FoWLayer::paintGridOnPixmap paints the grid from GridLayer on a pixmap
+ * @param pixmap
+ */
 void FoWLayer::paintGridOnPixmap(QPixmap *pixmap){
     QPainter *painter = new QPainter(pixmap);
     GridLayer::drawBackground(painter, QRectF(pixmap->rect()));
@@ -141,5 +148,6 @@ void FoWLayer::removeFoW() {
     RepositoryManager::s_SpriteRepository.removeAllSpritesFromFoWLayer(this->id());
 
     // Removes the FoW locally
-    removeAllSprites();
+    qDeleteAll(childItems());
+    usePixmapAsBackgroundGrid();
 }
