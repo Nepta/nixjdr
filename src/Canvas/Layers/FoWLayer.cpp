@@ -23,7 +23,9 @@ FoWLayer::FoWLayer(DBItem item, bool transparentSprites) : GridLayer()
     construct(step, transparentSprites);
 }
 
-FoWLayer::~FoWLayer() {}
+FoWLayer::~FoWLayer() {
+    delete m_GridPixmap;
+}
 
 void FoWLayer::construct(int step, bool transparentSprites) {
     m_LayerType = LayerType::FOW_LAYER;
@@ -33,6 +35,21 @@ void FoWLayer::construct(int step, bool transparentSprites) {
     // Retrieve the fow TokenItem from the database
     TokenItem *fowItem = RepositoryManager::s_TokenItemRepository.getFowTokenItem();
     setTokenItem(fowItem);
+}
+
+void FoWLayer::usePixmapAsBackgroundGrid(){
+    m_GridPixmap = new QPixmap(scene()->sceneRect().size().toSize());
+    m_DrawingZone = new QGraphicsPixmapItem(this);
+
+    m_GridPixmap->fill(Qt::transparent);
+    paintGridOnPixmap(m_GridPixmap);
+    m_DrawingZone->setPixmap(*m_GridPixmap);
+}
+
+void FoWLayer::paintGridOnPixmap(QPixmap *pixmap){
+    QPainter *painter = new QPainter(pixmap);
+    GridLayer::drawBackground(painter, QRectF(pixmap->rect()));
+    delete painter;
 }
 
 /**

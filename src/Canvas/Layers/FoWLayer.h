@@ -17,6 +17,7 @@ public:
     ~FoWLayer();
 
     Sprite *addSpriteToLayer(Sprite* sprite);
+    void usePixmapAsBackgroundGrid();
 
 private:
     /**
@@ -26,8 +27,14 @@ private:
     bool m_TransparentSprites;
 
     void construct(int step, bool transparentSprites);
+    void paintGridOnPixmap(QPixmap *pixmap);
+
     void mousePressEvent(QGraphicsSceneMouseEvent *);
     bool sceneEventFilter(QGraphicsItem *watched, QEvent *event);
+
+    QPixmap *m_GridPixmap;
+    QGraphicsPixmapItem *m_DrawingZone;
+
 
 private slots:
     void fillFoW();

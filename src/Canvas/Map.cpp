@@ -309,6 +309,7 @@ void Map::initFoWLayer(bool addToDb) {
 
     m_Scene->addLayer(fowLayer);
     fowLayer->setEnabled(false);
+    fowLayer->usePixmapAsBackgroundGrid();
 
     // FoW tools
     initFoWTools();
